@@ -1,9 +1,12 @@
-import Image from "next/image";
+import { Slider } from "./components/Slider";
+
+//Замінити та видалити!
+import dataSlider from "../public/data/slider_data.json";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Hello</h1>
+    <main>
+      <Slider data={dataSlider} />
     </main>
   );
 }
