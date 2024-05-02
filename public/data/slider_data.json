@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "New collection",
+    "subtitle": "SPRING - SUMMER",
+    "image": "https://cdn.pixabay.com/photo/2018/01/02/23/29/woman-3057294_1280.jpg"
+  },
+  {
+    "id": 2,
+    "title": "New collection",
+    "subtitle": "SPRING - SUMMER",
+    "image": "https://cdn.pixabay.com/photo/2015/02/13/04/27/run-634702_1280.jpg"
+  },
+  {
+    "id": 3,
+    "title": "New collection",
+    "subtitle": "SPRING - SUMMER",
+    "image": "https://cdn.pixabay.com/photo/2021/07/31/09/40/girl-6511568_1280.jpg"
+  }
+]
