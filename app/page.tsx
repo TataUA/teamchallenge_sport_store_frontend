@@ -1,12 +1,12 @@
-import { Slider } from "./components/Slider";
+import { Slider } from "./components/slider-hero/Slider";
 
 //Замінити та видалити!
 import dataSlider from "../public/data/slider_data.json";
 
-export default function Home() {
+export default function Page() {
   return (
-    <main>
+    <>
       <Slider data={dataSlider} />
-    </main>
+    </>
   );
 }
