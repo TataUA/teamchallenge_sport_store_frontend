@@ -1,12 +1,15 @@
 import React from "react";
 import Link from "next/link";
-import { RegisterForm } from "@/app/components/RegisterForm";
+import { RegisterForm } from "@/components/RegisterForm";
+import { ClientComponent } from "@/components/ClientComponent";
 
 export default function Page() {
   return (
     <>
       <h1 className="mb-6">Реєстрація</h1>
-      <RegisterForm />
+      <ClientComponent>
+        <RegisterForm />
+      </ClientComponent>
       <p>
         Натискаючи на кнопку я погоджуюсь з{" "}
         <Link href="" className="border-b-2">

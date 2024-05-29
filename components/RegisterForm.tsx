@@ -1,16 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-//import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-//import { registerUserThunk } from "redux/auth/authThunk";
+import { AppDispatch } from "@/redux/store";
+import { registerUserThunk } from "@/redux/auth/authThunk";
 
 export const schema = yup.object().shape({
   name: yup
     .string()
     .min(1, "Це поле не може бути порожнім")
-    .matches(/^[A-Za-zА-Яа-яЁёЇїІіЄєҐґ']+$/, "Це поле може містити лише літери")
+    .matches(/^[A-Za-zА-Яа-яёЇїІіЄєҐґ']+$/, "Це поле може містити лише літери")
     .required("Це поле обов'язкове"),
   surname: yup
     .string()
@@ -38,7 +39,7 @@ export const schema = yup.object().shape({
     .string()
     .min(6, "Пароль повинен містити не менше 6 символів")
     .matches(
-      /^[A-Za-z0-9!@#$%^&*]+$/,
+      /^[A-Za-zА-Яа-яЁёЇїІіЄєҐґ0-9!@#$%^&*]+$/,
       "Пароль може містити лише літери, цифри та символи"
     )
     .required("Це поле обов'язкове"),
@@ -48,7 +49,7 @@ export const schema = yup.object().shape({
     .required("Це поле обов'язкове"),
 });
 
-interface FormValues {
+export interface RegisterFormValues {
   name: string;
   surname: string;
   patronymic: string;
@@ -58,7 +59,7 @@ interface FormValues {
   repeatPassword: string;
 }
 
-const initialValues: FormValues = {
+const initialValues: RegisterFormValues = {
   name: "",
   surname: "",
   patronymic: "",
@@ -71,16 +72,21 @@ const initialValues: FormValues = {
 export const RegisterForm = () => {
   const [phone, setPhone] = useState("");
   const [isPhoneFocused, setIsPhoneFocused] = useState(false);
-  //const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
+
+  const handleInputChange = (
+    fieldName: string,
+    fieldValue: string,
+    setFieldValue: Function
+  ) => {
+    setFieldValue(fieldName, fieldValue.trim());
+  };
 
   const handleSubmit = (
-    values: FormValues,
+    values: RegisterFormValues,
     { resetForm }: { resetForm: () => void }
   ) => {
-    //dispatch(registerUserThunk({ name, email, password }));
-
-    //DELETE
-    console.log(values);
+    dispatch(registerUserThunk(values));
     resetForm();
     setPhone("");
   };
@@ -99,6 +105,10 @@ export const RegisterForm = () => {
               id="name"
               type="text"
               name="name"
+              value={formik.values.name}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleInputChange("name", e.target.value, formik.setFieldValue);
+              }}
               className="block border-b-2"
             />
             <ErrorMessage name="name" component="div" />
@@ -110,6 +120,14 @@ export const RegisterForm = () => {
               id="surname"
               type="text"
               name="surname"
+              value={formik.values.surname}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleInputChange(
+                  "surname",
+                  e.target.value,
+                  formik.setFieldValue
+                );
+              }}
               className="block border-b-2"
             />
             <ErrorMessage name="surname" component="div" />
@@ -121,6 +139,14 @@ export const RegisterForm = () => {
               id="patronymic"
               type="text"
               name="patronymic"
+              value={formik.values.patronymic}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleInputChange(
+                  "patronymic",
+                  e.target.value,
+                  formik.setFieldValue
+                );
+              }}
               className="block border-b-2"
             />
             <ErrorMessage name="patronymic" component="div" />
@@ -133,7 +159,7 @@ export const RegisterForm = () => {
               type="text"
               name="phone"
               className="block border-b-2"
-              value={isPhoneFocused || phone.length > 4 ? phone : ""}
+              value={isPhoneFocused || phone.length > 4 ? phone.trim() : ""}
               onFocus={() => {
                 setIsPhoneFocused(true);
                 if (!phone.startsWith("+380")) {
@@ -158,16 +184,26 @@ export const RegisterForm = () => {
             />
             <ErrorMessage name="phone" component="div" />
           </label>
+
           <label htmlFor="email" className="block mb-4">
             Електронна пошта
             <Field
               id="email"
               type="email"
               name="email"
+              value={formik.values.email}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleInputChange(
+                  "email",
+                  e.target.value,
+                  formik.setFieldValue
+                );
+              }}
               className="block border-b-2"
             />
             <ErrorMessage name="email" component="div" />
           </label>
+
           <label htmlFor="password" className="block mb-4">
             Пароль
             <Field
@@ -175,10 +211,19 @@ export const RegisterForm = () => {
               id="password"
               type="password"
               name="password"
+              value={formik.values.password}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                handleInputChange(
+                  "password",
+                  e.target.value,
+                  formik.setFieldValue
+                );
+              }}
               className="block border-b-2"
             />
             <ErrorMessage name="password" component="div" />
           </label>
+
           <label htmlFor="repeatPassword" className="block mb-4">
             Повторити пароль
             <Field
@@ -190,6 +235,7 @@ export const RegisterForm = () => {
             />
             <ErrorMessage name="repeatPassword" component="div" />
           </label>
+
           <button type="submit" className="h-12 border-2">
             Зареєструватись
           </button>
