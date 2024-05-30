@@ -7,6 +7,22 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    fontFamily: {
+      'body': ['"PP Pangram Sans"', '"Open Sans"']
+    },
+    colors: {
+      bluredbackground: "rgba(14, 14, 16, 0.8)",
+      mainbackground: "#FFFFFF"
+    },
+    borderRadius: {
+      buttonborder: "12px",
+      popupborder: "24px"
+    },
+    fontSize: {
+      basic: "14px",
+      button: "16px",
+      subheading: "20px"
+    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
