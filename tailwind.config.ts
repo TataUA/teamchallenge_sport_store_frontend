@@ -25,6 +25,16 @@ const config: Config = {
       margin: {
         "55": "165px",
       },
+      colors: {
+        primary: "#272728",
+        secondary: "#575758",
+        title: "#1A1A1C",
+        label: "#868687",
+        border: "#CFCFCF",
+        white: "#fff",
+        blue: "#0A4CF6",
+        red: "#DF0707",
+      },
     },
   },
   plugins: [],

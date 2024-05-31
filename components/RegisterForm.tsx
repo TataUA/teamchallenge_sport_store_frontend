@@ -98,8 +98,11 @@ export const RegisterForm = () => {
       onSubmit={handleSubmit}
     >
       {(formik) => (
-        <Form autoComplete="on">
-          <label htmlFor="name" className="block mb-4">
+        <Form autoComplete="on" className="flex flex-col gap-4">
+          <label
+            htmlFor="name"
+            className="block text-base font-medium text-label"
+          >
             Ім&apos;я
             <Field
               id="name"
@@ -109,12 +112,15 @@ export const RegisterForm = () => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 handleInputChange("name", e.target.value, formik.setFieldValue);
               }}
-              className="block border-b-2"
+              className="block w-full border-b"
             />
             <ErrorMessage name="name" component="div" />
           </label>
 
-          <label htmlFor="surname" className="block mb-4">
+          <label
+            htmlFor="surname"
+            className="block text-base font-medium text-label"
+          >
             Прізвище
             <Field
               id="surname"
@@ -128,12 +134,15 @@ export const RegisterForm = () => {
                   formik.setFieldValue
                 );
               }}
-              className="block border-b-2"
+              className="block w-full border-b"
             />
             <ErrorMessage name="surname" component="div" />
           </label>
 
-          <label htmlFor="patronymic" className="block mb-4">
+          <label
+            htmlFor="patronymic"
+            className="block text-base font-medium text-label"
+          >
             По-батькові
             <Field
               id="patronymic"
@@ -147,18 +156,21 @@ export const RegisterForm = () => {
                   formik.setFieldValue
                 );
               }}
-              className="block border-b-2"
+              className="block w-full border-b"
             />
             <ErrorMessage name="patronymic" component="div" />
           </label>
 
-          <label htmlFor="phone" className="block mb-4">
+          <label
+            htmlFor="phone"
+            className="block text-base font-medium text-label"
+          >
             Номер телефону
             <Field
               id="phone"
               type="text"
               name="phone"
-              className="block border-b-2"
+              className="block w-full border-b"
               value={isPhoneFocused || phone.length > 4 ? phone.trim() : ""}
               onFocus={() => {
                 setIsPhoneFocused(true);
@@ -185,7 +197,10 @@ export const RegisterForm = () => {
             <ErrorMessage name="phone" component="div" />
           </label>
 
-          <label htmlFor="email" className="block mb-4">
+          <label
+            htmlFor="email"
+            className="block text-base font-medium text-label"
+          >
             Електронна пошта
             <Field
               id="email"
@@ -199,12 +214,15 @@ export const RegisterForm = () => {
                   formik.setFieldValue
                 );
               }}
-              className="block border-b-2"
+              className="block w-full border-b"
             />
             <ErrorMessage name="email" component="div" />
           </label>
 
-          <label htmlFor="password" className="block mb-4">
+          <label
+            htmlFor="password"
+            className="block text-base font-medium text-label"
+          >
             Пароль
             <Field
               autoComplete="off"
@@ -219,19 +237,22 @@ export const RegisterForm = () => {
                   formik.setFieldValue
                 );
               }}
-              className="block border-b-2"
+              className="block w-full border-b"
             />
             <ErrorMessage name="password" component="div" />
           </label>
 
-          <label htmlFor="repeatPassword" className="block mb-4">
+          <label
+            htmlFor="repeatPassword"
+            className="block text-base font-medium text-label"
+          >
             Повторити пароль
             <Field
               autoComplete="off"
               id="repeatPassword"
               type="password"
               name="repeatPassword"
-              className="block border-b-2"
+              className="block w-full border-b"
             />
             <ErrorMessage name="repeatPassword" component="div" />
           </label>

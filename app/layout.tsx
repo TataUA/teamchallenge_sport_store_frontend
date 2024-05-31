@@ -19,7 +19,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="uk" className="h-full">
       <head />
       <body className="relative flex flex-col min-h-screen font-pangram antialiased">
-        <header className="p-8">
+        <header className="mx-6">
           <ClientComponent>
             <SignInButton />
           </ClientComponent>
