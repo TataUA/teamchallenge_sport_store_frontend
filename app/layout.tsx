@@ -1,13 +1,8 @@
 import React from "react";
 import type { Metadata } from "next";
-import { cn } from "@/services/utils/cn";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import SignInButton from "@/components/SignInButton";
 import { ClientComponent } from "@/components/ClientComponent";
-
-//need to change
-const inter = Inter({ subsets: ["latin"] });
 
 //need to change
 export const metadata: Metadata = {
@@ -23,12 +18,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="uk" className="h-full">
       <head />
-      <body
-        className={cn(
-          "relative flex flex-col min-h-screen font-sans antialiased",
-          inter.className
-        )}
-      >
+      <body className="relative flex flex-col min-h-screen font-pangram antialiased">
         <header className="p-8">
           <ClientComponent>
             <SignInButton />
