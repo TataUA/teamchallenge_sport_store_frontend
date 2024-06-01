@@ -8,6 +8,7 @@ import Link from "next/link";
 import { ResetPasswordForm } from "./ResetPasswordForm";
 //import { registerUserThunk } from "redux/auth/authThunk";
 
+
 export const schema = yup.object().shape({
   email: yup
     .string()
@@ -108,7 +109,8 @@ export const LoginForm = () => {
           </label>
           {/* <Link href={""} onClick={() => {}} className="block mb-5">
             Забули пароль?
-          </Link> */}
+            </Link> */}
+
           <button type="submit" className="h-12 border-2">
             Увійти
           </button>

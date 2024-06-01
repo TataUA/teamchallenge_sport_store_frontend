@@ -10,19 +10,6 @@ const config: Config = {
     fontFamily: {
       'body': ['"PP Pangram Sans"', '"Open Sans"']
     },
-    colors: {
-      bluredbackground: "rgba(14, 14, 16, 0.8)",
-      mainbackground: "#FFFFFF"
-    },
-    borderRadius: {
-      buttonborder: "12px",
-      popupborder: "24px"
-    },
-    fontSize: {
-      basic: "14px",
-      button: "16px",
-      subheading: "20px"
-    },
     extend: {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -37,6 +24,26 @@ const config: Config = {
       },
       margin: {
         "55": "165px",
+      },
+      colors: {
+        primary: "#272728",
+        secondary: "#575758",
+        title: "#1A1A1C",
+        common: "#3E3E40",
+        label: "#868687",
+        border: "#CFCFCF",
+        white: "#fff",
+        blue: "#0A4CF6",
+        red: "#DF0707",
+      },
+      fontSize: {
+        basic: "14px",
+        button: "16px",
+        subheading: "20px"
+      },
+      borderRadius: {
+        button: "12px",
+        popup: "24px"
       },
     },
   },
