@@ -38,6 +38,7 @@ const config: Config = {
         white: "#fff",
         blue: "#0A4CF6",
         red: "#DF0707",
+        blured: "rgba(14, 14, 16, 0.4)"
       },
       fontSize: {
         basic: "14px",
