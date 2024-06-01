@@ -11,6 +11,9 @@ const config: Config = {
       'body': ['"PP Pangram Sans"', '"Open Sans"']
     },
     extend: {
+      fontFamily: {
+        pangram: ["PP Pangram Sans", "sans-serif"],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -44,7 +47,7 @@ const config: Config = {
       borderRadius: {
         button: "12px",
         popup: "24px"
-      },
+      }
     },
   },
   plugins: [],
