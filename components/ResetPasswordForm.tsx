@@ -49,12 +49,12 @@ export const ResetPasswordForm = () => {
 
   return (
     <>
-        <button className="block mb-5" onClick={() => {setShowPasswordResetBlock(true)}}>Забули пароль?</button>
+                <button className="block mb-5" onClick={() => {setShowPasswordResetBlock(true)}}>Забули пароль?</button>
         {showPasswordResetBlock ?
-        <div className="absolute w-full h-full top-0 left-0 bg-bluredbackground flex justify-center content-center">
-        <div className="self-center bg-mainbackground p-6 rounded-popupborder">
-            <div className="flex flex-row gap-y-14">
-                <p className="text-subheading">Відновлення паролю</p>
+        <div className="fixed w-full h-screen top-0 left-0 flex justify-center content-center bg-blured">
+        <div className="self-center bg-white p-6 rounded-popup max-w-[88vw] max-h-[88vw] text-common text-basic font-medium">
+            <div className="flex flex-row justify-between items-center mb-4">
+                <p className="text-subheading text-title font-bold">Відновлення паролю</p>
                 <p onClick={() => {setShowPasswordResetBlock(false)}}>
                     <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M17.5 8.5L8.5 17.5" stroke="#3E3E40" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -62,7 +62,7 @@ export const ResetPasswordForm = () => {
                     </svg>
                 </p>
             </div>
-            <p>Вкажіть свою електронну адресу і ми відправимо вам лист з інструкцією</p>
+            <p className="mb-4">Вкажіть свою електронну адресу і ми відправимо вам лист з інструкцією</p>
             <Formik 
             initialValues={initialValues}
             validationSchema={schema}
@@ -76,6 +76,7 @@ export const ResetPasswordForm = () => {
                     id="email"
                     type="email"
                     name="email"
+                    placeholder="Електронна пошта"
                     value={formik.values.email}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         handleInputChange(
@@ -84,12 +85,12 @@ export const ResetPasswordForm = () => {
                         formik.setFieldValue
                         );
                     }}
-                    className="block border-b-2"
+                    className="block border-b-2 pb-2 w-full mb-8"
                     />
                     <ErrorMessage name="email" component="div" />
                 </label>
 
-                <button type="submit" className="h-12 border-2">
+                <button type="submit" className="h-12 text-button bg-blue rounded-button text-white w-full font-semibold">
                     Надіслати інструкцію
                 </button>
                 </Form>
