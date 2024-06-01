@@ -5,7 +5,9 @@ import React from "react";
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Link from "next/link";
+import { ResetPasswordForm } from "./ResetPasswordForm";
 //import { registerUserThunk } from "redux/auth/authThunk";
+
 
 export const schema = yup.object().shape({
   email: yup
@@ -59,6 +61,7 @@ export const LoginForm = () => {
   };
 
   return (
+    <>
     <Formik
       initialValues={initialValues}
       validationSchema={schema}
@@ -104,10 +107,9 @@ export const LoginForm = () => {
             />
             <ErrorMessage name="password" component="div" />
           </label>
-
-          <Link href={""} className="block mb-5">
+          {/* <Link href={""} onClick={() => {}} className="block mb-5">
             Забули пароль?
-          </Link>
+            </Link> */}
 
           <button type="submit" className="h-12 border-2">
             Увійти
@@ -115,5 +117,7 @@ export const LoginForm = () => {
         </Form>
       )}
     </Formik>
+    <ResetPasswordForm />
+    </>
   );
 };
