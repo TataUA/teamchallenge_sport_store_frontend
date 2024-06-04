@@ -43,7 +43,8 @@ const config: Config = {
       fontSize: {
         basic: "14px",
         button: "16px",
-        subheading: "20px"
+        subheading: "20px",
+        heading: "24px"
       },
       borderRadius: {
         button: "12px",
