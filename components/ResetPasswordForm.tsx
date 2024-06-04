@@ -37,6 +37,7 @@ export const ResetPasswordForm = () => {
 
   const [placeholderValue, setPlaceholderValue] = useState<string>("Електронна пошта");
 
+  const [userEmail, setUserEmail] = useState<string>("");
 
   const handleInputChange = (
     fieldName: string,
@@ -46,30 +47,32 @@ export const ResetPasswordForm = () => {
     setFieldValue(fieldName, fieldValue.trim());
   };
 
+  async function postEmailValue(value: string) {
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({"email": value}),
+      });
+  
+      const result = await response.json();
+      console.log("Success:", result);
+      setUserEmail(value);
+      setPopupContent("success message")
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
   const handleSubmit = (
     values: LoginFormValues,
     { resetForm }: { resetForm: () => void }
   ) => {
     console.log(values.email);
     resetForm();
-    async function postEmailValue() {
-      try {
-        const response = await fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({"email": values.email}),
-        });
-    
-        const result = await response.json();
-        console.log("Success:", result);
-        setPopupContent("success message")
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    }
-    postEmailValue();
+    postEmailValue(values.email);
   };
 
   return (
@@ -87,8 +90,9 @@ export const ResetPasswordForm = () => {
                     </svg>
                 </p>
             </div>
-            <p className="mb-4">Вкажіть свою електронну адресу, і ми відправимо вам лист з інструкцією</p>
             { popupContent === "form" ? 
+            <>
+              <p className="mb-4">Вкажіть свою електронну адресу, і ми відправимо вам лист з інструкцією</p>
               <Formik 
               initialValues={initialValues}
               validationSchema={schema}
@@ -124,10 +128,12 @@ export const ResetPasswordForm = () => {
                   </Form>
               )}
               </Formik>
+              </>
               : 
               <div>
+                <p className="mb-4">Ми надіслали посилання для відновлення на адресу {userEmail}</p>
                 <button className="my-4 h-12 text-button bg-blue rounded-button text-white w-full font-semibold mb-4" onClick={() => {setShowPasswordResetBlock(false)}}>На сторінку входу</button>
-                <button className="h-12 text-button bg-white rounded-button w-full font-semibold border-2" onClick={() => {setPopupContent("form")}}>Надіслати посилання ще раз</button>
+                <button className="h-12 text-button bg-white rounded-button w-full font-semibold border-2" onClick={() => {postEmailValue(userEmail)}}>Надіслати посилання ще раз</button>
               </div>
             }
         </div> 
