@@ -6,7 +6,7 @@ import { ClientComponent } from "@/components/ClientComponent";
 export default function Page() {
   return (
     <>
-      <h1 className="mb-6">Реєстрація</h1>
+      <h1 className="mt-4 mb-6 text-2xl font-bold text-title">Реєстрація</h1>
       <ClientComponent>
         <RegisterForm />
       </ClientComponent>

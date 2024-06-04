@@ -1,12 +1,7 @@
 import { Header } from '@/components/Header/Header'
-import { cn } from '@/services/utils/cn'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import React from 'react'
 import './globals.css'
-
-//need to change
-const inter = Inter({ subsets: ['latin'] })
 
 //need to change
 export const metadata: Metadata = {
@@ -22,17 +17,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<html lang='uk' className='h-full'>
 			<head />
-			<body
-				className={cn(
-					'relative flex flex-col min-h-screen font-sans antialiased',
-					inter.className
-				)}
-			>
-				<div className='wrapper'>
-					<Header />
-					<main className='relative flex-1'>{children}</main>
-					<footer className='p-8 mt-auto'>Footer</footer>
-				</div>
+			<body className='relative flex flex-col min-h-screen font-pangram antialiased'>
+				<Header />
+				<main className='relative flex-1'>{children}</main>
+				<footer className='p-8 mt-auto'>Footer</footer>
 			</body>
 		</html>
 	)
