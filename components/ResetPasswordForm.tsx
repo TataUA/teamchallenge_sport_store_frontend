@@ -4,7 +4,6 @@ import React from "react";
 import { useState } from "react";
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import Link from "next/link";
 
 
 export const schema = yup.object().shape({
@@ -25,6 +24,8 @@ export interface LoginFormValues {
 const initialValues: LoginFormValues = {
   email: "",
 };
+
+const url = `http://34.66.71.139:8000/user/password_reset/`;
 
 export const ResetPasswordForm = () => {
 
@@ -49,9 +50,26 @@ export const ResetPasswordForm = () => {
     values: LoginFormValues,
     { resetForm }: { resetForm: () => void }
   ) => {
-    console.log(values);
+    console.log(values.email);
     resetForm();
-    setPopupContent("success message")
+    async function postEmailValue() {
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({"email": values.email}),
+        });
+    
+        const result = await response.json();
+        console.log("Success:", result);
+        setPopupContent("success message")
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
+    postEmailValue();
   };
 
   return (
@@ -69,7 +87,7 @@ export const ResetPasswordForm = () => {
                     </svg>
                 </p>
             </div>
-            <p className="mb-4">Вкажіть свою електронну адресу і ми відправимо вам лист з інструкцією</p>
+            <p className="mb-4">Вкажіть свою електронну адресу, і ми відправимо вам лист з інструкцією</p>
             { popupContent === "form" ? 
               <Formik 
               initialValues={initialValues}
