@@ -45,6 +45,13 @@ const config: Config = {
 				button: '16px',
 				subheading: '20px',
 			},
+			lineHeight: {
+				'150': '1.5',
+				'140': '1.4',
+			},
+			letterSpacing: {
+				'wide-04': '0.04em',
+			},
 			borderRadius: {
 				button: '12px',
 				popup: '24px',

@@ -1,0 +1,13 @@
+@tailwind components;
+
+@layer components {
+	/* .nav__item-container {
+		@apply relative h-fit cursor-pointer flex flex-col justify-between whitespace-nowrap py-3;
+	} */
+	.dropdown {
+		@apply hidden;
+	}
+	.dropdownActive {
+		@apply block;
+	}
+}
