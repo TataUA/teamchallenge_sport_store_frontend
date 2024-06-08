@@ -21,6 +21,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 				<Header />
 				<main className='relative flex-1'>{children}</main>
 				<footer className='p-8 mt-auto'>Footer</footer>
+				<div id='modal-root'></div>
 			</body>
 		</html>
 	)
