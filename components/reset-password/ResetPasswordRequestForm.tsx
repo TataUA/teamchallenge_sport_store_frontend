@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-// import { useState } from "react";
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState, useLayoutEffect, useRef } from 'react';
@@ -99,14 +98,14 @@ export const ResetPasswordRequestForm = () => {
     values: LoginFormValues,
     { resetForm }: { resetForm: () => void }
   ) => {
-    console.log(values.email);
+    // console.log(values.email);
     resetForm();
     postEmailValue(values.email);
   };
 
   return (
     <div ref={formRef}>
-      <button className="block mb-5" onClick={() => {setShowPasswordResetBlock(true)}}>Забули пароль?</button>
+      <button type="button" className="block mb-5" onClick={() => {setShowPasswordResetBlock(true)}}>Забули пароль?</button>
         {showPasswordResetBlock ?
         <div className="fixed w-full h-screen top-0 left-0 flex justify-center content-center bg-blured">
         <div className="self-center bg-white p-6 rounded-popup max-w-[88vw] max-h-[88vw] text-common text-basic font-medium">

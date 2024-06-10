@@ -61,7 +61,6 @@ export const LoginForm = () => {
   };
 
   return (
-    <>
     <Formik
       initialValues={initialValues}
       validationSchema={schema}
@@ -110,6 +109,7 @@ export const LoginForm = () => {
           {/* <Link href={""} onClick={() => {}} className="block mb-5">
             Забули пароль?
             </Link> */}
+          <ResetPasswordRequestForm />
 
           <button type="submit" className="h-12 border-2">
             Увійти
@@ -117,7 +117,5 @@ export const LoginForm = () => {
         </Form>
       )}
     </Formik>
-    <ResetPasswordRequestForm />
-    </>
   );
 };
