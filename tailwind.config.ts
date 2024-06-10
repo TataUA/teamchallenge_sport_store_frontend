@@ -38,9 +38,11 @@ const config: Config = {
         white: "#fff",
         blue: "#0A4CF6",
         red: "#DF0707",
+        green: "#42BE65",
         blured: "rgba(14, 14, 16, 0.4)"
       },
       fontSize: {
+        error: "12px",
         basic: "14px",
         button: "16px",
         subheading: "20px",

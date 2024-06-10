@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 
 
-export const schema = yup.object().shape({
+const schema = yup.object().shape({
   email: yup
     .string()
     .email("Введіть дійсну електронну адресу")
@@ -17,7 +17,7 @@ export const schema = yup.object().shape({
     .required("Це поле обов'язкове"),
 });
 
-export interface LoginFormValues {
+interface LoginFormValues {
   email: string;
 }
 
@@ -27,7 +27,10 @@ const initialValues: LoginFormValues = {
 
 const url = `http://34.66.71.139:8000/user/password_reset/`;
 
-export const ResetPasswordForm = () => {
+export const submitButtonClassName = "h-12 text-button bg-blue rounded-button text-white w-full font-semibold"; 
+export const inputClassName = "block border-b-2 pb-2 w-full mb-8 text-label text-basic focus:outline-none";
+
+export const ResetPasswordRequestForm = () => {
 
   const [showPasswordResetBlock, setShowPasswordResetBlock] = useState<boolean>(false);
     
@@ -100,29 +103,30 @@ export const ResetPasswordForm = () => {
               >
               {(formik) => (
                   <Form autoComplete="on">
+
                   <label htmlFor="email" className="block mb-4">
                       {labelValue}
                       <Field
-                      id="email"
+                      id="resetPasswordEmail"
                       type="email"
-                      name="email"
+                      name="resetPasswordEmail"
                       placeholder={placeholderValue}
                       value={formik.values.email}
                       onFocus={() => {setLabelValue("Електронна пошта"); setPlaceholderValue("")}}
                       onBlur={() => {setLabelValue(""); setPlaceholderValue("Електронна пошта")}}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           handleInputChange(
-                          "email",
+                          "resetPasswordEmail",
                           e.target.value,
                           formik.setFieldValue
                           );
                       }}
-                      className="block border-b-2 pb-2 w-full mb-8 focus:outline-none"
+                      className={inputClassName}
                       />
                       <ErrorMessage name="email" component="div" />
                   </label>
 
-                  <button type="submit" className="h-12 text-button bg-blue rounded-button text-white w-full font-semibold">
+                  <button type="submit" className={submitButtonClassName}>
                       Надіслати інструкцію
                   </button>
                   </Form>
@@ -132,8 +136,8 @@ export const ResetPasswordForm = () => {
               : 
               <div>
                 <p className="mb-4">Ми надіслали посилання для відновлення на адресу {userEmail}</p>
-                <button className="my-4 h-12 text-button bg-blue rounded-button text-white w-full font-semibold mb-4" onClick={() => {setShowPasswordResetBlock(false)}}>На сторінку входу</button>
-                <button className="h-12 text-button bg-white rounded-button w-full font-semibold border-2" onClick={() => {postEmailValue(userEmail)}}>Надіслати посилання ще раз</button>
+                <button className={submitButtonClassName} onClick={() => {setShowPasswordResetBlock(false)}}>На сторінку входу</button>
+                <button className="h-12 text-button bg-white rounded-button w-full font-semibold border-2 mt-4" onClick={() => {postEmailValue(userEmail)}}>Надіслати посилання ще раз</button>
               </div>
             }
         </div> 

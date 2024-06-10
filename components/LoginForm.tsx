@@ -5,7 +5,7 @@ import React from "react";
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Link from "next/link";
-import { ResetPasswordForm } from "./ResetPasswordForm";
+import { ResetPasswordRequestForm } from "./reset-password/ResetPasswordRequestForm";
 //import { registerUserThunk } from "redux/auth/authThunk";
 
 
@@ -117,7 +117,7 @@ export const LoginForm = () => {
         </Form>
       )}
     </Formik>
-    <ResetPasswordForm />
+    <ResetPasswordRequestForm />
     </>
   );
 };
