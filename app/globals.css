@@ -3,54 +3,63 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "PP Pangram Sans";
-  src: url("/fonts/Pangram Sans/PPPangramSans_Regular.otf") format("opentype");
-  font-weight: 400;
-  font-style: normal;
+	font-family: 'PP Pangram Sans';
+	src: url('/fonts/Pangram Sans/PPPangramSans_Regular.otf') format('opentype');
+	font-weight: 400;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "PP Pangram Sans";
-  src: url("/fonts/Pangram Sans/PPPangramSans_Medium.otf") format("opentype");
-  font-weight: 500;
-  font-style: normal;
+	font-family: 'PP Pangram Sans';
+	src: url('/fonts/Pangram Sans/PPPangramSans_Medium.otf') format('opentype');
+	font-weight: 500;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "PP Pangram Sans";
-  src: url("/fonts/Pangram Sans/PPPangramSans_Semibold.otf") format("opentype");
-  font-weight: 600;
-  font-style: normal;
+	font-family: 'PP Pangram Sans';
+	src: url('/fonts/Pangram Sans/PPPangramSans_Semibold.otf') format('opentype');
+	font-weight: 600;
+	font-style: normal;
 }
 
 @font-face {
-  font-family: "PP Pangram Sans";
-  src: url("/fonts/Pangram Sans/PPPangramSans_Bold.otf") format("opentype");
-  font-weight: 700;
-  font-style: normal;
+	font-family: 'PP Pangram Sans';
+	src: url('/fonts/Pangram Sans/PPPangramSans_Bold.otf') format('opentype');
+	font-weight: 700;
+	font-style: normal;
 }
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+	--foreground-rgb: 0, 0, 0;
+	--background-start-rgb: 214, 219, 220;
+	--background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+	:root {
+		--foreground-rgb: 255, 255, 255;
+		--background-start-rgb: 0, 0, 0;
+		--background-end-rgb: 0, 0, 0;
+	}
 }
 
 body {
-  background: #fff;
-  font-family: "PP Pangram Sans", sans-serif;
+	background: #fff;
+	font-family: 'PP Pangram Sans', sans-serif;
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+	.text-balance {
+		text-wrap: balance;
+	}
+}
+
+@layer components {
+	.wrapper {
+		@apply min-h-full flex flex-col;
+	}
+	.container {
+		@apply mx-auto px-6;
+	}
 }
