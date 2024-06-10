@@ -1,10 +1,11 @@
 "use client";
 
 import React from "react";
-import { useState } from "react";
+// import { useState } from "react";
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-
+import { useState, useLayoutEffect, useRef } from 'react';
+import { gsap } from 'gsap';
 
 const schema = yup.object().shape({
   email: yup
@@ -27,6 +28,19 @@ const initialValues: LoginFormValues = {
 
 const url = `http://34.66.71.139:8000/user/password_reset/`;
 
+export const animateInputField = (animationTrigger: boolean, curentRef: any, element: string) => {
+  if (animationTrigger) {
+    let ctxTo = gsap.context(() => {
+        gsap.from(element, 
+        { 
+          duration: 0.5,
+          y: 20
+        }); 
+      }, curentRef); 
+    return () => ctxTo.revert(); 
+  } 
+}
+
 export const submitButtonClassName = "h-12 text-button bg-blue rounded-button text-white w-full font-semibold"; 
 export const inputClassName = "block border-b-2 pb-2 w-full mb-8 text-label text-basic focus:outline-none";
 
@@ -36,11 +50,23 @@ export const ResetPasswordRequestForm = () => {
     
   const [popupContent, setPopupContent] = useState<string>("form");
 
-  const [labelValue, setLabelValue] = useState<string>("");
+  const [labelClassname, setLabelClassname] = useState<string>("text-transparent");
 
   const [placeholderValue, setPlaceholderValue] = useState<string>("Електронна пошта");
 
   const [userEmail, setUserEmail] = useState<string>("");
+
+  const [animateField, setAnimateField] = useState<boolean>(false);
+
+
+  gsap.registerPlugin();
+
+  const formRef: any = useRef();
+
+  useLayoutEffect(() => {
+    animateInputField(animateField, formRef, ".Input-Label")
+  }, [animateField]);
+
 
   const handleInputChange = (
     fieldName: string,
@@ -79,7 +105,7 @@ export const ResetPasswordRequestForm = () => {
   };
 
   return (
-    <>
+    <div ref={formRef}>
       <button className="block mb-5" onClick={() => {setShowPasswordResetBlock(true)}}>Забули пароль?</button>
         {showPasswordResetBlock ?
         <div className="fixed w-full h-screen top-0 left-0 flex justify-center content-center bg-blured">
@@ -104,16 +130,15 @@ export const ResetPasswordRequestForm = () => {
               {(formik) => (
                   <Form autoComplete="on">
 
-                  <label htmlFor="email" className="block mb-4">
-                      {labelValue}
+                  <label htmlFor="resetPasswordEmail" className="block mb-4">
+                    <p className={`${labelClassname} Input-Label`}>Електронна пошта</p>
                       <Field
                       id="resetPasswordEmail"
                       type="email"
                       name="resetPasswordEmail"
                       placeholder={placeholderValue}
                       value={formik.values.email}
-                      onFocus={() => {setLabelValue("Електронна пошта"); setPlaceholderValue("")}}
-                      onBlur={() => {setLabelValue(""); setPlaceholderValue("Електронна пошта")}}
+                      onFocus={() => {setLabelClassname(""); setPlaceholderValue(""); setAnimateField(true)}}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           handleInputChange(
                           "resetPasswordEmail",
@@ -121,7 +146,7 @@ export const ResetPasswordRequestForm = () => {
                           formik.setFieldValue
                           );
                       }}
-                      className={inputClassName}
+                      className={`placeholder:text-button ${inputClassName}`}
                       />
                       <ErrorMessage name="email" component="div" />
                   </label>
@@ -144,6 +169,6 @@ export const ResetPasswordRequestForm = () => {
     </div>
     : <></>
     }
-    </>
+    </div>
   );
 };
