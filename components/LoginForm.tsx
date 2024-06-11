@@ -6,6 +6,8 @@ import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Link from "next/link";
 import { ResetPasswordRequestForm } from "./reset-password/ResetPasswordRequestForm";
+import { ResetPasswordButton } from "./reset-password/ResetPasswordButton";
+import { useState } from 'react';
 //import { registerUserThunk } from "redux/auth/authThunk";
 
 
@@ -60,7 +62,10 @@ export const LoginForm = () => {
     resetForm();
   };
 
+  const [showPasswordResetBlock, setShowPasswordResetBlock] = useState<boolean>(false);
+
   return (
+    <>
     <Formik
       initialValues={initialValues}
       validationSchema={schema}
@@ -109,13 +114,14 @@ export const LoginForm = () => {
           {/* <Link href={""} onClick={() => {}} className="block mb-5">
             Забули пароль?
             </Link> */}
-          <ResetPasswordRequestForm />
-
+          <ResetPasswordButton setShowPasswordResetBlock={setShowPasswordResetBlock} showPasswordResetBlock={showPasswordResetBlock} />
           <button type="submit" className="h-12 border-2">
             Увійти
           </button>
         </Form>
       )}
     </Formik>
+    <ResetPasswordRequestForm setShowPasswordResetBlock={setShowPasswordResetBlock} showPasswordResetBlock={showPasswordResetBlock} />
+    </>
   );
 };
