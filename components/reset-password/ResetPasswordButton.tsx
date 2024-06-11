@@ -8,7 +8,6 @@ export interface Props {
   setShowPasswordResetBlock: Dispatch<SetStateAction<boolean>>;
 }
 
-
 export const ResetPasswordButton = (props: Props) => {
     return(
         <button type="button" className="block mb-5" onClick={() => {props.setShowPasswordResetBlock(true)}}>Забули пароль?</button>
