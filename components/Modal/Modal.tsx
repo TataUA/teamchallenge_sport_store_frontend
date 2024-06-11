@@ -51,7 +51,10 @@ export const Modal = ({ show, onClose, children }: ModalProps) => {
 					className='container max-w-full max-h-full bg-white'
 				>
 					<div className='relative py-3 mb-4 flex justify-between items-center'>
-						<div className='absolute left-1/2 transform -translate-x-1/2'>
+						<div
+							className='absolute left-1/2 transform -translate-x-1/2 cursor-pointer'
+							onClick={onClose}
+						>
 							<Logo />
 						</div>
 						<a href='#' onClick={handleClose} className='ml-auto'>

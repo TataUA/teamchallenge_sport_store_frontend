@@ -1,16 +1,16 @@
-'use client'
-
 import Image from 'next/image'
-import { useState } from 'react'
 import menuIcon from '../../public/icons/header/mob-menu.svg'
 import { Modal } from '../Modal/Modal'
 import { NavItemListMobile } from './NavItemListMobile/NavItemListMobile'
 import { UsernavMobile } from './UsernavMobile'
 import { NAV_ITEMS } from './nav-items.data'
 
-export const Navbar = () => {
-	const [isModalOpen, setIsModalOpen] = useState(false)
+interface NavbarProps {
+	isModalOpen: boolean
+	setIsModalOpen: (isOpen: boolean) => void
+}
 
+export const Navbar = ({ isModalOpen, setIsModalOpen }: NavbarProps) => {
 	return (
 		<div className='flex items-center justify-center'>
 			<button className='border-none' onClick={() => setIsModalOpen(true)}>
