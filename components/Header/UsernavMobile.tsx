@@ -14,7 +14,7 @@ export const UsernavMobile = () => {
 				</ClientComponent>
 			</div>
 			<div className='cursor-pointer py-3'>
-				<Link href='/basket'>
+				<Link href='/cart'>
 					<p className='font-button cursor-pointer text-primary font-medium line-height-150 tracking-wide-04 flex'>
 						Корзина
 					</p>
