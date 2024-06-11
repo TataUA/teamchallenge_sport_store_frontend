@@ -4,6 +4,7 @@ import logoIcon from '../../public/icons/header/Logo.svg'
 
 interface LogoProps {
 	newStyle?: string
+	onClick?: () => void
 }
 
 export const Logo = ({ newStyle }: LogoProps) => {
