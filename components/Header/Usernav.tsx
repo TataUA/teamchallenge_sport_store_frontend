@@ -1,5 +1,6 @@
 import Image from 'next/image'
-import basketIcon from '../../public/icons/header/basket.svg'
+import Link from 'next/link'
+import cartIcon from '../../public/icons/header/cart.svg'
 import searchIcon from '../../public/icons/header/search.svg'
 import { ClientComponent } from '../ClientComponent'
 import SignInButton from '../SignInButton'
@@ -13,9 +14,9 @@ export const Usernav = () => {
 			<ClientComponent>
 				<SignInButton />
 			</ClientComponent>
-			<button>
-				<Image src={basketIcon} alt='basket' width={40} />
-			</button>
+			<Link href='/cart'>
+				<Image src={cartIcon} alt='cart' width={40} />
+			</Link>
 		</div>
 	)
 }
