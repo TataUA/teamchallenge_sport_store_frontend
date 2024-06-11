@@ -6,8 +6,10 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState, useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
+import { Props } from "./ResetPasswordButton";
+
 const schema = yup.object().shape({
-  email: yup
+  resetPasswordEmail: yup
     .string()
     .email("Введіть дійсну електронну адресу")
     .matches(
@@ -18,12 +20,13 @@ const schema = yup.object().shape({
 });
 
 interface LoginFormValues {
-  email: string;
+  resetPasswordEmail: string;
 }
 
 const initialValues: LoginFormValues = {
-  email: "",
+  resetPasswordEmail: "",
 };
+
 
 const url = `http://34.66.71.139:8000/user/password_reset/`;
 
@@ -43,9 +46,7 @@ export const animateInputField = (animationTrigger: boolean, curentRef: any, ele
 export const submitButtonClassName = "h-12 text-button bg-blue rounded-button text-white w-full font-semibold"; 
 export const inputClassName = "block border-b-2 pb-2 w-full mb-8 text-label text-basic focus:outline-none";
 
-export const ResetPasswordRequestForm = () => {
-
-  const [showPasswordResetBlock, setShowPasswordResetBlock] = useState<boolean>(false);
+export const ResetPasswordRequestForm = (props: Props) => {
     
   const [popupContent, setPopupContent] = useState<string>("form");
 
@@ -100,18 +101,17 @@ export const ResetPasswordRequestForm = () => {
   ) => {
     // console.log(values.email);
     resetForm();
-    postEmailValue(values.email);
+    postEmailValue(values.resetPasswordEmail);
   };
 
   return (
     <div ref={formRef}>
-      <button type="button" className="block mb-5" onClick={() => {setShowPasswordResetBlock(true)}}>Забули пароль?</button>
-        {showPasswordResetBlock ?
+        {props.showPasswordResetBlock ?
         <div className="fixed w-full h-screen top-0 left-0 flex justify-center content-center bg-blured">
         <div className="self-center bg-white p-6 rounded-popup max-w-[88vw] max-h-[88vw] text-common text-basic font-medium">
             <div className="flex flex-row justify-between items-center mb-4">
                 <p className="text-subheading text-title font-bold">Відновлення паролю</p>
-                <p onClick={() => {setShowPasswordResetBlock(false)}}>
+                <p onClick={() => {props.setShowPasswordResetBlock(false)}}>
                     <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M17.5 8.5L8.5 17.5" stroke="#3E3E40" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         <path d="M8.5 8.5L17.5 17.5" stroke="#3E3E40" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -136,7 +136,7 @@ export const ResetPasswordRequestForm = () => {
                       type="email"
                       name="resetPasswordEmail"
                       placeholder={placeholderValue}
-                      value={formik.values.email}
+                      value={formik.values.resetPasswordEmail}
                       onFocus={() => {setLabelClassname(""); setPlaceholderValue(""); setAnimateField(true)}}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           handleInputChange(
@@ -145,9 +145,9 @@ export const ResetPasswordRequestForm = () => {
                           formik.setFieldValue
                           );
                       }}
-                      className={`placeholder:text-button ${inputClassName}`}
+                      className={`placeholder:text-button ${inputClassName} mb-0`}
                       />
-                      <ErrorMessage name="email" component="div" />
+                      <ErrorMessage name="resetPasswordEmail" component="div" className="text-red text-error font-medium" />
                   </label>
 
                   <button type="submit" className={submitButtonClassName}>
@@ -160,7 +160,7 @@ export const ResetPasswordRequestForm = () => {
               : 
               <div>
                 <p className="mb-4">Ми надіслали посилання для відновлення на адресу {userEmail}</p>
-                <button className={submitButtonClassName} onClick={() => {setShowPasswordResetBlock(false)}}>На сторінку входу</button>
+                <button className={submitButtonClassName} onClick={() => {props.setShowPasswordResetBlock(false)}}>На сторінку входу</button>
                 <button className="h-12 text-button bg-white rounded-button w-full font-semibold border-2 mt-4" onClick={() => {postEmailValue(userEmail)}}>Надіслати посилання ще раз</button>
               </div>
             }
