@@ -7,6 +7,8 @@ import { useState, useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
 import { Props } from "./ResetPasswordButton";
+import Image from 'next/image';
+
 
 const schema = yup.object().shape({
   resetPasswordEmail: yup
@@ -112,10 +114,7 @@ export const ResetPasswordRequestForm = (props: Props) => {
             <div className="flex flex-row justify-between items-center mb-4">
                 <p className="text-subheading text-title font-bold">Відновлення паролю</p>
                 <p onClick={() => {props.setShowPasswordResetBlock(false)}}>
-                    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.5 8.5L8.5 17.5" stroke="#3E3E40" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M8.5 8.5L17.5 17.5" stroke="#3E3E40" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                  <Image src={require("../../public/icons/reset-password/close_icon.svg")} alt='close' width={40} height={40} />
                 </p>
             </div>
             { popupContent === "form" ? 
