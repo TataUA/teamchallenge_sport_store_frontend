@@ -78,7 +78,6 @@ export function Slider({ data }: SliderProps) {
 								</div>
 							</SwiperSlide>
 						))}
-						<SliderButtons />
 					</Swiper>
 				</ul>
 			</div>
