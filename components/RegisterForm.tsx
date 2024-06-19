@@ -3,29 +3,31 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { registerUserThunk } from "@/redux/auth/authThunk";
+import { InputLabelField } from "./InputLabelField";
 
 export const schema = yup.object().shape({
   name: yup
     .string()
-    .min(1, "Це поле не може бути порожнім")
+    .min(1)
     .matches(/^[A-Za-zА-Яа-яёЇїІіЄєҐґ']+$/, "Це поле може містити лише літери")
     .required("Це поле обов'язкове"),
   surname: yup
     .string()
-    .min(1, "Це поле не може бути порожнім")
+    .min(1)
     .matches(/^[A-Za-zА-Яа-яЁёЇїІіЄєҐґ']+$/, "Це поле може містити лише літери")
     .required("Це поле обов'язкове"),
   patronymic: yup
     .string()
-    .min(1, "Це поле не може бути порожнім")
+    .min(1)
     .matches(/^[A-Za-zА-Яа-яЁёЇїІіЄєҐґ']+$/, "Це поле може містити лише літери")
     .required("Це поле обов'язкове"),
   phone: yup
     .string()
-    .min(12, "Номер телефону повинен містити не менше 12 символів")
+    .min(13, "Номер повинен містити 13 символів")
+    .max(13, "Номер повинен містити 13 символів")
     .matches(
       /^\+380\d{9}$/,
       "Номер телефону повинен бути у форматі +380*********"
@@ -39,8 +41,8 @@ export const schema = yup.object().shape({
     .string()
     .min(6, "Пароль повинен містити не менше 6 символів")
     .matches(
-      /^[A-Za-zА-Яа-яЁёЇїІіЄєҐґ0-9!@#$%^&*]+$/,
-      "Пароль може містити лише літери, цифри та символи"
+      /^[A-Za-z0-9!@#$%^&*]+$/,
+      "Пароль може містити латинські літери, цифри та символи !@#$%^&*"
     )
     .required("Це поле обов'язкове"),
   repeatPassword: yup
@@ -71,16 +73,7 @@ const initialValues: RegisterFormValues = {
 
 export const RegisterForm = () => {
   const [phone, setPhone] = useState("");
-  const [isPhoneFocused, setIsPhoneFocused] = useState(false);
   const dispatch: AppDispatch = useDispatch();
-
-  const handleInputChange = (
-    fieldName: string,
-    fieldValue: string,
-    setFieldValue: Function
-  ) => {
-    setFieldValue(fieldName, fieldValue.trim());
-  };
 
   const handleSubmit = (
     values: RegisterFormValues,
@@ -89,6 +82,8 @@ export const RegisterForm = () => {
     dispatch(registerUserThunk(values));
     resetForm();
     setPhone("");
+
+    console.log(values); //DELETE
   };
 
   return (
@@ -98,166 +93,74 @@ export const RegisterForm = () => {
       onSubmit={handleSubmit}
     >
       {(formik) => (
-        <Form autoComplete="on" className="flex flex-col gap-4">
-          <label
-            htmlFor="name"
-            className="block text-base font-medium text-label"
-          >
-            Ім&apos;я
-            <Field
-              id="name"
-              type="text"
-              name="name"
-              value={formik.values.name}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleInputChange("name", e.target.value, formik.setFieldValue);
-              }}
-              className="block w-full border-b"
-            />
-            <ErrorMessage name="name" component="div" />
-          </label>
+        <Form autoComplete="off" className="flex flex-col gap-4">
+          <InputLabelField
+            label="Ім'я"
+            name="name"
+            type="text"
+            inputMode="text"
+            placeholder=""
+            formik={formik}
+          />
 
-          <label
-            htmlFor="surname"
-            className="block text-base font-medium text-label"
-          >
-            Прізвище
-            <Field
-              id="surname"
-              type="text"
-              name="surname"
-              value={formik.values.surname}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleInputChange(
-                  "surname",
-                  e.target.value,
-                  formik.setFieldValue
-                );
-              }}
-              className="block w-full border-b"
-            />
-            <ErrorMessage name="surname" component="div" />
-          </label>
+          <InputLabelField
+            label="Прізвище"
+            name="surname"
+            type="text"
+            inputMode="text"
+            placeholder=""
+            formik={formik}
+          />
 
-          <label
-            htmlFor="patronymic"
-            className="block text-base font-medium text-label"
-          >
-            По-батькові
-            <Field
-              id="patronymic"
-              type="text"
-              name="patronymic"
-              value={formik.values.patronymic}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleInputChange(
-                  "patronymic",
-                  e.target.value,
-                  formik.setFieldValue
-                );
-              }}
-              className="block w-full border-b"
-            />
-            <ErrorMessage name="patronymic" component="div" />
-          </label>
+          <InputLabelField
+            label="По-батькові"
+            name="patronymic"
+            type="text"
+            inputMode="text"
+            placeholder=""
+            formik={formik}
+          />
 
-          <label
-            htmlFor="phone"
-            className="block text-base font-medium text-label"
-          >
-            Номер телефону
-            <Field
-              id="phone"
-              type="text"
-              name="phone"
-              className="block w-full border-b"
-              value={isPhoneFocused || phone.length > 4 ? phone.trim() : ""}
-              onFocus={() => {
-                setIsPhoneFocused(true);
-                if (!phone.startsWith("+380")) {
-                  const newPhone = "+380" + phone.slice(4);
-                  setPhone(newPhone);
-                  formik.setFieldValue("phone", newPhone);
-                }
-              }}
-              onBlur={() => {
-                if (phone === "+380") {
-                  setPhone("");
-                }
-                setIsPhoneFocused(false);
-              }}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                const inputValue = e.target.value;
-                if (inputValue.startsWith("+380") || inputValue === "") {
-                  setPhone(inputValue);
-                  formik.setFieldValue("phone", inputValue);
-                }
-              }}
-            />
-            <ErrorMessage name="phone" component="div" />
-          </label>
+          <InputLabelField
+            label="Номер телефону"
+            name="phone"
+            type="text"
+            inputMode="tel"
+            placeholder="+380*********"
+            formik={formik}
+          />
 
-          <label
-            htmlFor="email"
-            className="block text-base font-medium text-label"
-          >
-            Електронна пошта
-            <Field
-              id="email"
-              type="email"
-              name="email"
-              value={formik.values.email}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleInputChange(
-                  "email",
-                  e.target.value,
-                  formik.setFieldValue
-                );
-              }}
-              className="block w-full border-b"
-            />
-            <ErrorMessage name="email" component="div" />
-          </label>
+          <InputLabelField
+            label="Електронна пошта"
+            name="email"
+            type="email"
+            inputMode="email"
+            placeholder="example@gmail.com"
+            formik={formik}
+          />
 
-          <label
-            htmlFor="password"
-            className="block text-base font-medium text-label"
-          >
-            Пароль
-            <Field
-              autoComplete="off"
-              id="password"
-              type="password"
-              name="password"
-              value={formik.values.password}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                handleInputChange(
-                  "password",
-                  e.target.value,
-                  formik.setFieldValue
-                );
-              }}
-              className="block w-full border-b"
-            />
-            <ErrorMessage name="password" component="div" />
-          </label>
+          <InputLabelField
+            label="Пароль"
+            name="password"
+            type="password"
+            inputMode="text"
+            placeholder="******"
+            formik={formik}
+          />
 
-          <label
-            htmlFor="repeatPassword"
-            className="block text-base font-medium text-label"
-          >
-            Повторити пароль
-            <Field
-              autoComplete="off"
-              id="repeatPassword"
-              type="password"
-              name="repeatPassword"
-              className="block w-full border-b"
-            />
-            <ErrorMessage name="repeatPassword" component="div" />
-          </label>
+          <InputLabelField
+            label="Повторити пароль"
+            name="repeatPassword"
+            type="password"
+            inputMode="text"
+            placeholder="******"
+            formik={formik}
+          />
 
-          <button type="submit" className="h-12 border-2">
+          <button
+            type="submit"
+            className="h-12 mb-2 px-6 border border-blue rounded-xl bg-blue text-base font-semibold  text-white hover:bg-white hover:text-blue transition-all"
+          >
             Зареєструватись
           </button>
         </Form>
