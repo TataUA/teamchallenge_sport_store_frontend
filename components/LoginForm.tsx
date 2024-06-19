@@ -8,6 +8,7 @@ import Link from "next/link";
 import { ResetPasswordRequestForm } from "./reset-password/ResetPasswordRequestForm";
 import { ResetPasswordButton } from "./reset-password/ResetPasswordButton";
 import { useState } from 'react';
+import { ClientComponent } from "./ClientComponent";
 //import { registerUserThunk } from "redux/auth/authThunk";
 
 
@@ -121,7 +122,9 @@ export const LoginForm = () => {
         </Form>
       )}
     </Formik>
+    <ClientComponent>
     <ResetPasswordRequestForm setShowPasswordResetBlock={setShowPasswordResetBlock} showPasswordResetBlock={showPasswordResetBlock} />
+    </ClientComponent>
     </>
   );
 };

@@ -7,10 +7,14 @@ import {
   logoutUser,
   //setToken,
   clearToken,
+  resetPasswordRequest
 } from "@/services/api";
 import { UserData } from "./authSlice";
 import { RegisterFormValues } from "@/components/RegisterForm";
 import { LoginFormValues } from "@/components/LoginForm";
+import { ResetPasswordValues } from "@/components/reset-password/ResetPasswordRequestForm";
+
+
 
 interface Error {
   message: string;
@@ -74,6 +78,18 @@ export const logoutUserThunk = createAsyncThunk(
     try {
       const response = await logoutUser();
       clearToken();
+      return response;
+    } catch (error) {
+      thunkApi.rejectWithValue({ message: (error as Error).message });
+    }
+  }
+);
+
+export const resetPasswordRequestThunk = createAsyncThunk(
+  "reset-password/get-link",
+  async (values: ResetPasswordValues, thunkApi) => {
+    try {
+      const response = await resetPasswordRequest(values);
       return response;
     } catch (error) {
       thunkApi.rejectWithValue({ message: (error as Error).message });

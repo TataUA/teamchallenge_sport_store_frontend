@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { ResetPasswordForm } from "@/components/reset-password/ResetPasswordForm";
 
+
 export default function Resetpassword() {
   const pathname = usePathname();
   const tokenValue = pathname.substring(15, pathname.length);

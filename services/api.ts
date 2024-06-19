@@ -1,6 +1,7 @@
 import axios from "axios";
 import { RegisterFormValues } from "@/components/RegisterForm";
 import { LoginFormValues } from "@/components/LoginForm";
+import { ResetPasswordValues } from "@/components/reset-password/ResetPasswordRequestForm";
 
 const $instance = axios.create({
   baseURL: "http://34.66.71.139:8000",
@@ -72,4 +73,17 @@ export const currentUser = async () => {
 export const logoutUser = async () => {
   const { data } = await $instance.post("/user/logout/");
   return data;
+};
+
+
+export const resetPasswordRequest = async (values: ResetPasswordValues) => {
+  await $instance.post('/user/password_reset', {
+    "email": values.resetPasswordEmail
+  })
+  .then(function (response) {
+    console.log(response, values);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 };

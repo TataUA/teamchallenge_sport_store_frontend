@@ -5,6 +5,10 @@ import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState, useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { resetPasswordRequestThunk } from "@/redux/auth/authThunk";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+
 
 import { Props } from "./ResetPasswordButton";
 import Image from 'next/image';
@@ -14,18 +18,14 @@ const schema = yup.object().shape({
   resetPasswordEmail: yup
     .string()
     .email("Введіть дійсну електронну адресу")
-    .matches(
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      "Електронна адреса не може містити пробіли"
-    )
     .required("Це поле обов'язкове"),
 });
 
-interface LoginFormValues {
+export interface ResetPasswordValues {
   resetPasswordEmail: string;
 }
 
-const initialValues: LoginFormValues = {
+const initialValues: ResetPasswordValues = {
   resetPasswordEmail: "",
 };
 
@@ -60,6 +60,8 @@ export const ResetPasswordRequestForm = (props: Props) => {
 
   const [animateField, setAnimateField] = useState<boolean>(false);
 
+  const dispatch: AppDispatch = useDispatch();
+
 
   gsap.registerPlugin();
 
@@ -78,32 +80,37 @@ export const ResetPasswordRequestForm = (props: Props) => {
     setFieldValue(fieldName, fieldValue.trim());
   };
 
-  async function postEmailValue(value: string) {
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({"email": value}),
-      });
+  // async function postEmailValue(value: string) {
+  //   try {
+  //     const response = await fetch(url, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({"email": value}),
+  //     });
   
-      const result = await response.json();
-      console.log("Success:", result);
-      setUserEmail(value);
-      setPopupContent("success message")
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
+  //     const result = await response.json();
+  //     console.log("Success:", result);
+  //     setUserEmail(value);
+  //     setPopupContent("success message")
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // }
 
   const handleSubmit = (
-    values: LoginFormValues,
+    values: ResetPasswordValues,
     { resetForm }: { resetForm: () => void }
   ) => {
     // console.log(values.email);
     resetForm();
-    postEmailValue(values.resetPasswordEmail);
+    dispatch(resetPasswordRequestThunk(values));
+    // setUserEmail(values.resetPasswordEmail);
+    // setPopupContent("success message")
+
+
+    // postEmailValue(values.resetPasswordEmail);
   };
 
   return (
@@ -160,7 +167,9 @@ export const ResetPasswordRequestForm = (props: Props) => {
               <div>
                 <p className="mb-4">Ми надіслали посилання для відновлення на адресу {userEmail}</p>
                 <button className={submitButtonClassName} onClick={() => {props.setShowPasswordResetBlock(false)}}>На сторінку входу</button>
-                <button className="h-12 text-button bg-white rounded-button w-full font-semibold border-2 mt-4" onClick={() => {postEmailValue(userEmail)}}>Надіслати посилання ще раз</button>
+                <button className="h-12 text-button bg-white rounded-button w-full font-semibold border-2 mt-4" 
+                // onClick={() => {postEmailValue(userEmail)}}
+                >Надіслати посилання ще раз</button>
               </div>
             }
         </div> 
