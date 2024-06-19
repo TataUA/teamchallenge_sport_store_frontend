@@ -52,7 +52,7 @@ export const registerUser = async (
   };
 
   const { data } = await $instance.post<RegisterResponse>(
-    "/user/create/",
+    "/user/registration/",
     requestData
   );
   return data;

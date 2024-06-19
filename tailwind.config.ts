@@ -23,6 +23,7 @@ const config: Config = {
         "18": "72px",
       },
       height: {
+        "13": "52px",
         "144": "574px",
       },
       margin: {
