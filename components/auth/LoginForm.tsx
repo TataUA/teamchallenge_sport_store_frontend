@@ -6,8 +6,8 @@ import * as yup from "yup";
 import { Formik, Form } from "formik";
 //import { registerUserThunk } from "redux/auth/authThunk";
 import { InputLabelField } from "./InputLabelField";
-import { ResetPasswordRequestForm } from "./reset-password/ResetPasswordRequestForm";
-import { ResetPasswordButton } from "./reset-password/ResetPasswordButton";
+import { ResetPasswordRequestForm } from "../reset-password/ResetPasswordRequestForm";
+import { ResetPasswordButton } from "../reset-password/ResetPasswordButton";
 
 export const schema = yup.object().shape({
   email: yup
@@ -92,6 +92,7 @@ export const LoginForm = () => {
           </Form>
         )}
       </Formik>
+      
       <ResetPasswordRequestForm
         setShowPasswordResetBlock={setShowPasswordResetBlock}
         showPasswordResetBlock={showPasswordResetBlock}

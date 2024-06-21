@@ -31,8 +31,6 @@ export const registerUserThunk = createAsyncThunk<
       phone: response.phone_number,
       email: response.email,
     };
-
-    //setToken(response.token);
   } catch (error: any) {
     return thunkApi.rejectWithValue({ message: error.message });
   }

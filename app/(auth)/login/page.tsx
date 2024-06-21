@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ClientComponent } from "@/components/ClientComponent";
-import { LoginForm } from "@/components/LoginForm";
+import { LoginForm } from "@/components/auth/LoginForm";
 
 export default function Page() {
   return (
@@ -24,10 +24,10 @@ export default function Page() {
           договором користувача
         </Link>
       </p>
-      <div className="flex mb-5  justify-center items-center">
+      <div className="flex mb-7 justify-center items-center">
         <div className="w-full flex items-center">
           <div className="flex-1 h-px mr-3 bg-border"></div>
-          <p className="text-sm font-medium text-secondary">або</p>
+          <p className=" text-sm font-medium text-secondary">або</p>
           <div className="flex-1 h-px ml-3 bg-border"></div>
         </div>
       </div>
