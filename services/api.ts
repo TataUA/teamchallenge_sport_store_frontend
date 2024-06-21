@@ -1,6 +1,6 @@
 import axios from "axios";
-import { RegisterFormValues } from "@/components/RegisterForm";
-import { LoginFormValues } from "@/components/LoginForm";
+import { RegisterFormValues } from "@/components/auth/RegisterForm";
+import { LoginFormValues } from "@/components/auth/LoginForm";
 
 const $instance = axios.create({
   baseURL: "http://34.66.71.139:8000",
