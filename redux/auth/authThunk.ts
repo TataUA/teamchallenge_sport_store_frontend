@@ -9,8 +9,8 @@ import {
   clearToken,
 } from "@/services/api";
 import { UserData } from "./authSlice";
-import { RegisterFormValues } from "@/components/RegisterForm";
-import { LoginFormValues } from "@/components/LoginForm";
+import { RegisterFormValues } from "@/components/auth/RegisterForm";
+import { LoginFormValues } from "@/components/auth/LoginForm";
 
 interface Error {
   message: string;
