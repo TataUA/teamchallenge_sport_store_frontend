@@ -1,6 +1,6 @@
 import axios from "axios";
-import { RegisterFormValues } from "@/components/RegisterForm";
-import { LoginFormValues } from "@/components/LoginForm";
+import { RegisterFormValues } from "@/components/auth/RegisterForm";
+import { LoginFormValues } from "@/components/auth/LoginForm";
 
 const $instance = axios.create({
   baseURL: "http://34.66.71.139:8000",
@@ -16,7 +16,7 @@ export const clearToken = () => {
 };
 
 //User
-
+//register
 export interface RequestData {
   first_name: string;
   surname: string;
@@ -26,6 +26,7 @@ export interface RequestData {
   password: string;
   repeat_password: string;
 }
+
 export interface RegisterResponse {
   id?: number;
   first_name: string;
@@ -51,13 +52,18 @@ export const registerUser = async (
     repeat_password: repeatPassword,
   };
 
-  const { data } = await $instance.post<RegisterResponse>(
-    "/user/registration/",
-    requestData
-  );
-  return data;
+  try {
+    const { data } = await $instance.post<RegisterResponse>(
+      "/user/registration/",
+      requestData
+    );
+    return data;
+  } catch (error: any) {
+    throw error;
+  }
 };
 
+//login
 export const loginUser = async (values: LoginFormValues) => {
   const { email, password } = values;
   const { data } = await $instance.post("/auth/token/", { email, password });

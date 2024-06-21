@@ -21,6 +21,7 @@ const config: Config = {
       },
       width: {
         "18": "72px",
+        "85": "342px"
       },
       height: {
         "13": "52px",

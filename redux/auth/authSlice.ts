@@ -15,7 +15,7 @@ export interface UserData {
   phone: string;
 }
 
-interface AuthState {
+export interface AuthState {
   user: UserData | null;
   accessToken: string | null;
   isAuthenticated: boolean;
@@ -42,7 +42,6 @@ const authSlice = createSlice({
       //register
       .addCase(registerUserThunk.pending, (state) => {
         state.isLoading = true;
-        state.isAuthenticated = false;
         state.error = null;
       })
       .addCase(
@@ -50,8 +49,6 @@ const authSlice = createSlice({
         (state, action: PayloadAction<UserData>) => {
           state.isLoading = false;
           state.user = action.payload;
-          //state.isAuthenticated = true;
-          //state.token = payload.token;
         }
       )
       .addCase(registerUserThunk.rejected, (state, action) => {
