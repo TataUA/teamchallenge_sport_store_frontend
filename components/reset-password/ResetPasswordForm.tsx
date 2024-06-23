@@ -11,6 +11,10 @@ import Image from 'next/image';
 import { submitButtonClassName } from "./ResetPasswordRequestForm";
 import { animateInputField } from "./ResetPasswordRequestForm";
 
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+import { validateTokenThunk, resetPasswordThunk } from "@/redux/auth/authThunk";
+
 
 const schema = yup.object().shape({
   password: yup
@@ -35,16 +39,24 @@ const schema = yup.object().shape({
 interface PasswordConfirmationValues {
   password: string;
   confirmPassword: string;
+  // tokenValue: string
 }
 
 const initialValues: PasswordConfirmationValues = {
   password: "",
   confirmPassword: "",
+  // tokenValue: ""
 };
 
 interface Props {
     tokenValue: string
   }
+
+export interface ResetPasswordValuesInterface {
+  password: string;
+  confirmPassword: string;
+  tokenValue: string
+}
 
 export const ResetPasswordForm = (props: Props) => {
 
@@ -66,6 +78,7 @@ export const ResetPasswordForm = (props: Props) => {
 
   const [animateConfirmField, setAnimateConfirmField] = useState<boolean>(false);
 
+  const dispatch: AppDispatch = useDispatch();
 
   gsap.registerPlugin();
 
@@ -140,11 +153,25 @@ export const ResetPasswordForm = (props: Props) => {
     values: PasswordConfirmationValues,
     { resetForm }: { resetForm: () => void }
   ) => {
-    console.log(values);
     resetForm();
     setConfirmIconSymbolValue("");
     setIconSymbolValue("");
-    validateToken(props.tokenValue, values.password)
+    const resetPasswordData = {
+      password: values.password,
+      confirmPassword: values.confirmPassword,
+      tokenValue: props.tokenValue
+    }
+    dispatch(validateTokenThunk(props.tokenValue)).then((error) => {
+      if(error) {
+        dispatch(resetPasswordThunk(resetPasswordData)).then((error) => {
+          if(error) {
+            // redirect('/success-page')
+          }
+        })
+        
+      }
+    });
+    // validateToken(props.tokenValue, values.password)
 
   };
 

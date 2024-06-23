@@ -29,8 +29,11 @@ const initialValues: ResetPasswordValues = {
   resetPasswordEmail: "",
 };
 
+// setPopupContent("success message")
 
-const url = `http://34.66.71.139:8000/user/password_reset/`;
+// const url = `http://34.66.71.139:8000/user/password_reset/`;
+
+
 
 export const animateInputField = (animationTrigger: boolean, curentRef: any, element: string) => {
   if (animationTrigger) {
@@ -61,7 +64,6 @@ export const ResetPasswordRequestForm = (props: Props) => {
   const [animateField, setAnimateField] = useState<boolean>(false);
 
   const dispatch: AppDispatch = useDispatch();
-
 
   gsap.registerPlugin();
 
@@ -101,15 +103,15 @@ export const ResetPasswordRequestForm = (props: Props) => {
 
   const handleSubmit = (
     values: ResetPasswordValues,
-    { resetForm }: { resetForm: () => void }
+    { resetForm }: { resetForm: () => void },
   ) => {
-    // console.log(values.email);
     resetForm();
-    dispatch(resetPasswordRequestThunk(values));
-    // setUserEmail(values.resetPasswordEmail);
-    // setPopupContent("success message")
-
-
+    dispatch(resetPasswordRequestThunk(values.resetPasswordEmail)).then((error) => {
+      if(!error) {
+        setUserEmail(values.resetPasswordEmail);
+        setPopupContent("success message")
+      }
+    });
     // postEmailValue(values.resetPasswordEmail);
   };
 
@@ -169,6 +171,7 @@ export const ResetPasswordRequestForm = (props: Props) => {
                 <button className={submitButtonClassName} onClick={() => {props.setShowPasswordResetBlock(false)}}>На сторінку входу</button>
                 <button className="h-12 text-button bg-white rounded-button w-full font-semibold border-2 mt-4" 
                 // onClick={() => {postEmailValue(userEmail)}}
+                onClick={() => {dispatch(resetPasswordRequestThunk(userEmail))}}
                 >Надіслати посилання ще раз</button>
               </div>
             }

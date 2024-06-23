@@ -7,12 +7,15 @@ import {
   logoutUser,
   //setToken,
   clearToken,
-  resetPasswordRequest
+  resetPasswordRequest,
+  validateToken,
+  resetPasswordConfirm
 } from "@/services/api";
 import { UserData } from "./authSlice";
 import { RegisterFormValues } from "@/components/RegisterForm";
 import { LoginFormValues } from "@/components/LoginForm";
-import { ResetPasswordValues } from "@/components/reset-password/ResetPasswordRequestForm";
+import { ResetPasswordValuesInterface } from "@/components/reset-password/ResetPasswordForm";
+
 
 
 
@@ -85,14 +88,52 @@ export const logoutUserThunk = createAsyncThunk(
   }
 );
 
+// export const resetPasswordRequestThunk = createAsyncThunk(
+//   "reset-password/get-link",
+//   async (values: ResetPasswordValues, thunkApi) => {
+//     try {
+//       const response = await resetPasswordRequest(values);
+//       return response;
+//     } catch (error) {
+//       thunkApi.rejectWithValue({ message: (error as Error).message });
+//     }
+//   }
+// );
+
 export const resetPasswordRequestThunk = createAsyncThunk(
   "reset-password/get-link",
-  async (values: ResetPasswordValues, thunkApi) => {
+  async (value: string, thunkApi) => {
     try {
-      const response = await resetPasswordRequest(values);
+      const response = await resetPasswordRequest(value);
       return response;
     } catch (error) {
       thunkApi.rejectWithValue({ message: (error as Error).message });
     }
   }
 );
+
+export const validateTokenThunk = createAsyncThunk(
+  "reset-password/validate-token",
+  async (value: string, thunkApi) => {
+    try {
+      const response = await validateToken(value);
+      return response;
+    } catch (error) {
+      thunkApi.rejectWithValue({ message: (error as Error).message });
+    }
+  }
+);
+
+export const resetPasswordThunk = createAsyncThunk(
+  "reset-password/confirm",
+  async (values: ResetPasswordValuesInterface, thunkApi) => {
+    try {
+      const response = await resetPasswordConfirm(values);
+      return response;
+    } catch (error) {
+      thunkApi.rejectWithValue({ message: (error as Error).message });
+    }
+  }
+);
+
+
