@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { redirect } from 'next/navigation'
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState, useLayoutEffect, useRef } from 'react';
@@ -14,6 +13,7 @@ import { animateInputField } from "./ResetPasswordRequestForm";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { validateTokenThunk, resetPasswordThunk } from "@/redux/auth/authThunk";
+import ResetPasswordSuccessMessage from "./ResetPasswordSuccessMessage";
 
 
 const schema = yup.object().shape({
@@ -78,6 +78,8 @@ export const ResetPasswordForm = (props: Props) => {
 
   const [animateConfirmField, setAnimateConfirmField] = useState<boolean>(false);
 
+  const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
+
   const dispatch: AppDispatch = useDispatch();
 
   gsap.registerPlugin();
@@ -93,52 +95,52 @@ export const ResetPasswordForm = (props: Props) => {
   }, [animateConfirmField]);
 
 
-  const validateTokenUrl = "http://34.66.71.139:8000/user/password_reset/validate_token/";
+  // const validateTokenUrl = "http://34.66.71.139:8000/user/password_reset/validate_token/";
 
-  const resetPasswordUrl = "http://34.66.71.139:8000/user/password_reset/confirm/";
-
-
-  async function confirmResetPassword (tokenValue: string, passwordValue: string) {
-    try {
-      const response = await fetch(resetPasswordUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-                "password": passwordValue,
-                "token": tokenValue
-            }),
-      });
-      const result = await response.json();
-      console.log("Success:", result, response.status);
-      if (response.status === 200) {
-        redirect('/success-page')
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
+  // const resetPasswordUrl = "http://34.66.71.139:8000/user/password_reset/confirm/";
 
 
-  async function validateToken(value: string, password: string) {
-    try {
-      const response = await fetch(validateTokenUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({"token": value}),
-      });
-      const result = await response.json();
-      console.log("Success:", result, response.status);
-      if (response.status === 200) {
-        confirmResetPassword(value, password)
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
+  // async function confirmResetPassword (tokenValue: string, passwordValue: string) {
+  //   try {
+  //     const response = await fetch(resetPasswordUrl, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //               "password": passwordValue,
+  //               "token": tokenValue
+  //           }),
+  //     });
+  //     const result = await response.json();
+  //     console.log("Success:", result, response.status);
+  //     if (response.status === 200) {
+  //       redirect('/success-page')
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // }
+
+
+  // async function validateToken(value: string, password: string) {
+  //   try {
+  //     const response = await fetch(validateTokenUrl, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({"token": value}),
+  //     });
+  //     const result = await response.json();
+  //     console.log("Success:", result, response.status);
+  //     if (response.status === 200) {
+  //       confirmResetPassword(value, password)
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // }
 
 
   const handleInputChange = (
@@ -162,10 +164,11 @@ export const ResetPasswordForm = (props: Props) => {
       tokenValue: props.tokenValue
     }
     dispatch(validateTokenThunk(props.tokenValue)).then((error) => {
-      if(error) {
+      if(!error) {
         dispatch(resetPasswordThunk(resetPasswordData)).then((error) => {
-          if(error) {
+          if(!error) {
             // redirect('/success-page')
+            setShowSuccessMessage(true)
           }
         })
         
@@ -262,6 +265,7 @@ export const ResetPasswordForm = (props: Props) => {
             </Form>
         )}
         </Formik>
+        <ResetPasswordSuccessMessage showSuccessMessage={showSuccessMessage}/>
     </div>
   );
 };
