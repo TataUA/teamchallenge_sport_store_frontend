@@ -1,6 +1,7 @@
 import axios from "axios";
 import { RegisterFormValues } from "@/components/auth/RegisterForm";
 import { LoginFormValues } from "@/components/auth/LoginForm";
+import { ResetPasswordValuesInterface } from "@/components/reset-password/ResetPasswordForm";
 
 const $instance = axios.create({
   baseURL: "http://34.66.71.139:8000",
@@ -79,3 +80,36 @@ export const logoutUser = async () => {
   const { data } = await $instance.post("/user/logout/");
   return data;
 };
+
+
+// export const resetPasswordRequest = async (values: ResetPasswordValues) => {
+//   await $instance.post('/user/password_reset', {
+//     "email": values.resetPasswordEmail
+//   })
+// };
+
+export const resetPasswordRequest = async (value: string) => {
+  await $instance.post('/user/password_reset', {
+    "email": value
+  })
+};
+
+export const validateToken = async (value: string) => {
+  await $instance.post('/user/password_reset/validate_token', {
+    "token": value,
+  })
+}
+
+export const resetPasswordConfirm = async (values: ResetPasswordValuesInterface) => {
+  await $instance.post('/user/password_reset/validate_token', {
+    "password": values.password,
+    "token": values.tokenValue
+  })
+}
+
+
+// export const resetPassword = async (values: ) => {
+//   await $instance.post('/user/password_reset', {
+//     "email": values
+//   })
+// };
