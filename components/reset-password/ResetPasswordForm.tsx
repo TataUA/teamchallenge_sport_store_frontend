@@ -163,9 +163,9 @@ export const ResetPasswordForm = (props: Props) => {
       confirmPassword: values.confirmPassword,
       tokenValue: props.tokenValue
     }
-    dispatch(validateTokenThunk(props.tokenValue)).then((error) => {
+    dispatch(validateTokenThunk(props.tokenValue)).then((error: any) => {
       if(!error) {
-        dispatch(resetPasswordThunk(resetPasswordData)).then((error) => {
+        dispatch(resetPasswordThunk(resetPasswordData)).then((error: any) => {
           if(!error) {
             // redirect('/success-page')
             setShowSuccessMessage(true)

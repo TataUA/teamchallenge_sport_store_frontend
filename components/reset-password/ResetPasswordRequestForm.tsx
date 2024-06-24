@@ -106,7 +106,7 @@ export const ResetPasswordRequestForm = (props: Props) => {
     { resetForm }: { resetForm: () => void },
   ) => {
     resetForm();
-    dispatch(resetPasswordRequestThunk(values.resetPasswordEmail)).then((error) => {
+    dispatch(resetPasswordRequestThunk(values.resetPasswordEmail)).then((error: any) => {
       if(!error) {
         setUserEmail(values.resetPasswordEmail);
         setPopupContent("success message")

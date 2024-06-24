@@ -1,6 +1,6 @@
 import axios from "axios";
 import { RegisterFormValues } from "@/components/auth/RegisterForm";
-import { LoginFormValues } from "@/components/LoginForm";
+import { LoginFormValues } from "@/components/auth/LoginForm";
 import { ResetPasswordValuesInterface } from "@/components/reset-password/ResetPasswordForm";
 
 const $instance = axios.create({
