@@ -12,10 +12,9 @@ import {
   resetPasswordConfirm
 } from "@/services/api";
 import { UserData } from "./authSlice";
-import { RegisterFormValues } from "@/components/RegisterForm";
+import { RegisterFormValues } from "@/components/auth/RegisterForm";
 import { LoginFormValues } from "@/components/LoginForm";
 import { ResetPasswordValuesInterface } from "@/components/reset-password/ResetPasswordForm";
-
 
 
 
@@ -38,8 +37,6 @@ export const registerUserThunk = createAsyncThunk<
       phone: response.phone_number,
       email: response.email,
     };
-
-    //setToken(response.token);
   } catch (error: any) {
     return thunkApi.rejectWithValue({ message: error.message });
   }

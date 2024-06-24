@@ -9,8 +9,15 @@ export interface Props {
 }
 
 export const ResetPasswordButton = (props: Props) => {
-    return(
-        <button type="button" className="block mb-5" onClick={() => {props.setShowPasswordResetBlock(true)}}>Забули пароль?</button>
-    )
-}
-
+  return (
+    <button
+      type="button"
+      className="block mt-2 mb-5 text-sm font-medium text-title border-b border-border"
+      onClick={() => {
+        props.setShowPasswordResetBlock(true);
+      }}
+    >
+      Забули пароль?
+    </button>
+  );
+};
