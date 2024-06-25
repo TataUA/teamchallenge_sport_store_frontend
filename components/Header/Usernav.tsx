@@ -1,22 +1,14 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import cartIcon from '../../public/icons/header/cart.svg'
-import searchIcon from '../../public/icons/header/search.svg'
+'use client'
+
 import { ClientComponent } from '../ClientComponent'
-import SignInButton from '../SignInButton'
+import HeaderNavLink from './HeaderNavLink/HeaderNavLink'
 
 export const Usernav = () => {
 	return (
 		<div className='flex items-center'>
-			<button className='border-none'>
-				<Image src={searchIcon} alt='search' width={40} />
-			</button>
 			<ClientComponent>
-				<SignInButton />
+				<HeaderNavLink />
 			</ClientComponent>
-			<Link href='/cart'>
-				<Image src={cartIcon} alt='cart' width={40} />
-			</Link>
 		</div>
 	)
 }

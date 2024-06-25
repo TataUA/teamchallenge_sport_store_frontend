@@ -1,6 +1,7 @@
+// app/layout.tsx
+import Footer from '@/components/Footer/Footer'
+import { Header } from '@/components/Header/Header'
 import type { Metadata } from 'next'
-import React from 'react'
-import ClientRootLayout from './ClientRootLayout'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -16,8 +17,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<html lang='uk' className='h-full'>
 			<head />
-			<body className='relative flex flex-col min-h-screen font-pangram antialiased'>
-				<ClientRootLayout>{children}</ClientRootLayout>
+			<body className='relative wrapper h-full font-pangram antialiased'>
+				<Header />
+				<main className='relative flex-1'>{children}</main>
+				<Footer />
+				<div id='modal-root'></div>
 			</body>
 		</html>
 	)
