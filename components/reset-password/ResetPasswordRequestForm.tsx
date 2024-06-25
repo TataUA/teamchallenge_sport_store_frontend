@@ -5,30 +5,35 @@ import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState, useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { resetPasswordRequestThunk } from "@/redux/auth/authThunk";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
+
 
 import { Props } from "./ResetPasswordButton";
+import Image from 'next/image';
+
 
 const schema = yup.object().shape({
   resetPasswordEmail: yup
     .string()
     .email("Введіть дійсну електронну адресу")
-    .matches(
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      "Електронна адреса не може містити пробіли"
-    )
     .required("Це поле обов'язкове"),
 });
 
-interface LoginFormValues {
+export interface ResetPasswordValues {
   resetPasswordEmail: string;
 }
 
-const initialValues: LoginFormValues = {
+const initialValues: ResetPasswordValues = {
   resetPasswordEmail: "",
 };
 
+// setPopupContent("success message")
 
-const url = `http://34.66.71.139:8000/user/password_reset/`;
+// const url = `http://34.66.71.139:8000/user/password_reset/`;
+
+
 
 export const animateInputField = (animationTrigger: boolean, curentRef: any, element: string) => {
   if (animationTrigger) {
@@ -58,6 +63,7 @@ export const ResetPasswordRequestForm = (props: Props) => {
 
   const [animateField, setAnimateField] = useState<boolean>(false);
 
+  const dispatch: AppDispatch = useDispatch();
 
   gsap.registerPlugin();
 
@@ -76,32 +82,37 @@ export const ResetPasswordRequestForm = (props: Props) => {
     setFieldValue(fieldName, fieldValue.trim());
   };
 
-  async function postEmailValue(value: string) {
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({"email": value}),
-      });
+  // async function postEmailValue(value: string) {
+  //   try {
+  //     const response = await fetch(url, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({"email": value}),
+  //     });
   
-      const result = await response.json();
-      console.log("Success:", result);
-      setUserEmail(value);
-      setPopupContent("success message")
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
+  //     const result = await response.json();
+  //     console.log("Success:", result);
+  //     setUserEmail(value);
+  //     setPopupContent("success message")
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // }
 
   const handleSubmit = (
-    values: LoginFormValues,
-    { resetForm }: { resetForm: () => void }
+    values: ResetPasswordValues,
+    { resetForm }: { resetForm: () => void },
   ) => {
-    // console.log(values.email);
     resetForm();
-    postEmailValue(values.resetPasswordEmail);
+    dispatch(resetPasswordRequestThunk(values.resetPasswordEmail)).then((error: any) => {
+      if(!error) {
+        setUserEmail(values.resetPasswordEmail);
+        setPopupContent("success message")
+      }
+    });
+    // postEmailValue(values.resetPasswordEmail);
   };
 
   return (
@@ -112,10 +123,7 @@ export const ResetPasswordRequestForm = (props: Props) => {
             <div className="flex flex-row justify-between items-center mb-4">
                 <p className="text-subheading text-title font-bold">Відновлення паролю</p>
                 <p onClick={() => {props.setShowPasswordResetBlock(false)}}>
-                    <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M17.5 8.5L8.5 17.5" stroke="#3E3E40" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M8.5 8.5L17.5 17.5" stroke="#3E3E40" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
+                  <Image src={require("../../public/icons/reset-password/close_icon.svg")} alt='close' width={40} height={40} />
                 </p>
             </div>
             { popupContent === "form" ? 
@@ -161,7 +169,10 @@ export const ResetPasswordRequestForm = (props: Props) => {
               <div>
                 <p className="mb-4">Ми надіслали посилання для відновлення на адресу {userEmail}</p>
                 <button className={submitButtonClassName} onClick={() => {props.setShowPasswordResetBlock(false)}}>На сторінку входу</button>
-                <button className="h-12 text-button bg-white rounded-button w-full font-semibold border-2 mt-4" onClick={() => {postEmailValue(userEmail)}}>Надіслати посилання ще раз</button>
+                <button className="h-12 text-button bg-white rounded-button w-full font-semibold border-2 mt-4" 
+                // onClick={() => {postEmailValue(userEmail)}}
+                onClick={() => {dispatch(resetPasswordRequestThunk(userEmail))}}
+                >Надіслати посилання ще раз</button>
               </div>
             }
         </div> 
