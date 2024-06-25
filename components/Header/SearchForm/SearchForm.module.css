@@ -1,0 +1,31 @@
+@tailwind components;
+
+@layer components {
+	.search_box {
+		@apply flex rounded-button;
+	}
+
+	.search_text {
+		@apply border-none outline-none bg-inherit p-0 text-title text-basic placeholder:text-button placeholder:font-medium w-0 transition duration-300;
+	}
+
+	.search_btn {
+		@apply flex items-center justify-center;
+	}
+
+	.search_wrapper.active {
+		@apply mx-auto px-6 fixed top-0 left-0 min-w-full min-h-full bg-white z-10 py-2;
+	}
+
+	.search_wrapper.active .search_box {
+		@apply justify-between bg-bgSearch px-4 py-3;
+	}
+
+	.search_wrapper.active .search_text {
+		@apply text-title text-basic placeholder:text-button placeholder:font-medium w-full;
+	}
+
+	.search_wrapper.active .search_btn > svg {
+		@apply fill-label;
+	}
+}
