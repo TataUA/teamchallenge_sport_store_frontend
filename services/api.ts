@@ -18,7 +18,7 @@ export const clearToken = () => {
 
 //User
 //register
-export interface RequestData {
+export interface RegisterRequestData {
   first_name: string;
   surname: string;
   last_name: string;
@@ -28,7 +28,7 @@ export interface RequestData {
   repeat_password: string;
 }
 
-export interface RegisterResponse {
+export interface RegisterResponseData {
   id?: number;
   first_name: string;
   surname: string;
@@ -39,11 +39,11 @@ export interface RegisterResponse {
 
 export const registerUser = async (
   values: RegisterFormValues
-): Promise<RegisterResponse> => {
+): Promise<RegisterResponseData> => {
   const { name, surname, patronymic, phone, email, password, repeatPassword } =
     values;
 
-  const requestData: RequestData = {
+  const requestData: RegisterRequestData = {
     first_name: name,
     surname,
     last_name: patronymic,
@@ -54,13 +54,13 @@ export const registerUser = async (
   };
 
   try {
-    const { data } = await $instance.post<RegisterResponse>(
+    const { data } = await $instance.post<RegisterResponseData>(
       "/user/registration/",
       requestData
     );
     return data;
   } catch (error: any) {
-    throw error;
+    throw error.response.data;
   }
 };
 
@@ -81,7 +81,6 @@ export const logoutUser = async () => {
   return data;
 };
 
-
 // export const resetPasswordRequest = async (values: ResetPasswordValues) => {
 //   await $instance.post('/user/password_reset', {
 //     "email": values.resetPasswordEmail
@@ -89,24 +88,25 @@ export const logoutUser = async () => {
 // };
 
 export const resetPasswordRequest = async (value: string) => {
-  await $instance.post('/user/password_reset', {
-    "email": value
-  })
+  await $instance.post("/user/password_reset", {
+    email: value,
+  });
 };
 
 export const validateToken = async (value: string) => {
-  await $instance.post('/user/password_reset/validate_token', {
-    "token": value,
-  })
-}
+  await $instance.post("/user/password_reset/validate_token", {
+    token: value,
+  });
+};
 
-export const resetPasswordConfirm = async (values: ResetPasswordValuesInterface) => {
-  await $instance.post('/user/password_reset/validate_token', {
-    "password": values.password,
-    "token": values.tokenValue
-  })
-}
-
+export const resetPasswordConfirm = async (
+  values: ResetPasswordValuesInterface
+) => {
+  await $instance.post("/user/password_reset/validate_token", {
+    password: values.password,
+    token: values.tokenValue,
+  });
+};
 
 // export const resetPassword = async (values: ) => {
 //   await $instance.post('/user/password_reset', {

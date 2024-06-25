@@ -3,89 +3,89 @@
 @tailwind utilities;
 
 @font-face {
-	font-family: 'PP Pangram Sans';
-	src: url('/fonts/Pangram Sans/PPPangramSans_Regular.woff2') format('opentype');
-	font-weight: 400;
-	font-style: normal;
+  font-family: "PP Pangram Sans";
+  src: url("/fonts/Pangram Sans/PPPangramSans_Regular.woff2") format("opentype");
+  font-weight: 400;
+  font-style: normal;
 }
 
 @font-face {
-	font-family: 'PP Pangram Sans';
-	src: url('/fonts/Pangram Sans/PPPangramSans_Medium.woff2') format('opentype');
-	font-weight: 500;
-	font-style: normal;
+  font-family: "PP Pangram Sans";
+  src: url("/fonts/Pangram Sans/PPPangramSans_Medium.woff2") format("opentype");
+  font-weight: 500;
+  font-style: normal;
 }
 
 @font-face {
-	font-family: 'PP Pangram Sans';
-	src: url('/fonts/Pangram Sans/PPPangramSans_Semibold.otf') format('opentype');
-	font-weight: 600;
-	font-style: normal;
+  font-family: "PP Pangram Sans";
+  src: url("/fonts/Pangram Sans/PPPangramSans_Semibold.otf") format("opentype");
+  font-weight: 600;
+  font-style: normal;
 }
 
 @font-face {
-	font-family: 'PP Pangram Sans';
-	src: url('/fonts/Pangram Sans/PPPangramSans_Bold.woff2') format('opentype');
-	font-weight: 700;
-	font-style: normal;
+  font-family: "PP Pangram Sans";
+  src: url("/fonts/Pangram Sans/PPPangramSans_Bold.woff2") format("opentype");
+  font-weight: 700;
+  font-style: normal;
 }
 
 :root {
-	--foreground-rgb: 0, 0, 0;
-	--background-start-rgb: 214, 219, 220;
-	--background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
-	:root {
-		--foreground-rgb: 255, 255, 255;
-		--background-start-rgb: 0, 0, 0;
-		--background-end-rgb: 0, 0, 0;
-	}
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
 }
 
 body {
-	background: #fff;
-	font-family: 'PP Pangram Sans', sans-serif;
+  background: #fff;
+  font-family: "PP Pangram Sans", sans-serif;
 }
 
 @layer utilities {
-	.text-balance {
-		text-wrap: balance;
-	}
+  .text-balance {
+    text-wrap: balance;
+  }
 }
 
 @layer components {
-	.wrapper {
-		@apply min-h-full flex flex-col;
-	}
-	.container {
-		@apply mx-auto px-6;
-	}
-	.input {
-		@apply w-full border-b h-12 pt-5 pb-2 border-border outline-none focus:ring-0 text-base font-medium;
-		color: var(--primary);
-	}
-	.input:-webkit-autofill {
-		color: inherit;
-		font-weight: inherit;
-		font-size: inherit;
-	}
-	.input:focus {
-		@apply border-blue;
-	}
-	.label {
-		@apply text-base font-medium text-label;
-	}
-	.peer-placeholder-shown {
-		@apply text-base text-label;
-	}
+  .wrapper {
+    @apply min-h-full flex flex-col;
+  }
+  .container {
+    @apply mx-auto px-6;
+  }
+  .input {
+    @apply w-full border-b h-13 pt-5 pb-2 border-border outline-none focus:ring-0 text-base font-medium;
+    color: var(--primary);
+  }
+  .input:-webkit-autofill {
+    color: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+  }
+  .input:focus {
+    @apply border-blue;
+  }
+  .label {
+    @apply text-base font-medium text-label;
+  }
+  .peer-placeholder-shown {
+    @apply text-base text-label;
+  }
 
-	.peer-focus {
-		@apply text-sm text-blue border-blue;
-	}
+  .peer-focus {
+    @apply text-sm text-blue border-blue;
+  }
 
-	.transition-all {
-		transition: all 0.2s;
-	}
+  .transition-all {
+    transition: all 0.2s;
+  }
 }

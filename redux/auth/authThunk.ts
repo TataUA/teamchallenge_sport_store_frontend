@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   registerUser,
-  RegisterResponse,
+  RegisterResponseData,
   loginUser,
   currentUser,
   logoutUser,
@@ -9,18 +9,15 @@ import {
   clearToken,
   resetPasswordRequest,
   validateToken,
-  resetPasswordConfirm
+  resetPasswordConfirm,
 } from "@/services/api";
 import { UserData } from "./authSlice";
 import { RegisterFormValues } from "@/components/auth/RegisterForm";
 import { LoginFormValues } from "@/components/auth/LoginForm";
 import { ResetPasswordValuesInterface } from "@/components/reset-password/ResetPasswordForm";
 
-
-
-
 interface Error {
-  message: string;
+  message: string[];
 }
 
 export const registerUserThunk = createAsyncThunk<
@@ -29,7 +26,7 @@ export const registerUserThunk = createAsyncThunk<
   { rejectValue: Error }
 >("auth/register", async (values, thunkApi) => {
   try {
-    const response: RegisterResponse = await registerUser(values);
+    const response: RegisterResponseData = await registerUser(values);
     return {
       id: response.id,
       name: response.first_name,
@@ -39,7 +36,13 @@ export const registerUserThunk = createAsyncThunk<
       email: response.email,
     };
   } catch (error: any) {
-    return thunkApi.rejectWithValue({ message: error.message });
+    const errorMessages: string[] = error.phone_number ||
+      error.email || ["An error occurred"];
+    const errorObject: Error = {
+      message: errorMessages,
+    };
+
+    return thunkApi.rejectWithValue(errorObject);
   }
 });
 
