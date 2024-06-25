@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as yup from "yup";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikHelpers } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { registerUserThunk } from "@/redux/auth/authThunk";
 import { InputLabelField } from "./InputLabelField";
@@ -84,11 +84,12 @@ const initialValues: RegisterFormValues = {
 export const RegisterForm = () => {
   const [phone, setPhone] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+
   const dispatch: AppDispatch = useDispatch();
 
   const handleSubmit = async (
     values: RegisterFormValues,
-    { resetForm }: { resetForm: () => void }
+    { resetForm, setErrors }: FormikHelpers<RegisterFormValues>
   ) => {
     try {
       const actionResult = await dispatch(registerUserThunk(values));
@@ -97,12 +98,35 @@ export const RegisterForm = () => {
         resetForm();
         setPhone("");
         setShowSuccessModal(true);
-        console.log("Registration successful");//DEL
       } else if (registerUserThunk.rejected.match(actionResult)) {
-        console.error("Registration failed", actionResult.error);//DEL "ooops.."
+        let errorData: any = actionResult.payload;
+
+        if (
+          errorData &&
+          errorData.message &&
+          Array.isArray(errorData.message)
+        ) {
+          if (
+            errorData.message.includes("user with this email already exists.")
+          ) {
+            setErrors({ email: "Така пошта вже зареєстрована" });
+          } else if (
+            errorData.message.includes("The phone number entered is not valid.")
+          ) {
+            setErrors({ phone: "Введений номер не вірний" });
+          } else if (
+            errorData.message.includes(
+              "user with this phone number already exists."
+            )
+          ) {
+            setErrors({ phone: "Такий номер вже зареєстрований" });
+          }
+        } else {
+          console.error("Registration failed with general error:", errorData);
+        }
       }
     } catch (error) {
-      console.error("Registration failed", error);
+      console.error("Registration failed in catch block:", error);
     }
   };
 

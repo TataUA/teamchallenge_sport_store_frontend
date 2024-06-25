@@ -48,13 +48,12 @@ const authSlice = createSlice({
         registerUserThunk.fulfilled,
         (state, action: PayloadAction<UserData>) => {
           state.isLoading = false;
-          state.user = action.payload;
         }
       )
       .addCase(registerUserThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload
-          ? (action.payload as Error).message
+          ? action.payload.message.join(", ")
           : "An error occurred";
       })
 
