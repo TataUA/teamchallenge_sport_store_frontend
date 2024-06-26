@@ -167,7 +167,6 @@ export const ResetPasswordForm = (props: Props) => {
       if(!error) {
         dispatch(resetPasswordThunk(resetPasswordData)).then((error: any) => {
           if(!error) {
-            // redirect('/success-page')
             setShowSuccessMessage(true)
           }
         })
@@ -214,7 +213,7 @@ export const ResetPasswordForm = (props: Props) => {
                                 iconSymbolValue === "Correct mark" ?
                                 <Image className="ml-2 mb-2" src={require("../../public/icons/reset-password/correct_mark.svg")} alt='close' width={24} height={24} />
                                 : iconSymbolValue === "Wrong mark" ?
-                                <Image className="ml-2 mb-2" src={require("../../public/icons/reset-password/wrong_mark.svg")} alt='close' width={24} height={24} />
+                                <Image className="ml-2 mb-2" src={require("../../public/icons/wrong.svg")} alt='close' width={24} height={24} />
                                 : 
                                 <></>
                             }
@@ -249,7 +248,7 @@ export const ResetPasswordForm = (props: Props) => {
                                 confirmIconSymbolValue === "Correct mark" ?
                                 <Image className="ml-2 mb-2" src={require("../../public/icons/reset-password/correct_mark.svg")} alt='close' width={24} height={24} />
                                 : confirmIconSymbolValue === "Wrong mark" ?
-                                <Image className="ml-2 mb-2" src={require("../../public/icons/reset-password/wrong_mark.svg")} alt='close' width={24} height={24} />
+                                <Image className="ml-2 mb-2" src={require("../../public/icons/wrong.svg")} alt='close' width={24} height={24} />
                                 : 
                                 <></>
                             }
