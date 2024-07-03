@@ -1,13 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-//import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { unwrapResult } from "@reduxjs/toolkit";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import * as yup from "yup";
-import { Formik, Form } from "formik";
-//import { registerUserThunk } from "redux/auth/authThunk";
+import { Formik, Form, FormikHelpers, FormikErrors } from "formik";
+import { AppDispatch } from "@/redux/store";
+import { currentUserThunk, loginUserThunk } from "@/redux/auth/authThunk";
 import { InputLabelField } from "./InputLabelField";
 import { ResetPasswordRequestForm } from "../reset-password/ResetPasswordRequestForm";
 import { ResetPasswordButton } from "../reset-password/ResetPasswordButton";
+import wrong from "@/public/icons/wrong.svg";
 
 export const schema = yup.object().shape({
   email: yup
@@ -29,6 +34,10 @@ export interface LoginFormValues {
   password: string;
 }
 
+interface ExtendedFormikErrors extends FormikErrors<LoginFormValues> {
+  _error?: string;
+}
+
 const initialValues: LoginFormValues = {
   email: "",
   password: "",
@@ -37,16 +46,42 @@ const initialValues: LoginFormValues = {
 export const LoginForm = () => {
   const [showPasswordResetBlock, setShowPasswordResetBlock] =
     useState<boolean>(false);
-  //const dispatch: AppDispatch = useDispatch();
 
-  const handleSubmit = (
+  const dispatch: AppDispatch = useDispatch();
+  const router = useRouter();
+
+  const handleSubmit = async (
     values: LoginFormValues,
-    { resetForm }: { resetForm: () => void }
+    { resetForm, setErrors }: FormikHelpers<LoginFormValues>
   ) => {
-    //dispatch(loginUserThunk(values));
-    resetForm();
+    try {
+      const actionResultAccessToken = await dispatch(loginUserThunk(values));
+      unwrapResult(actionResultAccessToken);
 
-    console.log(values); //DELETE
+      const actionResultUserData = await dispatch(currentUserThunk());
+      unwrapResult(actionResultUserData);
+
+      router.push("/profile");
+      resetForm();
+    } catch (rejectedValueOrSerializedError) {
+      const errorMessages: ExtendedFormikErrors = {};
+
+      if (typeof rejectedValueOrSerializedError === "string") {
+        if (
+          rejectedValueOrSerializedError ===
+          "No active account found with the given credentials"
+        ) {
+          errorMessages._error =
+            "Неправильна адреса електронної пошти або пароль";
+        } else {
+          errorMessages._error = "Невідома помилка, спробуйте ще раз";
+        }
+      } else {
+        errorMessages._error = "Невідома помилка, спробуйте ще раз";
+      }
+
+      setErrors(errorMessages);
+    }
   };
 
   return (
@@ -57,7 +92,7 @@ export const LoginForm = () => {
         onSubmit={handleSubmit}
       >
         {(formik) => (
-          <Form autoComplete="off" className="">
+          <Form autoComplete="off">
             <div className="flex flex-col gap-4">
               <InputLabelField
                 label="Електронна пошта"
@@ -83,8 +118,24 @@ export const LoginForm = () => {
               showPasswordResetBlock={showPasswordResetBlock}
             />
 
+            {formik.errors &&
+              (formik.errors as ExtendedFormikErrors)._error && (
+                <div className="flex items-center mb-6 ">
+                  <Image
+                    src={wrong}
+                    width={18}
+                    height={18}
+                    alt="Іконка помилки"
+                  />
+                  <div className="ml-1.5 text-sm font-medium text-red">
+                    {(formik.errors as ExtendedFormikErrors)._error}
+                  </div>
+                </div>
+              )}
+
             <button
               type="submit"
+              disabled={formik.isSubmitting}
               className="w-full h-12 mb-2 px-6 border border-blue rounded-xl bg-blue text-base font-semibold text-white hover:bg-white hover:text-blue transition-all"
             >
               Увійти
@@ -92,7 +143,7 @@ export const LoginForm = () => {
           </Form>
         )}
       </Formik>
-      
+
       <ResetPasswordRequestForm
         setShowPasswordResetBlock={setShowPasswordResetBlock}
         showPasswordResetBlock={showPasswordResetBlock}

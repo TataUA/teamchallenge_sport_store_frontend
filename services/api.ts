@@ -4,7 +4,7 @@ import { LoginFormValues } from "@/components/auth/LoginForm";
 import { ResetPasswordValuesInterface } from "@/components/reset-password/ResetPasswordForm";
 
 const $instance = axios.create({
-  baseURL: "http://34.66.71.139:8000",
+  baseURL: "https://api.sporthubsstore.com/",
 });
 
 //Token
@@ -65,15 +65,31 @@ export const registerUser = async (
 };
 
 //login
-export const loginUser = async (values: LoginFormValues) => {
+export interface LoginResponseData {
+  access: string;
+}
+
+export const loginUser = async (
+  values: LoginFormValues
+): Promise<LoginResponseData> => {
   const { email, password } = values;
-  const { data } = await $instance.post("/auth/token/", { email, password });
-  return data;
+
+  try {
+    const { data } = await $instance.post("/user/login/", { email, password });
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
 };
 
-export const currentUser = async () => {
-  const { data } = await $instance.get("/user/me");
-  return data;
+//current user
+export const currentUser = async (): Promise<RegisterResponseData> => {
+  try {
+    const { data } = await $instance.get("/user/me/");
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
 };
 
 export const logoutUser = async () => {
