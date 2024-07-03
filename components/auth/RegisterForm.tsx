@@ -204,6 +204,7 @@ export const RegisterForm = () => {
 
             <button
               type="submit"
+              disabled={formik.isSubmitting}
               className="h-12 mb-2 px-6 border border-blue rounded-xl bg-blue text-base font-semibold  text-white hover:bg-white hover:text-blue transition-all"
             >
               Зареєструватись
