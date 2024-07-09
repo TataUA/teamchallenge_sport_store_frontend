@@ -5,4 +5,8 @@ export const selectAccessToken = (state: { auth: AuthState }) =>
   state.auth.accessToken;
 export const selectIsAuthenticated = (state: { auth: AuthState }) =>
   state.auth.isAuthenticated;
+export const selectIsLoading = (state: { auth: AuthState }) =>
+  state.auth.isLoading;
+export const selectIsRefreshing = (state: { auth: AuthState }) =>
+  state.auth.isRefreshing;
 export const selectError = (state: { auth: AuthState }) => state.auth.error;

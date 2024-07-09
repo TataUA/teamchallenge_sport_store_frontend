@@ -1,9 +1,18 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { selectIsAuthenticated } from "@/redux/auth/authSelector";
+import { AppDispatch } from "@/redux/store";
+import {
+  selectIsAuthenticated,
+  selectIsLoading,
+  selectIsRefreshing,
+  selectUserData,
+} from "@/redux/auth/authSelector";
+import { setAccessToken } from "@/redux/auth/authSlice";
+import { currentUserThunk } from "@/redux/auth/authThunk";
+import { Loader } from "./Loader";
 
 interface PrivateRouteComponentProps {
   children: React.ReactNode;
@@ -12,18 +21,62 @@ interface PrivateRouteComponentProps {
 export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
   children,
 }) => {
+  const [isInitialized, setIsInitialized] = useState(false);
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const isLoading = useSelector(selectIsLoading);
+  const isRefreshing = useSelector(selectIsRefreshing);
+  const user = useSelector(selectUserData);
+  const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/login");
-    }
-  }, [isAuthenticated, router]);
+  const fetchAccessToken = useCallback(async () => {
+    try {
+      const tokenLocalStorage = localStorage.getItem("persist:auth");
 
-  if (!isAuthenticated) {
-    return null; // или можно добавить спиннер, пока идет проверка
+      if (tokenLocalStorage) {
+        const authState = JSON.parse(tokenLocalStorage);
+        const persistedAccessToken = authState.accessToken;
+
+        if (persistedAccessToken !== null && persistedAccessToken !== "null") {
+          dispatch(setAccessToken(persistedAccessToken));
+        } else {
+          router.push("/login");
+        }
+      }
+    } catch (error: any) {
+      router.push("/login");
+      throw new Error(error);
+    } finally {
+      setIsInitialized(true);
+    }
+  }, [dispatch, router]);
+
+  useEffect(() => {
+    fetchAccessToken();
+  }, [fetchAccessToken]);
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        if (isAuthenticated && isInitialized && !user) {
+          await dispatch(currentUserThunk()).unwrap();
+        }
+      } catch (error) {
+        console.error("Error fetching current user:", error);
+        router.push("/login");
+      }
+    };
+
+    if (isAuthenticated && isInitialized) {
+      fetchCurrentUser();
+    }
+  }, [dispatch, router, isAuthenticated, isInitialized, user]);
+
+  if (isLoading || isRefreshing || !isInitialized) {
+    return <Loader />;
   }
 
-  return <>{children}</>;
+  if (isAuthenticated) {
+    return <>{children}</>;
+  }
 };

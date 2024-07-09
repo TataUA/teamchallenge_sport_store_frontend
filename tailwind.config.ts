@@ -38,6 +38,8 @@ const config: Config = {
         border: "#CFCFCF",
         white: "#fff",
         blue: "#0A4CF6",
+        active_blue: "#0735AC",
+        active_lightblue: "#E7EDFE",
         red: "#DF0707",
         green: "#42BE65",
         bgSearch: "#F3F3F3",

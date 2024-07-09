@@ -34,7 +34,7 @@ export default function Page() {
 
       <Link
         href="/signup"
-        className="flex items-center justify-center  w-full h-12 mb-2 px-6 border border-blue rounded-xl  bg-white text-base font-semibold text-blue hover:bg-blue hover:text-white transition-all"
+        className="flex items-center justify-center  w-full h-12 mb-2 px-6 border border-blue rounded-xl  bg-white text-base font-semibold text-blue hover:bg-active_lightblue transition-all"
       >
         Зареєструватись
       </Link>
