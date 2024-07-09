@@ -1,8 +1,6 @@
-
-
 import React from "react";
-import { PrivateRouteComponent } from "@/components/PrivateRouteComponent";
 import { ClientComponent } from "@/components/ClientComponent";
+import { PrivateRouteComponent } from "@/components/PrivateRouteComponent";
 
 export default function Profile() {
   return (

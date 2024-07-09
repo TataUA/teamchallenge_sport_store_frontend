@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import * as yup from "yup";
 import { Formik, Form, FormikHelpers, FormikErrors } from "formik";
 import { AppDispatch } from "@/redux/store";
-import { currentUserThunk, loginUserThunk } from "@/redux/auth/authThunk";
+import { loginUserThunk } from "@/redux/auth/authThunk";
 import { InputLabelField } from "./InputLabelField";
 import { ResetPasswordRequestForm } from "../reset-password/ResetPasswordRequestForm";
 import { ResetPasswordButton } from "../reset-password/ResetPasswordButton";
@@ -57,9 +57,6 @@ export const LoginForm = () => {
     try {
       const actionResultAccessToken = await dispatch(loginUserThunk(values));
       unwrapResult(actionResultAccessToken);
-
-      const actionResultUserData = await dispatch(currentUserThunk());
-      unwrapResult(actionResultUserData);
 
       router.push("/profile");
       resetForm();
@@ -136,7 +133,7 @@ export const LoginForm = () => {
             <button
               type="submit"
               disabled={formik.isSubmitting}
-              className="w-full h-12 mb-2 px-6 border border-blue rounded-xl bg-blue text-base font-semibold text-white hover:bg-white hover:text-blue transition-all"
+              className="w-full h-12 mb-2 px-6  rounded-xl bg-blue text-base font-semibold text-white hover:bg-active_blue transition-all"
             >
               Увійти
             </button>

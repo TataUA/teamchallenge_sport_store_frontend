@@ -20,7 +20,7 @@ export interface AuthState {
   accessToken: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  //isRefreshing: boolean;
+  isRefreshing: boolean;
   error: string[];
 }
 
@@ -29,14 +29,22 @@ const initialState: AuthState = {
   accessToken: null,
   isAuthenticated: false,
   isLoading: false,
-  //isRefreshing: false,
+  isRefreshing: false,
   error: [],
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    setAccessToken: (state, { payload }: PayloadAction<string | null>) => {
+      state.accessToken =
+        payload !== "null" && payload !== null
+          ? payload.trim().replace(/^"(.*)"$/, "$1")
+          : null;
+      state.isAuthenticated = !!state.accessToken;
+    },
+  },
   extraReducers: (builder) =>
     builder
       //register
@@ -68,7 +76,7 @@ const authSlice = createSlice({
         loginUserThunk.fulfilled,
         (state, { payload }: PayloadAction<{ accessToken: string }>) => {
           state.isLoading = false;
-          state.isAuthenticated = false;
+          state.isAuthenticated = true;
           state.accessToken = payload.accessToken;
         }
       )
@@ -79,20 +87,20 @@ const authSlice = createSlice({
 
       //current
       .addCase(currentUserThunk.pending, (state) => {
-        state.isLoading = true;
-        state.isAuthenticated = false;
+        state.isRefreshing = true;
         state.error = [];
       })
       .addCase(
         currentUserThunk.fulfilled,
         (state, { payload }: PayloadAction<UserData>) => {
-          state.isLoading = false;
+          state.isRefreshing = false;
           state.isAuthenticated = true;
           state.user = { ...payload };
         }
       )
       .addCase(currentUserThunk.rejected, (state, { payload }) => {
-        state.isLoading = false;
+        state.isRefreshing = false;
+        state.isAuthenticated = false;
         if (payload) {
           payload.message.forEach((item: string) => state.error.push(item));
         }
@@ -117,3 +125,4 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
+export const { setAccessToken } = authSlice.actions;

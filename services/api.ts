@@ -16,8 +16,7 @@ export const clearToken = () => {
   $instance.defaults.headers["Authorization"] = "";
 };
 
-//User
-//register
+//register user
 export interface RegisterRequestData {
   first_name: string;
   surname: string;
@@ -64,7 +63,7 @@ export const registerUser = async (
   }
 };
 
-//login
+//login user
 export interface LoginResponseData {
   access: string;
 }
@@ -92,9 +91,14 @@ export const currentUser = async (): Promise<RegisterResponseData> => {
   }
 };
 
+//logout user
 export const logoutUser = async () => {
-  const { data } = await $instance.post("/user/logout/");
-  return data;
+  try {
+    const { data } = await $instance.post("/user/logout/");
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
 };
 
 // export const resetPasswordRequest = async (values: ResetPasswordValues) => {
