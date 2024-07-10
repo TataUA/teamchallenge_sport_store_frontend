@@ -1,5 +1,8 @@
 import Image from "next/image";
 
+// utils
+import { cn } from "@/services/utils/cn";
+
 // assets
 import footerTitleImage from '@/public/icons/footer/footer-title.png'
 import { getTelegramIconFooter } from "@/public/icons/footer/socials/getTelegramIconFooter";
@@ -7,23 +10,29 @@ import { getInstagramIconFooter } from "@/public/icons/footer/socials/getInstagr
 import { getViberIconFooter } from "@/public/icons/footer/socials/getViberIconFooter";
 
 const InfoSectionFooter = () => {
-  const subtitleClassname = 'text-lg max-[767px]:text-base font-black mb-1 min-[2800px]:text-4xl min-[2800px]:mb-[30px]';
-  const infoSectionClassname = 'shrink-0 max-[767px]:grow';
-  const infoListItemClassname = 'text-base last:mb-0 max-[767px]:text-sm max-[767px]:mb-2 min-[2800px]:text-3xl min-[2800px]:mb-[10px]'
-  const infoSocialItemClassname = 'mr-2 hover:cursor-pointer [&>svg]:hover:fill-blue min-[2800px]:mr-[50px] min-[2800px]:[&>svg]:w-auto min-[2800px]:[&>svg]:h-[80px]';
+  const infoSectionClassname = cn('shrink-0', 'max-[767px]:grow');
+  const subtitleClassname = cn('text-lg font-black mb-4', 
+    'max-[767px]:mb-3 max-[767px]:text-base', 
+    'min-[2800px]:text-4xl min-[2800px]:mb-[30px]');
+  const infoListItemClassname = cn('text-base last:mb-0', 
+    'max-[767px]:text-sm max-[767px]:mb-2', 
+    'min-[2800px]:text-3xl min-[2800px]:mb-[10px]')
+  const informationBlockClassanme = cn(infoListItemClassname, {'hover:cursor-pointer hover:underline': true})
+  const infoSocialItemClassname = cn('mr-2 hover:cursor-pointer [&>svg]:hover:fill-blue', 
+    'min-[2800px]:mr-[50px] min-[2800px]:[&>svg]:w-auto min-[2800px]:[&>svg]:h-[80px]');
 
   return (
     <div>
-      <div className="text-center flex justify-center content-center mb-20px min-[2800px]:mb-[50px]">
+      <div className="text-center flex justify-center content-center mb-5 min-[2800px]:mb-[50px]">
         <Image alt='footer title' src={footerTitleImage} className="min-[2800px]:h-[200px] min-[2800px]:w-auto"/>
       </div>
-      <div className="flex flex-wrap gap-20 mb-5 max-[767px]:gap-7">
+      <div className="flex flex-wrap gap-20 mb-5 max-[767px]:gap-7 max-[767px]:mb-6 min-[2800px]:mb-12">
         <div className={infoSectionClassname}>
           <div className={subtitleClassname}>Інформація</div>
           <div className="list-none">
-            <li className={infoListItemClassname}>Про компанію </li>
-            <li className={infoListItemClassname}>Доставка і оплата</li>
-            <li className={infoListItemClassname}>Повернення</li>
+            <li className={informationBlockClassanme}>Про компанію </li>
+            <li className={informationBlockClassanme}>Доставка і оплата</li>
+            <li className={informationBlockClassanme}>Повернення</li>
           </div>
         </div>
         <div  className={infoSectionClassname}>
