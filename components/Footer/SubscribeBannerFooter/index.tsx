@@ -8,7 +8,7 @@ import { cn } from "@/services/utils/cn";
 
 // assets
 import banner from '../../../public/images/footer/subscribe.png'
-import getSuccessBlueIcon from "@/public/icons/getSuccessBlueIcon";
+import getSuccessBlueIcon from "@/helpers/getSuccessBlueIcon";
 
 const SubscribeBannerFooter = () => {
 
