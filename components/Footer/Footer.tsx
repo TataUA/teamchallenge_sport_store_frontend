@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 
 // components
 import InfoSectionFooter from './InfoSectionFooter'
+import SubscribeBannerFooter from './SubscribeBannerFooter'
 
 const Footer = () => {
 	const pathname = usePathname()
@@ -22,8 +23,11 @@ const Footer = () => {
 	}
 
 	return (
-		<footer className='p-8 mt-auto max-[767px]:px-4'>
-			<InfoSectionFooter />
+		<footer>
+			<SubscribeBannerFooter />
+			<div className='p-8 mt-auto max-[767px]:px-6 max-[767px]:py-5'>
+				<InfoSectionFooter />
+			</div>
 		</footer>
 	)
 }
