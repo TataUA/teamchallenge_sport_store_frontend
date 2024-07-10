@@ -62,7 +62,7 @@ const InfoSectionFooter = () => {
         </span>
       </div>
         <hr className="mb-5 min-[2800px]:my-[50px]" />
-        <div className="font-normal text-sm max-[767px]:text-xs min-[2800px]:text-3xl">
+        <div className="font-normal text-[#6E6E70] text-sm max-[767px]:text-xs min-[2800px]:text-3xl">
           <div>Project created for educational purposes <br />
             © 2024 Sport Hub.
           </div>
