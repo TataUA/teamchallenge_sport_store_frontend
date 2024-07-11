@@ -6,22 +6,29 @@ import 'swiper/css/pagination'
 import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { SliderButtons } from './SliderButtons'
+import { cn } from '@/services/utils/cn'
 
 interface Slide {
-	id: number
-	title: string
-	subtitle: string
+	id?: number
+	title?: string
+	subtitle?: string
 	image: string
 }
 
 interface SliderProps {
 	data: Slide[]
+	autoPlay?: boolean
+	homePageMainSlider?: boolean
+	productsList?: boolean
 }
 
-export function Slider({ data }: SliderProps) {
+export function Slider({ data, autoPlay = true, homePageMainSlider = false, productsList=false }: SliderProps) {
 	return (
 		<section className='w-full'>
-			<div className=' h-144'>
+			<div className={cn('', {
+				'min-h-[400px] h-[50dvh]': homePageMainSlider,
+				'h-[224px] min-[2800px]:h-[600px]': productsList
+			})}>
 				<ul className='h-full w-full'>
 					<Swiper
 						className='h-full'
@@ -51,12 +58,12 @@ export function Slider({ data }: SliderProps) {
 								return bulletElement.outerHTML
 							},
 						}}
-						autoplay={true}
+						autoplay={autoPlay}
 						loop={true}
 						modules={[Autoplay, Navigation, Pagination]}
 					>
 						{data.map(({ id, image, title, subtitle }) => (
-							<SwiperSlide key={id}>
+							<SwiperSlide key={id || image}>
 								<div
 									className='h-full w-full absolute left-0 top-0'
 									style={{
