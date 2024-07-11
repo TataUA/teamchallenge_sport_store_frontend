@@ -15,7 +15,8 @@ interface IProps extends IProductsPageProps {
 }
 
 const ProductsList = (props: IProps) => {
-  const {params: {productType}, searchParams: {gender, page}, products} = props
+  const {params: {productType}, searchParams, products} = props
+	const {gender, page} = searchParams
 
   const correctProductType = extractProductTypeFromParamsAndTranslateUkraine(productType[0])
   
@@ -26,7 +27,7 @@ const ProductsList = (props: IProps) => {
         gender={gender} 
       />
 			<div className=''>
-				<ProductsListMainContent page={page} products={products} productType={correctProductType}  />
+				<ProductsListMainContent searchParams={searchParams} products={products} productType={correctProductType}  />
 			</div>
 		</section>
 	)
