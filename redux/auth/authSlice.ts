@@ -4,6 +4,7 @@ import {
   loginUserThunk,
   currentUserThunk,
   logoutUserThunk,
+  editUserThunk,
 } from "./authThunk";
 
 export interface UserData {
@@ -106,6 +107,25 @@ const authSlice = createSlice({
         }
       })
 
+      //edit
+      .addCase(editUserThunk.pending, (state) => {
+        state.isRefreshing = true;
+        state.error = [];
+      })
+      .addCase(
+        editUserThunk.fulfilled,
+        (state, { payload }: PayloadAction<UserData>) => {
+          state.isRefreshing = false;
+          state.user = { ...payload };
+        }
+      )
+      .addCase(editUserThunk.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        if (payload) {
+          payload.message.forEach((item: string) => state.error.push(item));
+        }
+      })
+
       //logout
       .addCase(logoutUserThunk.pending, (state) => {
         state.isLoading = true;
@@ -115,12 +135,12 @@ const authSlice = createSlice({
       .addCase(logoutUserThunk.fulfilled, (state) => {
         state.isLoading = false;
         state.isAuthenticated = false;
-        //state.userData = null;
-        //state.token = null;
+        state.accessToken = null;
+        state.user = null;
       })
       .addCase(logoutUserThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
-        //state.error = payload ? payload.message : "An error occurred";
+        payload && state.error.push(payload);
       }),
 });
 
