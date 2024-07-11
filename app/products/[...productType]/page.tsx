@@ -12,7 +12,7 @@ export const metadata = {
 
 export interface IProductsPageProps {
 	params: {productType: string}
-	searchParams: {gender: string}
+	searchParams: {gender: string, page: string}
 }
 
 
@@ -25,8 +25,8 @@ const getProducts = async () => {
 export default async function ProductsPage(props: IProductsPageProps) {
 	const products = await getProducts();
 	return (
-		<section className='px-6 pt-4 h-full'>
-			<ProductsList {...props} products={products} />
+		<section className='px-6 pt-4 pb-12'>
+				<ProductsList {...props} products={products} />
 		</section>
 	)
 }
