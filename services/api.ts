@@ -3,7 +3,7 @@ import { RegisterFormValues } from "@/components/auth/RegisterForm";
 import { LoginFormValues } from "@/components/auth/LoginForm";
 import { ResetPasswordValuesInterface } from "@/components/reset-password/ResetPasswordForm";
 
-const $instance = axios.create({
+export const $instance = axios.create({
   baseURL: "https://api.sporthubsstore.com/",
 });
 
