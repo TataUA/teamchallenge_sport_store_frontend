@@ -29,17 +29,16 @@ export type SvgProps = {
 	isHovered?: boolean
 }
 
-type GenderEnum = "Male" | "Female"
 
 interface Category {
     id: number;
-    gender: GenderEnum;
+    gender: string;
     sub_category: string;
 }
 
 interface Color {
     id: number;
-    title: string;
+    title: string; // Updated to match the provided object
 }
 
 interface ProductSize {
@@ -48,7 +47,6 @@ interface ProductSize {
 }
 
 interface ProductImage {
-    id: number;
     image_url: string;
 }
 
@@ -61,5 +59,5 @@ export interface IProduct {
     color: Color[];
     size: ProductSize[];
     images: ProductImage[];
-    quantity: string;
+    quantity: number;
 }
