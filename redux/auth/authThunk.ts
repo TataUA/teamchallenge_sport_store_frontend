@@ -12,11 +12,13 @@ import {
   validateToken,
   resetPasswordConfirm,
   LoginResponseData,
+  editUser,
 } from "@/services/api";
 import { AppState } from "../store";
 import { UserData } from "./authSlice";
 import { RegisterFormValues } from "@/components/auth/RegisterForm";
 import { LoginFormValues } from "@/components/auth/LoginForm";
+import { UserDataEditFormValues } from "@/components/auth/UserDataEdit";
 import { ResetPasswordValuesInterface } from "@/components/reset-password/ResetPasswordForm";
 
 interface Error {
@@ -96,18 +98,45 @@ export const currentUserThunk = createAsyncThunk<
   }
 });
 
-export const logoutUserThunk = createAsyncThunk(
-  "auth/logout",
-  async (_, thunkApi) => {
-    try {
-      const response = await logoutUser();
-      clearToken();
-      return response;
-    } catch (error) {
-      thunkApi.rejectWithValue({ message: (error as Error).message });
-    }
+export const editUserThunk = createAsyncThunk<
+  UserData,
+  UserDataEditFormValues,
+  { rejectValue: Error }
+>("auth/edit", async (values, thunkApi) => {
+  try {
+    const response: RegisterResponseData = await editUser(values);
+    return {
+      id: response.id,
+      name: response.first_name,
+      surname: response.surname,
+      patronymic: response.last_name,
+      phone: response.phone_number,
+      email: response.email,
+    };
+  } catch (error: any) {
+    const errorMessages: string[] = error.phone_number ||
+      error.email || ["An error occurred"];
+    const errorObject: Error = {
+      message: errorMessages,
+    };
+
+    return thunkApi.rejectWithValue(errorObject);
   }
-);
+});
+
+export const logoutUserThunk = createAsyncThunk<
+  {},
+  void,
+  { rejectValue: string }
+>("auth/logout", async (_, thunkApi) => {
+  try {
+    await logoutUser();
+    clearToken();
+    return {};
+  } catch (error: any) {
+    return thunkApi.rejectWithValue(error.detail || "An error occurred");
+  }
+});
 
 // export const resetPasswordRequestThunk = createAsyncThunk(
 //   "reset-password/get-link",
