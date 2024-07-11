@@ -19,9 +19,9 @@ import { ResetPasswordButton } from "../reset-password/ResetPasswordButton";
 
 // assets
 import wrong from "@/public/icons/wrong.svg";
+import saveTokensToCookiesAction from "@/app/actions/saveTokensToCookiesAction";
 
 // actions
-import saveTokenToCookiesAction from "@/app/actions/saveTokenToCookiesAction";
 
 export const schema = yup.object().shape({
   email: yup
@@ -65,8 +65,8 @@ export const LoginForm = () => {
   ) => {
     try {
       const actionResultAccessToken = await dispatch(loginUserThunk(values));
-      const {accessToken} = unwrapResult(actionResultAccessToken);
-      saveTokenToCookiesAction(accessToken)
+      const {accessToken, refreshToken} = unwrapResult(actionResultAccessToken);
+      saveTokensToCookiesAction({accessToken, refreshToken})
       
 
       router.push("/profile");
