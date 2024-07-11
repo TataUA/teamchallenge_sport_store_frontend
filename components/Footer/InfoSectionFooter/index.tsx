@@ -5,9 +5,9 @@ import { cn } from "@/services/utils/cn";
 
 // assets
 import footerTitleImage from '@/public/icons/footer/footer-title.png'
-import { getTelegramIconFooter } from "@/helpers/getTelegramIconFooter";
-import { getInstagramIconFooter } from "@/helpers/getInstagramIconFooter";
-import { getViberIconFooter } from "@/helpers/getViberIconFooter";
+import { getTelegramIconFooter } from "@/helpers/getTelegramIconFooterSVG";
+import { getInstagramIconFooter } from "@/helpers/getInstagramIconFooterSVG";
+import { getViberIconFooter } from "@/helpers/getViberIconFooterSVG";
 
 const InfoSectionFooter = () => {
   const infoSectionClassname = cn('shrink-0', 'max-[767px]:grow');
