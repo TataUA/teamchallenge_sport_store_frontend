@@ -28,7 +28,7 @@ const getPaginatedItems = useCallback((items: IProduct[], itemsPerPage: number, 
     }
   }, [])
 
-const itemsPerPage = 2;
+const itemsPerPage = 8;
 
 const {paginatedProducts, countPages} = getPaginatedItems(products, itemsPerPage, currentPage);
 
