@@ -1,17 +1,16 @@
-
 // utils
 import { cn } from "@/services/utils/cn"
 import getArrayWithExtractedImgUrl from "@/helpers/getArrayWithExtractedImgUrl"
 
 // components
-import { Slider } from "@/components/slider-hero/Slider"
+import {Slider}  from "@/components/slider-hero/Slider"
 
 // types
 import { IProduct } from "@/services/types"
 
 const ListItem = (props: {product: IProduct}) => {
   const {product} = props
-  const {title, price, color: colorsArray} = product
+  const {title, color, price} = product
 
   return (
     <div className={cn(
@@ -22,7 +21,8 @@ const ListItem = (props: {product: IProduct}) => {
         <Slider
           productsList
           autoPlay={false} 
-          data={getArrayWithExtractedImgUrl(product)} />
+          data={getArrayWithExtractedImgUrl(product)}
+          />
       </div>
       <div 
         className="text-[#575758] truncate text-base max-[767px]:text-sm font-medium min-[2800px]:text-3xl"
@@ -30,12 +30,12 @@ const ListItem = (props: {product: IProduct}) => {
         {title}
       </div>
       <ul className="flex gap-2 min-[2800px]:gap-5">
-        {colorsArray?.map((color)=> (
+        {color?.map((color)=> (
           <li 
-            key={color.id} 
+            key={color.id}
             className={cn(
-              `bg-${color.title.toLowerCase()} w-2 h-2 rounded-[50%] min-[2800px]:size-8`, {
-                'border': true
+              `bg-${color.title.toLowerCase()} relative min-w-3 min-h-3 rounded-[50%] min-[2800px]:size-8`, {
+                'border': true,
               })}
           />
         ))}
