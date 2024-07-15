@@ -4,23 +4,21 @@ import { ClientComponent } from "@/components/ClientComponent"
 import List from "../List"
 
 // types
-import { IProduct } from "@/services/types"
+import { IProductsPageProps } from ".."
+
+// helpers
+import extractProductTypeFromParamsAndTranslateUkraine from "@/helpers/extractProductTypeFromParamsAndTranslateUkraine"
 
 
-interface IProps {
-  productType: string
-  page?: string
-  products: IProduct[]
-  searchParams: {gender: string, page: string}
-}
+const ProductsListMainContent = (props: IProductsPageProps) => {
+  const {products, searchParams, params} = props
 
-const ProductsListMainContent = (props: IProps) => {
-  const {productType, products, searchParams} = props
-
+  const translatedProductType = extractProductTypeFromParamsAndTranslateUkraine(params.productType[0])
+  
   return (
     <section>
       <div className="flex justify-between items-center mb-4">
-        <div className="text-3xl text-[##1A1A1C] font-bold">{productType}</div>
+        <div className="text-3xl text-[##1A1A1C] font-bold">{translatedProductType}</div>
         <div>Filters</div>
       </div>
       {Array.isArray(products) && products.length ? (
