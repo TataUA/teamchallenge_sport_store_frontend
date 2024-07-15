@@ -8,7 +8,8 @@ export interface IProductsFiltersProps {
     productType: string;
     page?: string;
     sortedBy?: string;
-}
+  }
+  params: {productType: string[]}
 }
 
 const ProductsFilters = (props: IProductsFiltersProps) => {
