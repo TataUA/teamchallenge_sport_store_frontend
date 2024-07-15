@@ -10,9 +10,9 @@ export const metadata = {
 	description: 'Products Page with listed products',
 }
 
-export interface IProductsPageProps {
-	params: {productType: string}
-	searchParams: {gender: string, page: string}
+export interface IProductsPageInitialProps {
+	params: {productType: string[]}
+	searchParams: {gender: string, page?: string, productType: string}
 }
 
 
@@ -22,7 +22,7 @@ const getProducts = async () => {
   return  products
 };
 
-export default async function ProductsPage(props: IProductsPageProps) {
+export default async function ProductsPage(props: IProductsPageInitialProps) {
 	const products = await getProducts();
 	return (
 		<section className='px-6 pt-4 pb-12'>

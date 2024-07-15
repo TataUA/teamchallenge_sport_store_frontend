@@ -1,33 +1,28 @@
 
 // types
-import { IProductsPageProps } from '@/app/products/[...productType]/page'
+import { IProductsPageInitialProps } from '@/app/products/[...productType]/page'
 import { IProduct } from '@/services/types'
 
 // components
 import ProductsListMainContent from './ProductsListMainContent'
 import NavigationByCategoryAndGender from './NavigationByCategoryAndGender'
 
-// helpers
-import extractProductTypeFromParamsAndTranslateUkraine from '@/helpers/extractProductTypeFromParamsAndTranslateUkraine'
-
-interface IProps extends IProductsPageProps {
+export interface IProductsPageProps extends IProductsPageInitialProps {
 	products: IProduct[] | []
 }
 
-const ProductsList = (props: IProps) => {
-  const {params: {productType}, searchParams, products} = props
-	const {gender, page} = searchParams
-
-  const correctProductType = extractProductTypeFromParamsAndTranslateUkraine(productType[0])
+const ProductsList = (props: IProductsPageProps) => {
+  const {products, ...otherProps} = props
   
 	return (
 		<section className='h-full w-full'>
       <NavigationByCategoryAndGender 
-        productType={correctProductType} 
-        gender={gender} 
+			{...otherProps}
       />
 			<div className=''>
-				<ProductsListMainContent searchParams={searchParams} products={products} productType={correctProductType}  />
+				<ProductsListMainContent
+				{...props}
+			/>
 			</div>
 		</section>
 	)
