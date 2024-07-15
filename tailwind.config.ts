@@ -58,6 +58,30 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // implemantation price filter with slider-thumb
+    function({ addUtilities }: {addUtilities: any}) {
+      const newUtilities = {
+        '.appearance-none::-webkit-slider-thumb': {
+          '-webkit-appearance': 'none',
+          width: '24px',
+          height: '24px',
+          borderRadius: '50%',
+          backgroundColor: '#0A4CF6',
+          cursor: 'pointer',
+          pointerEvents: 'auto',
+        },
+        '.appearance-none::-moz-range-thumb': {
+          width: '20px',
+          height: '20px',
+          borderRadius: '50%',
+          backgroundColor: '#0A4CF6',
+          cursor: 'pointer',
+          pointerEvents: 'auto',
+        },
+      }
+      addUtilities(newUtilities, ['responsive', 'hover'])
+    }
+  ],
 };
 export default config;
