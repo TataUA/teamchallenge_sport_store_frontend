@@ -18,6 +18,7 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        'colorful-circle': 'radial-gradient(circle at top left, #00ffff, #0080ff, #8000ff, #ff00ff, #ff0080, #ff8000, #ffff00)',
       },
       width: {
         "18": "72px",
