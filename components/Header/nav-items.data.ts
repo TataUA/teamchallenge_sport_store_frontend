@@ -45,18 +45,18 @@ export const NAV_ITEMS: NavItem[] = [
 	{
 		title: { key: 'women', label: 'Жінки', href: '/women' },
 		links: [
-			{ key: 'sneakers', label: 'Кросівки', href: '/products?gender=Жінки&productType=Кросівки' },
-			{ key: 't-shirts', label: 'Футболки', href: '/products?gender=Жінки&productType=Футболки' },
-			{ key: 'shorts', label: 'Шорти', href: '/products?gender=Жінки&productType=Шорти' },
+			{ key: 'sneakers', label: 'Кросівки', href: '/products/sneakers?gender=Жінки&productType=Кросівки' },
+			{ key: 't-shirts', label: 'Футболки', href: '/products/t-shirts?gender=Жінки&productType=Футболки' },
+			{ key: 'shorts', label: 'Шорти', href: '/products/shorts?gender=Жінки&productType=Шорти' },
 			{
 				key: 'pants',
 				label: 'Штани',
-				href: '/products?gender=Жінки&productType=Штани',
+				href: '/products/pants?gender=Жінки&productType=Штани',
 			},
 			{
 				key: 'sweatshirts',
 				label: 'Світшоти',
-				href: '/products?gender=Жінки&productType=Світшоти',
+				href: '/products/sweatshirts?gender=Жінки&productType=Світшоти',
 			},
 			// { key: 'accessories', label: 'Аксесуари', href: '/women/accessories' },
 			// {
