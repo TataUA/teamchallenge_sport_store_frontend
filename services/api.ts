@@ -66,7 +66,7 @@ export const registerUser = async (
 //login user
 export interface LoginResponseData {
   access: string;
-  refresh: string;
+  // refresh: string;
 }
 
 export const loginUser = async (
