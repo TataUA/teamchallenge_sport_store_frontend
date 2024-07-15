@@ -65,8 +65,14 @@ export const LoginForm = () => {
   ) => {
     try {
       const actionResultAccessToken = await dispatch(loginUserThunk(values));
-      const {accessToken, refreshToken} = unwrapResult(actionResultAccessToken);
-      saveTokensToCookiesAction({accessToken, refreshToken})
+      const {
+        accessToken, 
+        // refreshToken
+      } = unwrapResult(actionResultAccessToken);
+      saveTokensToCookiesAction({
+        accessToken, 
+        refreshToken: ''
+      })
       
 
       router.push("/profile");
