@@ -9,8 +9,7 @@ import Pagination from "../Pagination"
 
 interface IProps {
   products: IProduct[]
-  page?: string
-  searchParams: {gender: string, page: string}
+  searchParams: {gender: string, page?: string, productType: string}
 }
 
 const List = (props: IProps) => {
