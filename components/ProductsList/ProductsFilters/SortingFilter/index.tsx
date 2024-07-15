@@ -10,7 +10,7 @@ import getCheckedIconSortingOptionSVG from "@/helpers/getCheckedIconSortingOptio
 import { cn } from "@/services/utils/cn";
 
 // components
-import FilterModal from "../FilterModal";
+// import FilterModal from "../FilterModal";
 
 // data
 import { sortingProductsFilers } from "../filtersData";
@@ -37,7 +37,7 @@ const SortingFilter = () => {
         className={cn("p-3 cursor-pointer border-[1px] rounded-xl border-[#E7E7E8] [&>svg]:hover:opacity-50")}>
         {getSortingIconSVG()}
       </div>
-      <FilterModal isOpen={isSortingFilterOpen} onClose={() => setIsSortingFilterOpen(false)}>
+      {/* <FilterModal isOpen={isSortingFilterOpen} onClose={() => setIsSortingFilterOpen(false)}>
         <h2 className="text-2xl font-bold mb-4 text-center">Сортування</h2>
         {sortingProductsFilers.map((item, index) => (
           <div key={item.id} className="mb-4">
@@ -55,7 +55,7 @@ const SortingFilter = () => {
             <hr />
           </div>
         ))}
-      </FilterModal>
+      </FilterModal> */}
     </div>
   )
 }
