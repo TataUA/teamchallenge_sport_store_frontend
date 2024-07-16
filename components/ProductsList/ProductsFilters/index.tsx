@@ -1,6 +1,9 @@
 // conmponents
 import SortingFilters from "./SortingFilter"
 import GeneralFilters from "./GeneralFilters"
+import { ClientComponent } from "@/components/ClientComponent";
+
+// typess
 import { IProduct } from "@/services/types";
 
 export interface IProductsFiltersProps {
@@ -19,7 +22,9 @@ const ProductsFilters = (props: IProductsFiltersProps) => {
   return (
   <div className="flex gap-2">
     <SortingFilters />
-    <GeneralFilters {...props} />
+    <ClientComponent>
+      <GeneralFilters {...props} />
+    </ClientComponent>
       </div>
   )
 }
