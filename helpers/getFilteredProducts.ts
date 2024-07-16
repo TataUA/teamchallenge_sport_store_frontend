@@ -1,9 +1,11 @@
 import { IProduct } from "@/services/types";
 
-const getFilteredProducts = ({products, filters}: {products: IProduct[], filters: any[]}) => products.filter(product => 
-    filters?.every(filter => {
+import getTranslatedSubcategoryFromUkraineToEnglish from "./getTranslatedSubcategoryFromUkraineToEnglish";
+
+const getFilteredProducts = ({products, filters}: {products: IProduct[], filters: any[]}) => products.filter(product => {
+    return filters?.every(filter => {
         if(filter.sub_category) {
-            return product.category.sub_category.toLowerCase().includes(filter.sub_category.toLowerCase())
+            return getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category).toLowerCase().includes(filter.sub_category.toLowerCase())
         }
         if(filter.price_to){
             return Number(product.price) <= Number(filter.price_to)
@@ -21,6 +23,7 @@ const getFilteredProducts = ({products, filters}: {products: IProduct[], filters
             
         return product
     })
+    }
 );
 
 export default getFilteredProducts

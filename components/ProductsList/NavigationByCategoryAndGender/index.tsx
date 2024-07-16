@@ -1,4 +1,4 @@
-import extractProductTypeFromParamsAndTranslateUkraine from "@/helpers/extractProductTypeFromParamsAndTranslateUkraine"
+import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine"
 
 interface IProps {
   params: { sub_category: Array<string> },
@@ -8,7 +8,7 @@ interface IProps {
 const NavigationByCategoryAndGender = (props: IProps) => {
   const {searchParams: {gender}, params:{sub_category}} = props
 
-  const translatedProductType = extractProductTypeFromParamsAndTranslateUkraine(sub_category[0])
+  const translatedProductType = getTranslatedSubcategoryFromEnglishToUkraine(sub_category[0])
 
   return (
     <div className='flex gap-2 mb-5 text-base font-medium max-[767px]:text-sm min-[2800px]:text-3xl min-[2800px]:mx-10'>

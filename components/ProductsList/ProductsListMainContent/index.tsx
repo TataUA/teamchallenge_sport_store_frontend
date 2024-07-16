@@ -8,13 +8,13 @@ import ProductsFilters from "../ProductsFilters"
 import { IProductsPageProps } from ".."
 
 // helpers
-import extractProductTypeFromParamsAndTranslateUkraine from "@/helpers/extractProductTypeFromParamsAndTranslateUkraine"
+import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine"
 
 
 const ProductsListMainContent = (props: IProductsPageProps) => {
   const {products, searchParams, params} = props
   
-  const translatedProductType = extractProductTypeFromParamsAndTranslateUkraine(params.sub_category[0])
+  const translatedProductType = getTranslatedSubcategoryFromEnglishToUkraine(params.sub_category[0])
   
   return (
     <section>

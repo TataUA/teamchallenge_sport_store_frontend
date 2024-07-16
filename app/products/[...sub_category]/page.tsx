@@ -11,6 +11,7 @@ import { IProduct } from "@/services/types"
 // helpers
 import getSortedProducts from "@/helpers/getSortedProducts"
 import getFilteredProducts from "@/helpers/getFilteredProducts"
+import getTranslatedSubcategoryFromUkraineToEnglish from "@/helpers/getTranslatedSubcategoryFromUkraineToEnglish"
 
 export const metadata = {
 	title: 'Products Page',
@@ -34,21 +35,23 @@ export interface IProductsPageInitialProps {
 		page?: string, 
 		sub_category: string
 		sortedBy?: string;
+		size?: string;
+		color?: string;
 	}
 }
 
 
 const getSortedAndFilteredProducts = async (filters: IFilters) => {
 	const products: IProduct[] = await fetchProductsAction()
-
-  const filteredProductByCategoryAndGender = products.filter(product => (product.category.sub_category === filters.sub_category) 
+  const filteredProductByCategoryAndGender = products.filter(product => 
+		(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === filters.sub_category) 
 	&& (product.category.gender.toLowerCase() === filters.gender.toLowerCase()))
 
 	const sortedProducts = getSortedProducts({products: filteredProductByCategoryAndGender, direction: filters.sortedBy})
 
 	const arraOfFiltersFromFiltersObject = Object.entries(filters).map(([key, value]) => ({ [key]: value }));
 	const filteredProductsByGeneralFilters = getFilteredProducts({products: sortedProducts, filters: arraOfFiltersFromFiltersObject})
-
+	
 	return filteredProductsByGeneralFilters
 };
 
