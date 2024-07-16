@@ -17,6 +17,11 @@ const ColorsFilter = (props: IProps) => {
 
   const createPageURLWithPageParams = (value: string) => {
     const params = new URLSearchParams(searchParams);
+    if(params.get('color') === value) {
+      params.delete('color')
+      
+      return `${pathname}?${params.toString()}`;
+    }
     params.set("color", value.toString());
     return `${pathname}?${params.toString()}`;
   };
