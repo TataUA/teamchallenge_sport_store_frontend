@@ -52,7 +52,10 @@ export const registerUserThunk = createAsyncThunk<
 });
 
 export const loginUserThunk = createAsyncThunk<
-  { accessToken: string },
+  { 
+    accessToken: string, 
+    // refreshToken: string
+  },
   LoginFormValues,
   { rejectValue: string }
 >("auth/login", async (values, thunkApi) => {
@@ -61,6 +64,7 @@ export const loginUserThunk = createAsyncThunk<
     setToken(response.access);
     return {
       accessToken: response.access,
+      // refreshToken: response.refresh,
     };
   } catch (error: any) {
     return thunkApi.rejectWithValue(error.detail || "An error occurred");

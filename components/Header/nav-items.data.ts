@@ -2,20 +2,20 @@ import { NavItem } from '../../services/types'
 
 export const NAV_ITEMS: NavItem[] = [
 	{
-		title: { key: 'men', label: 'Чоловіки', href: '/men' },
+		title: { key: 'men', label: 'Чоловіки', href: '/products?gender=men' },
 		links: [
-			{ key: 'sneakers', label: 'Кросівки', href: '/men/sneakers' },
-			{ key: 't-shirts', label: 'Футболки', href: '/men/t-shirts' },
-			{ key: 'shorts', label: 'Шорти', href: '/men/shorts' },
+			{ key: 'sneakers', label: 'Кросівки', href: '/products/sneakers?gender=Чоловіки&productType=Кросівки' },
+			{ key: 't-shirts', label: 'Футболки', href: '/products/t-shirts?gender=Чоловіки&productType=Футболки' },
+			{ key: 'shorts', label: 'Шорти', href: '/products/shorts?gender=Чоловіки&productType=Шорти' },
 			{
 				key: 'pants',
 				label: 'Штани',
-				href: '/men/pants',
+				href: '/products/pants?gender=Чоловіки&productType=Штани',
 			},
 			{
 				key: 'sweatshirts',
 				label: 'Світшоти',
-				href: '/men/sweatshirts',
+				href: '/products/sweatshirts?gender=Чоловіки&productType=Світшоти',
 			},
 			// { key: 'accessories', label: 'Аксесуари', href: '/men/accessories' },
 			// {
@@ -45,18 +45,18 @@ export const NAV_ITEMS: NavItem[] = [
 	{
 		title: { key: 'women', label: 'Жінки', href: '/women' },
 		links: [
-			{ key: 'sneakers', label: 'Кросівки', href: '/women/sneakers' },
-			{ key: 't-shirts', label: 'Футболки', href: '/women/t-shirts' },
-			{ key: 'shorts', label: 'Шорти', href: '/women/shorts' },
+			{ key: 'sneakers', label: 'Кросівки', href: '/products/sneakers?gender=Жінки&productType=Кросівки' },
+			{ key: 't-shirts', label: 'Футболки', href: '/products/t-shirts?gender=Жінки&productType=Футболки' },
+			{ key: 'shorts', label: 'Шорти', href: '/products/shorts?gender=Жінки&productType=Шорти' },
 			{
 				key: 'pants',
 				label: 'Штани',
-				href: '/women/pants',
+				href: '/products/pants?gender=Жінки&productType=Штани',
 			},
 			{
 				key: 'sweatshirts',
 				label: 'Світшоти',
-				href: '/women/sweatshirts',
+				href: '/products/sweatshirts?gender=Жінки&productType=Світшоти',
 			},
 			// { key: 'accessories', label: 'Аксесуари', href: '/women/accessories' },
 			// {

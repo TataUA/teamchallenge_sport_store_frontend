@@ -4,7 +4,7 @@ import { LoginFormValues } from "@/components/auth/LoginForm";
 import { UserDataEditFormValues } from "@/components/auth/UserDataEdit";
 import { ResetPasswordValuesInterface } from "@/components/reset-password/ResetPasswordForm";
 
-const $instance = axios.create({
+export const $instance = axios.create({
   baseURL: "https://api.sporthubsstore.com/",
 });
 
@@ -69,6 +69,7 @@ export const registerUser = async (
 //login user
 export interface LoginResponseData {
   access: string;
+  // refresh: string;
 }
 
 export const loginUser = async (

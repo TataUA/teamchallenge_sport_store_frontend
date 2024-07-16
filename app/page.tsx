@@ -6,7 +6,7 @@ import dataSlider from '../public/data/slider_data.json'
 export default function Page() {
 	return (
 		<>
-			<Slider data={dataSlider} />
+			<Slider data={dataSlider} homePageMainSlider />
 		</>
 	)
 }
