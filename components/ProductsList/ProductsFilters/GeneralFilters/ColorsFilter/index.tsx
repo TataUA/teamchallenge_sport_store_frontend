@@ -1,30 +1,22 @@
 'use client'
 
+import { useDispatch, useSelector } from "react-redux";
+
+// helpers
 import getCheckedIconSVG from "@/helpers/getCheckedIconSVG";
 import { cn } from "@/services/utils/cn"
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
+// redux
+import { selectGeneralFilters } from "@/redux/generalFilters/generalFiltersSelector";
+import { setColor } from "@/redux/generalFilters/generalFiltersSlice";
 
 interface IProps {
   colors: {title: string, value: string}[]
 }
 
 const ColorsFilter = (props: IProps) => {
-
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const currentFilterValue = searchParams.get("color") || '';
-
-  const createPageURLWithPageParams = (value: string) => {
-    const params = new URLSearchParams(searchParams);
-    if(params.get('color') === value) {
-      params.delete('color')
-      
-      return `${pathname}?${params.toString()}`;
-    }
-    params.set("color", value.toString());
-    return `${pathname}?${params.toString()}`;
-  };
+  const dispatch = useDispatch()
+  const {color} = useSelector(selectGeneralFilters)
 
   return (
     <ul className="list-none">
@@ -32,9 +24,9 @@ const ColorsFilter = (props: IProps) => {
         <li
           className={cn('flex list-none items-center gap-3 mb-2 text-[#272728] cursor-pointer',
             '[&>svg]:hidden', {
-            'text-[#083DC5] [&>svg]:block [&>svg]:ml-auto [&>svg]:size-7': currentFilterValue === colorItem.value
+            'text-[#083DC5] [&>svg]:block [&>svg]:ml-auto [&>svg]:size-7': color === colorItem.value
           })}
-          onClick={() => router.push(createPageURLWithPageParams(colorItem.value))}
+          onClick={() => dispatch(setColor(colorItem.value))}
           key={index}
         >
           <span className={cn('size-8 rounded-[50%]', `bg-${colorItem.value.toLocaleLowerCase()}`,{
@@ -45,7 +37,6 @@ const ColorsFilter = (props: IProps) => {
             {colorItem.title}
           </span>
           {getCheckedIconSVG()}
-          {}
         </li>
       ))}
     </ul>
