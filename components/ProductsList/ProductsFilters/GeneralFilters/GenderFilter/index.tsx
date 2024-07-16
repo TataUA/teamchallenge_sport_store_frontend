@@ -22,7 +22,7 @@ const GenderFilter = (props: IProps) => {
         <li 
           key={index}
           className={cn('flex justify-between [&>svg]:hidden', {
-    'text-blue [&>svg]:block [&>svg]:ml-auto [&>svg]:size-7': currentFilterValue.toLocaleLowerCase() === 'чоловіки'
+    'text-blue [&>svg]:block [&>svg]:ml-auto [&>svg]:size-7': currentFilterValue.toLocaleLowerCase() === 'men'
   })}
         ><span>
           {item.title}
@@ -34,7 +34,7 @@ const GenderFilter = (props: IProps) => {
         <li 
           key={index}
           className={cn('flex justify-between [&>svg]:hidden mb-5', {
-    'text-blue [&>svg]:block [&>svg]:ml-auto [&>svg]:size-7': currentFilterValue.toLocaleLowerCase() === 'жінки'
+    'text-blue [&>svg]:block [&>svg]:ml-auto [&>svg]:size-7': currentFilterValue.toLocaleLowerCase() === 'women'
   })}
         >
         <span>
