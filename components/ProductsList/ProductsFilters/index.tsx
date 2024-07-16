@@ -1,6 +1,6 @@
 // conmponents
 import SortingFilter from "./SortingFilter"
-import GeneralFilter from "./GeneralFilters"
+import GeneralFilters from "./GeneralFilters"
 
 export interface IProductsFiltersProps {
   searchParams: {
@@ -17,7 +17,7 @@ const ProductsFilters = (props: IProductsFiltersProps) => {
   return (
   <div className="flex gap-2">
     <SortingFilter />
-    <GeneralFilter {...props} />
+    <GeneralFilters {...props} />
       </div>
   )
 }
