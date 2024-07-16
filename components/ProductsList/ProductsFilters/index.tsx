@@ -5,11 +5,11 @@ import GeneralFilter from "./GeneralFilters"
 export interface IProductsFiltersProps {
   searchParams: {
     gender: string;
-    productType: string;
+    sub_category: string;
     page?: string;
     sortedBy?: string;
   }
-  params: {productType: string[]}
+  params: {sub_category: string[]}
 }
 
 const ProductsFilters = (props: IProductsFiltersProps) => {

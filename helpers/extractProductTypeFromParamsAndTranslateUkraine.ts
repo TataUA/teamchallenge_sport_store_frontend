@@ -1,6 +1,6 @@
-const extractProductTypeFromParamsAndTranslateUkraine = (productType: string) => {
+const extractProductTypeFromParamsAndTranslateUkraine = (sub_category: string) => {
     let correctProdType = ''
-    switch (productType) {
+    switch (sub_category) {
       case 'sneakers':
         correctProdType = 'Кросівки'
         break;

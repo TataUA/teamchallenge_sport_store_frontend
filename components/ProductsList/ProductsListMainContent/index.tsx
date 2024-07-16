@@ -14,7 +14,7 @@ import extractProductTypeFromParamsAndTranslateUkraine from "@/helpers/extractPr
 const ProductsListMainContent = (props: IProductsPageProps) => {
   const {products, searchParams, params} = props
   
-  const translatedProductType = extractProductTypeFromParamsAndTranslateUkraine(params.productType[0])
+  const translatedProductType = extractProductTypeFromParamsAndTranslateUkraine(params.sub_category[0])
   
   return (
     <section>
