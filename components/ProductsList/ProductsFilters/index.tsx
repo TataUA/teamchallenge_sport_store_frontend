@@ -1,6 +1,7 @@
 // conmponents
 import SortingFilters from "./SortingFilter"
 import GeneralFilters from "./GeneralFilters"
+import { IProduct } from "@/services/types";
 
 export interface IProductsFiltersProps {
   searchParams: {
@@ -10,6 +11,7 @@ export interface IProductsFiltersProps {
     sortedBy?: string;
   }
   params: {sub_category: string[]}
+  products: IProduct[]
 }
 
 const ProductsFilters = (props: IProductsFiltersProps) => {

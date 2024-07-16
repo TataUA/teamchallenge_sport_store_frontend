@@ -14,12 +14,13 @@ import { cn } from "@/services/utils/cn";
 // components
 import FilterModal from "../FilterModal";
 import PriceFilter from "./PriceFilter";
-
-// types
-import { IProductsFiltersProps } from "..";
 import ColorsFilter from "./ColorsFilter";
 import GenderFilter from "./GenderFilter";
 import SizeFilter from "./SizeFilter";
+import InfoGeneralFilters from "./InfoGeneralFilters";
+
+// types
+import { IProductsFiltersProps } from "..";
 
 const GeneralFilters = (props: IProductsFiltersProps) => {
   const [isGeneralFilterOpen, setIsGeneralFilterOpen] = useState(false);
@@ -70,10 +71,7 @@ const GeneralFilters = (props: IProductsFiltersProps) => {
         ))}
         <div className={cn("mb-4 pt-6 relative", 
           'before:absolute before:top-0 before:left-[-24px] before:w-full before:h-[1px] before:bg-[#E7E7E8]')}>
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold mb-2">Нічого не знайдено</h3>
-            <button className="text-sm font-medium text-[#272728] hover:opacity-50">Скинути фільтри</button>
-          </div>
+            <InfoGeneralFilters {...props} />
           <div className="flex justify-center items-center">
             <button className="m-auto w-full py-3 bg-blue text-white font-base font-medium rounded-xl hover:opacity-75">Застосувати</button>
           </div>

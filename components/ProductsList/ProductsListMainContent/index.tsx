@@ -20,7 +20,7 @@ const ProductsListMainContent = (props: IProductsPageProps) => {
     <section>
       <div className="flex justify-between items-center mb-4">
         <div className="text-3xl text-[##1A1A1C] font-bold">{translatedProductType}</div>
-        <ProductsFilters searchParams={searchParams} params={params} />
+        <ProductsFilters {...props} />
       </div>
       {Array.isArray(products) && products.length ? (
         <ClientComponent>
