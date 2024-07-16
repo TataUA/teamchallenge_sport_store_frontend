@@ -1,27 +1,25 @@
 'use client'
 
-import { cn } from "@/services/utils/cn";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+// reducers
+import { setPrice } from "@/redux/generalFilters/generalFiltersSlice";
+
+// selectors
+import { selectGeneralFilters } from "@/redux/generalFilters/generalFiltersSelector";
+
+// helpers
+import { cn } from "@/services/utils/cn";
 
 const PriceFilter = () => {
-  const [minPrice, setMinPrice] = useState(499);
-  const [maxPrice, setMaxPrice] = useState(10999);
+  const dispatch = useDispatch()
+  const {price} = useSelector(selectGeneralFilters)
+
+  const [minPrice, setMinPrice] = useState(price.priceFrom);
+  const [maxPrice, setMaxPrice] = useState(price.priceTo);
   const rangeRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const updateSlider = () => {
-      if (rangeRef.current) {
-        const range = maxPrice - 499;
-        const minPosition = ((minPrice - 499) / range) * 100;
-        const maxPosition = ((maxPrice - 499) / range) * 100;
-        rangeRef.current.style.left = `${minPosition}%`;
-        rangeRef.current.style.width = `${maxPosition - minPosition}%`;
-      }
-    };
-
-    updateSlider();
-  }, [minPrice, maxPrice]);
-
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (name === 'min') {
@@ -29,7 +27,42 @@ const PriceFilter = () => {
     } else {
       setMaxPrice(Math.max(Number(value), minPrice + 1));
     }
+    
   };
+
+  useEffect(() => {
+    let timer 
+    if(!timer) {
+      timer = setTimeout(()=>{
+        const updateSlider = () => {
+          if (rangeRef.current) {
+            const range = maxPrice - 499;
+            const minPosition = ((minPrice - 499) / range) * 100;
+            const maxPosition = ((maxPrice - 499) / range) * 100;
+            rangeRef.current.style.left = `${minPosition}%`;
+            rangeRef.current.style.width = `${maxPosition - minPosition}%`;
+
+            dispatch(setPrice({priceTo: maxPrice, priceFrom: minPrice}))
+          }
+        };
+        updateSlider();
+      },500)
+    }
+
+    return () => {
+      if(timer) clearTimeout(timer)
+    }
+  }, [minPrice, maxPrice, dispatch]);
+
+  // make price defaults after clicked button 'Скинути Фільтри'
+  useEffect(()=>{
+    if(price.priceFrom === 499) {
+      setMinPrice(price.priceFrom);
+    }
+    if(price.priceTo === 10999) {
+      setMaxPrice(price.priceTo);
+    }
+  },[price])
 
   return (
     <div className="w-full">
