@@ -7,8 +7,6 @@ import { AppDispatch } from "@/redux/store";
 import {
   selectIsAuthenticated,
   selectIsLoading,
-  selectIsRefreshing,
-  selectUserData,
 } from "@/redux/auth/authSelector";
 import { setAccessToken } from "@/redux/auth/authSlice";
 import { currentUserThunk } from "@/redux/auth/authThunk";
@@ -24,8 +22,6 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
   const [isInitialized, setIsInitialized] = useState(false);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const isLoading = useSelector(selectIsLoading);
-  const isRefreshing = useSelector(selectIsRefreshing);
-  const user = useSelector(selectUserData);
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
 
@@ -58,7 +54,7 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
-        if (isAuthenticated && isInitialized && !user) {
+        if (isAuthenticated && isInitialized) {
           await dispatch(currentUserThunk()).unwrap();
         }
       } catch (error) {
@@ -70,9 +66,9 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
     if (isAuthenticated && isInitialized) {
       fetchCurrentUser();
     }
-  }, [dispatch, router, isAuthenticated, isInitialized, user]);
+  }, [dispatch, router, isAuthenticated, isInitialized]);
 
-  if (isLoading || isRefreshing || !isInitialized) {
+  if (isLoading || !isInitialized) {
     return <Loader />;
   }
 

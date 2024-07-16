@@ -88,19 +88,19 @@ const authSlice = createSlice({
 
       //current
       .addCase(currentUserThunk.pending, (state) => {
-        state.isRefreshing = true;
+        state.isLoading = true;
         state.error = [];
       })
       .addCase(
         currentUserThunk.fulfilled,
         (state, { payload }: PayloadAction<UserData>) => {
-          state.isRefreshing = false;
+          state.isLoading = false;
           state.isAuthenticated = true;
           state.user = { ...payload };
         }
       )
       .addCase(currentUserThunk.rejected, (state, { payload }) => {
-        state.isRefreshing = false;
+        state.isLoading = false;
         state.isAuthenticated = false;
         if (payload) {
           payload.message.forEach((item: string) => state.error.push(item));
@@ -120,7 +120,7 @@ const authSlice = createSlice({
         }
       )
       .addCase(editUserThunk.rejected, (state, { payload }) => {
-        state.isLoading = false;
+        state.isRefreshing = false;
         if (payload) {
           payload.message.forEach((item: string) => state.error.push(item));
         }
