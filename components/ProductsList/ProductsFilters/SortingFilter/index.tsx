@@ -15,7 +15,7 @@ import FilterModal from "../FilterModal";
 // data
 import { sortingProductsFilers } from "../filtersData";
 
-const SortingFilter = () => {
+const SortingFilters = () => {
   const [isSortingFilterOpen, setIsSortingFilterOpen] = useState(false);
 
   const pathname = usePathname();
@@ -60,4 +60,4 @@ const SortingFilter = () => {
   )
 }
 
-export default SortingFilter
+export default SortingFilters
