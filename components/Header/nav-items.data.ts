@@ -4,18 +4,18 @@ export const NAV_ITEMS: NavItem[] = [
 	{
 		title: { key: 'men', label: 'Чоловіки', href: '/products?gender=men' },
 		links: [
-			{ key: 'sneakers', label: 'Кросівки', href: '/products/sneakers?gender=Чоловіки&productType=Кросівки' },
-			{ key: 't-shirts', label: 'Футболки', href: '/products/t-shirts?gender=Чоловіки&productType=Футболки' },
-			{ key: 'shorts', label: 'Шорти', href: '/products/shorts?gender=Чоловіки&productType=Шорти' },
+			{ key: 'sneakers', label: 'Кросівки', href: '/products/sneakers?gender=men&sub_category=sneakers' },
+			{ key: 't-shirts', label: 'Футболки', href: '/products/t-shirts?gender=men&sub_category=t-shirts' },
+			{ key: 'shorts', label: 'Шорти', href: '/products/shorts?gender=men&sub_category=shorts' },
 			{
 				key: 'pants',
 				label: 'Штани',
-				href: '/products/pants?gender=Чоловіки&productType=Штани',
+				href: '/products/pants?gender=men&sub_category=pants',
 			},
 			{
 				key: 'sweatshirts',
 				label: 'Світшоти',
-				href: '/products/sweatshirts?gender=Чоловіки&productType=Світшоти',
+				href: '/products/sweatshirts?gender=men&sub_category=sweatshirts',
 			},
 			// { key: 'accessories', label: 'Аксесуари', href: '/men/accessories' },
 			// {
@@ -45,18 +45,18 @@ export const NAV_ITEMS: NavItem[] = [
 	{
 		title: { key: 'women', label: 'Жінки', href: '/women' },
 		links: [
-			{ key: 'sneakers', label: 'Кросівки', href: '/products/sneakers?gender=Жінки&productType=Кросівки' },
-			{ key: 't-shirts', label: 'Футболки', href: '/products/t-shirts?gender=Жінки&productType=Футболки' },
-			{ key: 'shorts', label: 'Шорти', href: '/products/shorts?gender=Жінки&productType=Шорти' },
+			{ key: 'sneakers', label: 'Кросівки', href: '/products/sneakers?gender=women&sub_category=sneakers' },
+			{ key: 't-shirts', label: 'Футболки', href: '/products/t-shirts?gender=women&sub_category=t-shirts' },
+			{ key: 'shorts', label: 'Шорти', href: '/products/shorts?gender=women&sub_category=shorts' },
 			{
 				key: 'pants',
 				label: 'Штани',
-				href: '/products/pants?gender=Жінки&productType=Штани',
+				href: '/products/pants?gender=women&sub_category=pants',
 			},
 			{
 				key: 'sweatshirts',
 				label: 'Світшоти',
-				href: '/products/sweatshirts?gender=Жінки&productType=Світшоти',
+				href: '/products/sweatshirts?gender=women&sub_category=sweatshirts',
 			},
 			// { key: 'accessories', label: 'Аксесуари', href: '/women/accessories' },
 			// {
