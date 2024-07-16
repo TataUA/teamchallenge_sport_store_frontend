@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { Formik, Form, FormikHelpers } from "formik";
@@ -8,7 +8,6 @@ import { AppDispatch } from "@/redux/store";
 import { selectUserData } from "@/redux/auth/authSelector";
 import { editUserThunk } from "@/redux/auth/authThunk";
 import { InputLabelField } from "./InputLabelField";
-import { SuccessRegisterModal } from "./SuccessRegisterModal";
 
 export const schema = yup.object().shape({
   name: yup
@@ -58,33 +57,22 @@ export interface UserDataEditFormValues {
   email: string;
 }
 
-let initialValues: UserDataEditFormValues = {
-  name: "",
-  surname: "",
-  patronymic: "",
-  phone: "",
-  email: "",
-};
-
 interface UserDataEditProps {
   setEditData: (edit: boolean) => void;
+  setShowSuccessMessage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const UserDataEdit = (props: UserDataEditProps) => {
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const user = useSelector(selectUserData);
-
   const dispatch: AppDispatch = useDispatch();
 
-  if (user) {
-    initialValues = {
-      name: user.name,
-      surname: user.surname,
-      patronymic: user.patronymic,
-      phone: user.phone,
-      email: user.email,
-    };
-  }
+  const initialValues: UserDataEditFormValues = {
+    name: user?.name || "",
+    surname: user?.surname || "",
+    patronymic: user?.patronymic || "",
+    phone: user?.phone || "",
+    email: user?.email || "",
+  };
 
   const handleSubmit = async (
     values: UserDataEditFormValues,
@@ -92,11 +80,14 @@ export const UserDataEdit = (props: UserDataEditProps) => {
   ) => {
     try {
       const actionResult = await dispatch(editUserThunk(values));
+
       if (editUserThunk.fulfilled.match(actionResult)) {
         resetForm();
-        setShowSuccessModal(true);
+        props.setEditData(false);
+        props.setShowSuccessMessage(true);
       } else if (editUserThunk.rejected.match(actionResult)) {
         let errorData: any = actionResult.payload;
+
         if (
           errorData &&
           errorData.message &&
@@ -192,11 +183,6 @@ export const UserDataEdit = (props: UserDataEditProps) => {
           </Form>
         )}
       </Formik>
-
-      <SuccessRegisterModal
-        showSuccessModal={showSuccessModal}
-        setShowSuccessModal={setShowSuccessModal}
-      />
     </>
   );
 };

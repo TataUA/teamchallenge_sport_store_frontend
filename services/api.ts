@@ -53,6 +53,8 @@ export const registerUser = async (
     repeat_password: repeatPassword,
   };
 
+  clearToken();
+
   try {
     const { data } = await $instance.post<RegisterResponseData>(
       "/user/registration/",

@@ -9,11 +9,12 @@ import { logoutUserThunk } from "@/redux/auth/authThunk";
 
 interface UserDataSaveProps {
   setEditData: (edit: boolean) => void;
+  showSuccessMessage: boolean;
+  setShowSuccessMessage: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const UserDataSave = (props: UserDataSaveProps) => {
   const user = useSelector(selectUserData);
-
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
 
@@ -24,6 +25,12 @@ export const UserDataSave = (props: UserDataSaveProps) => {
 
   return (
     <>
+      {props.showSuccessMessage && (
+        <p className="mb-6 text-center text-sm font-normal text-label">
+          Інформація успішно оновлена
+        </p>
+      )}
+
       <div className="w-full mb-4 p-6 flex flex-col gap-5 rounded-xl bg-blue_trans5">
         <div className="flex">
           <label className="mr-4 label_read">
@@ -85,6 +92,7 @@ export const UserDataSave = (props: UserDataSaveProps) => {
       >
         Редагувати
       </button>
+
       <button
         type="button"
         onClick={handleLogout}
