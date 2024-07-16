@@ -15,9 +15,29 @@ const SizeFilter = (props: IProps) => {
 
   const createPageURLWithParams = (value: string) => {
     const params = new URLSearchParams(searchParams);
-    params.set("size", value.toString());
+    const updatedValue = currentFilterValue ? currentFilterValue + ',' + value.toString() : value.toString()
+    params.set("size", updatedValue);
+
     return `${pathname}?${params.toString()}`;
   };
+
+  const createPageURLWithRemovedParams = (value: string) => {
+    const params = new URLSearchParams(searchParams);
+      const newValue = currentFilterValue.split(',')
+      const index = newValue.indexOf(value)
+      newValue.splice(index, 1)
+
+      params.set("size", newValue.join(','));
+    return `${pathname}?${params.toString()}`;
+  };
+
+  const handleClick = (size: string) => {
+    if(currentFilterValue.includes(size)) {
+      router.push(createPageURLWithRemovedParams(size))
+      return
+    }
+    router.push(createPageURLWithParams(size))
+  }
 
   if(!props.sizes?.length) return null
 
@@ -26,10 +46,10 @@ const SizeFilter = (props: IProps) => {
       <div className="flex gap-2 flex-wrap">
         {props.sizes?.map((size, sizeIndex) => (
           <li 
-            onClick={() => router.push(createPageURLWithParams(size))}
+            onClick={() => handleClick(size)}
             className={cn('list-none size-12 rounded-lg border-[1px] p-4 flex justify-center items-center cursor-pointer',
               'hover:bg-blue hover:text-white', {
-                'border-[#0A4CF6] text-[#0A4CF6]': currentFilterValue.toLowerCase() === size.toLowerCase()
+                'border-[#0A4CF6] text-[#0A4CF6]': currentFilterValue.includes(size)
               }
             )}
             key={sizeIndex}
