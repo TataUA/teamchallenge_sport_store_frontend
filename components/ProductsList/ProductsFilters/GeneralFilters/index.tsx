@@ -40,13 +40,13 @@ const GeneralFilters = (props: IProductsFiltersProps) => {
             {generalFilter.id === 'sizes' && generalFilter.shoesPosibleProductTypes?.includes(props.params.sub_category[0]) ? (
               <>
                 <h3 className="text-base font-semibold text-[#272728] mb-4">{generalFilter.title}</h3>
-                <SizeFilter sizes={generalFilter.sizesShoes} />
+                <SizeFilter shoesSizes={generalFilter.sizesShoes} />
               </>
               ) : null}
             {generalFilter.id === 'sizes' && !generalFilter.shoesPosibleProductTypes?.includes(props.params.sub_category[0]) ? (
               <>
                 <h3 className="text-base font-semibold text-[#272728] mb-4">{generalFilter.title}</h3>
-                <SizeFilter sizes={generalFilter.sizesClothes} />
+                <SizeFilter clothesSizes={generalFilter.sizesClothes} />
                 </>
               ) : null}
             {generalFilter.id === 'price' ? (
@@ -72,9 +72,6 @@ const GeneralFilters = (props: IProductsFiltersProps) => {
         <div className={cn("mb-4 pt-6 relative", 
           'before:absolute before:top-0 before:left-[-24px] before:w-full before:h-[1px] before:bg-[#E7E7E8]')}>
             <InfoGeneralFilters {...props} />
-          <div className="flex justify-center items-center">
-            <button className="m-auto w-full py-3 bg-blue text-white font-base font-medium rounded-xl hover:opacity-75">Застосувати</button>
-          </div>
         </div>
       </FilterModal>
     </>
