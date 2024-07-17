@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 // helpers
 import getSortingIconSVG from "@/helpers/getSortingIconSVG";
-import getCheckedIconSortingOptionSVG from "@/helpers/getCheckedIconSortingOptionSVG";
+import getCheckedIconSVG from "@/helpers/getCheckedIconSVG";
 import { cn } from "@/services/utils/cn";
 
 // components
@@ -15,7 +15,7 @@ import FilterModal from "../FilterModal";
 // data
 import { sortingProductsFilers } from "../filtersData";
 
-const SortingFilter = () => {
+const SortingFilters = () => {
   const [isSortingFilterOpen, setIsSortingFilterOpen] = useState(false);
 
   const pathname = usePathname();
@@ -50,7 +50,7 @@ const SortingFilter = () => {
                 })}
                 onClick={() => router.push(createPageURLWithPageParams(item.id))}
                 >{item.title}</div>
-                {getCheckedIconSortingOptionSVG()}
+                {getCheckedIconSVG()}
             </div>
             <hr />
           </div>
@@ -60,4 +60,4 @@ const SortingFilter = () => {
   )
 }
 
-export default SortingFilter
+export default SortingFilters

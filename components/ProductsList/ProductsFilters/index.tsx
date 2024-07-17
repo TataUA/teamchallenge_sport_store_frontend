@@ -1,22 +1,30 @@
 // conmponents
-import SortingFilter from "./SortingFilter"
-// import GeneralFilter from "./GeneralFilter"
+import SortingFilters from "./SortingFilter"
+import GeneralFilters from "./GeneralFilters"
+import { ClientComponent } from "@/components/ClientComponent";
+
+// typess
+import { IProduct } from "@/services/types";
 
 export interface IProductsFiltersProps {
   searchParams: {
     gender: string;
-    productType: string;
+    sub_category: string;
     page?: string;
     sortedBy?: string;
-}
+  }
+  params: {sub_category: string[]}
+  products: IProduct[]
 }
 
 const ProductsFilters = (props: IProductsFiltersProps) => {
 
   return (
   <div className="flex gap-2">
-    <SortingFilter />
-    {/* <GeneralFilter {...props} /> */}
+    <SortingFilters />
+    <ClientComponent>
+      <GeneralFilters {...props} />
+    </ClientComponent>
       </div>
   )
 }

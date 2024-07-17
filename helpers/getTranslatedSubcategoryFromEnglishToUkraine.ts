@@ -1,6 +1,6 @@
-const extractProductTypeFromParamsAndTranslateUkraine = (productType: string) => {
+const getTranslatedSubcategoryFromEnglishToUkraine = (sub_category: string) => {
     let correctProdType = ''
-    switch (productType) {
+    switch (sub_category.toLowerCase()) {
       case 'sneakers':
         correctProdType = 'Кросівки'
         break;
@@ -23,5 +23,5 @@ const extractProductTypeFromParamsAndTranslateUkraine = (productType: string) =>
     return correctProdType
   }
 
-  export default extractProductTypeFromParamsAndTranslateUkraine
+  export default getTranslatedSubcategoryFromEnglishToUkraine
   

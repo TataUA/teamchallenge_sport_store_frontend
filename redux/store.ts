@@ -10,17 +10,25 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+
+// reducers
 import { authReducer } from "./auth/authSlice";
+import { generalFiltersReducer } from "./generalFilters/generalFiltersSlice";
 
 const authPersistConfig = {
   key: "auth",
   storage,
   whitelist: ["accessToken"],
 };
+const generalFiltersPersistConfig = {
+  key: "generalFilters",
+  storage,
+};
 
 export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
+    generalFilters: persistReducer(generalFiltersPersistConfig, generalFiltersReducer),
     //cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) =>

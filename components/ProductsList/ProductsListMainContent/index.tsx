@@ -8,19 +8,19 @@ import ProductsFilters from "../ProductsFilters"
 import { IProductsPageProps } from ".."
 
 // helpers
-import extractProductTypeFromParamsAndTranslateUkraine from "@/helpers/extractProductTypeFromParamsAndTranslateUkraine"
+import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine"
 
 
 const ProductsListMainContent = (props: IProductsPageProps) => {
   const {products, searchParams, params} = props
   
-  const translatedProductType = extractProductTypeFromParamsAndTranslateUkraine(params.productType[0])
+  const translatedProductType = getTranslatedSubcategoryFromEnglishToUkraine(params.sub_category[0])
   
   return (
     <section>
       <div className="flex justify-between items-center mb-4">
         <div className="text-3xl text-[##1A1A1C] font-bold">{translatedProductType}</div>
-        <ProductsFilters searchParams={searchParams} />
+        <ProductsFilters {...props} />
       </div>
       {Array.isArray(products) && products.length ? (
         <ClientComponent>
