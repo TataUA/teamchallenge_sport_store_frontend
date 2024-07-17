@@ -52,18 +52,18 @@ const InfoGeneralFilters = (props: IProductsFiltersProps) => {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-4 text-sm font-medium text-[#272728]">
+      <div className="flex justify-between items-center mb-4 text-sm font-medium text-[#272728] min-[2800px]:mb-8">
         {props.products?.length ? (
           <div className="flex gap-1">
             <span>{props.products?.length}</span>
             <span>товарів</span>
           </div>
         ) : (
-          <h3 className="text-lg font-semibold mb-2 text-[#DF0707]">Нічого не знайдено</h3>
+          <h3 className="text-lg font-semibold mb-2 text-[#DF0707] min-[2800px]:text-3xl">Нічого не знайдено</h3>
         )}
         <button 
           onClick={() => handleRemoveFilters()}
-          className="hover:opacity-50 underline hover:no-underline"
+          className="hover:opacity-50 underline hover:no-underline min-[2800px]:text-3xl"
         >
           Скинути фільтри
         </button>
@@ -71,7 +71,7 @@ const InfoGeneralFilters = (props: IProductsFiltersProps) => {
       <div className="flex justify-center items-center">
         <button 
         onClick={() => handleApplyFilters()}
-          className="m-auto w-full py-3 bg-blue text-white font-base font-medium rounded-xl hover:opacity-75"
+          className="m-auto w-full py-3 bg-blue text-white font-base font-medium rounded-xl hover:opacity-75 min-[2800px]:text-3xl"
         >
           Застосувати
         </button>

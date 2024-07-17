@@ -32,12 +32,13 @@ const SizeFilter = (props: IProps) => {
 
   return (
     <>
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex gap-2 flex-wrap min-[2800px]:gap-5">
         {props.clothesSizes?.map((size, sizeIndex) => (
           <li 
             onClick={() => handleClickClothes(size)}
             className={cn('list-none size-12 rounded-lg border-[1px] p-4 flex justify-center items-center cursor-pointer',
-              'hover:bg-blue hover:text-white', {
+              'hover:bg-blue hover:text-white',
+              'min-[2800px]:size-20 min-[2800px]:text-3xl', {
                 'border-[#0A4CF6] text-[#0A4CF6]': clothesSizes.includes(size)
               }
             )}
@@ -48,7 +49,8 @@ const SizeFilter = (props: IProps) => {
           <li 
             onClick={() => handleShoesClothes(size)}
             className={cn('list-none size-12 rounded-lg border-[1px] p-4 flex justify-center items-center cursor-pointer',
-              'hover:bg-blue hover:text-white', {
+              'hover:bg-blue hover:text-white',
+              'min-[2800px]:size-20 min-[2800px]:text-3xl', {
                 'border-[#0A4CF6] text-[#0A4CF6]': shoesSizes.includes(size)
               }
             )}

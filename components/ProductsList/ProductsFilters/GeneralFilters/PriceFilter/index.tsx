@@ -66,7 +66,7 @@ const PriceFilter = () => {
 
   return (
     <div className="w-full">
-      <div className="relative h-5 mb-5">
+      <div className="relative h-5 mb-5 min-[2800px]:h-12">
           <input
             type="range"
             min="499"
@@ -89,7 +89,8 @@ const PriceFilter = () => {
           <div className="absolute top-1/2 -translate-y-1/2 h-1 bg-blue-500" ref={rangeRef}></div>
         </div>
         <div className={cn("flex w-full gap-2 [&>span]:w-[50%] [&>span]:border-b-[1px] [&>span]:border-[#868687]",
-          '[&>span]:w-[50%] [&>span]:border-b-[1px] [&>span]:border-[#868687] [&>span]:pb-2'
+          '[&>span]:w-[50%] [&>span]:border-b-[1px] [&>span]:border-[#868687] [&>span]:pb-2',
+          'min-[2800px]:[&>span]:text-3xl'
         )}>
           <span>{minPrice}</span>
           <span>{maxPrice}</span>

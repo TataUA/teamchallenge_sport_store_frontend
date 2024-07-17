@@ -16,14 +16,14 @@ const GenderFilter = (props: IProps) => {
   const currentFilterValue = searchParams.get("gender") || '';
 
   return (
-    <ul className="list-none">
+    <ul className="list-none text-base min-[2800px]:text-3xl">
       {props.values.map((item, index) => {
         if(item.value === 'men') return (
         <li 
           key={index}
           className={cn('flex justify-between [&>svg]:hidden', {
-    'text-blue [&>svg]:block [&>svg]:ml-auto [&>svg]:size-7': currentFilterValue.toLocaleLowerCase() === 'men'
-  })}
+            'text-blue [&>svg]:block [&>svg]:ml-auto [&>svg]:size-7 min-[2800px]:[&>svg]:size-12': currentFilterValue.toLocaleLowerCase() === 'men'
+          })}
         ><span>
           {item.title}
         </span>
@@ -34,8 +34,8 @@ const GenderFilter = (props: IProps) => {
         <li 
           key={index}
           className={cn('flex justify-between [&>svg]:hidden mb-5', {
-    'text-blue [&>svg]:block [&>svg]:ml-auto [&>svg]:size-7': currentFilterValue.toLocaleLowerCase() === 'women'
-  })}
+            'text-blue [&>svg]:block [&>svg]:ml-auto [&>svg]:size-7 min-[2800px]:[&>svg]:size-12': currentFilterValue.toLocaleLowerCase() === 'women'
+          })}
         >
         <span>
           {item.title}

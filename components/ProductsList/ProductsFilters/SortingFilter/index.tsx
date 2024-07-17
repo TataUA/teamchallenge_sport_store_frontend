@@ -34,18 +34,20 @@ const SortingFilters = () => {
     <div>
       <div
         onClick={() => setIsSortingFilterOpen(true)}
-        className={cn("p-3 cursor-pointer border-[1px] rounded-xl border-[#E7E7E8] [&>svg]:hover:opacity-50")}>
+        className={cn(
+          "p-3 cursor-pointer border-[1px] rounded-xl border-[#E7E7E8] [&>svg]:hover:opacity-50",
+          'min-[2800px]:[&>svg]:size-14')}>
         {getSortingIconSVG()}
       </div>
       <FilterModal isOpen={isSortingFilterOpen} onClose={() => setIsSortingFilterOpen(false)}>
-        <h2 className="text-2xl font-bold mb-4 text-center">Сортування</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center min-[2800px]:text-4xl min-[2800px]:mb-8">Сортування</h2>
         {sortingProductsFilers.map((item, index) => (
-          <div key={item.id} className="mb-4">
+          <div key={item.id} className="mb-4 min-[2800px]:mb-8">
             <div className={cn("flex justify-between items-center px-4 [&>svg]:hidden", {
               '[&>svg]:block': currentFilterValue === item.id.toLocaleLowerCase()
             })}>
               <div 
-                className={cn("text-base mb-2 font-medium cursor-pointer hover:opacity-50", {
+                className={cn("text-base mb-2 font-medium cursor-pointer hover:opacity-50 min-[2800px]:text-3xl", {
                   'text-[#0A4CF6]': currentFilterValue === item.id.toLocaleLowerCase()
                 })}
                 onClick={() => router.push(createPageURLWithPageParams(item.id))}
