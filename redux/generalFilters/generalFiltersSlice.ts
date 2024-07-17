@@ -1,15 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IGeneralFiltersState {
-  shoesSizes:  string[];
-  clothesSizes:  string[];
+  sizes:  string[];
   price: {priceFrom: number, priceTo: number} 
   color: string;
 }
 
 const initialState: IGeneralFiltersState = {
-  shoesSizes: [],
-  clothesSizes: [],
+  sizes: [],
   price: {priceFrom: 499, priceTo: 10999} ,
   color: '',
 };
@@ -18,19 +16,12 @@ const generalFiltersSlice = createSlice({
   name: 'generalFilters',
   initialState,
   reducers: {
-    setShoesSize: (state, {payload}:  PayloadAction<string>) => {
-      state.shoesSizes.push(payload)
+    setSize: (state, {payload}:  PayloadAction<string>) => {
+      state.sizes.push(payload)
     },
-    setClothesSize: (state, {payload}:  PayloadAction<string>) => {
-      state.clothesSizes.push(payload)
-    },
-    removeShoesSize: (state, {payload}:  PayloadAction<string>) => {
-      const index = state.shoesSizes.indexOf(payload)
-      state.shoesSizes.splice(index, 1)
-    },
-    removeClothesSize: (state, {payload}:  PayloadAction<string>) => {
-      const index = state.clothesSizes.indexOf(payload)
-      state.clothesSizes.splice(index, 1)
+    removeSize: (state, {payload}:  PayloadAction<string>) => {
+      const index = state.sizes.indexOf(payload)
+      state.sizes.splice(index, 1)
     },
     setPrice: (state, {payload}:  PayloadAction<{priceFrom?: number, priceTo?: number}>) => {
       state.price = {...state.price, ...payload}
@@ -40,12 +31,11 @@ const generalFiltersSlice = createSlice({
     },
     setDefaultsFilters: (state) => {
       state.color = ''
-      state.shoesSizes = []
-      state.clothesSizes = []
+      state.sizes = []
       state.price = {priceFrom: 499, priceTo: 10999}
     }
   }
 })
 
 export const generalFiltersReducer = generalFiltersSlice.reducer;
-export const { setShoesSize, setClothesSize, removeShoesSize, removeClothesSize, setPrice, setColor, setDefaultsFilters } = generalFiltersSlice.actions;
+export const { setSize, removeSize, setPrice, setColor, setDefaultsFilters } = generalFiltersSlice.actions;
