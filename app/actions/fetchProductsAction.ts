@@ -5,8 +5,12 @@ import { cookies } from "next/headers";
 
 const fetchProductsAction = async () => {
   try {
-    const { data } = await $instance.get("/products/");
-    return data;
+    const result = await fetch("https://api.sporthubsstore.com/products/");
+    if(result.status === 200) {
+      const data = result?.json()
+      return data;
+    }
+    return [];
   } catch (error: any) {
     console.log("🚀 ~ fetchProductsAction ~ error:", error.response)
   }
