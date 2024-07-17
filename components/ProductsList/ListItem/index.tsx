@@ -32,7 +32,7 @@ const ListItem = (props: {product: IProduct}) => {
           />
       </div>
       <div 
-        onClick={() => router.replace(`/product/${product.id}`)     }
+        onClick={() => router.push(`/product/${product.id}`)     }
         className="text-[#575758] truncate cursor-pointer hover:opacity-[50%] text-base max-[767px]:text-sm font-medium min-[2800px]:text-3xl"
       >
         {title}
