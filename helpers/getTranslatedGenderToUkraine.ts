@@ -1,5 +1,5 @@
 const getTranslatedGenderToUkraine = (gender: string) => {
-  if(gender === 'Women')  return "Жінки"
-  if(gender === 'Men')  return "Чоловіки"
+  if(gender.toLowerCase() === 'women')  return "жінки"
+  if(gender.toLowerCase() === 'men')  return "чоловіки"
 }
 export default getTranslatedGenderToUkraine
