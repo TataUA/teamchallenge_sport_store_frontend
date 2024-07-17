@@ -20,7 +20,7 @@ export const UserDataSave = (props: UserDataSaveProps) => {
 
   const handleLogout = () => {
     dispatch(logoutUserThunk());
-    router.push("/login");
+    router.push("/");
   };
 
   return (
