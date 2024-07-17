@@ -1,8 +1,5 @@
 'use server';
 
-import { $instance } from "@/services/api";
-import { cookies } from "next/headers";
-
 const fetchProductsAction = async () => {
   try {
     const result = await fetch("https://api.sporthubsstore.com/products/");
