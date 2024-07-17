@@ -38,7 +38,7 @@ const {paginatedProducts, countPages} = getPaginatedItems(products, itemsPerPage
         {paginatedProducts.map((product, index) => (
           <ListItem 
             key={product.id} 
-            product={product} 
+            product={product}
           />
           ))}
       </ul>
