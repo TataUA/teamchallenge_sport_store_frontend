@@ -22,18 +22,19 @@ const ColorsFilter = (props: IProps) => {
     <ul className="list-none">
       {props.colors.map((colorItem, index) => (
         <li
-          className={cn('flex list-none items-center gap-3 mb-2 text-[#272728] cursor-pointer',
+          className={cn('flex list-none items-center gap-3 mb-2 text-[#272728] cursor-pointer min-[2800px]:gap-5 min-[2800px]:mb-5',
             '[&>svg]:hidden', {
-            'text-[#083DC5] [&>svg]:block [&>svg]:ml-auto [&>svg]:size-7': color === colorItem.value
+            'text-[#083DC5] [&>svg]:block [&>svg]:ml-auto [&>svg]:size-7 min-[2800px]:[&>svg]:size-12': color === colorItem.value
           })}
           onClick={() => dispatch(setColor(colorItem.value))}
           key={index}
         >
-          <span className={cn('size-8 rounded-[50%]', `bg-${colorItem.value.toLocaleLowerCase()}`,{
+          <span className={cn('size-8 rounded-[50%]', `bg-${colorItem.value.toLocaleLowerCase()}`,
+          'min-[2800px]:size-16', {
             'border-[1px]': colorItem.value.toLocaleLowerCase() === 'white',
             'bg-colorful-circle bg-center bg-cover': colorItem.value.toLocaleLowerCase() === 'colorful',
           })} />
-          <span className={cn('text-base font-medium')} >
+          <span className={cn('text-base font-medium min-[2800px]:text-3xl')} >
             {colorItem.title}
           </span>
           {getCheckedIconSVG()}

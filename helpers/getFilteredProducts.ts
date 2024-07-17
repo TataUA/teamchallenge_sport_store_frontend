@@ -17,8 +17,10 @@ const getFilteredProducts = ({products, filters}: {products: IProduct[], filters
         if(filter.color){
             return product.color.some(c => c.title.toLowerCase().includes(filter.color.toLowerCase()))
         }
-        if(filter.size){
-            return product.size.some(s => s.value.toLowerCase().includes(filter.size.toLowerCase()))
+        if(filter.sizes){
+            const filterSizes = filter.sizes.split(',')?.map((s: string) => s.trim().toLowerCase());
+            const productSizes = product.size.map(s => s.value.toLowerCase());
+            return filterSizes.some((size: string) => productSizes.includes(size));
         }
             
         return product

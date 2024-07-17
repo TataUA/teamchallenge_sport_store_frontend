@@ -1,3 +1,5 @@
+// helpers
+import getTranslatedGenderToUkraine from "@/helpers/getTranslatedGenderToUkraine"
 import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine"
 
 interface IProps {
@@ -11,8 +13,8 @@ const NavigationByCategoryAndGender = (props: IProps) => {
   const translatedProductType = getTranslatedSubcategoryFromEnglishToUkraine(sub_category[0])
 
   return (
-    <div className='flex gap-2 mb-5 text-base font-medium max-[767px]:text-sm min-[2800px]:text-3xl min-[2800px]:mx-10'>
-      <span>{gender}</span>
+    <div className='flex gap-2 mb-5 text-base font-medium max-[767px]:text-sm min-[2800px]:text-4xl min-[2800px]:mb-10'>
+      <span className="capitalize">{getTranslatedGenderToUkraine(gender)}</span>
       <span>&gt;</span>
       <span>{translatedProductType}</span>
     </div>

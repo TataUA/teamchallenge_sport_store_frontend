@@ -20,7 +20,7 @@ export interface IProductsFiltersProps {
 const ProductsFilters = (props: IProductsFiltersProps) => {
 
   return (
-  <div className="flex gap-2">
+  <div className="flex gap-2 min-[2800px]:gap-6">
     <SortingFilters />
     <ClientComponent>
       <GeneralFilters {...props} />

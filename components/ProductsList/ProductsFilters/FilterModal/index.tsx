@@ -73,7 +73,9 @@ const FilterModal = ({ isOpen, onClose, children }: IProps) => {
           `${isMobile ? 'max-w-full' : 'max-w-lg'}`,
           `${isMobile 
             ? 'rounded-t-3xl h-[90vh] transition-transform duration-300 ease-out'
-            : 'rounded-lg'}`)}
+            : 'rounded-lg'}`,
+            'min-[2800px]:p-10 rounded-3xl min-[2800px]:max-w-5xl',
+          )}
         style={modalStyle}
         onClick={(e) => e.stopPropagation()}
         onTouchStart={isMobile ? handleTouchStart : emptyHandler}
@@ -85,7 +87,7 @@ const FilterModal = ({ isOpen, onClose, children }: IProps) => {
         )}
         {!isMobile ? (
           <button 
-          className="float-right text-2xl bg-transparent border-none cursor-pointer"
+          className="float-right text-2xl bg-transparent border-none cursor-pointer min-[2800px]:text-4xl"
           onClick={onClose}
         >
           &times;

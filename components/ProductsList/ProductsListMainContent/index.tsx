@@ -18,8 +18,10 @@ const ProductsListMainContent = (props: IProductsPageProps) => {
   
   return (
     <section>
-      <div className="flex justify-between items-center mb-4">
-        <div className="text-3xl text-[##1A1A1C] font-bold">{translatedProductType}</div>
+      <div className="flex justify-between items-center mb-4 min-[2800px]:mb-10">
+        <div className="text-3xl text-[##1A1A1C] font-bold min-[2800px]:text-5xl">
+          {translatedProductType}
+        </div>
         <ProductsFilters {...props} />
       </div>
       {Array.isArray(products) && products.length ? (
@@ -28,7 +30,10 @@ const ProductsListMainContent = (props: IProductsPageProps) => {
         </ClientComponent>
       ) : null}
       {Array.isArray(products) && !products.length ? (
-        <>Empty Array</>
+        <div className="text-base min-[2800px]:text-3xl">
+          <div>Нажаль не має товарів які відповідають вибраним критеріям</div>
+          <div>Спробуйте змінити фільтри пошуку</div>
+        </div>
       ) : null}
     </section>
   )
