@@ -46,6 +46,10 @@ export const schema = yup.object().shape({
   email: yup
     .string()
     .email("Введіть дійсну електронну адресу")
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "Невірний формат адреси електронної пошти"
+    )
     .required("Це поле обов'язкове"),
   password: yup
     .string()
@@ -110,6 +114,10 @@ export const RegisterForm = () => {
             errorData.message.includes("user with this email already exists.")
           ) {
             setErrors({ email: "Така пошта вже зареєстрована" });
+          } else if (
+            errorData.message.includes("Enter a valid email address.")
+          ) {
+            setErrors({ email: "Адреса введеної пошти не вірна" });
           } else if (
             errorData.message.includes("The phone number entered is not valid.")
           ) {
