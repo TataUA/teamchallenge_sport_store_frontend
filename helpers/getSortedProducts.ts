@@ -1,8 +1,13 @@
 import { IProduct } from "@/services/types";
 
 const getSortedProducts = ({products, direction = 'popularity'}: {products: IProduct[], direction?: string}) => [...products].sort((a, b) => {
-      if (a.price < b.price) return direction === 'ascent' ? -1 : 1;
-      if (a.price > b.price) return direction === 'descent' ? 1 : -1;
+      const aPrice = Number(a.price);
+      const bPrice = Number(b.price);
+      if (direction === 'ascent') {
+        return aPrice - bPrice;
+      } else if (direction === 'descent') {
+        return bPrice - aPrice;
+      }
       return 0;
     });
 
