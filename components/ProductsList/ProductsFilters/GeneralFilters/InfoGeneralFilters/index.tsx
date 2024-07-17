@@ -21,8 +21,7 @@ const InfoGeneralFilters = (props: IProductsFiltersProps) => {
   const removeParamsGeneralFiltersFromUrl = () => {
     const params = new URLSearchParams(searchParams);
     
-    params.delete("size");
-    params.delete("size");
+    params.delete("sizes");
     params.delete("price_to");
     params.delete("price_from");
     params.delete("color");
@@ -33,10 +32,10 @@ const InfoGeneralFilters = (props: IProductsFiltersProps) => {
   const applyGeneralFilters = () => {
     const params = new URLSearchParams(searchParams);
     
-    params.set("size", filters.clothesSizes.join(','));
-    params.set("price_to", filters.price.priceTo.toString());
-    params.set("price_from", filters.price.priceFrom.toString());
-    params.set("color", filters.color);
+    if(filters.sizes.length) params.set("sizes", filters.sizes.join(','));
+    if(filters.price.priceTo !== 10999) params.set("price_to", filters.price.priceTo.toString());
+    if(filters.price.priceFrom !== 499) params.set("price_from", filters.price.priceFrom.toString());
+    if(filters.color) params.set("color", filters.color);
     
     return `${pathname}?${params.toString()}`;
   };

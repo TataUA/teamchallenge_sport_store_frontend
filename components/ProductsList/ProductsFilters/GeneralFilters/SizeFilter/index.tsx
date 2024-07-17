@@ -3,7 +3,7 @@
 import { cn } from "@/services/utils/cn"
 import { useDispatch, useSelector } from "react-redux";
 
-import { removeClothesSize, removeShoesSize, setClothesSize, setShoesSize } from "@/redux/generalFilters/generalFiltersSlice";
+import { removeSize, setSize } from "@/redux/generalFilters/generalFiltersSlice";
 import { selectGeneralFilters } from "@/redux/generalFilters/generalFiltersSelector";
 
 interface IProps {
@@ -13,21 +13,14 @@ interface IProps {
 
 const SizeFilter = (props: IProps) => {
   const dispatch = useDispatch()
-  const {shoesSizes, clothesSizes} = useSelector(selectGeneralFilters);
-
-  const handleClickClothes = (size: string) => {
-    if(clothesSizes.includes(size)) {
-      dispatch(removeClothesSize(size))
+  const {sizes} = useSelector(selectGeneralFilters);
+ 
+  const handleClick = (size: string) => {
+    if(sizes.includes(size)) {
+      dispatch(removeSize(size))
       return
     }
-    dispatch(setClothesSize(size))
-  }
-  const handleShoesClothes = (size: string) => {
-    if(shoesSizes.includes(size)) {
-      dispatch(removeShoesSize(size))
-      return
-    }
-    dispatch(setShoesSize(size))
+    dispatch(setSize(size))
   }
 
   return (
@@ -35,11 +28,11 @@ const SizeFilter = (props: IProps) => {
       <div className="flex gap-2 flex-wrap min-[2800px]:gap-5">
         {props.clothesSizes?.map((size, sizeIndex) => (
           <li 
-            onClick={() => handleClickClothes(size)}
+            onClick={() => handleClick(size)}
             className={cn('list-none size-12 rounded-lg border-[1px] p-4 flex justify-center items-center cursor-pointer',
               'hover:bg-blue hover:text-white',
               'min-[2800px]:size-20 min-[2800px]:text-3xl', {
-                'border-[#0A4CF6] text-[#0A4CF6]': clothesSizes.includes(size)
+                'border-[#0A4CF6] text-[#0A4CF6]': sizes.includes(size)
               }
             )}
             key={sizeIndex}
@@ -47,11 +40,11 @@ const SizeFilter = (props: IProps) => {
         ))}
         {props.shoesSizes?.map((size, sizeIndex) => (
           <li 
-            onClick={() => handleShoesClothes(size)}
+            onClick={() => handleClick(size)}
             className={cn('list-none size-12 rounded-lg border-[1px] p-4 flex justify-center items-center cursor-pointer',
               'hover:bg-blue hover:text-white',
               'min-[2800px]:size-20 min-[2800px]:text-3xl', {
-                'border-[#0A4CF6] text-[#0A4CF6]': shoesSizes.includes(size)
+                'border-[#0A4CF6] text-[#0A4CF6]': sizes.includes(size)
               }
             )}
             key={sizeIndex}
