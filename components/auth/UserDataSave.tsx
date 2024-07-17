@@ -3,9 +3,11 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { AppDispatch } from "@/redux/store";
 import { selectUserData } from "@/redux/auth/authSelector";
 import { logoutUserThunk } from "@/redux/auth/authThunk";
+import success from "@/public/icons/success_blue.svg";
 
 interface UserDataSaveProps {
   setEditData: (edit: boolean) => void;
@@ -20,15 +22,18 @@ export const UserDataSave = (props: UserDataSaveProps) => {
 
   const handleLogout = () => {
     dispatch(logoutUserThunk());
-    router.push("/login");
+    router.push("/");
   };
 
   return (
     <>
       {props.showSuccessMessage && (
-        <p className="mb-6 text-center text-sm font-normal text-label">
-          Інформація успішно оновлена
-        </p>
+        <div className="mb-6 flex flex-col justify-center items-center self-center">
+          <Image src={success} alt="Синя галочка" className="w-14 h-14 mb-2" />
+          <p className="text-sm font-normal text-label">
+            Інформація успішно оновлена
+          </p>
+        </div>
       )}
 
       <div className="w-full mb-4 p-6 flex flex-col gap-5 rounded-xl bg-blue_trans5">
