@@ -20,15 +20,11 @@ const authPersistConfig = {
   storage,
   whitelist: ["accessToken"],
 };
-const generalFiltersPersistConfig = {
-  key: "generalFilters",
-  storage,
-};
 
 export const store = configureStore({
   reducer: {
-    auth: persistReducer(authPersistConfig, authReducer),
-    generalFilters: persistReducer(generalFiltersPersistConfig, generalFiltersReducer),
+    auth: persistReducer<ReturnType<typeof authReducer>>(authPersistConfig, authReducer),
+    generalFilters: generalFiltersReducer,
     //cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) =>
