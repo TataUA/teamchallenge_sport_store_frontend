@@ -14,6 +14,7 @@ interface IProps {
 
 const List = (props: IProps) => {
   const {products, searchParams} = props
+  console.log("🚀 ~ List ~ products:", products)
   const {gender, page} = searchParams
 
   const currentPage = Number(page) || 1;
@@ -31,6 +32,7 @@ const getPaginatedItems = useCallback((items: IProduct[], itemsPerPage: number, 
 const itemsPerPage = 8;
 
 const {paginatedProducts, countPages} = getPaginatedItems(products, itemsPerPage, currentPage);
+console.log("🚀 ~ List ~ paginatedProducts:", paginatedProducts)
 
   return (
     <div>
