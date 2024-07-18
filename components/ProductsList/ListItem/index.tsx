@@ -14,6 +14,7 @@ import { IProduct } from "@/services/types"
 
 const ListItem = (props: {product: IProduct}) => {
   const {product} = props
+  console.log("🚀 ~ ListItem ~ product:", product)
   const {title, color, price} = product
 
   const router = useRouter()

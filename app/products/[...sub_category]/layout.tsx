@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
 import PaginationWrapper from './PaginationWrapper';
+
 interface LayoutProps {
   children: ReactNode;
 }
