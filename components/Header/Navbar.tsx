@@ -1,9 +1,9 @@
 import Image from 'next/image'
 import menuIcon from '../../public/icons/header/mob-menu.svg'
+import { UsernavMobile } from '../header/UsernavMobile'
+import { NAV_ITEMS } from '../header/nav-items.data'
+import { NavItemListMobile } from '../header/navItemListMobile/NavItemListMobile'
 import { Modal } from '../modal/Modal'
-import { NAV_ITEMS } from './nav-items.data'
-import { NavItemListMobile } from './navItemListMobile/NavItemListMobile'
-import { UsernavMobile } from './UsernavMobile'
 
 interface NavbarProps {
 	isModalOpen: boolean
