@@ -31,7 +31,7 @@ const getProductById = async (product_id: string) => {
 export default async function ProductsPage(props: IProductsPageInitialProps) {
 	const product = await getProductById(props.params.product_id[0]);
 	return (
-		<section className='px-6 pt-4 pb-12'>
+		<section className='px-6 pt-4 pb-8'>
 			<ProductById product={product} />
 		</section>
 	)
