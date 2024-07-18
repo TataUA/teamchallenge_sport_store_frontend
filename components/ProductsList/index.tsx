@@ -22,6 +22,7 @@ const ProductsList = (props: IProductsPageProps) => {
 			<div className=''>
 				<ProductsListMainContent
 				{...props}
+				products={products}
 			/>
 			</div>
 		</section>
