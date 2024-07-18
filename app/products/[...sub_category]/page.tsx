@@ -43,6 +43,7 @@ export interface IProductsPageInitialProps {
 
 const getSortedAndFilteredProducts = async (filters: IFilters) => {
 	const products: IProduct[] = await fetchProductsAction()
+	console.log("🚀 ~ getSortedAndFilteredProducts ~ products:", products)
 
   const filteredProductByCategoryAndGender = products.filter(product => 
 		(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === filters.sub_category) 
