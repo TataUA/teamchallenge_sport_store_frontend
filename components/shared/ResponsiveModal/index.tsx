@@ -7,7 +7,7 @@ interface IProps {
   children: React.ReactNode
 }
 
-const FilterModal = ({ isOpen, onClose, children }: IProps) => {
+const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
   const [isMobile, setIsMobile] = useState(false);
   const modalRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -99,4 +99,4 @@ const FilterModal = ({ isOpen, onClose, children }: IProps) => {
   );
 };
 
-export default FilterModal;
+export default ResponsiveModal;
