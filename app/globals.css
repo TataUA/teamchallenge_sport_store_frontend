@@ -59,33 +59,47 @@ body {
   .wrapper {
     @apply min-h-full flex flex-col;
   }
+
   .container {
     @apply mx-auto px-6;
   }
+
   .loader {
     @apply flex align-middle justify-center mt-16;
   }
+
   .input {
-    @apply w-full border-b h-13 pt-5 pb-2 border-border outline-none focus:ring-0 text-base font-medium;
-    color: var(--primary);
+    @apply w-full border-b h-13 pt-5 pb-2 border-border outline-none focus:ring-0 text-base font-medium text-primary;
   }
+
   .input:-webkit-autofill {
     color: inherit;
     font-weight: inherit;
     font-size: inherit;
   }
+
   .input:focus {
     @apply border-blue;
   }
+
   .label {
     @apply text-base font-medium text-label;
   }
+
   .peer-placeholder-shown {
     @apply text-base text-label;
   }
 
   .peer-focus {
     @apply text-sm text-blue border-blue;
+  }
+
+  .label_read {
+    @apply block mb-1 text-xs font-medium text-label;
+  }
+
+  .input_read {
+    @apply block bg-transparent text-base font-medium text-primary;
   }
 
   .transition-all {

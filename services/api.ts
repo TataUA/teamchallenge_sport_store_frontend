@@ -1,6 +1,7 @@
 import axios from "axios";
 import { RegisterFormValues } from "@/components/auth/RegisterForm";
 import { LoginFormValues } from "@/components/auth/LoginForm";
+import { UserDataEditFormValues } from "@/components/auth/UserDataEdit";
 import { ResetPasswordValuesInterface } from "@/components/reset-password/ResetPasswordForm";
 
 export const $instance = axios.create({
@@ -52,6 +53,8 @@ export const registerUser = async (
     repeat_password: repeatPassword,
   };
 
+  clearToken();
+
   try {
     const { data } = await $instance.post<RegisterResponseData>(
       "/user/registration/",
@@ -86,6 +89,39 @@ export const loginUser = async (
 export const currentUser = async (): Promise<RegisterResponseData> => {
   try {
     const { data } = await $instance.get("/user/me/");
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
+//edit user
+export interface EditUserRequestData {
+  first_name: string;
+  surname: string;
+  last_name: string;
+  phone_number: string;
+  email: string;
+}
+
+export const editUser = async (
+  values: UserDataEditFormValues
+): Promise<RegisterResponseData> => {
+  const { name, surname, patronymic, phone, email } = values;
+
+  const requestData: EditUserRequestData = {
+    first_name: name,
+    surname,
+    last_name: patronymic,
+    phone_number: phone,
+    email,
+  };
+
+  try {
+    const { data } = await $instance.put<RegisterResponseData>(
+      "/user/profile/",
+      requestData
+    );
     return data;
   } catch (error: any) {
     throw error.response.data;
