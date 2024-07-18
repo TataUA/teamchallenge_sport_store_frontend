@@ -1,11 +1,14 @@
 'use server';
 
-import { $instance } from "@/services/api";
-
 const fetchProductByIdAction = async (id: number | string) => {
   try {
-    const { data } = await $instance.get(`/products/${id}/`);
-    return data;
+    const result = await fetch(`https://api.sporthubsstore.com/products/${id}/`);
+    if(result.status === 200) {
+      const data = result?.json()
+      return data;
+    }
+    return [];
+
   } catch (error: any) {
     console.log("🚀 ~ fetchProductsAction ~ error:", error.response)
   }
