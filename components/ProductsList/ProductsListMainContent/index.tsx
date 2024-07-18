@@ -13,7 +13,6 @@ import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslate
 
 const ProductsListMainContent = (props: IProductsPageProps) => {
   const {products, searchParams, params} = props
-  console.log("🚀 ~ ProductsListMainContent ~ products:", products)
   
   const translatedProductType = getTranslatedSubcategoryFromEnglishToUkraine(params.sub_category[0])
   

@@ -5,7 +5,6 @@ const fetchProductsAction = async () => {
     const result = await fetch("https://api.sporthubsstore.com/products/");
     if(result.status === 200) {
       const data = await result?.json()
-      console.log("🚀 ~ fetchProductsAction ~ data:", await data)
       return data;
     }
     return [];

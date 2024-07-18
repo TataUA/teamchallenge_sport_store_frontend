@@ -1,4 +1,9 @@
+// types
 import { IProduct } from "@/services/types"
+
+// Components
+import NavigationComponent from "./NavigationComponent"
+import ProductInfo from "./ProductInfo"
 
 interface IProps {
   product: IProduct
@@ -7,7 +12,8 @@ interface IProps {
 const ProductById = (props: IProps) => {
   return (
     <div>
-      {props.product.description}
+      <NavigationComponent subCategory={props.product.category.sub_category} />
+      <ProductInfo {...props} />
     </div>
   )
 }

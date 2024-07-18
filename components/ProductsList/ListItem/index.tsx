@@ -14,6 +14,7 @@ import { IProduct } from "@/services/types"
 
 const ListItem = (props: {product: IProduct}) => {
   const {product} = props
+  console.log("🚀 ~ ListItem ~ product:", product)
   const {title, color, price} = product
 
   const router = useRouter()
@@ -29,6 +30,7 @@ const ListItem = (props: {product: IProduct}) => {
           productsList
           autoPlay={false} 
           data={getArrayWithExtractedImgUrl(product)}
+          className={'h-[224px] min-[2800px]:h-[600px]'}
           />
       </div>
       <div 
@@ -47,7 +49,6 @@ const ListItem = (props: {product: IProduct}) => {
               })}
           />
         ))}
-        <li></li>
       </ul>
       <div 
         className="text-[#1A1A1C] truncate text-xl max-[767px]:text-base font-semibold min-[2800px]:text-4xl"

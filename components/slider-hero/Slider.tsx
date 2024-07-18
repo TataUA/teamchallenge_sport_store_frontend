@@ -20,15 +20,17 @@ interface SliderProps {
 	autoPlay?: boolean
 	homePageMainSlider?: boolean
 	productsList?: boolean
+	className?: string
 }
 
-export function Slider({ data, autoPlay = true, homePageMainSlider = false, productsList=false }: SliderProps) {
+export function Slider({ 
+	data, 
+	autoPlay = true, 
+	className='',
+	}: SliderProps) {
 	return (
 		<section className='w-full'>
-			<div className={cn('', {
-				'min-h-[400px] h-[50dvh]': homePageMainSlider,
-				'h-[224px] min-[2800px]:h-[600px]': productsList
-			})}>
+			<div className={cn('', className)}>
 				<ul className='h-full w-full'>
 					<Swiper
 						className='h-full'

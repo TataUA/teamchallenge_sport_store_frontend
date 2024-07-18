@@ -43,27 +43,21 @@ export interface IProductsPageInitialProps {
 
 const getSortedAndFilteredProducts = async (filters: IFilters) => {
 	const products: IProduct[] = await fetchProductsAction()
-	console.log("🚀 ~ getSortedAndFilteredProducts ~ products:", products)
 
-  // const filteredProductByCategoryAndGender = products.filter(product => 
-	// 	(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === filters.sub_category) 
-	// && (product.category.gender.toLowerCase() === filters.gender.toLowerCase()))
-  // console.log("🚀 ~ getSortedAndFilteredProducts ~ filteredProductByCategoryAndGender:", filteredProductByCategoryAndGender)
+  const filteredProductByCategoryAndGender = products.filter(product => 
+		(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === filters.sub_category) 
+	&& (product.category.gender.toLowerCase() === filters.gender.toLowerCase()))
 
-	// const sortedProducts = getSortedProducts({products: filteredProductByCategoryAndGender, direction: filters.sortedBy})
-	// console.log("🚀 ~ getSortedAndFilteredProducts ~ sortedProducts:", sortedProducts)
+	const sortedProducts = getSortedProducts({products: filteredProductByCategoryAndGender, direction: filters.sortedBy})
 	
-	// const arraOfFiltersFromFiltersObject = Object.entries(filters).map(([key, value]) => ({ [key]: value }));
-	// console.log("🚀 ~ getSortedAndFilteredProducts ~ arraOfFiltersFromFiltersObject:", arraOfFiltersFromFiltersObject)
-	// const filteredProductsByGeneralFilters = getFilteredProducts({products: sortedProducts, filters: arraOfFiltersFromFiltersObject})
-	// console.log("🚀 ~ getSortedAndFilteredProducts ~ filteredProductsByGeneralFilters:", filteredProductsByGeneralFilters)
+	const arraOfFiltersFromFiltersObject = Object.entries(filters).map(([key, value]) => ({ [key]: value }));
+	const filteredProductsByGeneralFilters = getFilteredProducts({products: sortedProducts, filters: arraOfFiltersFromFiltersObject})
 	
-	return products
+	return filteredProductsByGeneralFilters
 };
 
 export default async function ProductsPage(props: IProductsPageInitialProps) {
 	const products = await getSortedAndFilteredProducts(props.searchParams);
-	console.log("🚀 ~ ProductsPage ~ products:", products)
 	return (
 		<section className='px-6 pt-4 pb-12'>
 				<ProductsList {...props} products={products} />

@@ -12,7 +12,7 @@ import { generalProductsFilers } from "../filtersData";
 import { cn } from "@/services/utils/cn";
 
 // components
-import FilterModal from "../FilterModal";
+import ResponsiveModal from "../../../shared/ResponsiveModal";
 import PriceFilter from "./PriceFilter";
 import ColorsFilter from "./ColorsFilter";
 import GenderFilter from "./GenderFilter";
@@ -35,7 +35,7 @@ const GeneralFilters = (props: IProductsFiltersProps) => {
         >
         {getFiltersIconSVG()}
       </div>
-      <FilterModal isOpen={isGeneralFilterOpen} onClose={() => setIsGeneralFilterOpen(false)}>
+      <ResponsiveModal isOpen={isGeneralFilterOpen} onClose={() => setIsGeneralFilterOpen(false)}>
         <h2 className="text-2xl font-bold mb-4 text-center min-[2800px]:text-4xl">Фільтри</h2>
         {generalProductsFilers.map((generalFilter, index) => (
           <div className="mb-10 min-[2800px]:mb-20" key={index}>
@@ -75,7 +75,7 @@ const GeneralFilters = (props: IProductsFiltersProps) => {
           'before:absolute before:top-0 before:left-[-24px] before:w-full before:h-[1px] before:bg-[#E7E7E8]')}>
             <InfoGeneralFilters {...props} />
         </div>
-      </FilterModal>
+      </ResponsiveModal>
     </>
   )
 }
