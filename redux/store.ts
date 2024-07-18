@@ -14,6 +14,8 @@ import storage from "redux-persist/lib/storage";
 // reducers
 import { authReducer } from "./auth/authSlice";
 import { generalFiltersReducer } from "./generalFilters/generalFiltersSlice";
+import { currentProductReducer } from "./currentProduct/currentProductSlice";
+import { cartReducer } from "./cart/cartSlice";
 
 const authPersistConfig = {
   key: "auth",
@@ -25,7 +27,8 @@ export const store = configureStore({
   reducer: {
     auth: persistReducer<ReturnType<typeof authReducer>>(authPersistConfig, authReducer),
     generalFilters: generalFiltersReducer,
-    //cart: cartReducer,
+    currentProduct: currentProductReducer,
+    cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
