@@ -1,4 +1,4 @@
-import SvgComponent from '@/components/SvgComponent/SvgComponent'
+import SvgComponent from '@/components/svgComponent/SvgComponent'
 import { iconsData } from '@/constants'
 import Link from 'next/link'
 import { useState } from 'react'

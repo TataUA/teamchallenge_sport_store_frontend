@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import closeIcon from '../../public/icons/header/close.svg'
-import { Logo } from '../Logo/Logo'
+import { Logo } from '../logo/Logo'
 
 interface ModalProps {
 	show: boolean

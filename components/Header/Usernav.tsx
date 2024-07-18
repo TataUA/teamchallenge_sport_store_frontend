@@ -1,7 +1,7 @@
 'use client'
 
 import { ClientComponent } from '../ClientComponent'
-import HeaderNavLink from './HeaderNavLink/HeaderNavLink'
+import HeaderNavLink from './headerNavLink/HeaderNavLink'
 
 export const Usernav = () => {
 	return (

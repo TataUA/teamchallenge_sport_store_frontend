@@ -2,8 +2,8 @@
 import { headerNav, iconsData } from '@/constants'
 import Link from 'next/link'
 import { useState } from 'react'
-import SvgComponent from '../../SvgComponent/SvgComponent'
-import { SearchForm } from '../SearchForm/SearchForm'
+import SvgComponent from '../../svgComponent/SvgComponent'
+import { SearchForm } from '../searchForm/SearchForm'
 
 const HeaderNavLink = () => {
 	const [isHovered, setIsHovered] = useState('')

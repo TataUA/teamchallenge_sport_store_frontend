@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Logo } from '../Logo/Logo'
+import { Logo } from '../logo/Logo'
 import { Navbar } from './Navbar'
 import { Usernav } from './Usernav'
 
