@@ -46,6 +46,10 @@ export const schema = yup.object().shape({
   email: yup
     .string()
     .email("Введіть дійсну електронну адресу")
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "Невірний формат адреси електронної пошти"
+    )
     .required("Це поле обов'язкове"),
   password: yup
     .string()
@@ -111,6 +115,10 @@ export const RegisterForm = () => {
           ) {
             setErrors({ email: "Така пошта вже зареєстрована" });
           } else if (
+            errorData.message.includes("Enter a valid email address.")
+          ) {
+            setErrors({ email: "Адреса введеної пошти не вірна" });
+          } else if (
             errorData.message.includes("The phone number entered is not valid.")
           ) {
             setErrors({ phone: "Введений номер не вірний" });
@@ -138,73 +146,75 @@ export const RegisterForm = () => {
         onSubmit={handleSubmit}
       >
         {(formik) => (
-          <Form autoComplete="off" className="flex flex-col gap-4">
-            <InputLabelField
-              label="Ім'я"
-              name="name"
-              type="text"
-              inputMode="text"
-              placeholder=""
-              formik={formik}
-            />
+          <Form autoComplete="off" className="flex flex-col ">
+            <div className="flex flex-col gap-4 mb-8">
+              <InputLabelField
+                label="Ім'я"
+                name="name"
+                type="text"
+                inputMode="text"
+                placeholder=""
+                formik={formik}
+              />
 
-            <InputLabelField
-              label="Прізвище"
-              name="surname"
-              type="text"
-              inputMode="text"
-              placeholder=""
-              formik={formik}
-            />
+              <InputLabelField
+                label="Прізвище"
+                name="surname"
+                type="text"
+                inputMode="text"
+                placeholder=""
+                formik={formik}
+              />
 
-            <InputLabelField
-              label="По-батькові"
-              name="patronymic"
-              type="text"
-              inputMode="text"
-              placeholder=""
-              formik={formik}
-            />
+              <InputLabelField
+                label="По-батькові"
+                name="patronymic"
+                type="text"
+                inputMode="text"
+                placeholder=""
+                formik={formik}
+              />
 
-            <InputLabelField
-              label="Номер телефону"
-              name="phone"
-              type="text"
-              inputMode="tel"
-              placeholder="+380*********"
-              formik={formik}
-            />
+              <InputLabelField
+                label="Номер телефону"
+                name="phone"
+                type="text"
+                inputMode="tel"
+                placeholder="+380*********"
+                formik={formik}
+              />
 
-            <InputLabelField
-              label="Електронна пошта"
-              name="email"
-              type="email"
-              inputMode="email"
-              placeholder="example@gmail.com"
-              formik={formik}
-            />
+              <InputLabelField
+                label="Електронна пошта"
+                name="email"
+                type="email"
+                inputMode="email"
+                placeholder="example@gmail.com"
+                formik={formik}
+              />
 
-            <InputLabelField
-              label="Пароль"
-              name="password"
-              type="password"
-              inputMode="text"
-              placeholder="******"
-              formik={formik}
-            />
+              <InputLabelField
+                label="Пароль"
+                name="password"
+                type="password"
+                inputMode="text"
+                placeholder="******"
+                formik={formik}
+              />
 
-            <InputLabelField
-              label="Повторити пароль"
-              name="repeatPassword"
-              type="password"
-              inputMode="text"
-              placeholder="******"
-              formik={formik}
-            />
-
+              <InputLabelField
+                label="Повторити пароль"
+                name="repeatPassword"
+                type="password"
+                inputMode="text"
+                placeholder="******"
+                formik={formik}
+              />
+            </div>
             <button
               type="submit"
-              className="h-12 mb-2 px-6 border border-blue rounded-xl bg-blue text-base font-semibold  text-white hover:bg-white hover:text-blue transition-all"
+              disabled={formik.isSubmitting}
+              className="h-12 mb-2 px-6 rounded-xl bg-blue text-base font-semibold  text-white hover:bg-active_blue transition-all"
             >
               Зареєструватись
             </button>

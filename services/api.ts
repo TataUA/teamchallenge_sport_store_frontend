@@ -1,10 +1,11 @@
 import axios from "axios";
 import { RegisterFormValues } from "@/components/auth/RegisterForm";
 import { LoginFormValues } from "@/components/auth/LoginForm";
+import { UserDataEditFormValues } from "@/components/auth/UserDataEdit";
 import { ResetPasswordValuesInterface } from "@/components/reset-password/ResetPasswordForm";
 
-const $instance = axios.create({
-  baseURL: "http://34.66.71.139:8000",
+export const $instance = axios.create({
+  baseURL: "https://api.sporthubsstore.com/",
 });
 
 //Token
@@ -16,8 +17,7 @@ export const clearToken = () => {
   $instance.defaults.headers["Authorization"] = "";
 };
 
-//User
-//register
+//register user
 export interface RegisterRequestData {
   first_name: string;
   surname: string;
@@ -53,6 +53,8 @@ export const registerUser = async (
     repeat_password: repeatPassword,
   };
 
+  clearToken();
+
   try {
     const { data } = await $instance.post<RegisterResponseData>(
       "/user/registration/",
@@ -64,21 +66,76 @@ export const registerUser = async (
   }
 };
 
-//login
-export const loginUser = async (values: LoginFormValues) => {
+//login user
+export interface LoginResponseData {
+  access: string;
+  // refresh: string;
+}
+
+export const loginUser = async (
+  values: LoginFormValues
+): Promise<LoginResponseData> => {
   const { email, password } = values;
-  const { data } = await $instance.post("/auth/token/", { email, password });
-  return data;
+
+  try {
+    const { data } = await $instance.post("/user/login/", { email, password });
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
 };
 
-export const currentUser = async () => {
-  const { data } = await $instance.get("/user/me");
-  return data;
+//current user
+export const currentUser = async (): Promise<RegisterResponseData> => {
+  try {
+    const { data } = await $instance.get("/user/me/");
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
 };
 
+//edit user
+export interface EditUserRequestData {
+  first_name: string;
+  surname: string;
+  last_name: string;
+  phone_number: string;
+  email: string;
+}
+
+export const editUser = async (
+  values: UserDataEditFormValues
+): Promise<RegisterResponseData> => {
+  const { name, surname, patronymic, phone, email } = values;
+
+  const requestData: EditUserRequestData = {
+    first_name: name,
+    surname,
+    last_name: patronymic,
+    phone_number: phone,
+    email,
+  };
+
+  try {
+    const { data } = await $instance.put<RegisterResponseData>(
+      "/user/profile/",
+      requestData
+    );
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
+//logout user
 export const logoutUser = async () => {
-  const { data } = await $instance.post("/user/logout/");
-  return data;
+  try {
+    const { data } = await $instance.post("/user/logout/");
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
 };
 
 // export const resetPasswordRequest = async (values: ResetPasswordValues) => {

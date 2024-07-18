@@ -2,20 +2,20 @@ import { NavItem } from '../../services/types'
 
 export const NAV_ITEMS: NavItem[] = [
 	{
-		title: { key: 'men', label: 'Чоловіки', href: '/men' },
+		title: { key: 'men', label: 'Чоловіки', href: '/products?gender=men' },
 		links: [
-			{ key: 'sneakers', label: 'Кросівки', href: '/men/sneakers' },
-			{ key: 't-shirts', label: 'Футболки', href: '/men/t-shirts' },
-			{ key: 'shorts', label: 'Шорти', href: '/men/shorts' },
+			{ key: 'sneakers', label: 'Кросівки', href: '/products/sneakers?gender=men&sub_category=sneakers' },
+			{ key: 't-shirts', label: 'Футболки', href: '/products/t-shirts?gender=men&sub_category=t-shirts' },
+			{ key: 'shorts', label: 'Шорти', href: '/products/shorts?gender=men&sub_category=shorts' },
 			{
 				key: 'pants',
 				label: 'Штани',
-				href: '/men/pants',
+				href: '/products/pants?gender=men&sub_category=pants',
 			},
 			{
 				key: 'sweatshirts',
 				label: 'Світшоти',
-				href: '/men/sweatshirts',
+				href: '/products/sweatshirts?gender=men&sub_category=sweatshirts',
 			},
 			// { key: 'accessories', label: 'Аксесуари', href: '/men/accessories' },
 			// {
@@ -45,18 +45,18 @@ export const NAV_ITEMS: NavItem[] = [
 	{
 		title: { key: 'women', label: 'Жінки', href: '/women' },
 		links: [
-			{ key: 'sneakers', label: 'Кросівки', href: '/women/sneakers' },
-			{ key: 't-shirts', label: 'Футболки', href: '/women/t-shirts' },
-			{ key: 'shorts', label: 'Шорти', href: '/women/shorts' },
+			{ key: 'sneakers', label: 'Кросівки', href: '/products/sneakers?gender=women&sub_category=sneakers' },
+			{ key: 't-shirts', label: 'Футболки', href: '/products/t-shirts?gender=women&sub_category=t-shirts' },
+			{ key: 'shorts', label: 'Шорти', href: '/products/shorts?gender=women&sub_category=shorts' },
 			{
 				key: 'pants',
 				label: 'Штани',
-				href: '/women/pants',
+				href: '/products/pants?gender=women&sub_category=pants',
 			},
 			{
 				key: 'sweatshirts',
 				label: 'Світшоти',
-				href: '/women/sweatshirts',
+				href: '/products/sweatshirts?gender=women&sub_category=sweatshirts',
 			},
 			// { key: 'accessories', label: 'Аксесуари', href: '/women/accessories' },
 			// {

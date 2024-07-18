@@ -1,13 +1,19 @@
-import { redirect } from "next/navigation";
+import React from "react";
+import { ClientComponent } from "@/components/ClientComponent";
+import { PrivateRouteComponent } from "@/components/PrivateRouteComponent";
+import { UserData } from "@/components/auth/UserData";
 
 export default function Profile() {
-  const authenticate = 0;
-  if (!authenticate) {
-    redirect("/login");
-  }
   return (
-    <>
-      <h1>Особистий кабінет</h1>
-    </>
+    <ClientComponent>
+      <PrivateRouteComponent>
+        <div className="container">
+          <h1 className="mt-4 mb-6 text-2xl font-bold text-title">
+            Особистий кабінет
+          </h1>
+          <UserData />
+        </div>
+      </PrivateRouteComponent>
+    </ClientComponent>
   );
 }

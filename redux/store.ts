@@ -10,7 +10,10 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+
+// reducers
 import { authReducer } from "./auth/authSlice";
+import { generalFiltersReducer } from "./generalFilters/generalFiltersSlice";
 
 const authPersistConfig = {
   key: "auth",
@@ -20,7 +23,8 @@ const authPersistConfig = {
 
 export const store = configureStore({
   reducer: {
-    auth: persistReducer(authPersistConfig, authReducer),
+    auth: persistReducer<ReturnType<typeof authReducer>>(authPersistConfig, authReducer),
+    generalFilters: generalFiltersReducer,
     //cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -35,6 +39,7 @@ export const persistor = persistStore(store);
 
 export type AppState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
   AppState,
