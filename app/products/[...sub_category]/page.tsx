@@ -48,17 +48,22 @@ const getSortedAndFilteredProducts = async (filters: IFilters) => {
   const filteredProductByCategoryAndGender = products.filter(product => 
 		(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === filters.sub_category) 
 	&& (product.category.gender.toLowerCase() === filters.gender.toLowerCase()))
+  console.log("🚀 ~ getSortedAndFilteredProducts ~ filteredProductByCategoryAndGender:", filteredProductByCategoryAndGender)
 
 	const sortedProducts = getSortedProducts({products: filteredProductByCategoryAndGender, direction: filters.sortedBy})
+	console.log("🚀 ~ getSortedAndFilteredProducts ~ sortedProducts:", sortedProducts)
 	
 	const arraOfFiltersFromFiltersObject = Object.entries(filters).map(([key, value]) => ({ [key]: value }));
+	console.log("🚀 ~ getSortedAndFilteredProducts ~ arraOfFiltersFromFiltersObject:", arraOfFiltersFromFiltersObject)
 	const filteredProductsByGeneralFilters = getFilteredProducts({products: sortedProducts, filters: arraOfFiltersFromFiltersObject})
+	console.log("🚀 ~ getSortedAndFilteredProducts ~ filteredProductsByGeneralFilters:", filteredProductsByGeneralFilters)
 	
 	return filteredProductsByGeneralFilters
 };
 
 export default async function ProductsPage(props: IProductsPageInitialProps) {
 	const products = await getSortedAndFilteredProducts(props.searchParams);
+	console.log("🚀 ~ ProductsPage ~ products:", products)
 	return (
 		<section className='px-6 pt-4 pb-12'>
 				<ProductsList {...props} products={products} />

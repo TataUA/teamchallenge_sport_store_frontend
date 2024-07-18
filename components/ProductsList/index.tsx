@@ -13,6 +13,7 @@ export interface IProductsPageProps extends IProductsPageInitialProps {
 
 const ProductsList = (props: IProductsPageProps) => {
   const {products, ...otherProps} = props
+  console.log("🚀 ~ ProductsList ~ products:", products)
   
 	return (
 		<section className='h-full w-full'>

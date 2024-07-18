@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 
 import { ReactNode } from 'react';
 
@@ -11,7 +11,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   // removing page parameter from url
   // when user leaves from current page with products
-  usePagination()
+  // usePagination()
 
   return (
     <div>
