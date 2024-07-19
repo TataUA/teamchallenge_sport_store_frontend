@@ -1,10 +1,11 @@
 // helpers
+import { IFilters } from "@/app/products/[...sub_category]/page"
 import getTranslatedGenderToUkraine from "@/helpers/getTranslatedGenderToUkraine"
 import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine"
 
 interface IProps {
   params: { sub_category: Array<string> },
-  searchParams: { gender: string, sub_category: string }
+  searchParams: IFilters
 }
 
 const NavigationByCategoryAndGender = (props: IProps) => {
