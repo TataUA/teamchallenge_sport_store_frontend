@@ -26,6 +26,7 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
+      setCurrentY(0)
     }
     return () => {
       document.body.style.overflow = 'unset';
