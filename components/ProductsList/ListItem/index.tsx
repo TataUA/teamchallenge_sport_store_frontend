@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter } from "next/navigation"
+import { useEffect } from "react"
 
 // utils
 import { cn } from "@/services/utils/cn"
@@ -14,11 +15,14 @@ import { IProduct } from "@/services/types"
 
 const ListItem = (props: {product: IProduct}) => {
   const {product} = props
-  // console.log("🚀 ~ ListItem ~ product:", product)
-  console.log("🚀 ~ ListItem ~ product:", product)
   const {title, color, price} = product
-
+  
   const router = useRouter()
+  
+  // TODO remove log
+  useEffect(()=>{
+    console.log("🚀 ~ ListItem ~ product:", product)
+  },[product])
 
   return (
     <div 
