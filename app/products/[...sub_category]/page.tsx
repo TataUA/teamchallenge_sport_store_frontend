@@ -34,23 +34,29 @@ export interface IProductsPageInitialProps {
 }
 
 
-const getSortedAndFilteredProducts = async (filters: IFilters) => {
+const getSortedAndFilteredProducts = async ({filters, sub_category}:{filters: IFilters, sub_category: string}) => {
 	const products: IProduct[] = await fetchProductsAction()
 
-  // const filteredProductByCategoryAndGender = products.filter(product => 
-	// 	(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === filters.sub_category) 
-	// && (product.category.gender.toLowerCase() === filters.gender.toLowerCase()))
+	const filteredProductBySubcategory = products.filter(product => 
+			(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === sub_category.toLowerCase()))
+	
+		const filteredProductByGender = filteredProductBySubcategory.filter(product => {
+			if(filters.gender) {
+				return (product.category.gender.toLowerCase() === filters.gender?.toLowerCase())
+			}
+			return product
+		})
 
-	// const sortedProducts = getSortedProducts({products: filteredProductByCategoryAndGender, direction: filters.sortedBy})
+	const sortedProducts = getSortedProducts({products: filteredProductByGender, direction: filters.sortedBy})
 	
-	// const arraOfFiltersFromFiltersObject = Object.entries(filters).map(([key, value]) => ({ [key]: value }));
-	// const filteredProductsByGeneralFilters = getFilteredProducts({products: sortedProducts, filters: arraOfFiltersFromFiltersObject})
+	const arraOfFiltersFromFiltersObject = Object.entries({...filters, sub_category }).map(([key, value]) => ({ [key]: value }));
+	const filteredProductsByGeneralFilters = getFilteredProducts({products: sortedProducts, filters: arraOfFiltersFromFiltersObject})
 	
-	return products
+	return filteredProductsByGeneralFilters
 };
 
 export default async function ProductsPage(props: IProductsPageInitialProps) {
-	const products = await getSortedAndFilteredProducts(props.searchParams);
+	const products = await getSortedAndFilteredProducts({filters:props.searchParams, sub_category: props.params.sub_category[0]});
 	return (
 		<section className='px-6 pt-4 pb-12'>
 				<ProductsList {...props} products={products} />

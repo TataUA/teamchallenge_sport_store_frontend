@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 // types
 import { IProductsPageInitialProps } from '@/app/products/[...sub_category]/page'
 import { IProduct } from '@/services/types'
@@ -18,28 +18,28 @@ export interface IProductsPageProps extends IProductsPageInitialProps {
 const ProductsList = (props: IProductsPageProps) => {
   const {products, ...otherProps} = props
 	
-	useEffect(()=>{
-		console.log("🚀 ~ ProductsList ~ products:", products)
+	// useEffect(()=>{
+	// 	console.log("🚀 ~ ProductsList ~ products:", products)
 
-		const filters = otherProps.searchParams
-		console.log("🚀 ~ ProductsList ~ filters:", filters)
+	// 	const filters = otherProps.searchParams
+	// 	console.log("🚀 ~ ProductsList ~ filters:", filters)
 	
-		const filteredProductBySubcategory = products.filter(product => 
-			(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === otherProps.params.sub_category[0].toLowerCase()))
-		console.log("🚀 ~ ProductsList ~ filteredProductBySubcategory:", filteredProductBySubcategory)
+	// 	const filteredProductBySubcategory = products.filter(product => 
+	// 		(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === otherProps.params.sub_category[0].toLowerCase()))
+	// 	console.log("🚀 ~ ProductsList ~ filteredProductBySubcategory:", filteredProductBySubcategory)
 	
-		const filteredProductByGender = filteredProductBySubcategory.filter(product => 
-			(product.category.gender.toLowerCase() === filters.gender.toLowerCase()))
+	// 	const filteredProductByGender = filteredProductBySubcategory.filter(product => 
+	// 		(product.category.gender.toLowerCase() === filters.gender.toLowerCase()))
 		
-		console.log("🚀 ~ ProductsList ~ filteredProductBySubcategory:", filteredProductByGender)
-		console.log('---------------------------------------------');
+	// 	console.log("🚀 ~ ProductsList ~ filteredProductBySubcategory:", filteredProductByGender)
+	// 	console.log('---------------------------------------------');
 		
-		// const sortedProducts = getSortedProducts({products: filteredProductByCategoryAndGender, direction: filters.sortedBy})
+	// 	// const sortedProducts = getSortedProducts({products: filteredProductByCategoryAndGender, direction: filters.sortedBy})
 		
-		// const arraOfFiltersFromFiltersObject = Object.entries(filters).map(([key, value]) => ({ [key]: value }));
-		// const filteredProductsByGeneralFilters = getFilteredProducts({products: sortedProducts, filters: arraOfFiltersFromFiltersObject})
+	// 	// const arraOfFiltersFromFiltersObject = Object.entries(filters).map(([key, value]) => ({ [key]: value }));
+	// 	// const filteredProductsByGeneralFilters = getFilteredProducts({products: sortedProducts, filters: arraOfFiltersFromFiltersObject})
 
-	},[otherProps.searchParams, products, otherProps.params])
+	// },[otherProps.searchParams, products, otherProps.params])
 
   
 	return (
