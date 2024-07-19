@@ -44,16 +44,16 @@ export interface IProductsPageInitialProps {
 const getSortedAndFilteredProducts = async (filters: IFilters) => {
 	const products: IProduct[] = await fetchProductsAction()
 
-  const filteredProductByCategoryAndGender = products.filter(product => 
-		(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === filters.sub_category) 
-	&& (product.category.gender.toLowerCase() === filters.gender.toLowerCase()))
+  // const filteredProductByCategoryAndGender = products.filter(product => 
+	// 	(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === filters.sub_category) 
+	// && (product.category.gender.toLowerCase() === filters.gender.toLowerCase()))
 
-	const sortedProducts = getSortedProducts({products: filteredProductByCategoryAndGender, direction: filters.sortedBy})
+	// const sortedProducts = getSortedProducts({products: filteredProductByCategoryAndGender, direction: filters.sortedBy})
 	
-	const arraOfFiltersFromFiltersObject = Object.entries(filters).map(([key, value]) => ({ [key]: value }));
-	const filteredProductsByGeneralFilters = getFilteredProducts({products: sortedProducts, filters: arraOfFiltersFromFiltersObject})
+	// const arraOfFiltersFromFiltersObject = Object.entries(filters).map(([key, value]) => ({ [key]: value }));
+	// const filteredProductsByGeneralFilters = getFilteredProducts({products: sortedProducts, filters: arraOfFiltersFromFiltersObject})
 	
-	return filteredProductsByGeneralFilters
+	return products
 };
 
 export default async function ProductsPage(props: IProductsPageInitialProps) {

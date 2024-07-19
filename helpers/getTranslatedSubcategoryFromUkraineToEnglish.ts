@@ -4,6 +4,9 @@ const getTranslatedSubcategoryFromUkraineToEnglish = (sub_category: string) => {
       case 'кросівки':
         correctProdType = 'sneakers'
         break;
+      case 'кеди':
+        correctProdType = 'sneakers'
+        break;
       case 'футболки':
         correctProdType = 't-shirts'
         break;
