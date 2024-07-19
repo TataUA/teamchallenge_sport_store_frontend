@@ -73,7 +73,7 @@ const GeneralFilters = (props: IProductsFiltersProps) => {
         ))}
         <div className={cn("mb-4 pt-6 relative", 
           'before:absolute before:top-0 before:left-[-24px] before:w-full before:h-[1px] before:bg-[#E7E7E8]')}>
-            <InfoGeneralFilters {...props} />
+            <InfoGeneralFilters onClose={() => setIsGeneralFilterOpen(false)} {...props} />
         </div>
       </ResponsiveModal>
     </>
