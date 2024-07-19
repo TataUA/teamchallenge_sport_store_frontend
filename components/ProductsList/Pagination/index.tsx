@@ -81,9 +81,10 @@ const Pagination = ({ pageCount }: Readonly<PaginationProps>) => {
             key={i} 
             onClick={() => router.push(createPageURLWithPageParams(i))}
             className={cn("cursor-pointer text-[#B7B7B8] py-1 px-2 min-[2800px]:text-4xl", 
-              'after:block after:bg-blue after:size-2 after:rounded-[50%] after:absolute',
-              'min-[2800px]:after:size-5',
-                {'text-[#272728]': i == currentPage})}
+              'min-[2800px]:after:size-5', {
+                'after:block after:bg-blue after:size-2 after:rounded-[50%] after:absolute': i == currentPage,
+                  'text-[#272728]': i == currentPage,
+                })}
           >
             {i}
           </li>
