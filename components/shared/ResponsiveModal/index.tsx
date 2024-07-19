@@ -50,7 +50,7 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
 
   const handleTouchEnd = () => {
     setIsDragging(false);
-    if (currentY > window.innerHeight * 0.8) {
+    if (currentY > window.innerHeight * 0.5) {
       onClose();
     } else {
       setCurrentY(0);
@@ -71,10 +71,10 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
     >
       <div
         ref={modalRef}
-        className={cn('bg-white p-5 pt-0 w-full max-w-lg max-h-[90vh] overflow-y-auto',
+        className={cn('bg-white p-5 pt-0 w-full max-w-lg max-h-[85vh] overflow-y-auto',
           `${isMobile ? 'max-w-full' : 'max-w-lg'}`,
           `${isMobile 
-            ? 'rounded-t-3xl h-[90vh] transition-transform duration-300 ease-out'
+            ? 'rounded-t-3xl h-[85vh] transition-transform duration-300 ease-out'
             : 'rounded-lg'}`,
           'min-[2800px]:p-10 rounded-3xl min-[2800px]:max-w-5xl',
         )}
