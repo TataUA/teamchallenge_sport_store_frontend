@@ -5,14 +5,11 @@ import { ClientComponent } from "@/components/ClientComponent";
 
 // typess
 import { IProduct } from "@/services/types";
+import { IProductsPageInitialProps } from "@/app/product/[...product_id]/page";
+import { IFilters } from "@/app/products/[...sub_category]/page";
 
 export interface IProductsFiltersProps {
-  searchParams: {
-    gender: string;
-    sub_category: string;
-    page?: string;
-    sortedBy?: string;
-  }
+  searchParams: IFilters
   params: {sub_category: string[]}
   products: IProduct[]
 }

@@ -18,7 +18,7 @@ export const metadata = {
 	description: 'Products Page with listed products',
 }
 
-interface IFilters {
+export interface IFilters {
 	gender: string, 
 	page?: string, 
 	sub_category?: string, 
@@ -30,14 +30,7 @@ interface IFilters {
 
 export interface IProductsPageInitialProps {
 	params: {sub_category: string[]}
-	searchParams: {
-		gender: string, 
-		page?: string, 
-		sub_category?: string
-		sortedBy?: string;
-		sizes?: string;
-		color?: string;
-	}
+	searchParams: IFilters
 }
 
 

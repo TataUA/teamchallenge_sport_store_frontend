@@ -6,10 +6,11 @@ import { IProduct } from "@/services/types"
 // components
 import ListItem from "../ListItem"
 import Pagination from "../Pagination"
+import { IFilters } from "@/app/products/[...sub_category]/page"
 
 interface IProps {
   products: IProduct[]
-  searchParams: {gender: string, page?: string, sub_category: string}
+  searchParams: IFilters
 }
 
 const List = (props: IProps) => {
