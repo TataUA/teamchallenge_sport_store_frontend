@@ -40,6 +40,13 @@ const currentProductSlice = createSlice({
     setCurrentProduct: (state, {payload}:  PayloadAction<IProduct>) => {
       state.product = {...payload}
     },
+    setDefaultCurrentProduct: (state) => {
+      state.sizes = []
+      state.price = 0
+      state.color = ''
+      state.isSizeModalOpened = false
+      state.product = null
+    },
   }
 })
 
@@ -51,4 +58,5 @@ export const {
   setCurrentProductColor,
   setIsSizeModalOpened,
   setCurrentProduct,
+  setDefaultCurrentProduct,
   } = currentProductSlice.actions;
