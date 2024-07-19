@@ -21,7 +21,7 @@ export const metadata = {
 interface IFilters {
 	gender: string, 
 	page?: string, 
-	sub_category: string, 
+	sub_category?: string, 
 	sortedBy?: string
 	sizes?: string
 	price?: string
