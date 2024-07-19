@@ -18,7 +18,7 @@ export const generalProductsFilers = [
     title: 'Розмір',
     shoesPosibleProductTypes: ['shoes', 'sneakers'],
     id: 'sizes',
-    sizesShoes: ['36', '37', '38','39', '40', '41','42','43','44','44','45'],
+    sizesShoes: ['36', '37', '38','39', '40', '41','42','43','44','45'],
     sizesClothes: ['S', 'M', 'L','XL', 'XXL']
   },
   {
