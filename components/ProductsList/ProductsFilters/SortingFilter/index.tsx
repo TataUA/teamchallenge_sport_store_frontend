@@ -29,6 +29,11 @@ const SortingFilters = () => {
     return `${pathname}?${params.toString()}`;
   };
 
+  const handleClick = (id: string) => {
+    router.push(createPageURLWithPageParams(id))
+    setIsSortingFilterOpen(false)
+  }
+
 
   return (
     <div>
@@ -50,7 +55,7 @@ const SortingFilters = () => {
                 className={cn("text-base mb-2 font-medium cursor-pointer hover:opacity-50 min-[2800px]:text-3xl", {
                   'text-[#0A4CF6]': currentFilterValue === item.id.toLocaleLowerCase()
                 })}
-                onClick={() => router.push(createPageURLWithPageParams(item.id))}
+                onClick={() => handleClick(item.id)}
                 >{item.title}</div>
                 {getCheckedIconSVG()}
             </div>
