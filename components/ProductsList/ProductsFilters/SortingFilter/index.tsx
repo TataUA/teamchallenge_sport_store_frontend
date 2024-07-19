@@ -10,7 +10,7 @@ import getCheckedIconSVG from "@/helpers/getCheckedIconSVG";
 import { cn } from "@/services/utils/cn";
 
 // components
-import FilterModal from "../FilterModal";
+import ResponsiveModal from "../../../shared/ResponsiveModal";
 
 // data
 import { sortingProductsFilers } from "../filtersData";
@@ -39,7 +39,7 @@ const SortingFilters = () => {
           'min-[2800px]:[&>svg]:size-14')}>
         {getSortingIconSVG()}
       </div>
-      <FilterModal isOpen={isSortingFilterOpen} onClose={() => setIsSortingFilterOpen(false)}>
+      <ResponsiveModal isOpen={isSortingFilterOpen} onClose={() => setIsSortingFilterOpen(false)}>
         <h2 className="text-2xl font-bold mb-4 text-center min-[2800px]:text-4xl min-[2800px]:mb-8">Сортування</h2>
         {sortingProductsFilers.map((item, index) => (
           <div key={item.id} className="mb-4 min-[2800px]:mb-8">
@@ -57,7 +57,7 @@ const SortingFilters = () => {
             <hr />
           </div>
         ))}
-      </FilterModal>
+      </ResponsiveModal>
     </div>
   )
 }
