@@ -1,6 +1,6 @@
 'use client'
 
-import {  useState } from "react"
+import {  useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -15,12 +15,15 @@ import { cn } from "@/services/utils/cn"
 
 // redux
 import { selectCurrentProduct } from "@/redux/currentProduct/currentProductSelector"
-import { setIsSizeModalOpened } from "@/redux/currentProduct/currentProductSlice"
+import { setDefaultCurrentProduct, setIsSizeModalOpened } from "@/redux/currentProduct/currentProductSlice"
 import { setProduct } from "@/redux/cart/cartSlice"
 import { selectCart } from "@/redux/cart/cartSelector"
 
 // types
 import { IProduct } from "@/services/types"
+
+// data
+import { generalProductsFilers } from "@/components/ProductsList/ProductsFilters/filtersData"
 
 const AddProductToCartComponent = ({product}: {product: IProduct}) => {
   const [isSuccessModalIsOpened, setIsSuccessModalIsOpened] = useState(false)
@@ -31,14 +34,26 @@ const AddProductToCartComponent = ({product}: {product: IProduct}) => {
   const currentProduct = useSelector(selectCurrentProduct)
   const {sizes: sizesStored} = currentProduct
 
-  const handleClickCartButton = () => {
-      if(!sizesStored?.length) {
-        dispatch(setIsSizeModalOpened(true))
-        return
-      }
-      setIsSuccessModalIsOpened(true)
-      dispatch(setProduct(product))
+  const isShoesSizes = () => {
+    if(sizesStored?.length) {
+      const shoesSizes = generalProductsFilers.filter(item => item.id === 'sizes')[0].sizesShoes
+      return shoesSizes?.includes(sizesStored[0])
     }
+  }
+
+  const handleClickCartButton = () => {
+    if(!sizesStored?.length) {
+      dispatch(setIsSizeModalOpened(true))
+      return
+    }
+    setIsSuccessModalIsOpened(true)
+    dispatch(setProduct(product))
+  }
+
+  useEffect(()=>{
+    dispatch(setDefaultCurrentProduct())
+  },[dispatch])
+
   return (
     <div>
       <div 
@@ -53,7 +68,7 @@ const AddProductToCartComponent = ({product}: {product: IProduct}) => {
             Додати до кошика
       </div>
       <ResponsiveModal isOpen={isSuccessModalIsOpened} onClose={() => setIsSuccessModalIsOpened(false)}>
-          <div className="flex gap-3 justify-center items-center mb-10">
+          <div className="flex gap-3 pt-5 justify-center items-center mb-10">
             <span className="bg-blue rounded-[50%] [&>svg]:fill-white [&>svg]:text-white">{getCheckedIconSVG()}</span>
             <h3 className="text-xl text-[#272728]">Товар додано в кошик!</h3>
           </div>
@@ -69,7 +84,11 @@ const AddProductToCartComponent = ({product}: {product: IProduct}) => {
             <div className="flex flex-col justify-evenly flex-1">
               <p>{product.title}</p>
               <div className="flex justify-between">
-                <span className="text-[#868687] text-sm">Розмір: {sizesStored.join(' UA, ')}</span>
+                <span 
+                className="text-[#868687] text-sm"
+                >
+                  Розмір: {isShoesSizes() ? sizesStored.map((el:string) => el + ' UA').join(', ') : sizesStored.join(' , ')}
+                  </span>
                 <span className="text-[#1A1A1C] font-semibold text-base">{product.price} грн</span>
               </div>
             </div>
