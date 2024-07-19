@@ -1,4 +1,3 @@
-
 // types
 import { IProductsPageInitialProps } from '@/app/products/[...sub_category]/page'
 import { IProduct } from '@/services/types'
