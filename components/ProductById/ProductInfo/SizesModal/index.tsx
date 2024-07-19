@@ -15,23 +15,34 @@ import getArrowDownSVG from "@/helpers/getArrowDownSVG"
 import { cn } from "@/services/utils/cn"
 import getMessageIconSVG from "@/helpers/getMessageIconSVG"
 
+interface IProps {
+  existedSizesFromDb: {id:number, value: string}[], 
+  translatedSubCategory: string
+}
 
-const SizesModal = ({sizeFromDb}: any) => {
+const SizesModal = ({existedSizesFromDb, translatedSubCategory}: IProps) => {
   const dispatch = useDispatch()
   const {sizes: sizesStored, isSizeModalOpened} = useSelector(selectCurrentProduct)
 
+  const sizesFromDbFilteredValues = existedSizesFromDb.map((item) => item.value)
+
   const arrayOfSizes = generalProductsFilers.filter(filter => filter.id === 'sizes')
-    .map((item, index) => item.sizesShoes)[0];
-
-    const sizesFromDbFilteredValues = sizeFromDb.map((item: {id: string, value: string}) => item.value)
-
-    const handleClickSize = (size: string) => {
-      if(sizesStored.includes(size)) {
-        dispatch(removeCurrentProductSize(size))
-        return
-      }
-      dispatch(setCurrentProductSize(size))
+  .map((item, index) => {
+    if(item.shoesPosibleProductTypes?.includes(translatedSubCategory)) {
+      return item.sizesShoes
     }
+    return item.sizesClothes
+  })[0];
+
+
+  const handleClickSize = (size: string) => {
+    if(sizesStored.includes(size)) {
+      dispatch(removeCurrentProductSize(size))
+      return
+    }
+    dispatch(setCurrentProductSize(size))
+  }
+
   return (
     <>
       <div className="mb-8">
@@ -79,8 +90,12 @@ const SizesModal = ({sizeFromDb}: any) => {
                   key={index}
                   >
                     {size}
-                    {' '}
-                    {'UA'}
+                    {isNaN(Number(size)) ? null : (
+                      <>
+                        {' '}
+                        {'UA'}
+                      </>
+                    )}
                     {sizesFromDbFilteredValues.includes(size) ? null : (
                       <span className="flex gap-2 items-center text-xs font-medium text=[#272728]">
                         {getMessageIconSVG()}

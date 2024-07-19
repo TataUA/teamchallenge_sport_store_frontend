@@ -4,6 +4,7 @@ import { Slider } from "@/components/slider-hero/Slider"
 
 // helpers
 import getArrayWithExtractedImgUrl from "@/helpers/getArrayWithExtractedImgUrl"
+import getTranslatedSubcategoryFromUkraineToEnglish from "@/helpers/getTranslatedSubcategoryFromUkraineToEnglish"
 
 // components
 import SizesModal from "./SizesModal"
@@ -15,9 +16,10 @@ import ColorPickerComponent from "./ColorPickerComponent"
 import { IProduct } from "@/services/types"
 
 const ProductInfo = ({product}: {product: IProduct}) => {
-const {color, price, size} = product
+const {color, price, size, category} = product
 
 const formattedDescription = product.description.replace(/\r\n/g, '<br>');
+const translatedSubCategory = getTranslatedSubcategoryFromUkraineToEnglish(category.sub_category)
 
   return (
     <div>
@@ -40,7 +42,7 @@ const formattedDescription = product.description.replace(/\r\n/g, '<br>');
             {price + ' грн'}
           </div>
           <ColorPickerComponent color={color} />
-          <SizesModal sizeFromDb={size} />
+          <SizesModal translatedSubCategory={translatedSubCategory} existedSizesFromDb={size} />
           <AddProductToCartComponent product={product}/>
           <div>
             <h4 className="text-base font-medium text-[#272728] lg:text-xl min-[2800px]:text-5xl min-[2800px]:mb-4">Опис</h4>
