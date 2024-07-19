@@ -17,6 +17,7 @@ import { cn } from "@/services/utils/cn"
 import { selectCurrentProduct } from "@/redux/currentProduct/currentProductSelector"
 import { setIsSizeModalOpened } from "@/redux/currentProduct/currentProductSlice"
 import { setProduct } from "@/redux/cart/cartSlice"
+import { selectCart } from "@/redux/cart/cartSelector"
 
 // types
 import { IProduct } from "@/services/types"
@@ -28,6 +29,7 @@ const AddProductToCartComponent = ({product}: {product: IProduct}) => {
   const router = useRouter()
 
   const currentProduct = useSelector(selectCurrentProduct)
+  const cart = useSelector(selectCart)
   const {sizes: sizesStored} = currentProduct
 
   const handleClickCartButton = () => {
@@ -39,9 +41,14 @@ const AddProductToCartComponent = ({product}: {product: IProduct}) => {
       dispatch(setProduct(product))
     }
 
+    // TODO logs should be removed latter
     useEffect(()=>{
-      console.log("🚀 ~ AddProductToCartComponent ~ product:", product)
-    },[product])
+      if(isSuccessModalIsOpened) {
+        console.log("🚀 ~ AddProductToCartComponent ~ cart:", cart)
+        console.log("🚀 ~ AddProductToCartComponent ~ product:", product)
+        console.log("🚀 ~ AddProductToCartComponent ~ currentProduct:", currentProduct)
+      }currentProduct
+    },[product, isSuccessModalIsOpened, currentProduct, cart])
 
   return (
     <div>
