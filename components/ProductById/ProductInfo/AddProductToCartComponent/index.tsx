@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
@@ -29,7 +29,6 @@ const AddProductToCartComponent = ({product}: {product: IProduct}) => {
   const router = useRouter()
 
   const currentProduct = useSelector(selectCurrentProduct)
-  const cart = useSelector(selectCart)
   const {sizes: sizesStored} = currentProduct
 
   const handleClickCartButton = () => {
@@ -40,16 +39,6 @@ const AddProductToCartComponent = ({product}: {product: IProduct}) => {
       setIsSuccessModalIsOpened(true)
       dispatch(setProduct(product))
     }
-
-    // TODO logs should be removed latter
-    useEffect(()=>{
-      if(isSuccessModalIsOpened) {
-        console.log("🚀 ~ AddProductToCartComponent ~ cart:", cart)
-        console.log("🚀 ~ AddProductToCartComponent ~ product:", product)
-        console.log("🚀 ~ AddProductToCartComponent ~ currentProduct:", currentProduct)
-      }currentProduct
-    },[product, isSuccessModalIsOpened, currentProduct, cart])
-
   return (
     <div>
       <div 
