@@ -13,7 +13,6 @@ const Footer = () => {
 	const [shouldHideFooter, setShouldHideFooter] = useState(false)
 
 	useEffect(() => {
-		console.log(pathname)
 		const hidePath = HIDE_PAGE_PATH.map(page => page.path)
 		setShouldHideFooter(hidePath.includes(pathname))
 	}, [pathname])
