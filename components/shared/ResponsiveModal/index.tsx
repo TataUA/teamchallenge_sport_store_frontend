@@ -2,14 +2,14 @@ import { cn } from '@/services/utils/cn';
 import React, { useState, useEffect, useRef } from 'react';
 
 interface IProps {
-  isOpen: boolean
-  onClose: () => void
-  children: React.ReactNode
+  isOpen: boolean;
+  onClose: () => void;
+  children: React.ReactNode;
 }
 
 const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
   const [isMobile, setIsMobile] = useState(false);
-  const modalRef = useRef(null);
+  const modalRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
   const [currentY, setCurrentY] = useState(0);
@@ -35,6 +35,7 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     setIsDragging(true);
     setStartY(e.touches[0].clientY);
+    setCurrentY(0); // Reset currentY to ensure smooth dragging
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -48,7 +49,7 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
 
   const handleTouchEnd = () => {
     setIsDragging(false);
-    if (currentY > window.innerHeight * 0.2) {
+    if (currentY > window.innerHeight * 0.8) {
       onClose();
     } else {
       setCurrentY(0);
@@ -74,8 +75,8 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
           `${isMobile 
             ? 'rounded-t-3xl h-[90vh] transition-transform duration-300 ease-out'
             : 'rounded-lg'}`,
-            'min-[2800px]:p-10 rounded-3xl min-[2800px]:max-w-5xl',
-          )}
+          'min-[2800px]:p-10 rounded-3xl min-[2800px]:max-w-5xl',
+        )}
         style={modalStyle}
         onClick={(e) => e.stopPropagation()}
         onTouchStart={isMobile ? handleTouchStart : emptyHandler}
@@ -87,11 +88,11 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
         )}
         {!isMobile ? (
           <button 
-          className="float-right text-2xl bg-transparent border-none cursor-pointer min-[2800px]:text-4xl"
-          onClick={onClose}
-        >
-          &times;
-        </button>
+            className="float-right text-2xl bg-transparent border-none cursor-pointer min-[2800px]:text-4xl"
+            onClick={onClose}
+          >
+            &times;
+          </button>
         ) : null}
         {children}
       </div>
