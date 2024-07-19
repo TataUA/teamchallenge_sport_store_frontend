@@ -49,7 +49,7 @@ export const getFilteredProductsClientSide = ({products, filters}: {products: IP
             if(filter.sizes.length) {
                 const copiedSizesFromStore = [...filter.sizes]
                 const productSizes = product.size?.map(s => s.value.toLowerCase());
-                return copiedSizesFromStore?.some((size: string) => productSizes.includes(size));
+                return copiedSizesFromStore?.some((size: string) => productSizes.includes(size.toLowerCase()));
             }
         }
             

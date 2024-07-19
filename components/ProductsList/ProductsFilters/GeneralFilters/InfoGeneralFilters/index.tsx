@@ -80,7 +80,7 @@ const InfoGeneralFilters = (props: IProps) => {
       price_from: filters.price.priceFrom,
       sub_category: props.params.sub_category[0],
     }).map(([key, value]) => ({ [key]: value }));
-
+    
     const filteredProductsByGeneralFilters = getFilteredProductsClientSide({products: props.products, filters: arraOfFiltersFromFiltersObject})
 
     setFilteredProductsByGeneralFilters([...filteredProductsByGeneralFilters])
