@@ -70,7 +70,7 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
     >
       <div
         ref={modalRef}
-        className={cn('bg-white p-5 w-full max-w-lg max-h-[90vh] overflow-y-auto',
+        className={cn('bg-white p-5 pt-0 w-full max-w-lg max-h-[90vh] overflow-y-auto',
           `${isMobile ? 'max-w-full' : 'max-w-lg'}`,
           `${isMobile 
             ? 'rounded-t-3xl h-[90vh] transition-transform duration-300 ease-out'
@@ -79,12 +79,20 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
         )}
         style={modalStyle}
         onClick={(e) => e.stopPropagation()}
-        onTouchStart={isMobile ? handleTouchStart : emptyHandler}
-        onTouchMove={isMobile ? handleTouchMove : emptyHandler}
-        onTouchEnd={isMobile ? handleTouchEnd : emptyHandler}
+        // onTouchStart={isMobile ? handleTouchStart : emptyHandler}
+        // onTouchMove={isMobile ? handleTouchMove : emptyHandler}
+        // onTouchEnd={isMobile ? handleTouchEnd : emptyHandler}
       >
         {isMobile && (
-          <div className="w-10 h-1 bg-gray-300 rounded mx-auto mb-4" />
+          <div className='h-10 pt-5'>
+            <div 
+              className="w-10 h-1 bg-gray-300 rounded mx-auto mb-4"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            />
+          </div>
+          
         )}
         {!isMobile ? (
           <button 
