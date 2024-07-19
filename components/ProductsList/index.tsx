@@ -25,7 +25,7 @@ const ProductsList = (props: IProductsPageProps) => {
 		console.log("🚀 ~ ProductsList ~ filters:", filters)
 	
 		const filteredProductBySubcategory = products.filter(product => 
-			(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === filters.sub_category.toLowerCase()))
+			(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === otherProps.params.sub_category[0].toLowerCase()))
 		console.log("🚀 ~ ProductsList ~ filteredProductBySubcategory:", filteredProductBySubcategory)
 	
 		const filteredProductByGender = filteredProductBySubcategory.filter(product => 
@@ -39,7 +39,7 @@ const ProductsList = (props: IProductsPageProps) => {
 		// const arraOfFiltersFromFiltersObject = Object.entries(filters).map(([key, value]) => ({ [key]: value }));
 		// const filteredProductsByGeneralFilters = getFilteredProducts({products: sortedProducts, filters: arraOfFiltersFromFiltersObject})
 
-	},[otherProps.searchParams, products])
+	},[otherProps.searchParams, products, otherProps.params])
 
   
 	return (
