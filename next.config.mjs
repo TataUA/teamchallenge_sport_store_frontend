@@ -5,7 +5,15 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ['storage.googleapis.com']
+    domains: ['https://storage.googleapis.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+        port: '',
+        pathname: '**',
+      },
+    ],
   }
 };
 
