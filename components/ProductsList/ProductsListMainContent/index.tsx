@@ -12,11 +12,8 @@ import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslate
 
 
 const ProductsListMainContent = (props: IProductsPageProps) => {
-  console.log('-8');
   const {products, searchParams, params} = props
-  console.log('-9');
   const translatedProductType = getTranslatedSubcategoryFromEnglishToUkraine(params.sub_category[0])
-  console.log('-10');
   return (
     <section>
       <div className="flex justify-between items-center mb-4 min-[2800px]:mb-10">

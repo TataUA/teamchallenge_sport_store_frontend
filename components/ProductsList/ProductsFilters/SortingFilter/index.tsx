@@ -16,8 +16,6 @@ import ResponsiveModal from "../../../shared/ResponsiveModal";
 import { sortingProductsFilers } from "../filtersData";
 
 const SortingFilters = () => {
-    console.log('-12');
-
   const [isSortingFilterOpen, setIsSortingFilterOpen] = useState(false);
 
   const pathname = usePathname();
@@ -35,8 +33,6 @@ const SortingFilters = () => {
     router.push(createPageURLWithPageParams(id))
     setIsSortingFilterOpen(false)
   }
-
-  console.log('-13');
 
   return (
     <div>

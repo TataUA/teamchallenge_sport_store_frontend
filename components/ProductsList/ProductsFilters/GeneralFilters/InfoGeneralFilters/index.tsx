@@ -85,7 +85,6 @@ const InfoGeneralFilters = (props: IProps) => {
 
     setFilteredProductsByGeneralFilters([...filteredProductsByGeneralFilters])
   },[filters, props])
-  console.log("🚀 ~ }).map ~ props:", props)
 
   return (
     <>

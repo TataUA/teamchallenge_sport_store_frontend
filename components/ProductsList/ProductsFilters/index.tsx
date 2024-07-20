@@ -15,7 +15,6 @@ export interface IProductsFiltersProps {
 }
 
 const ProductsFilters = (props: IProductsFiltersProps) => {
-  console.log('-11');
 
   return (
   <div className="flex gap-2 min-[2800px]:gap-6">

@@ -12,7 +12,6 @@ interface IProps {
 }
 
 const GenderFilter = (props: IProps) => {
-  console.log("🚀 ~ GenderFilter ~ props:", props)
   const searchParams = useSearchParams();
   const currentFilterValue = searchParams.get("gender") || '';
 
