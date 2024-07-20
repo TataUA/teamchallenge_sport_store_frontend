@@ -8,8 +8,10 @@ interface IProps {
 }
 
 const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
-  const [isMobile, setIsMobile] = useState(false);
-  const modalRef = useRef<HTMLDivElement>(null);
+    console.log('14');
+    
+    const [isMobile, setIsMobile] = useState(false);
+    const modalRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
   const [currentY, setCurrentY] = useState(0);
@@ -20,7 +22,7 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
-
+  
   useEffect(() => {
     if (isOpen && isMobile) {
       document.body.style.overflow = 'hidden';
@@ -32,7 +34,7 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
       document.body.style.overflow = 'unset';
     };
   }, [isOpen, isMobile]);
-
+  
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     setIsDragging(true);
     setStartY(e.touches[0].clientY);
@@ -47,7 +49,7 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
       setCurrentY(diff);
     }
   };
-
+  
   const handleTouchEnd = () => {
     setIsDragging(false);
     if (currentY > window.innerHeight * 0.5) {
@@ -56,13 +58,14 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
       setCurrentY(0);
     }
   };
-
+  
   const emptyHandler = () => {};
-
+  
   if (!isOpen) return null;
-
+  
   const modalStyle = isMobile ? { transform: `translateY(${currentY}px)` } : {};
-
+  console.log('14');
+  
   return (
     <div 
       className={cn('fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center',
