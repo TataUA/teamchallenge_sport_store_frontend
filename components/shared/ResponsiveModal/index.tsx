@@ -8,10 +8,8 @@ interface IProps {
 }
 
 const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
-    console.log('14');
-    
-    const [isMobile, setIsMobile] = useState(false);
-    const modalRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
   const [currentY, setCurrentY] = useState(0);
@@ -64,7 +62,6 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
   if (!isOpen) return null;
   
   const modalStyle = isMobile ? { transform: `translateY(${currentY}px)` } : {};
-  console.log('14');
   
   return (
     <div 

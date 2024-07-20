@@ -15,7 +15,6 @@ interface IProps {
 }
 
 const ColorsFilter = (props: IProps) => {
-  console.log("🚀 ~ ColorsFilter ~ props:", props)
   const dispatch = useDispatch()
   const {color} = useSelector(selectGeneralFilters)
 

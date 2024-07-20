@@ -12,7 +12,6 @@ interface IProps {
 }
 
 const SizeFilter = (props: IProps) => {
-    console.log('-16');
 
   const dispatch = useDispatch()
   const {sizes} = useSelector(selectGeneralFilters);
@@ -24,7 +23,6 @@ const SizeFilter = (props: IProps) => {
     }
     dispatch(setSize(size))
   }
-   console.log('-17');
 
   return (
     <>

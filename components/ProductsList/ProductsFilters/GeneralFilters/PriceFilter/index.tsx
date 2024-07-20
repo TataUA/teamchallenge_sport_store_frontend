@@ -13,7 +13,6 @@ import { selectGeneralFilters } from "@/redux/generalFilters/generalFiltersSelec
 import { cn } from "@/services/utils/cn";
 
 const PriceFilter = () => {
-    console.log('-18');
 
   const dispatch = useDispatch()
   const {price} = useSelector(selectGeneralFilters)
@@ -65,7 +64,6 @@ const PriceFilter = () => {
       setMaxPrice(price.priceTo);
     }
   },[price])
-  console.log('-19');
 
   return (
     <div className="w-full">

@@ -14,14 +14,12 @@ interface IProps {
 }
 
 const List = (props: IProps) => {
-    console.log('-2');
-
   const {products, searchParams} = props
   const {gender, page} = searchParams
 
   const currentPage = Number(page) || 1;
 
-const getPaginatedItems = useCallback((items: IProduct[], itemsPerPage: number, currentPage: number) => {
+  const getPaginatedItems = useCallback((items: IProduct[], itemsPerPage: number, currentPage: number) => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const paginatedProducts = items.slice(startIndex, startIndex + itemsPerPage);
     const countPages = items?.length / itemsPerPage
@@ -30,12 +28,10 @@ const getPaginatedItems = useCallback((items: IProduct[], itemsPerPage: number, 
       countPages
     }
   }, [])
-  console.log('-2');
 
 const itemsPerPage = 8;
 
 const {paginatedProducts, countPages} = getPaginatedItems(products, itemsPerPage, currentPage);
-  console.log('-2');
 
   return (
     <div>

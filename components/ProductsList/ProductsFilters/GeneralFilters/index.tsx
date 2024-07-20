@@ -23,7 +23,6 @@ import InfoGeneralFilters from "./InfoGeneralFilters";
 import { IProductsFiltersProps } from "..";
 
 const GeneralFilters = (props: IProductsFiltersProps) => {
-    console.log('-14');
 
   const [isGeneralFilterOpen, setIsGeneralFilterOpen] = useState(false);
 
