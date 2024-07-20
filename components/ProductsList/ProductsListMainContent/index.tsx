@@ -12,20 +12,20 @@ import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslate
 
 
 const ProductsListMainContent = (props: IProductsPageProps) => {
-  console.log('-2');
+  console.log('-8');
   const {products, searchParams, params} = props
-  console.log('-2');
+  console.log('-9');
   const translatedProductType = getTranslatedSubcategoryFromEnglishToUkraine(params.sub_category[0])
-  console.log('-2');
+  console.log('-10');
   return (
     <section>
       <div className="flex justify-between items-center mb-4 min-[2800px]:mb-10">
         <div className="text-3xl text-[##1A1A1C] font-bold min-[2800px]:text-5xl">
           {translatedProductType}
         </div>
-        {/* <ProductsFilters {...props} /> */}
+        <ProductsFilters {...props} />
       </div>
-      {/* {Array.isArray(products) && products.length ? (
+      {Array.isArray(products) && products.length ? (
         <ClientComponent>
           <List products={products} searchParams={searchParams} />
         </ClientComponent>
@@ -35,7 +35,7 @@ const ProductsListMainContent = (props: IProductsPageProps) => {
           <div>Нажаль не має товарів які відповідають вибраним критеріям</div>
           <div>Спробуйте змінити фільтри пошуку</div>
         </div>
-      ) : null} */}
+      ) : null}
     </section>
   )
 }
