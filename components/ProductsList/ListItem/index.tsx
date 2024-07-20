@@ -6,6 +6,7 @@ import { useEffect } from "react"
 // utils
 import { cn } from "@/services/utils/cn"
 import getArrayWithExtractedImgUrl from "@/helpers/getArrayWithExtractedImgUrl"
+import getArrayRemovedColorsDuplicates from "@/helpers/getArrayRemovedDuplicates"
 
 // components
 import {Slider}  from "@/components/slider-hero/Slider"
@@ -15,10 +16,10 @@ import { IProduct } from "@/services/types"
 
 const ListItem = (props: {product: IProduct}) => {
   const {product} = props
-  const {title, color, price} = product
+  const {title, colors, price} = product
   
   const router = useRouter()
-  
+
   // TODO remove log
   useEffect(()=>{
     console.log("🚀 ~ ListItem ~ product:", product)
@@ -37,7 +38,7 @@ const ListItem = (props: {product: IProduct}) => {
         <Slider
           productsList
           autoPlay={false} 
-          data={getArrayWithExtractedImgUrl(product)}
+          data={getArrayWithExtractedImgUrl(product) || []}
           className={'h-[224px] min-[2800px]:h-[600px]'}
           />
       </div>
@@ -48,11 +49,11 @@ const ListItem = (props: {product: IProduct}) => {
         {title}
       </div>
       <ul className="flex gap-2 min-[2800px]:gap-5">
-        {color?.map((color)=> (
+        {getArrayRemovedColorsDuplicates(colors)?.map((item: {title: string, id:number})=> (
           <li 
-            key={color.id}
+            key={item.id}
             className={cn(
-              `bg-${color.title.toLowerCase()} relative min-w-3 min-h-3 rounded-[50%] min-[2800px]:size-8`, {
+              `bg-${item.title.toLowerCase()} relative min-w-3 min-h-3 rounded-[50%] min-[2800px]:size-8`, {
                 'border': true,
               })}
           />

@@ -45,7 +45,7 @@ export const Modal = ({ show, onClose, children }: ModalProps) => {
 
 	const modalContent = show ? (
 		<>
-			<div className='fixed top-0 left-0 w-full h-full bg-white z-10'>
+			<div className='fixed top-0 left-0 w-full h-full bg-white z-20'>
 				<div
 					ref={modalRef}
 					className='container max-w-full max-h-full bg-white'

@@ -76,7 +76,7 @@ const SizesModal = ({existedSizesFromDb, translatedSubCategory}: IProps) => {
         </div>
         <ResponsiveModal isOpen={isSizeModalOpened} onClose={() => dispatch(setIsSizeModalOpened(false))}>
           <div className="flex gap-6 flex-col">
-            <h3 className="text-xl text-[#272728] font-semibold text-center">Розмір</h3>
+            <h3 className="text-xl text-[#272728] pt-5 font-semibold text-center">Розмір</h3>
             <ul className="list-none flex flex-col">
               {arrayOfSizes?.map((size, index) => (
                 <li
