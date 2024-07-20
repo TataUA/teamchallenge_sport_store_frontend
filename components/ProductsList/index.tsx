@@ -1,3 +1,5 @@
+'use client'
+
 // types
 import { IProductsPageInitialProps } from '@/app/products/[...sub_category]/page'
 import { IProduct } from '@/services/types'
@@ -11,8 +13,9 @@ export interface IProductsPageProps extends IProductsPageInitialProps {
 }
 
 const ProductsList = (props: IProductsPageProps) => {
+	console.log('-3');
   const {products, ...otherProps} = props
-  
+  console.log('-4');
 	return (
 		<section className='h-full w-full'>
       <NavigationByCategoryAndGender 
