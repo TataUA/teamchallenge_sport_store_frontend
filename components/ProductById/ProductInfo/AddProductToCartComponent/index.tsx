@@ -15,9 +15,8 @@ import { cn } from "@/services/utils/cn"
 
 // redux
 import { selectCurrentProduct } from "@/redux/currentProduct/currentProductSelector"
-import { setDefaultCurrentProduct, setIsSizeModalOpened } from "@/redux/currentProduct/currentProductSlice"
+import { setCurrentProduct, setDefaultCurrentProduct, setIsSizeModalOpened } from "@/redux/currentProduct/currentProductSlice"
 import { setProduct } from "@/redux/cart/cartSlice"
-import { selectCart } from "@/redux/cart/cartSelector"
 
 // types
 import { IProduct } from "@/services/types"
@@ -52,7 +51,8 @@ const AddProductToCartComponent = ({product}: {product: IProduct}) => {
 
   useEffect(()=>{
     dispatch(setDefaultCurrentProduct())
-  },[dispatch])
+    dispatch(setCurrentProduct(product))
+  },[dispatch, product])
 
   return (
     <div>
@@ -77,7 +77,7 @@ const AddProductToCartComponent = ({product}: {product: IProduct}) => {
               <Image 
                 width={108} 
                 height={108} 
-                src={product.images[0].image_url} 
+                src={product.colors?.[0]?.image_url} 
                 alt='photo_product'
               />
             </div>
