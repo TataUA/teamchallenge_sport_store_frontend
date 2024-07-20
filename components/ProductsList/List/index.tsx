@@ -36,12 +36,12 @@ const {paginatedProducts, countPages} = getPaginatedItems(products, itemsPerPage
   return (
     <div>
       <ul className="flex flex-wrap gap-2 justify-between mb-5">
-        {paginatedProducts.map((product, index) => (
+        {/* {paginatedProducts.map((product, index) => (
           <ListItem 
             key={product.id} 
             product={product}
           />
-          ))}
+          ))} */}
       </ul>
       {paginatedProducts?.length ? (
         <Pagination

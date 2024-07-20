@@ -22,13 +22,13 @@ const ProductsListMainContent = (props: IProductsPageProps) => {
         <div className="text-3xl text-[##1A1A1C] font-bold min-[2800px]:text-5xl">
           {translatedProductType}
         </div>
-        <ProductsFilters {...props} />
+        {/* <ProductsFilters {...props} /> */}
       </div>
-      {Array.isArray(products) && products.length ? (
+      {/* {Array.isArray(products) && products.length ? (
         <ClientComponent>
           <List products={products} searchParams={searchParams} />
         </ClientComponent>
-      ) : null}
+      ) : null} */}
       {Array.isArray(products) && !products.length ? (
         <div className="text-base min-[2800px]:text-3xl">
           <div>Нажаль не має товарів які відповідають вибраним критеріям</div>
