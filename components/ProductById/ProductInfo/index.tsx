@@ -11,27 +11,21 @@ import SizesModal from "./SizesModal"
 import { ClientComponent } from "@/components/ClientComponent"
 import AddProductToCartComponent from "./AddProductToCartComponent"
 import ColorPickerComponent from "./ColorPickerComponent"
+import SliderComponent from "./SliderComponent"
 
 // types
 import { IProduct } from "@/services/types"
 
 const ProductInfo = ({product}: {product: IProduct}) => {
-const {color, price, size, category} = product
+const {colors, price, size, category} = product
 
 const formattedDescription = product.description.replace(/\r\n/g, '<br>');
 const translatedSubCategory = getTranslatedSubcategoryFromUkraineToEnglish(category.sub_category)
 
   return (
     <div>
-      <div className="rounded-[12px] overflow-hidden mb-4">
-        <Slider
-          productsList
-          autoPlay={false}
-          data={getArrayWithExtractedImgUrl(product)}
-          className={'h-[343px] min-[2800px]:h-[1000px] min-[768px]:h-[500px]'} 
-          />
-      </div>
       <ClientComponent>
+        <SliderComponent />
         <div>
           <div className="text-base mb-4 lg:text-lg min-[2800px]:text-5xl min-[2800px]:mb-10">
             {product.title}
@@ -41,7 +35,7 @@ const translatedSubCategory = getTranslatedSubcategoryFromUkraineToEnglish(categ
           >
             {price + ' грн'}
           </div>
-          <ColorPickerComponent color={color} />
+          <ColorPickerComponent colors={colors} />
           <SizesModal translatedSubCategory={translatedSubCategory} existedSizesFromDb={size} />
           <AddProductToCartComponent product={product}/>
           <div>
