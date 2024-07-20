@@ -64,7 +64,7 @@ export function Slider({
 						loop={true}
 						modules={[Autoplay, Navigation, Pagination]}
 					>
-						{data.map(({ id, image, title, subtitle }) => (
+						{data?.map(({ id, image, title, subtitle }) => (
 							<SwiperSlide key={id || image}>
 								<div
 									className='h-full w-full absolute left-0 top-0'
