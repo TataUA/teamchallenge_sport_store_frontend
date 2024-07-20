@@ -57,7 +57,10 @@ const getSortedAndFilteredProducts = async ({filters, sub_category}:{filters: IF
 };
 
 export default async function ProductsPage(props: IProductsPageInitialProps) {
+	console.log('-1');
+	
 	const products = await getSortedAndFilteredProducts({filters:props.searchParams, sub_category: props.params.sub_category[0]});
+	console.log('-2');
 	return (
 		<section className='px-6 pt-4 pb-12'>
 				<ProductsList {...props} products={products} />
