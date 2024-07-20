@@ -36,7 +36,7 @@ interface Category {
     sub_category: string;
 }
 
-interface Color {
+export interface IColor {
     id: number;
     title: string; // Updated to match the provided object
 }
@@ -50,14 +50,23 @@ interface ProductImage {
     image_url: string;
 }
 
+export interface IColors {
+    image_url: string, 
+    color: IColor
+}
+
 export interface IProduct {
     id: number;
     title: string;
     category: Category;
     description: string;
     price: string;
-    color: Color[];
+    colors: IColors[]
     size: ProductSize[];
     images: ProductImage[];
-    quantity: number;
+    quantity: {
+        size: string
+        color: string
+        quantity: number
+    };
 }
