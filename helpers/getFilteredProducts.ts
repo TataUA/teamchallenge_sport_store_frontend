@@ -15,7 +15,7 @@ const getFilteredProducts = ({products, filters}: {products: IProduct[], filters
             return Number(product.price)  >= Number(filter.price_from)
         }
         if(filter.color){
-            return product.color.some(c => c.title.toLowerCase().includes(filter.color.toLowerCase()))
+            return product.colors?.some(item => item.color.title.toLowerCase().includes(filter.color.toLowerCase()))
         }
         if(filter.sizes){
             if(filter.sizes.length) {
@@ -43,7 +43,7 @@ export const getFilteredProductsClientSide = ({products, filters}: {products: IP
             return Number(product.price)  >= Number(filter.price_from)
         }
         if(filter.color){
-            return product.color.some(c => c.title.toLowerCase().includes(filter.color.toLowerCase()))
+            return product.colors?.some(item => item.color.title.toLowerCase().includes(filter.color.toLowerCase()))
         }
         if(filter.sizes){
             if(filter.sizes.length) {
