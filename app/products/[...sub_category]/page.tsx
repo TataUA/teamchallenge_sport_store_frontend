@@ -36,7 +36,7 @@ export interface IProductsPageInitialProps {
 
 const getSortedAndFilteredProducts = async ({filters, sub_category}:{filters: IFilters, sub_category: string}) => {
 	try {
-    const result = await fetch("https://api.sporthubsstore.com/products/", { cache: 'no-store' });
+    const result = await fetch("https://api.sporthubsstore.com/products/", { cache: 'no-store', next: { revalidate: 3600 } });
     if(result.status === 200) {
       const products: IProduct[] = await result?.json()
 			const filteredProductBySubcategory = products.filter(product => 
