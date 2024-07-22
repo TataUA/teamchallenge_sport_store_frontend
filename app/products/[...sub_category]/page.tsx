@@ -3,7 +3,7 @@
 import ProductsList from "@/components/ProductsList"
 
 // actions
-import fetchProductsAction from "@/app/actions/fetchProductsAction"
+// import fetchProductsAction from "@/app/actions/fetchProductsAction"
 
 // types
 import { IProduct } from "@/services/types"
@@ -35,25 +35,36 @@ export interface IProductsPageInitialProps {
 
 
 const getSortedAndFilteredProducts = async ({filters, sub_category}:{filters: IFilters, sub_category: string}) => {
-	const products: IProduct[] = await fetchProductsAction()
+	try {
+    const result = await fetch("https://api.sporthubsstore.com/products/");
+    if(result.status === 200) {
+      const products: IProduct[] = await result?.json()
+			const filteredProductBySubcategory = products.filter(product => 
+					(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === sub_category.toLowerCase()))
+			
+				const filteredProductByGender = filteredProductBySubcategory.filter(product => {
+					if(filters.gender) {
+						return (product.category.gender.toLowerCase() === filters.gender?.toLowerCase())
+					}
+					return product
+				})
+		
+			const sortedProducts = getSortedProducts({products: filteredProductByGender, direction: filters.sortedBy})
+			
+			const arraOfFiltersFromFiltersObject = Object.entries({...filters, sub_category }).map(([key, value]) => ({ [key]: value }));
+			const filteredProductsByGeneralFilters = getFilteredProducts({products: sortedProducts, filters: arraOfFiltersFromFiltersObject})
+			
+			return filteredProductsByGeneralFilters
+    }
+    return [];
+  } catch (error: any) {
+    console.log("🚀 ~ fetchProductsAction ~ error:", error.response)
+		return []
+  }
 
-	const filteredProductBySubcategory = products.filter(product => 
-			(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === sub_category.toLowerCase()))
-	
-		const filteredProductByGender = filteredProductBySubcategory.filter(product => {
-			if(filters.gender) {
-				return (product.category.gender.toLowerCase() === filters.gender?.toLowerCase())
-			}
-			return product
-		})
-
-	const sortedProducts = getSortedProducts({products: filteredProductByGender, direction: filters.sortedBy})
-	
-	const arraOfFiltersFromFiltersObject = Object.entries({...filters, sub_category }).map(([key, value]) => ({ [key]: value }));
-	const filteredProductsByGeneralFilters = getFilteredProducts({products: sortedProducts, filters: arraOfFiltersFromFiltersObject})
-	
-	return filteredProductsByGeneralFilters
 };
+
+
 
 export default async function ProductsPage(props: IProductsPageInitialProps) {
 	const products = await getSortedAndFilteredProducts({filters:props.searchParams, sub_category: props.params.sub_category[0]});
@@ -63,3 +74,4 @@ export default async function ProductsPage(props: IProductsPageInitialProps) {
 		</section>
 	)
 }
+
