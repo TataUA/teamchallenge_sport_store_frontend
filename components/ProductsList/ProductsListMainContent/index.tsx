@@ -13,11 +13,11 @@ import { IProductsPageInitialProps } from "@/app/products/[...sub_category]/page
 import { IProduct } from "@/services/types"
 
 
-export interface IProps extends IProductsPageInitialProps {
-	products: IProduct[] | []
-}
+// export interface IProps extends IProductsPageInitialProps {
+// 	// products: IProduct[] | []
+// }
 
-const ProductsListMainContent = (props: IProps) => {
+const ProductsListMainContent = (props: IProductsPageProps) => {
   const {products, searchParams, params} = props
   const translatedProductType = getTranslatedSubcategoryFromEnglishToUkraine(params.sub_category[0])
   return (
