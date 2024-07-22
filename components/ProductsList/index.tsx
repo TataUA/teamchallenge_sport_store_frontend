@@ -1,4 +1,4 @@
-'use client'
+// 'use client'
 
 // types
 import { IFilters, IProductsPageInitialProps } from '@/app/products/[...sub_category]/page'
