@@ -69,5 +69,5 @@ export interface IProduct {
         size: string
         color: string
         quantity: number
-    };
+    }[];
 }
