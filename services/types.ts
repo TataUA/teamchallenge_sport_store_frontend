@@ -27,6 +27,7 @@ export type SvgProps = {
 	name?: string
 	fillHovered?: string
 	isHovered?: boolean
+    classname?: string
 }
 
 
