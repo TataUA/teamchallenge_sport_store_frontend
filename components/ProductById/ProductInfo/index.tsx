@@ -17,7 +17,7 @@ import SliderComponent from "./SliderComponent"
 import { IProduct } from "@/services/types"
 
 const ProductInfo = ({product}: {product: IProduct}) => {
-const {colors, price, size, category} = product
+const {colors, price, size, quantity, category} = product
 
 const formattedDescription = product.description.replace(/\r\n/g, '<br>');
 const translatedSubCategory = getTranslatedSubcategoryFromUkraineToEnglish(category.sub_category)
@@ -36,7 +36,7 @@ const translatedSubCategory = getTranslatedSubcategoryFromUkraineToEnglish(categ
             {price + ' грн'}
           </div>
           <ColorPickerComponent colors={colors} />
-          <SizesModal translatedSubCategory={translatedSubCategory} existedSizesFromDb={size} />
+          <SizesModal translatedSubCategory={translatedSubCategory} existedSizesFromDb={quantity} />
           <AddProductToCartComponent product={product}/>
           <div>
             <h4 className="text-base font-medium text-[#272728] lg:text-xl min-[2800px]:text-5xl min-[2800px]:mb-4">Опис</h4>

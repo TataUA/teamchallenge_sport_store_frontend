@@ -16,15 +16,18 @@ import { cn } from "@/services/utils/cn"
 import getMessageIconSVG from "@/helpers/getMessageIconSVG"
 
 interface IProps {
-  existedSizesFromDb: {id:number, value: string}[], 
+  existedSizesFromDb: {color:string, quantity: number, size:string}[], 
   translatedSubCategory: string
 }
 
 const SizesModal = ({existedSizesFromDb, translatedSubCategory}: IProps) => {
   const dispatch = useDispatch()
-  const {sizes: sizesStored, isSizeModalOpened} = useSelector(selectCurrentProduct)
+  const {sizes: sizesStored, color: currentColor, isSizeModalOpened} = useSelector(selectCurrentProduct)
 
-  const sizesFromDbFilteredValues = existedSizesFromDb.map((item) => item.value)
+  const sizesFromDbFilteredValues = existedSizesFromDb.filter((item) => {
+    return  (item.color.toLowerCase() === currentColor?.toLowerCase()) && item.quantity >= 1
+  
+  }).map(item => item.size)
 
   const arrayOfSizes = generalProductsFilers.filter(filter => filter.id === 'sizes')
   .map((item, index) => {
