@@ -34,13 +34,17 @@ const SizesModal = ({existedSizesFromDb, translatedSubCategory}: IProps) => {
     return item.sizesClothes
   })[0];
 
+  const isShoesSizes = () => {
+    if(sizesStored?.length) {
+      const shoesSizes = generalProductsFilers.filter(item => item.id === 'sizes')[0].sizesShoes
+      return shoesSizes?.includes(sizesStored.toString())
+    }
+  }
+
 
   const handleClickSize = (size: string) => {
-    if(sizesStored.includes(size)) {
-      dispatch(removeCurrentProductSize(size))
-      return
-    }
     dispatch(setCurrentProductSize(size))
+    dispatch(setIsSizeModalOpened(false))
   }
 
   return (
@@ -65,7 +69,7 @@ const SizesModal = ({existedSizesFromDb, translatedSubCategory}: IProps) => {
           })}
           >
             {sizesStored.length ? (
-              <>{sizesStored.join(', ')}</>
+              <>{isShoesSizes() ? (`${sizesStored} UA`) : sizesStored}</>
               ) : 'Вибрати Розмір'}
             </span>
           {getArrowDownSVG()}
@@ -82,8 +86,8 @@ const SizesModal = ({existedSizesFromDb, translatedSubCategory}: IProps) => {
                 <li
                   className={cn("border-b-[1px] border-[#E7E7E8] p-4 font-bold text-base", 
                     'flex justify-between', {
-                      'text-blue': sizesStored.includes(size),
-                      'text-[#CFCFCF]': !sizesFromDbFilteredValues.includes(size),
+                      'text-blue': sizesStored === size,
+                      'text-[#CFCFCF] pointer-events-none': !sizesFromDbFilteredValues.includes(size),
                       'cursor-pointer hover:text-blue': sizesFromDbFilteredValues.includes(size),
                     })}
                   onClick={() => handleClickSize(size)}
