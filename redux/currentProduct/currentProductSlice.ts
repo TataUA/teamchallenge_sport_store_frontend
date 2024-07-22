@@ -2,7 +2,7 @@ import { IProduct } from "@/services/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IProductState {
-  sizes:  string[];
+  sizes:  string;
   price: number 
   color: string;
   isSizeModalOpened: boolean;
@@ -10,7 +10,7 @@ export interface IProductState {
 }
 
 const initialState: IProductState = {
-  sizes: [],
+  sizes: '',
   price: 0 ,
   color: '',
   isSizeModalOpened: false,
@@ -22,11 +22,10 @@ const currentProductSlice = createSlice({
   initialState,
   reducers: {
     setCurrentProductSize: (state, {payload}:  PayloadAction<string>) => {
-      state.sizes.push(payload)
+      state.sizes = payload
     },
     removeCurrentProductSize: (state, {payload}:  PayloadAction<string>) => {
-      const index = state.sizes.indexOf(payload)
-      state.sizes.splice(index, 1)
+      state.sizes = ''
     },
     setCurrentProductPrice: (state, {payload}:  PayloadAction<number>) => {
       state.price = payload
@@ -41,7 +40,7 @@ const currentProductSlice = createSlice({
       state.product = {...payload}
     },
     setDefaultCurrentProduct: (state) => {
-      state.sizes = []
+      state.sizes = ''
       state.price = 0
       state.color = ''
       state.isSizeModalOpened = false

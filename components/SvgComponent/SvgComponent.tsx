@@ -1,6 +1,7 @@
 'use client'
 
 import { SvgProps } from '@/services/types'
+import { cn } from '@/services/utils/cn'
 
 const SvgComponent = ({
 	path,
@@ -8,10 +9,11 @@ const SvgComponent = ({
 	fill = '#3E3E40',
 	fillHovered = '#868687',
 	isHovered,
+	classname='',
 }: SvgProps) => {
 	return (
 		<svg
-			className='w-6 h-6'
+			className={cn('w-6 h-6', classname)}
 			viewBox={viewBox}
 			fill={!isHovered ? fill : fillHovered}
 			xmlns='http://www.w3.org/2000/svg'

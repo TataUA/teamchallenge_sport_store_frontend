@@ -36,7 +36,7 @@ const AddProductToCartComponent = ({product}: {product: IProduct}) => {
   const isShoesSizes = () => {
     if(sizesStored?.length) {
       const shoesSizes = generalProductsFilers.filter(item => item.id === 'sizes')[0].sizesShoes
-      return shoesSizes?.includes(sizesStored[0])
+      return shoesSizes?.includes(sizesStored.toString())
     }
   }
 
@@ -87,7 +87,7 @@ const AddProductToCartComponent = ({product}: {product: IProduct}) => {
                 <span 
                 className="text-[#868687] text-sm"
                 >
-                  Розмір: {isShoesSizes() ? sizesStored.map((el:string) => el + ' UA').join(', ') : sizesStored.join(' , ')}
+                  Розмір: {isShoesSizes() ? (`${sizesStored} UA`) : sizesStored}
                   </span>
                 <span className="text-[#1A1A1C] font-semibold text-base">{product.price} грн</span>
               </div>
