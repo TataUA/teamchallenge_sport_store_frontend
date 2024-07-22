@@ -43,13 +43,13 @@ const GeneralFilters = (props: IProductsFiltersProps) => {
             {generalFilter.id === 'sizes' && generalFilter.shoesPosibleProductTypes?.includes(props.params.sub_category[0]) ? (
               <>
                 <h3 className="text-base font-semibold text-[#272728] mb-4 min-[2800px]:text-4xl min-[2800px]:mb-8">{generalFilter.title}</h3>
-                <SizeFilter shoesSizes={generalFilter.sizesShoes} />
+                <SizeFilter products={props.products} shoesSizes={generalFilter.sizesShoes} />
               </>
               ) : null}
             {generalFilter.id === 'sizes' && !generalFilter.shoesPosibleProductTypes?.includes(props.params.sub_category[0]) ? (
               <>
                 <h3 className="text-base font-semibold text-[#272728] mb-4 min-[2800px]:text-4xl min-[2800px]:mb-8">{generalFilter.title}</h3>
-                <SizeFilter clothesSizes={generalFilter.sizesClothes} />
+                <SizeFilter products={props.products} clothesSizes={generalFilter.sizesClothes} />
                 </>
               ) : null}
             {generalFilter.id === 'price' ? (
