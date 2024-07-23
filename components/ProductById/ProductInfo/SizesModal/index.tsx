@@ -1,6 +1,7 @@
 'use client'
 
 import { useDispatch, useSelector } from "react-redux"
+import { useState } from "react"
 
 // redux
 import { selectCurrentProduct } from "@/redux/currentProduct/currentProductSelector"
@@ -9,11 +10,13 @@ import { removeCurrentProductSize, setCurrentProductSize, setIsSizeModalOpened }
 // components
 import ResponsiveModal from "@/components/shared/ResponsiveModal"
 import { generalProductsFilers } from "@/components/ProductsList/ProductsFilters/filtersData"
+import SizeGridTables from "../SizeGridTables"
 
 // helpers
 import getArrowDownSVG from "@/helpers/getArrowDownSVG"
 import { cn } from "@/services/utils/cn"
 import getMessageIconSVG from "@/helpers/getMessageIconSVG"
+import FullSizeModalOnMobiles from "@/components/shared/FullSizeModal"
 
 interface IProps {
   existedSizesFromDb: {color:string, quantity: number, size:string}[], 
@@ -23,6 +26,8 @@ interface IProps {
 const SizesModal = ({existedSizesFromDb, translatedSubCategory}: IProps) => {
   const dispatch = useDispatch()
   const {sizes: sizesStored, color: currentColor, isSizeModalOpened} = useSelector(selectCurrentProduct)
+
+  const [isSizeGridTablesOpened, setIsSizGridTableOpened] = useState<boolean>(false)
 
   const sizesFromDbFilteredValues = existedSizesFromDb.filter((item) => {
     return  (item.color.toLowerCase() === currentColor?.toLowerCase()) && item.quantity >= 1
@@ -79,8 +84,20 @@ const SizesModal = ({existedSizesFromDb, translatedSubCategory}: IProps) => {
         </div>
         <div className="flex gap-1 text-xs text-[#868687]">
           <span>Вагаєтесь який розмір обрати?</span>
-          <span className="text-[#272728] cursor-pointer hover:underline">Розмірна сітка</span>
+          <span 
+            onClick={() => setIsSizGridTableOpened(true)}
+            className="text-[#272728] cursor-pointer hover:underline"
+            >
+              Розмірна сітка
+            </span>
         </div>
+        <FullSizeModalOnMobiles 
+          isOpen={isSizeGridTablesOpened} 
+          onClose={() => setIsSizGridTableOpened(false)}
+          buttonText='До товару'
+        >
+          <SizeGridTables />
+        </FullSizeModalOnMobiles>
         <ResponsiveModal isOpen={isSizeModalOpened} onClose={() => dispatch(setIsSizeModalOpened(false))}>
           <div className="flex gap-6 flex-col">
             <h3 className="text-xl text-[#272728] pt-5 font-semibold text-center">Розмір</h3>
