@@ -22,7 +22,7 @@ const List = (props: IProps) => {
   const getPaginatedItems = useCallback((items: IProduct[], itemsPerPage: number, currentPage: number) => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const paginatedProducts = items.slice(startIndex, startIndex + itemsPerPage);
-    const countPages = items?.length / itemsPerPage
+    const countPages = Math.ceil(items?.length / itemsPerPage)
     return {
       paginatedProducts,
       countPages
