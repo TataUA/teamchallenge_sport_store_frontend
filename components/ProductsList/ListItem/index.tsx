@@ -19,12 +19,7 @@ const ListItem = (props: {product: IProduct}) => {
   const {title, colors, price} = product
   
   const router = useRouter()
-
-  // TODO remove log
-  useEffect(()=>{
-    console.log("🚀 ~ ListItem ~ product:", product)
-  },[product])
-
+ 
   return (
     <div 
       className={cn(
