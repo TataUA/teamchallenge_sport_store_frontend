@@ -32,8 +32,9 @@ const searchSlice = createSlice({
   name: 'search',
   initialState,
   reducers: {
-    setProductsSearchResult: (state, {payload}:  PayloadAction<IProduct[]>) => {
-      state.products = [...payload]
+    setSearchResultProducts: (state, {payload}:  PayloadAction<IProduct[] | null>) => {
+      if(Array.isArray(payload)) state.products = [...payload]
+      if(!payload) state.products = null
     },
     setSearchQuery: (state, {payload}:  PayloadAction<string>) => {
       state.query = payload
@@ -59,7 +60,7 @@ const searchSlice = createSlice({
 
 export const searchReducer = searchSlice.reducer;
 export const { 
-  setProductsSearchResult, 
+  setSearchResultProducts, 
   setSearchQuery,
   setErrorNull
   } = searchSlice.actions;
