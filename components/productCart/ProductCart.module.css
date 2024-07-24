@@ -1,0 +1,19 @@
+@tailwind components;
+
+@layer components {
+	.item__imgWrapper {
+		@apply overflow-hidden relative rounded-lg min-w-[109px] h-[162px];
+	}
+
+	.item__img {
+		@apply object-cover object-top;
+	}
+
+	.product__btn {
+		@apply border border-[#e7e7e8] rounded-md w-8 h-8 cursor-pointer flex justify-center items-center;
+	}
+
+	.product__quantity {
+		@apply text-title font-medium text-basic;
+	}
+}
