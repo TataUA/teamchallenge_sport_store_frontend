@@ -24,11 +24,11 @@ const FullSizeModalOnMobiles = ({ isOpen, onClose, children, wrapperClassname, b
     if (isOpen && isMobile) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      if(document.body.style.overflow === 'hidden') document.body.style.overflow = 'unset';
       setCurrentY(0)
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      if(document.body.style.overflow === 'hidden') document.body.style.overflow = 'unset';
     };
   }, [isOpen, isMobile]);
   
