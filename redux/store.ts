@@ -23,6 +23,11 @@ const authPersistConfig = {
   storage,
   whitelist: ["accessToken"],
 };
+const searchPersistConfig = {
+  key: "search",
+  storage,
+  whitelist: ["previousQueries"],
+};
 
 export const store = configureStore({
   reducer: {
@@ -30,7 +35,7 @@ export const store = configureStore({
     generalFilters: generalFiltersReducer,
     currentProduct: currentProductReducer,
     cart: cartReducer,
-    search: searchReducer,
+    search: persistReducer<ReturnType<typeof searchReducer>>(searchPersistConfig, searchReducer),
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
