@@ -13,8 +13,12 @@ const NavigationByCategoryAndGender = (props: IProps) => {
   const translatedProductType = getTranslatedSubcategoryFromEnglishToUkraine(sub_category[0])
   return (
     <div className='flex gap-2 mb-5 text-base font-medium max-[767px]:text-sm min-[2800px]:text-4xl min-[2800px]:mb-10'>
-      <span className="capitalize">{getTranslatedGenderToUkraine(gender)}</span>
-      <span>&gt;</span>
+      {gender ? (
+        <>
+          <span className="capitalize">{getTranslatedGenderToUkraine(gender)}</span>
+          <span>&gt;</span>
+        </>
+      ) : null}
       <span>{translatedProductType}</span>
     </div>
   )
