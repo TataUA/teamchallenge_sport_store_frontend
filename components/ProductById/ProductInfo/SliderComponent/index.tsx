@@ -27,7 +27,7 @@ const SliderComponent = () => {
         productsList
         autoPlay={false}
         data={getImagesData()}
-        className={'h-[90vw] lg:h-[50vw] lg:max-h-[800px] min-[2800px]:h-[1500px]'} 
+        className={'h-[90vw] min-h-[520px] lg:h-[50vw] lg:max-h-[800px] min-[2800px]:h-[1500px]'} 
         />
     </div>
   )
