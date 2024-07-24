@@ -16,12 +16,13 @@ import styles from '../Search/Search.module.css'
 
 // store
 import { selectSearch } from '@/redux/search/searchSelector'
-import { sendSearchQueryThunk, setErrorNull, setSearchResultProducts, setSearchQuery } from '@/redux/search/searchSlice'
+import { sendSearchQueryThunk, setErrorNull, setSearchResultProducts, setSearchQuery, saveSearchQueryToArray } from '@/redux/search/searchSlice'
 
 // utils
 import { cn } from '@/services/utils/cn'
 import getCloseIconSVG from '@/helpers/getCloseIconSVG'
 import getTranslatedSubcategoryFromUkraineToEnglish from '@/helpers/getTranslatedSubcategoryFromUkraineToEnglish'
+import getOldQueryIconSVG from '@/helpers/getOldQueryIconSVG'
 
 interface IProps {
 	name: string
@@ -34,32 +35,46 @@ const SearchForm = (props: IProps) => {
 	const dispatch: AppDispatch = useDispatch()
 	const router = useRouter()
 
-  const {error, query, loading} = useSelector(selectSearch)
+  const {error, query, loading, previousQueries, products } = useSelector(selectSearch)
 	const [searchText, setSearchText] = useState(query)
 
 	const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchText(event.target.value?.toLowerCase())
-		if(searchText && !loading) dispatch(sendSearchQueryThunk(searchText))
 		if(error) {
 			dispatch(setErrorNull())
 		}
 	}
 
-	const recomendedCategories = categoriesListData.filter((category) => category.includes(searchText))
+	const recomendedCategories = categoriesListData.filter((category) => searchText && category.includes(searchText))
 	
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
-		if(searchText) dispatch(sendSearchQueryThunk(searchText))
+		if(searchText) {
+			dispatch(sendSearchQueryThunk(searchText))
+			dispatch(saveSearchQueryToArray(searchText))
+		}
 	}
 	const handleClickResetButton = () => {
-		if(searchText) setSearchText('')
-			dispatch(setSearchResultProducts(null))
+		setSearchText('')
+		dispatch(setSearchResultProducts(null))
+		setSearchQuery('')
+	}
+
+	const handleClickCloseIcon = () => {
+		handleClickResetButton()
+		onClose?.()
 	}
 
 	const handleClickCategory = (subCategory:string) => {
       router.push(`/products/${getTranslatedSubcategoryFromUkraineToEnglish(subCategory)}/`)
       if(onClose) onClose()
   }
+
+	const handleClickOldQuery = (query: string) => {
+		setSearchText(query)
+		dispatch(sendSearchQueryThunk(query))
+		dispatch(saveSearchQueryToArray(query))
+	}
 	
 	useEffect(()=>{
 		dispatch(setSearchQuery(searchText))
@@ -94,7 +109,7 @@ const SearchForm = (props: IProps) => {
 						onChange={(e) => handleChangeInput(e)}
 					/> 
 					<div
-						onClick={() => onClose?.()}
+						onClick={() => handleClickCloseIcon()}
 						className='[&>svg]:size-5 [&>svg]:fill-[#868687]'
 					>
 						{getCloseIconSVG()}
@@ -107,7 +122,7 @@ const SearchForm = (props: IProps) => {
 					Скасувати
 				</span>
 			</div>
-			{recomendedCategories?.length ? (
+			{products && recomendedCategories?.length ? (
 				<>
 					<div className='mt-5'>
 						<h4 className='text-[#868687] text-base mb-1'>Категорії</h4>
@@ -123,6 +138,48 @@ const SearchForm = (props: IProps) => {
 									</span>
 									<span className='text-3xl'>
 										{'>'}
+									</span>
+								</div>
+							))}
+					</div>
+				</>
+			) : null}
+			{!searchText && previousQueries?.length ? (
+				<>
+					<div className='mt-5'>
+						{previousQueries
+							.map((item, index) => (
+								<div 
+									className={cn('text-sm text-[#272728] capitalize flex items-center gap-3 py-2',
+										'hover:text-blue hover:underline',
+									'border-b-[1px]')} 
+									key={index}
+									onClick={() => handleClickOldQuery(item)}
+								>
+									<span className='[&>svg]:size-6'>{getOldQueryIconSVG()}</span>
+									<span>
+										{item}
+									</span>
+								</div>
+							))}
+					</div>
+				</>
+			) : null}
+			{searchText && !products && recomendedCategories?.length ? (
+				<>
+					<div className='mt-5'>
+						<h3 className='mb-5'>Можливо ви мали на увазі</h3>
+						{recomendedCategories
+							.map((item, index) => (
+								<div 
+									className={cn('text-sm text-[#272728] capitalize flex items-center gap-3 py-2',
+										'hover:text-blue hover:underline',
+									'border-b-[1px]')} 
+									key={index}
+									onClick={() => handleClickOldQuery(item)}
+								>
+									<span>
+										{item}
 									</span>
 								</div>
 							))}
