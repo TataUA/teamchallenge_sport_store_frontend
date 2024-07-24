@@ -19,12 +19,7 @@ const ListItem = (props: {product: IProduct}) => {
   const {title, colors, price} = product
   
   const router = useRouter()
-
-  // TODO remove log
-  useEffect(()=>{
-    console.log("🚀 ~ ListItem ~ product:", product)
-  },[product])
-
+ 
   return (
     <div 
       className={cn(
@@ -39,7 +34,7 @@ const ListItem = (props: {product: IProduct}) => {
           productsList
           autoPlay={false} 
           data={getArrayWithExtractedImgUrl(product) || []}
-          className={'h-[224px] min-[2800px]:h-[600px]'}
+          className={'h-[60vw] max-h-[400px] min-[2800px]:max-h-[800px]'}
           />
       </div>
       <div 

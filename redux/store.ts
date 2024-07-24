@@ -16,17 +16,22 @@ import { authReducer } from './auth/authSlice'
 import { cartReducer } from './cart/cartSlice'
 import { currentProductReducer } from './currentProduct/currentProductSlice'
 import { generalFiltersReducer } from './generalFilters/generalFiltersSlice'
+import { searchReducer } from './search/searchSlice'
 
 const authPersistConfig = {
 	key: 'auth',
 	storage,
 	whitelist: ['accessToken'],
 }
-
 const cartPersistConfig = {
 	key: 'cart',
 	storage,
 	whitelist: ['productsCart'],
+}
+const searchPersistConfig = {
+	key: 'search',
+	storage,
+	whitelist: ['previousQueries'],
 }
 
 export const store = configureStore({
@@ -40,6 +45,10 @@ export const store = configureStore({
 		cart: persistReducer<ReturnType<typeof cartReducer>>(
 			cartPersistConfig,
 			cartReducer
+		),
+		search: persistReducer<ReturnType<typeof searchReducer>>(
+			searchPersistConfig,
+			searchReducer
 		),
 	},
 	middleware: getDefaultMiddleware =>

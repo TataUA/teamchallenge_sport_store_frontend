@@ -5,9 +5,10 @@ interface IProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  wrapperClassname?: string
 }
 
-const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
+const ResponsiveModal = ({ isOpen, onClose, children, wrapperClassname }: IProps) => {
   const [isMobile, setIsMobile] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -25,18 +26,18 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
     if (isOpen && isMobile) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      if(document.body.style.overflow === 'hidden') document.body.style.overflow = 'unset';
       setCurrentY(0)
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      if(document.body.style.overflow === 'hidden') document.body.style.overflow = 'unset';
     };
   }, [isOpen, isMobile]);
   
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     setIsDragging(true);
     setStartY(e.touches[0].clientY);
-    setCurrentY(0); // Reset currentY to ensure smooth dragging
+    setCurrentY(0);
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -76,13 +77,12 @@ const ResponsiveModal = ({ isOpen, onClose, children }: IProps) => {
           `${isMobile 
             ? 'rounded-t-3xl h-[85vh] transition-transform duration-300 ease-out'
             : 'rounded-lg'}`,
-          'min-[2800px]:p-10 rounded-3xl min-[2800px]:max-w-5xl',
+          'min-[2800px]:p-10 rounded-3xl min-[2800px]:max-w-5xl', 
+          'md: pt-6',
+          `${wrapperClassname?.length ? wrapperClassname : ''}`,
         )}
         style={modalStyle}
         onClick={(e) => e.stopPropagation()}
-        // onTouchStart={isMobile ? handleTouchStart : emptyHandler}
-        // onTouchMove={isMobile ? handleTouchMove : emptyHandler}
-        // onTouchEnd={isMobile ? handleTouchEnd : emptyHandler}
       >
         {isMobile && (
           <div className='h-10 pt-5'>
