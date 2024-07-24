@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { ClientComponent } from "@/components/ClientComponent";
-import { LoginForm } from "@/components/auth/LoginForm";
+import { LoginForm } from "@/components/Auth/LoginForm";
 
 export default function Page() {
   return (

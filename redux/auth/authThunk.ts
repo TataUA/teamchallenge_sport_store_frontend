@@ -16,10 +16,10 @@ import {
 } from "@/services/api";
 import { AppState } from "../store";
 import { UserData } from "./authSlice";
-import { RegisterFormValues } from "@/components/auth/RegisterForm";
-import { LoginFormValues } from "@/components/auth/LoginForm";
-import { UserDataEditFormValues } from "@/components/auth/UserDataEdit";
-import { ResetPasswordValuesInterface } from "@/components/reset-password/ResetPasswordForm";
+import { RegisterFormValues } from "@/components/Auth/RegisterForm";
+import { LoginFormValues } from "@/components/Auth/LoginForm";
+import { UserDataEditFormValues } from "@/components/Auth/UserDataEdit";
+import { ResetPasswordValuesInterface } from "@/components/ResetPassword/ResetPasswordForm";
 
 interface Error {
   message: string[];

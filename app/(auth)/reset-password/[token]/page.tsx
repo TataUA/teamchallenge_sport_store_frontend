@@ -1,7 +1,7 @@
 'use client'
  
 import { usePathname } from 'next/navigation'
-import { ResetPasswordForm } from "@/components/reset-password/ResetPasswordForm";
+import { ResetPasswordForm } from "@/components/ResetPassword/ResetPasswordForm";
 import { ClientComponent } from '@/components/ClientComponent';
 
 

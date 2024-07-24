@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 // components
-import ResponsiveModal from '@/components/shared/ResponsiveModal'
+import ResponsiveModal from '@/components/Shared/ResponsiveModal'
 
 // helpers
 import getCartSVG from '@/helpers/getCartSVG'

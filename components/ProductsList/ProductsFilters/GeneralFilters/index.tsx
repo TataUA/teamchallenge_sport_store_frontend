@@ -12,7 +12,7 @@ import { generalProductsFilers } from "../filtersData";
 import { cn } from "@/services/utils/cn";
 
 // components
-import ResponsiveModal from "../../../shared/ResponsiveModal";
+import ResponsiveModal from "../../../Shared/ResponsiveModal";
 import PriceFilter from "./PriceFilter";
 import ColorsFilter from "./ColorsFilter";
 import GenderFilter from "./GenderFilter";

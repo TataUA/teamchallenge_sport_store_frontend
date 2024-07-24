@@ -8,7 +8,7 @@ import { selectCurrentProduct } from "@/redux/currentProduct/currentProductSelec
 import { removeCurrentProductSize, setCurrentProductSize, setIsSizeModalOpened } from "@/redux/currentProduct/currentProductSlice"
 
 // components
-import ResponsiveModal from "@/components/shared/ResponsiveModal"
+import ResponsiveModal from "@/components/Shared/ResponsiveModal"
 import { generalProductsFilers } from "@/components/ProductsList/ProductsFilters/filtersData"
 import SizeGridTables from "../SizeGridTables"
 
@@ -16,7 +16,7 @@ import SizeGridTables from "../SizeGridTables"
 import getArrowDownSVG from "@/helpers/getArrowDownSVG"
 import { cn } from "@/services/utils/cn"
 import getMessageIconSVG from "@/helpers/getMessageIconSVG"
-import FullSizeModalOnMobiles from "@/components/shared/FullSizeModal"
+import FullSizeModalOnMobiles from "@/components/Shared/FullSizeModal"
 
 interface IProps {
   existedSizesFromDb: {color:string, quantity: number, size:string}[], 

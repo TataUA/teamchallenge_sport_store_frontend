@@ -10,8 +10,8 @@ import { Formik, Form, FormikHelpers, FormikErrors } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { loginUserThunk } from "@/redux/auth/authThunk";
 import { InputLabelField } from "./InputLabelField";
-import { ResetPasswordRequestForm } from "../reset-password/ResetPasswordRequestForm";
-import { ResetPasswordButton } from "../reset-password/ResetPasswordButton";
+import { ResetPasswordRequestForm } from "../ResetPassword/ResetPasswordRequestForm";
+import { ResetPasswordButton } from "../ResetPassword/ResetPasswordButton";
 import wrong from "@/public/icons/wrong.svg";
 import saveTokensToCookiesAction from "@/app/actions/saveTokensToCookiesAction";
 

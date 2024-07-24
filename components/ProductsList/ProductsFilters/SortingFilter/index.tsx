@@ -10,7 +10,7 @@ import getCheckedIconSVG from "@/helpers/getCheckedIconSVG";
 import { cn } from "@/services/utils/cn";
 
 // components
-import ResponsiveModal from "../../../shared/ResponsiveModal";
+import ResponsiveModal from "../../../Shared/ResponsiveModal";
 
 // data
 import { sortingProductsFilers } from "../filtersData";
