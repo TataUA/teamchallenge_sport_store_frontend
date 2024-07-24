@@ -1,8 +1,16 @@
 import axios from "axios";
+
+// component
 import { RegisterFormValues } from "@/components/auth/RegisterForm";
 import { LoginFormValues } from "@/components/auth/LoginForm";
 import { UserDataEditFormValues } from "@/components/auth/UserDataEdit";
 import { ResetPasswordValuesInterface } from "@/components/reset-password/ResetPasswordForm";
+
+// types
+import { IProduct } from "./types";
+
+// helpers
+import getCorrectQueryParamsSearchQuery from "@/helpers/getCorrectQueryParamsSearchQuery";
 
 export const $instance = axios.create({
   baseURL: "https://api.sporthubsstore.com/",
@@ -170,3 +178,15 @@ export const resetPasswordConfirm = async (
 //     "email": values
 //   })
 // };
+
+export const sendSearchQueryApi = async (
+  query: string
+): Promise<IProduct[]> => {
+  try {
+    const extractedParams = getCorrectQueryParamsSearchQuery(query)
+    const { data } = await $instance.get(`products/search/?${extractedParams}`);
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};

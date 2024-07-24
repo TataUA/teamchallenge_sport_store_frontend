@@ -26,7 +26,7 @@ export const Modal = ({ show, onClose, children }: ModalProps) => {
 			return () => {
 				document.removeEventListener('keydown', handleKeyDown)
 				document.removeEventListener('mousedown', handleClickOutside)
-				document.body.style.overflow = 'auto'
+				if(document.body.style.overflow === 'hidden') document.body.style.overflow = 'auto'
 			}
 		}
 	}, [isBrowser, show])
