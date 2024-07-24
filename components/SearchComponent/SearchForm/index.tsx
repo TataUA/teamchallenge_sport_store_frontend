@@ -1,17 +1,23 @@
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch } from '@/redux/store'
 
+// components
 import SvgComponent from '@/components/SvgComponent/SvgComponent'
 
+// data
 import { iconsData } from '@/constants'
 
+// styles
 import styles from '../Search/Search.module.css'
-import searchSubmitAction from '@/app/actions/searchSubmitAction'
-import { useDispatch, useSelector } from 'react-redux'
-import { sendSearchQueryThunk, setErrorNull, setProductsSearchResult, setSearchQuery } from '@/redux/search/searchSlice'
-import { AppDispatch } from '@/redux/store'
-import { cn } from '@/services/utils/cn'
+
+// store
 import { selectSearch } from '@/redux/search/searchSelector'
+import { sendSearchQueryThunk, setErrorNull, setSearchResultProducts, setSearchQuery } from '@/redux/search/searchSlice'
+
+// utils
+import { cn } from '@/services/utils/cn'
 
 interface IProps {
 	name: string
@@ -22,21 +28,28 @@ const SearchForm = (props: IProps) => {
 
 	const dispatch: AppDispatch = useDispatch()
 
-	const [searchText, setSearchText] = useState('')
-  const {error} = useSelector(selectSearch)
+  const {error, query} = useSelector(selectSearch)
+	const [searchText, setSearchText] = useState(query)
 
 	const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchText(event.target.value?.toLowerCase())
-		dispatch(setSearchQuery(event.target.value?.toLowerCase()))
 		if(error) {
 			dispatch(setErrorNull())
 		}
 	}
-
+	
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
 		if(searchText) dispatch(sendSearchQueryThunk(searchText))
 	}
+	const handleClickResetButton = () => {
+		if(searchText) setSearchText('')
+			dispatch(setSearchResultProducts(null))
+	}
+	
+	useEffect(()=>{
+		dispatch(setSearchQuery(searchText))
+	},[dispatch, searchText])
 
   return (
     <div>
@@ -70,6 +83,13 @@ const SearchForm = (props: IProps) => {
 					)}
 				</div>
 			</form>
+			<div 
+				className='flex w-full justify-end text-sm text-[#868687] pt-3 cursor-pointer hover:underline'
+			>
+				<span onClick={handleClickResetButton}>
+					Очистити результат і запит
+				</span>
+			</div>
 		</div>
   )
 }
