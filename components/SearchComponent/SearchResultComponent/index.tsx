@@ -1,9 +1,16 @@
-import { selectSearch } from "@/redux/search/searchSelector"
-import { useSelector } from "react-redux"
-import ProductCardInfo from "../ProductCardInfo"
+import {  useSelector } from "react-redux"
 import { useRouter } from "next/navigation"
-import getTranslatedSubcategoryFromUkraineToEnglish from "@/helpers/getTranslatedSubcategoryFromUkraineToEnglish"
+
+// store
+import { selectSearch } from "@/redux/search/searchSelector"
+
+// components
+import ProductCardInfo from "../ProductCardInfo"
 import { Loader } from "@/components/Loader"
+
+// helpers
+import getTranslatedSubcategoryFromUkraineToEnglish from "@/helpers/getTranslatedSubcategoryFromUkraineToEnglish"
+import getCorrectQueryParamsSearchQuery from "@/helpers/getCorrectQueryParamsSearchQuery"
 
 interface IProps {
 	onClose?: () => void
@@ -11,17 +18,21 @@ interface IProps {
 
 const SearchResultComponent = (props: IProps) => {
   const {onClose} = props
-  const {products: searchResult, loading, error} = useSelector(selectSearch)
-
+  const {products: searchResult, loading, error, query} = useSelector(selectSearch)
+  
   const router = useRouter()
-
+  
   const handleClickButton = () => {
-    if(searchResult) router.push(`/products/${getTranslatedSubcategoryFromUkraineToEnglish(searchResult[0].category.sub_category)}`)
-    if(onClose) onClose()
+    if(searchResult) {
+      const otherParams = getCorrectQueryParamsSearchQuery(query)
+      const subCategory = getTranslatedSubcategoryFromUkraineToEnglish(searchResult[0].category.sub_category)
+      router.push(`/products/${subCategory}?${otherParams}`)
+      if(onClose) onClose()
+    }
   }
 
   return (
-    <div className="pt-10 h-auto max-h-[90vh] overflow-y-auto">
+    <div className="pt-8 h-auto max-h-[90vh] overflow-y-auto">
       {searchResult?.length ? (
         <div>
           <h3 className="mb-5">Товари</h3>
