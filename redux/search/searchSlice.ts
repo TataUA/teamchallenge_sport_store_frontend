@@ -8,6 +8,7 @@ import { IProduct } from "@/services/types";
 
 export interface ISearchState {
   products: IProduct[] | null
+  previousQueries: string[]
   query: string
   loading: boolean
   error: boolean
@@ -16,6 +17,7 @@ export interface ISearchState {
 const initialState: ISearchState = {
   products: null,
   query: '',
+  previousQueries: [],
   loading: false,
   error: false,
 };
@@ -38,6 +40,11 @@ const searchSlice = createSlice({
     },
     setSearchQuery: (state, {payload}:  PayloadAction<string>) => {
       state.query = payload
+    },
+    saveSearchQueryToArray: (state, {payload}:  PayloadAction<string>) => {
+      if(state.previousQueries.indexOf(payload) < 0) {
+        state.previousQueries.push(payload)
+      }
     },
     setErrorNull: (state) => {
       state.error = false
@@ -62,5 +69,6 @@ export const searchReducer = searchSlice.reducer;
 export const { 
   setSearchResultProducts, 
   setSearchQuery,
-  setErrorNull
+  setErrorNull,
+  saveSearchQueryToArray,
   } = searchSlice.actions;
