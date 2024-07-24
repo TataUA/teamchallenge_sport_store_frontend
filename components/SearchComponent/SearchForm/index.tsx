@@ -28,11 +28,12 @@ const SearchForm = (props: IProps) => {
 
 	const dispatch: AppDispatch = useDispatch()
 
-  const {error, query} = useSelector(selectSearch)
+  const {error, query, loading} = useSelector(selectSearch)
 	const [searchText, setSearchText] = useState(query)
 
 	const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchText(event.target.value?.toLowerCase())
+		if(searchText && !loading) dispatch(sendSearchQueryThunk(searchText))
 		if(error) {
 			dispatch(setErrorNull())
 		}
