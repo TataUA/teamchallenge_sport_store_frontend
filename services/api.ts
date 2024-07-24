@@ -184,6 +184,8 @@ export const sendSearchQueryApi = async (
 ): Promise<IProduct[]> => {
   try {
     const extractedParams = getCorrectQueryParamsSearchQuery(query)
+    if(!extractedParams) return []
+    
     const { data } = await $instance.get(`products/search/?${extractedParams}`);
     return data;
   } catch (error: any) {
