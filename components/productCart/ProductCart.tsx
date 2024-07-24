@@ -2,6 +2,7 @@ import { removeProductById } from '@/redux/cart/cartSlice'
 import { IProduct } from '@/services/types'
 import Image from 'next/image'
 import { useDispatch } from 'react-redux'
+
 import ButtonSvg from '../Button/ButtonSvg'
 import styles from './ProductCart.module.css'
 
