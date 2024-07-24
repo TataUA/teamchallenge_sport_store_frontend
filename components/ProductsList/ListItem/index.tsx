@@ -9,7 +9,7 @@ import getArrayWithExtractedImgUrl from "@/helpers/getArrayWithExtractedImgUrl"
 import getArrayRemovedColorsDuplicates from "@/helpers/getArrayRemovedDuplicates"
 
 // components
-import {Slider}  from "@/components/slider-hero/Slider"
+import {Slider}  from "@/components/Slider-hero/Slider"
 
 // types
 import { IProduct } from "@/services/types"

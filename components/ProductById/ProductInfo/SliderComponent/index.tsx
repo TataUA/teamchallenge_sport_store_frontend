@@ -3,7 +3,7 @@
 import { useSelector } from "react-redux"
 
 // components
-import { Slider } from "@/components/slider-hero/Slider"
+import { Slider } from "@/components/Slider-hero/Slider"
 
 // helpers
 import { getArrayWithExtractedImgUrlWithCurrentColor } from "@/helpers/getArrayWithExtractedImgUrl"
