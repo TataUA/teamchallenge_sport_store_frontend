@@ -2,12 +2,14 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch } from '@/redux/store'
+import { useRouter } from 'next/navigation'
 
 // components
 import SvgComponent from '@/components/SvgComponent/SvgComponent'
 
 // data
 import { iconsData } from '@/constants'
+import { categoriesListData } from '../categoriesListData'
 
 // styles
 import styles from '../Search/Search.module.css'
@@ -18,15 +20,19 @@ import { sendSearchQueryThunk, setErrorNull, setSearchResultProducts, setSearchQ
 
 // utils
 import { cn } from '@/services/utils/cn'
+import getCloseIconSVG from '@/helpers/getCloseIconSVG'
+import getTranslatedSubcategoryFromUkraineToEnglish from '@/helpers/getTranslatedSubcategoryFromUkraineToEnglish'
 
 interface IProps {
 	name: string
+	onClose?: () => void
 }
 
 const SearchForm = (props: IProps) => {
-  const {name} = props
+  const {name, onClose} = props
 
 	const dispatch: AppDispatch = useDispatch()
+	const router = useRouter()
 
   const {error, query, loading} = useSelector(selectSearch)
 	const [searchText, setSearchText] = useState(query)
@@ -38,6 +44,8 @@ const SearchForm = (props: IProps) => {
 			dispatch(setErrorNull())
 		}
 	}
+
+	const recomendedCategories = categoriesListData.filter((category) => category.includes(searchText))
 	
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault()
@@ -47,6 +55,11 @@ const SearchForm = (props: IProps) => {
 		if(searchText) setSearchText('')
 			dispatch(setSearchResultProducts(null))
 	}
+
+	const handleClickCategory = (subCategory:string) => {
+      router.push(`/products/${getTranslatedSubcategoryFromUkraineToEnglish(subCategory)}/`)
+      if(onClose) onClose()
+  }
 	
 	useEffect(()=>{
 		dispatch(setSearchQuery(searchText))
@@ -54,19 +67,10 @@ const SearchForm = (props: IProps) => {
 
   return (
     <div>
-			<form 
-				className='flex rounded-button justify-between bg-bgSearch px-4 py-3' 
-				onSubmit={handleSubmit}
-			>
-				<input 
-					type='text' 
-					placeholder='Пошук' 
-					className={styles.search_text} 
-					value={searchText}
-					onChange={(e) => handleChangeInput(e)}
-				/>
-				<div
-					className={styles.search_btn}
+			<div className='flex gap-2 items-center justify-between'>
+				<form 
+					className={cn('flex w-full rounded-button gap-2 items-center bg-bgSearch px-4 py-2')} 
+					onSubmit={handleSubmit}
 				>
 					{iconsData.map(
 						icon =>
@@ -82,15 +86,49 @@ const SearchForm = (props: IProps) => {
 								</button>
 							)
 					)}
-				</div>
-			</form>
-			<div 
-				className='flex w-full justify-end text-sm text-[#868687] pt-3 cursor-pointer hover:underline'
-			>
-				<span onClick={handleClickResetButton}>
-					Очистити результат і запит
+					<input 
+						type='text' 
+						placeholder='Пошук' 
+						className={styles.search_text} 
+						value={searchText}
+						onChange={(e) => handleChangeInput(e)}
+					/> 
+					<div
+						onClick={() => onClose?.()}
+						className='[&>svg]:size-5 [&>svg]:fill-[#868687]'
+					>
+						{getCloseIconSVG()}
+					</div>
+				</form>
+				<span
+					className='text-sm text-[#868687] cursor-pointer hover:underline'
+					onClick={handleClickResetButton}
+				>
+					Скасувати
 				</span>
 			</div>
+			{recomendedCategories?.length ? (
+				<>
+					<div className='mt-5'>
+						<h4 className='text-[#868687] text-base mb-1'>Категорії</h4>
+						{recomendedCategories
+							.map((item, index) => (
+								<div 
+									className='text-base text-[#272728] capitalize flex items-center justify-between py-2 hover:text-blue hover:underline' 
+									key={index}
+									onClick={() => handleClickCategory(item)}
+								>
+									<span>
+										{item}
+									</span>
+									<span className='text-3xl'>
+										{'>'}
+									</span>
+								</div>
+							))}
+					</div>
+				</>
+			) : null}
 		</div>
   )
 }

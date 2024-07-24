@@ -32,15 +32,16 @@ const SearchResultComponent = (props: IProps) => {
   }
 
   return (
-    <div className="pt-8 h-auto max-h-[90vh] overflow-y-auto">
+    <div className="pt-5 h-auto max-h-[90vh] overflow-y-auto">
       {searchResult?.length ? (
         <div>
-          <h3 className="mb-5">Товари</h3>
-          {searchResult.slice(0,4).map((product) => (
+          <h3 className="mb-4 text-[#868687]">Товари</h3>
+          {searchResult.slice(0,4).map((product, index) => (
             <ProductCardInfo 
               key={product.id} 
               product={product}
               onClose={onClose} 
+              classname={index === 3 ? 'border-b-0' : ''}
             />
           ))}
           <div 
@@ -53,7 +54,7 @@ const SearchResultComponent = (props: IProps) => {
       ) : null}
       {Array.isArray(searchResult) && !searchResult?.length ? (
         <>
-          <h3 className="text-center text-sm text-[#868687]">За вашим запитом нічого не знайдено</h3>
+          <h3 className="mt-4 text-center text-sm text-[#868687]">За вашим запитом нічого не знайдено</h3>
         </>
       ) : null}
       {loading ? <Loader /> : null}
