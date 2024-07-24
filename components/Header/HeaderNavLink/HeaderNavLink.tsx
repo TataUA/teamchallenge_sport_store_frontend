@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 // data
@@ -10,7 +9,7 @@ import { headerNav, iconsData } from '@/constants'
 
 // components
 import SvgComponent from '../../SvgComponent/SvgComponent'
-import { SearchForm } from '../SearchForm/SearchForm'
+import SearchComponent from '../SearchComponent'
 
 // utils
 import { cn } from '@/services/utils/cn'
@@ -19,8 +18,6 @@ import { cn } from '@/services/utils/cn'
 import { selectCart } from '@/redux/cart/cartSelector'
 
 const HeaderNavLink = () => {
-	const [isHovered, setIsHovered] = useState('')
-
 	const cart = useSelector(selectCart)
 
 	return (
@@ -28,25 +25,21 @@ const HeaderNavLink = () => {
 			{headerNav.map(({ href, name }) => (
 				<li className='py-2 px-2 h-10' key={name}>
 					{name === 'search' ? (
-						<SearchForm href={href} name={name} />
+						<SearchComponent />
 					) : (
 						<Link
 							href={href}
-							onMouseEnter={() => setIsHovered(name)}
-							onMouseLeave={() => setIsHovered('')}
-							onFocus={() => setIsHovered(name)}
 						>
 							{iconsData.map(
 								icon => {
 									return icon.name === name && (
 										<span key={icon.name}
-											className='relative'
+											className='relative [&>svg]:hover:opacity-[50%] cursor-pointer'
 										>
 											<SvgComponent
 												key={icon.name}
 												viewBox={icon.viewBox}
 												path={icon.path}
-												isHovered={isHovered === name}
 											/>
 												{name === 'cart' && cart.products?.length ? (
 													<div 
