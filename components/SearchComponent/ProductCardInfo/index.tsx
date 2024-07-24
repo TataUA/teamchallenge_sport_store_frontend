@@ -6,10 +6,11 @@ import { useRouter } from "next/navigation"
 interface IProps {
   product: IProduct
   onClose?: () => void
+  classname?: string
 }
 
 const ProductCardInfo = (props: IProps) => {
-  const {product, onClose} = props
+  const {product, onClose, classname} = props
 
   const router = useRouter()
 
@@ -20,19 +21,20 @@ const ProductCardInfo = (props: IProps) => {
 
   return (
     <div
-      className="flex gap-3 mb-8 hover:bg-gray-100 rounded-xl"
+      className={cn("flex min-h-6 gap-3 mb-4 pb-4 hover:bg-gray-100 rounded-xl border-b-[1px]", `${classname ? classname : ''}`)}
       onClick={() => handleClickItem()}
     >
-      <div className={cn("w-[108px] h-[108px] bg-blue rounded-xl overflow-hidden")}>
+      <div className={cn("w-[50px] h-[72px] bg-blue rounded-xl overflow-hidden")}>
         <Image 
-          width={108} 
-          height={108} 
+          width={50} 
+          height={72} 
           src={product.colors?.[0]?.image_url} 
           alt='photo_product'
         />
       </div>
-      <div className="flex flex-col justify-evenly flex-1">
-        <p>{product.title}</p>
+      <div className="flex flex-col justify-evenly flex-1 ">
+        <p className="text-ellipsis whitespace-nowrap overflow-hidden max-w-[75vw]">{product.title}</p>
+        <p className="text-[#868687]">{product.category.sub_category}</p>
         <div className="flex justify-between">
           <span className="text-[#1A1A1C] font-semibold text-base">{product.price} грн</span>
         </div>

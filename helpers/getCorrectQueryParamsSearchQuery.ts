@@ -11,6 +11,12 @@ const getCorrectQueryParamsSearchQuery = (query: string): string => {
     'футболки',
     'штани',
   ]
+  const arrayOfColors: Color[] = [
+    'білий',
+    'чорний',
+    'синій',
+    'кольоровий',
+  ]
   const objectOfColors: Record<Color, string> = {
     білий: 'white',
     чорний: 'black',
@@ -20,16 +26,19 @@ const getCorrectQueryParamsSearchQuery = (query: string): string => {
   let queryParams = ''
   
   splittedWords.map((word) => {
-    const categoryMatched = arrayOfCategories.filter(category => category === word)
+    if(word?.length < 3) return
+    
+    const categoryMatched = arrayOfCategories.filter(category => category.includes(word))
+    const colorsMatched = arrayOfColors.filter(color => color.includes(word))
     if(categoryMatched?.length) {
       queryParams += `category=${categoryMatched[0]}`
     }
   
-    if(objectOfColors.hasOwnProperty(word)) {
+    if(objectOfColors.hasOwnProperty(colorsMatched[0])) {
       if(queryParams) {
-        queryParams += `&color=${objectOfColors[word as Color]}`
+        queryParams += `&color=${objectOfColors[colorsMatched[0] as Color]}`
       } else {
-        queryParams += `color=${objectOfColors[word as Color]}`
+        queryParams += `color=${objectOfColors[colorsMatched[0] as Color]}`
       }
     }
   })
