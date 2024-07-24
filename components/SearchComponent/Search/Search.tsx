@@ -13,7 +13,7 @@ export interface SearchFormProps {
 }
 
 const Search = (props: SearchFormProps) => {
-	const {isOpen} = props
+	const {isOpen, onClose} = props
 
 	if(!isOpen) return null
 
@@ -24,7 +24,7 @@ const Search = (props: SearchFormProps) => {
 			}`}
 		>
 			<SearchForm {...props}/>
-			<SearchResultComponent />
+			<SearchResultComponent onClose={onClose} />
 		</div>
 	)
 }

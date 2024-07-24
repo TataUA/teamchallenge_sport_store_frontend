@@ -48,6 +48,7 @@ const SearchComponent = () => {
       </div>
       <Search 
         isOpen={isSearchVisible} 
+        onClose={() => setIsSearchVisible(false)} 
         name={'search'} 
       />
     </>

@@ -9,7 +9,7 @@ import { headerNav, iconsData } from '@/constants'
 
 // components
 import SvgComponent from '../../SvgComponent/SvgComponent'
-import SearchComponent from '../SearchComponent'
+import SearchComponent from '../../SearchComponent'
 
 // utils
 import { cn } from '@/services/utils/cn'
