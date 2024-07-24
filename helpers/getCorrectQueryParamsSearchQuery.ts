@@ -2,7 +2,7 @@ const getCorrectQueryParamsSearchQuery = (query: string): string => {
   type Category = 'шорти' | 'кросівки' | 'кеди' | 'світшоти' | 'футболки' | 'штани';
   type Color = 'білий' | 'чорний' | 'синій' | 'кольоровий';
 
-
+  const splittedWords = query.split(' ')
   const arrayOfCategories: Category[] = [
     'шорти',
     'кросівки',
@@ -17,16 +17,24 @@ const getCorrectQueryParamsSearchQuery = (query: string): string => {
     синій: 'blue',
     кольоровий: 'colorful',
   }
-  const categoryMatched = arrayOfCategories.filter(category => category === query)
-  if(categoryMatched?.length) {
-    return `category=${categoryMatched[0]}`
-  }
+  let queryParams = ''
+  
+  splittedWords.map((word) => {
+    const categoryMatched = arrayOfCategories.filter(category => category === word)
+    if(categoryMatched?.length) {
+      queryParams += `category=${categoryMatched[0]}`
+    }
+  
+    if(objectOfColors.hasOwnProperty(word)) {
+      if(queryParams) {
+        queryParams += `&color=${objectOfColors[word as Color]}`
+      } else {
+        queryParams += `color=${objectOfColors[word as Color]}`
+      }
+    }
+  })
 
-  if(objectOfColors.hasOwnProperty(query)) {
-    return `color=${objectOfColors[query as Color]}`
-  }
-
-  return ''
+  return queryParams
 }
 
 export default getCorrectQueryParamsSearchQuery
