@@ -2,7 +2,7 @@
 
 const fetchProductByIdAction = async (id: number | string) => {
   try {
-    const result = await fetch(`https://api.sporthubsstore.com/products/${id}/`, { cache: 'no-store' });
+    const result = await fetch(`https://api.sporthubsstore.com/products/${id}/`, { next: { revalidate: 3600 } });
     if(result.status === 200) {
       const data = result?.json()
       return data;

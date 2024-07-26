@@ -2,7 +2,7 @@
 
 const fetchProductsAction = async () => {
   try {
-    const result = await fetch("https://api.sporthubsstore.com/products/", { cache: 'no-store' });
+    const result = await fetch("https://api.sporthubsstore.com/products/", { next: { revalidate: 3600 } });
     if(result.status === 200) {
       const data = await result?.json()
       return data;
