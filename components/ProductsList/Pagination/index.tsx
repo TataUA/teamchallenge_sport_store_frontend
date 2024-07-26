@@ -1,6 +1,7 @@
 "use client";
 
-import { FC, useEffect } from "react";
+import Link from "next/link";
+import { FC } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 
 // utils
@@ -21,16 +22,16 @@ const PaginationArrow: FC<PaginationArrowProps> = ({
   href,
   isDisabled,
 }) => {
-  const router = useRouter();
   const isLeft = direction === "left";
   const disabledClassName = isDisabled ? "opacity-50 cursor-not-allowed" : "";
 
   return (
-    <button
-      onClick={() => router.push(href)}
-      className={`hover:bg-gray-200 ${disabledClassName}`}
+    <Link
+      href={href}
+      className={cn(`hover:bg-gray-200 ${disabledClassName}`, {
+        'opacity-[50%] pointer-events-none': isDisabled
+      })}
       aria-disabled={isDisabled}
-      disabled={isDisabled}
     >
       {isLeft ? 
       (
@@ -48,7 +49,7 @@ const PaginationArrow: FC<PaginationArrowProps> = ({
           </svg>
         </span>
       )}
-    </button>
+    </Link>
   );
 };
 
@@ -77,9 +78,9 @@ const Pagination = ({ pageCount }: Readonly<PaginationProps>) => {
         (pageCount <= maxVisiblePages)
       ) {
         pageNumbers.push(
-          <li 
+          <Link
             key={i} 
-            onClick={() => router.push(createPageURLWithPageParams(i))}
+            href={createPageURLWithPageParams(i)}
             className={cn("cursor-pointer text-[#B7B7B8] py-1 px-2 min-[2800px]:text-4xl", 
               'min-[2800px]:after:size-5', {
                 'after:block after:bg-blue after:size-2 after:rounded-[50%] after:absolute': i == currentPage,
@@ -87,7 +88,7 @@ const Pagination = ({ pageCount }: Readonly<PaginationProps>) => {
                 })}
           >
             {i}
-          </li>
+          </Link>
         );
       } else if (
         (i === currentPage - 2 && currentPage > 3) ||
