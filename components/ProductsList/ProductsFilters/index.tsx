@@ -5,7 +5,6 @@ import { ClientComponent } from "@/components/ClientComponent";
 
 // typess
 import { IProduct } from "@/services/types";
-import { IProductsPageInitialProps } from "@/app/product/[...product_id]/page";
 import { IFilters } from "@/app/products/[...sub_category]/page";
 
 export interface IProductsFiltersProps {

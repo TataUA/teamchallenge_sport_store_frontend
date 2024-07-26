@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import Link from 'next/link'
 
 // components
 import ResponsiveModal from '@/components/Shared/ResponsiveModal'
@@ -154,15 +155,15 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 					>
 						Продовжити покупки
 					</div>
-					<div
-						onClick={() => router.push('/cart')}
+					<Link
+						href={'/cart'}
 						className={cn(
-							'text-white bg-[#0A4CF6] rounded-xl py-4 px-20 mb-3',
+							'text-white bg-[#0A4CF6] rounded-xl py-4 px-20 mb-3 inline-block w-full',
 							'hover:text-[#0A4CF6] hover:bg-white hover:border-[#0A4CF6] border-[1px] cursor-pointer'
 						)}
 					>
 						Перейти в кошик
-					</div>
+					</Link>
 				</div>
 			</ResponsiveModal>
 		</div>

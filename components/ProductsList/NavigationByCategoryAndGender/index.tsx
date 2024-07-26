@@ -12,11 +12,13 @@ const NavigationByCategoryAndGender = (props: IProps) => {
   const {searchParams: {gender}, params:{sub_category}} = props
   const translatedProductType = getTranslatedSubcategoryFromEnglishToUkraine(sub_category[0] || '')
   return (
-    <div className='flex gap-2 mb-5 text-base font-medium max-[767px]:text-sm min-[2800px]:text-4xl min-[2800px]:mb-10'>
+    <div className='flex items-center gap-2 mb-5 text-base font-medium max-[767px]:text-sm min-[2800px]:text-4xl min-[2800px]:mb-10'>
       {gender ? (
         <>
           <span className="capitalize">{getTranslatedGenderToUkraine(gender)}</span>
-          <span>&gt;</span>
+          <svg className="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="none">
+            <path d="M6.75 13.5L11.25 9L6.75 4.5" stroke="#272728" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </>
       ) : null}
       <span>{translatedProductType}</span>

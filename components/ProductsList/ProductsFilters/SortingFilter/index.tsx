@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 // helpers
 import getSortingIconSVG from "@/helpers/getSortingIconSVG";
@@ -20,7 +20,6 @@ const SortingFilters = () => {
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const router = useRouter();
   const currentFilterValue = searchParams.get("sortedBy") || 'popularity';
 
   const createPageURLWithPageParams = (filterValue: string) => {
@@ -30,7 +29,6 @@ const SortingFilters = () => {
   };
 
   const handleClick = (id: string) => {
-    router.push(createPageURLWithPageParams(id))
     setIsSortingFilterOpen(false)
   }
 
@@ -50,12 +48,13 @@ const SortingFilters = () => {
             <div className={cn("flex justify-between items-center px-4 [&>svg]:hidden", {
               '[&>svg]:block': currentFilterValue === item.id.toLocaleLowerCase()
             })}>
-              <div 
+              <Link 
                 className={cn("text-base mb-2 font-medium cursor-pointer hover:opacity-50 min-[2800px]:text-3xl", {
                   'text-[#0A4CF6]': currentFilterValue === item.id.toLocaleLowerCase()
                 })}
                 onClick={() => handleClick(item.id)}
-                >{item.title}</div>
+                href={createPageURLWithPageParams(item.id)}
+                >{item.title}</Link>
                 {getCheckedIconSVG()}
             </div>
             <hr />
