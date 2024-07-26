@@ -11,7 +11,7 @@
 
 
 	.search_wrapper.active {
-		@apply mx-auto px-6 fixed top-0 left-0 min-w-full min-h-full bg-white z-30 py-3;
+		@apply mx-auto overflow-y-auto px-6 pb-14 fixed top-0 bottom-0 right-0 left-0 bg-white z-30 py-3;
 	}
 
 	.search_wrapper.active .search_box {

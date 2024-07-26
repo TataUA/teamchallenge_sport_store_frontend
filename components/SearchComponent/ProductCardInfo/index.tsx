@@ -21,7 +21,8 @@ const ProductCardInfo = (props: IProps) => {
 
   return (
     <div
-      className={cn("flex min-h-6 gap-3 mb-4 pb-4 hover:bg-gray-100 rounded-xl border-b-[1px]", `${classname ? classname : ''}`)}
+      className={cn("flex min-h-6 gap-3 mb-4 pb-4 hover:bg-gray-100 border-b-[1px]", 
+        `${classname ? classname : ''}`)}
       onClick={() => handleClickItem()}
     >
       <div className={cn("w-[50px] h-[72px] bg-blue rounded-xl overflow-hidden")}>

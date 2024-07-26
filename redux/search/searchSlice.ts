@@ -42,9 +42,12 @@ const searchSlice = createSlice({
       state.query = payload
     },
     saveSearchQueryToArray: (state, {payload}:  PayloadAction<string>) => {
-      if(state.previousQueries.indexOf(payload) < 0) {
+      if((state.previousQueries.indexOf(payload) < 0) && (state.previousQueries?.length >= 5)) {
+        state.previousQueries.shift()
         state.previousQueries.push(payload)
-      }
+      } else if(state.previousQueries.indexOf(payload) < 0 && (state.previousQueries?.length < 5)) {
+        state.previousQueries.push(payload)
+      } 
     },
     setErrorNull: (state) => {
       state.error = false

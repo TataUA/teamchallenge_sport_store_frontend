@@ -109,15 +109,15 @@ const SearchForm = (props: IProps) => {
 						onChange={(e) => handleChangeInput(e)}
 					/> 
 					<div
-						onClick={() => handleClickCloseIcon()}
 						className='[&>svg]:size-5 [&>svg]:fill-[#868687]'
-					>
+						onClick={handleClickResetButton}
+						>
 						{getCloseIconSVG()}
 					</div>
 				</form>
 				<span
 					className='text-sm text-[#868687] cursor-pointer hover:underline'
-					onClick={handleClickResetButton}
+					onClick={() => handleClickCloseIcon()}
 				>
 					Скасувати
 				</span>
@@ -147,10 +147,9 @@ const SearchForm = (props: IProps) => {
 			{!searchText && previousQueries?.length ? (
 				<>
 					<div className='mt-5'>
-						{previousQueries
-							.map((item, index) => (
+						{[...previousQueries]?.reverse()?.map((item, index) => (
 								<div 
-									className={cn('text-sm text-[#272728] capitalize flex items-center gap-3 py-2',
+									className={cn('text-sm min-h-[48px] text-[#272728] capitalize flex items-center gap-3 py-2 cursor-pointer',
 										'hover:text-blue hover:underline',
 									'border-b-[1px]')} 
 									key={index}

@@ -32,7 +32,7 @@ const SearchResultComponent = (props: IProps) => {
   }
 
   return (
-    <div className="pt-5 h-auto max-h-[90vh] overflow-y-auto">
+    <div className="pt-5">
       {searchResult?.length ? (
         <div>
           <h3 className="mb-4 text-[#868687]">Товари</h3>
