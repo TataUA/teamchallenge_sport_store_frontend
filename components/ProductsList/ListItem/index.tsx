@@ -24,7 +24,7 @@ const ListItem = (props: {product: IProduct}) => {
     <div 
       className={cn(
       'flex flex-col gap-2 pb-5',
-      "w-[32.33333%] max-[767px]:w-[48.5%] max-[767px]:pb-4 max-[380px]:w-[100%] min-[1250px]:w-[24%] min-[2800px]:gap-6"
+      "w-[32.33333%] max-[767px]:w-[48.5%] max-[767px]:pb-4 max-[370px]:w-[100%] min-[1250px]:w-[24%] min-[2800px]:gap-6"
       )}>
       <div
         onClick={() => router.push(`/product/${product.id}`)}
