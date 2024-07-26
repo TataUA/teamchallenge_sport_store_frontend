@@ -16,17 +16,26 @@ interface IProps {
 
 const ColorsFilter = (props: IProps) => {
   const dispatch = useDispatch()
-  const {color} = useSelector(selectGeneralFilters)
+  const {color: colorStored} = useSelector(selectGeneralFilters)
+
+  const handleClickColor = (color: string) => {
+    if(color === colorStored) {
+      dispatch(setColor(''))
+    } else {
+      dispatch(setColor(color))
+      
+    } 
+  }
 
   return (
     <ul className="list-none">
       {props.colors.map((colorItem, index) => (
         <li
-          className={cn('flex list-none items-center gap-3 mb-2 text-[#272728] cursor-pointer min-[2800px]:gap-5 min-[2800px]:mb-5',
-            '[&>svg]:hidden', {
-            'text-[#083DC5] [&>svg]:block [&>svg]:ml-auto [&>svg]:size-7 min-[2800px]:[&>svg]:size-12': color === colorItem.value
+          className={cn('flex min-h-12 list-none items-center gap-3 text-[#272728] cursor-pointer min-[2800px]:gap-5 min-[2800px]:mb-5',
+            '[&>svg]:hidden [&>svg]:fill-blue', {
+            'text-[#083DC5] [&>svg]:block [&>svg]:ml-auto [&>svg]:size-7 min-[2800px]:[&>svg]:size-12': colorStored === colorItem.value
           })}
-          onClick={() => dispatch(setColor(colorItem.value))}
+          onClick={() => handleClickColor(colorItem.value)}
           key={index}
         >
           <span className={cn('size-8 rounded-[50%]', `bg-${colorItem.value.toLocaleLowerCase()}`,

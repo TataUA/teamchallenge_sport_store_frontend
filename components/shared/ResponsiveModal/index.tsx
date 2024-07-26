@@ -77,7 +77,7 @@ const ResponsiveModal = ({ isOpen, onClose, children, wrapperClassname }: IProps
           `${isMobile 
             ? 'rounded-t-3xl h-[85vh] transition-transform duration-300 ease-out'
             : 'rounded-lg'}`,
-          'min-[2800px]:p-10 rounded-3xl min-[2800px]:max-w-5xl', 
+          'min-[2800px]:p-10 min-[2800px]:rounded-3xl min-[2800px]:max-w-5xl', 
           'md: pt-6',
           `${wrapperClassname?.length ? wrapperClassname : ''}`,
         )}
