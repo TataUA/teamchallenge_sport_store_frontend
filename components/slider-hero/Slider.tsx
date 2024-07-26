@@ -78,7 +78,6 @@ export function Slider({
 										background: image ? `url(${image}) center center / cover scroll no-repeat` : undefined,
 									}}
 								></div>
-								<div className='h-full w-full absolute left-0 top-0 bg-black opacity-20'></div>
 								<div className='relative z-10 h-full  flex items-center justify-left'>
 									<div className='w-3/6 ml-10'>
 										{title && (
