@@ -13,12 +13,28 @@ interface ModalProps {
 
 export const Modal = ({ show, onClose, children }: ModalProps) => {
 	const handleClose = useHandleClose(onClose)
+
 	const [isBrowser, setIsBrowser] = useState(false)
+
 	const modalRef = useRef<HTMLDivElement>(null)
+
 	useEffect(() => {
 		setIsBrowser(true)
 	}, [])
+
 	useEffect(() => {
+		const handleClickOutside = (e: MouseEvent) => {
+			if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+				onClose()
+			}
+		}
+
+		const handleKeyDown = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') {
+				onClose()
+			}
+		}
+
 		if (isBrowser && show) {
 			document.addEventListener('keydown', handleKeyDown)
 			document.addEventListener('mousedown', handleClickOutside)
@@ -29,26 +45,15 @@ export const Modal = ({ show, onClose, children }: ModalProps) => {
 				document.body.style.overflow = 'auto'
 			}
 		}
-	}, [isBrowser, show])
+	}, [isBrowser, show, onClose])
 
-	const handleKeyDown = (e: KeyboardEvent) => {
-		if (e.key === 'Escape') {
-			onClose()
-		}
-	}
-
-	const handleClickOutside = (e: MouseEvent) => {
-		if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
-			onClose()
-		}
-	}
 
 	const modalContent = show ? (
 		<>
-			<div className='fixed top-0 left-0 w-full h-full bg-white z-20'>
+			<div className='fixed top-0 left-0 right-0 bottom-0 bg-white z-20 overflow-auto'>
 				<div
 					ref={modalRef}
-					className='container max-w-full max-h-full bg-white'
+					className='container w-full h-full bg-white'
 				>
 					<div className='relative py-3 mb-4 flex justify-between items-center'>
 						<div

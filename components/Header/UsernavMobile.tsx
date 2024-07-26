@@ -4,7 +4,7 @@ import { ClientComponent } from '../ClientComponent'
 export const UsernavMobile = () => {
 	return (
 		<>
-			<div className='cursor-pointer py-3 mb-2 last:mb-0'>
+			<div className='min-h-14 cursor-pointer py-3'>
 				<ClientComponent>
 					<Link href='/profile'>
 						<p className='font-button cursor-pointer text-primary font-medium line-height-150 tracking-wide-04 flex'>
@@ -13,7 +13,7 @@ export const UsernavMobile = () => {
 					</Link>
 				</ClientComponent>
 			</div>
-			<div className='cursor-pointer py-3'>
+			<div className='min-h-14 cursor-pointer py-3'>
 				<Link href='/cart'>
 					<p className='font-button cursor-pointer text-primary font-medium line-height-150 tracking-wide-04 flex'>
 						Корзина
