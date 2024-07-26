@@ -42,7 +42,7 @@ export function Slider({
 
 								document.documentElement.style.setProperty(
 									'--swiper-theme-color',
-									'#000'
+									'#0A4CF6'
 								)
 
 								document.documentElement.style.setProperty(
@@ -53,6 +53,10 @@ export function Slider({
 								document.documentElement.style.setProperty(
 									'--swiper-pagination-bullet-inactive-opacity',
 									'1'
+								)
+								document.documentElement.style.setProperty(
+									'--swiper-pagination-bullet-horizontal-gap',
+									'2px'
 								)
 
 								bulletElement.className = `${className}`
