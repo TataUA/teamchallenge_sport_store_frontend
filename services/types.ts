@@ -27,47 +27,48 @@ export type SvgProps = {
 	name?: string
 	fillHovered?: string
 	isHovered?: boolean
-    classname?: string
+	classname?: string
+	stroke?: string
+	strokeHovered?: string
 }
 
-
 interface Category {
-    id: number;
-    gender: string;
-    sub_category: string;
+	id: number
+	gender: string
+	sub_category: string
 }
 
 export interface IColor {
-    id: number;
-    title: string; // Updated to match the provided object
+	id: number
+	title: string // Updated to match the provided object
 }
 
-interface ProductSize {
-    id: number;
-    value: string;
+export interface ProductSize {
+	id: number
+	value: string
 }
 
 interface ProductImage {
-    image_url: string;
+	image_url: string
 }
 
 export interface IColors {
-    image_url: string, 
-    color: IColor
+	image_url: string
+	color: IColor
 }
 
 export interface IProduct {
-    id: number;
-    title: string;
-    category: Category;
-    description: string;
-    price: string;
-    colors: IColors[]
-    size: ProductSize[];
-    images: ProductImage[];
-    quantity: {
-        size: string
-        color: string
-        quantity: number
-    }[];
+	id: number
+	title: string
+	category: Category
+	description: string
+	price: string
+	colors: IColors[]
+	size: ProductSize[]
+	images: ProductImage[]
+	quantity: {
+		size: string
+		color: string
+		quantity: number
+	}[]
 }

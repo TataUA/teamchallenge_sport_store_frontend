@@ -1,6 +1,6 @@
 
 // componsnts
-import { Slider } from "@/components/slider-hero/Slider"
+import { Slider } from "@/components/Slider-hero/Slider"
 
 // helpers
 import getArrayWithExtractedImgUrl from "@/helpers/getArrayWithExtractedImgUrl"

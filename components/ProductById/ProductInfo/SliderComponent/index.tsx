@@ -3,7 +3,7 @@
 import { useSelector } from "react-redux"
 
 // components
-import { Slider } from "@/components/slider-hero/Slider"
+import { Slider } from "@/components/Slider-hero/Slider"
 
 // helpers
 import { getArrayWithExtractedImgUrlWithCurrentColor } from "@/helpers/getArrayWithExtractedImgUrl"
@@ -27,7 +27,7 @@ const SliderComponent = () => {
         productsList
         autoPlay={false}
         data={getImagesData()}
-        className={'h-[343px] min-[2800px]:h-[1000px] min-[768px]:h-[500px]'} 
+        className={'h-[90vw] min-h-[520px] lg:h-[50vw] lg:max-h-[800px] min-[2800px]:h-[1500px]'} 
         />
     </div>
   )

@@ -1,4 +1,4 @@
-import { Slider } from '@/components/slider-hero/Slider'
+import { Slider } from '@/components/Slider-hero/Slider'
 
 //Замінити та видалити!
 import dataSlider from '../public/data/slider_data.json'

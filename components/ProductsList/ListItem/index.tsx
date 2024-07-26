@@ -9,7 +9,7 @@ import getArrayWithExtractedImgUrl from "@/helpers/getArrayWithExtractedImgUrl"
 import getArrayRemovedColorsDuplicates from "@/helpers/getArrayRemovedDuplicates"
 
 // components
-import {Slider}  from "@/components/slider-hero/Slider"
+import {Slider}  from "@/components/Slider-hero/Slider"
 
 // types
 import { IProduct } from "@/services/types"
@@ -34,7 +34,7 @@ const ListItem = (props: {product: IProduct}) => {
           productsList
           autoPlay={false} 
           data={getArrayWithExtractedImgUrl(product) || []}
-          className={'h-[224px] min-[2800px]:h-[600px]'}
+          className={'h-[60vw] max-h-[400px] min-[2800px]:max-h-[800px]'}
           />
       </div>
       <div 

@@ -1,5 +1,5 @@
-import Cart from "@/components/Cart"
-import { ClientComponent } from "@/components/ClientComponent"
+import Cart from '@/components/Cart'
+import { ClientComponent } from '@/components/ClientComponent'
 
 export const metadata = {
 	title: 'Cart',

@@ -71,11 +71,9 @@ export function Slider({
 						{data?.map(({ id, image, title, subtitle }) => (
 							<SwiperSlide key={id || image}>
 								<div
-									className={cn('h-full w-full absolute left-0 top-0',{
-										'bg-grey-500': !image
-									})}
+									className={cn('h-full w-full absolute left-0 top-0 bg-grey-900')}
 									style={{
-										background: image ? `url(${image}) center center / cover scroll no-repeat` : undefined,
+										background: image ? `center center / cover scroll no-repeat url(${image})` : undefined,
 									}}
 								></div>
 								<div className='relative z-10 h-full  flex items-center justify-left'>
