@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 // helpers
