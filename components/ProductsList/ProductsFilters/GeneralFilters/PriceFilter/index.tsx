@@ -89,12 +89,26 @@ const PriceFilter = () => {
           <div className="absolute top-1/2 -translate-y-1/2 w-full h-1 bg-[#E7E7E8]"></div>
           <div className="absolute top-1/2 -translate-y-1/2 h-1 bg-blue-500" ref={rangeRef}></div>
         </div>
-        <div className={cn("flex w-full gap-2 [&>span]:w-[50%] [&>span]:border-b-[1px] [&>span]:border-[#868687]",
-          '[&>span]:w-[50%] [&>span]:border-b-[1px] [&>span]:border-[#868687] [&>span]:pb-2',
-          'min-[2800px]:[&>span]:text-3xl'
+        <div className={cn("flex w-full gap-2 [&>input]:w-[50%] [&>input]:border-b-[1px] [&>input]:border-[#868687]",
+          '[&>input]:w-[50%] [&>input]:border-b-[1px] [&>input]:border-[#868687] [&>input]:pb-2',
+          'min-[2800px]:[&>input]:text-3xl'
         )}>
-          <span>{minPrice}</span>
-          <span>{maxPrice}</span>
+          <input
+            min="499"
+            max="10999"
+            value={minPrice}
+            name="min"
+            onChange={handleChange}
+            className="focus:outline-none focus:border-blue focus:text-blue"
+          />
+          <input
+            min="499"
+            max="10999"
+            value={maxPrice}
+            name="max"
+            onChange={handleChange}
+            className="focus:outline-none focus:border-blue focus:text-blue"
+          />
         </div>
     </div>
     )
