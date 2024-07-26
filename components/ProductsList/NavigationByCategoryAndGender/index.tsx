@@ -10,7 +10,7 @@ interface IProps {
 
 const NavigationByCategoryAndGender = (props: IProps) => {
   const {searchParams: {gender}, params:{sub_category}} = props
-  const translatedProductType = getTranslatedSubcategoryFromEnglishToUkraine(sub_category[0])
+  const translatedProductType = getTranslatedSubcategoryFromEnglishToUkraine(sub_category[0] || '')
   return (
     <div className='flex gap-2 mb-5 text-base font-medium max-[767px]:text-sm min-[2800px]:text-4xl min-[2800px]:mb-10'>
       {gender ? (

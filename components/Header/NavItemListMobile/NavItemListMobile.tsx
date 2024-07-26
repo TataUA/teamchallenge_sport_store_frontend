@@ -30,7 +30,7 @@ export const NavItemListMobile = ({ navItems, onClose }: NavItemListProps) => {
 			{navItems.map((item, index) => (
 				<div
 					key={item.title.label}
-					className='relative h-fit cursor-pointer flex flex-row justify-between py-3 mb-2 last:mb-0'
+					className='relative min-h-14 cursor-pointer flex flex-row justify-between py-3'
 					onClick={() => handleToggleDropdown(index)}
 				>
 					<p>
@@ -60,7 +60,7 @@ export const NavItemListMobile = ({ navItems, onClose }: NavItemListProps) => {
 							dropdownStates[index] ? styles.dropdownActive : ''
 						}`}
 					>
-						<div className='container fixed top-0 left-0 min-w-full min-h-full bg-white z-10'>
+						<div className='container fixed top-0 left-0 right-0 bottom-0 bg-white z-10'>
 							<div className='relative py-3 mb-4 flex items-center gap-2'>
 								<a href='#'>
 									<button className='flex h-10 mt-1'>
@@ -82,20 +82,19 @@ export const NavItemListMobile = ({ navItems, onClose }: NavItemListProps) => {
 								</a>
 							</div>
 
-							<ul className='mb-4'>
+							<ul>
 								{item.links.map(link => (
 									<li
 										key={link.key}
-										className='py-3 mb-2 last:mb-0'
 										onClick={() => handleToggleDropdown(index)}
 									>
 										<Link
 											onClick={onClose}
 											href={link.href}
-											className='relative h-fit cursor-pointer flex flex-row justify-between'
+											className='relative min-h-14 items-center cursor-pointer flex flex-row justify-between'
 										>
-											<p>
-												<span className='text-button cursor-pointer text-primary font-medium line-height-150 tracking-wide-04 flex'>
+											<p className='text-button cursor-pointer text-primary font-medium line-height-150 tracking-wide-04 flex hover:text-blue'>
+												<span>
 													{link.label}
 												</span>
 											</p>
@@ -103,8 +102,8 @@ export const NavItemListMobile = ({ navItems, onClose }: NavItemListProps) => {
 												id={`svg-${item.title.label}`}
 												width='24px'
 												height='24px'
-												viewBox='0 0 24 24'
 												fill='none'
+												viewBox='0 0 24 24'
 												xmlns='http://www.w3.org/2000/svg'
 												className='svgIcon'
 											>

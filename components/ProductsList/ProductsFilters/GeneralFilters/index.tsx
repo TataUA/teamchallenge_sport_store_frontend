@@ -39,34 +39,34 @@ const GeneralFilters = (props: IProductsFiltersProps) => {
       <ResponsiveModal isOpen={isGeneralFilterOpen} onClose={() => setIsGeneralFilterOpen(false)}>
         <h2 className="text-2xl font-bold mb-4 text-center min-[2800px]:text-4xl">Фільтри</h2>
         {generalProductsFilers.map((generalFilter, index) => (
-          <div className="mb-10 min-[2800px]:mb-20" key={index}>
+          <div className="mb-2 min-[2800px]:mb-20" key={index}>
             {generalFilter.id === 'sizes' && generalFilter.shoesPosibleProductTypes?.includes(props.params.sub_category[0]) ? (
-              <>
+              <div className="mb-10">
                 <h3 className="text-base font-semibold text-[#272728] mb-4 min-[2800px]:text-4xl min-[2800px]:mb-8">{generalFilter.title}</h3>
                 <SizeFilter products={props.products} shoesSizes={generalFilter.sizesShoes} />
-              </>
+              </div>
               ) : null}
             {generalFilter.id === 'sizes' && !generalFilter.shoesPosibleProductTypes?.includes(props.params.sub_category[0]) ? (
-              <>
+              <div className="mb-10">
                 <h3 className="text-base font-semibold text-[#272728] mb-4 min-[2800px]:text-4xl min-[2800px]:mb-8">{generalFilter.title}</h3>
                 <SizeFilter products={props.products} clothesSizes={generalFilter.sizesClothes} />
-                </>
+                </div>
               ) : null}
             {generalFilter.id === 'price' ? (
-              <>
-                <h3 className="text-base font-semibold text-[#272728] mb-5 min-[2800px]:text-4xl min-[2800px]:mb-10">{generalFilter.title}</h3>
+              <div className="mb-10">
+                <h3 className="text-base font-semibold text-[#272728] mb-4 min-[2800px]:text-4xl min-[2800px]:mb-10">{generalFilter.title}</h3>
                 <PriceFilter />
-              </>
+              </div>
             ) : null}
             {generalFilter.id === 'color' && generalFilter.colorValues ? (
-              <>
-                <h3 className="text-base font-semibold text-[#272728] mb-5 min-[2800px]:text-4xl min-[2800px]:mb-10">{generalFilter.title}</h3>
+              <div className="mb-10">
+                <h3 className="text-base font-semibold text-[#272728] mb-2 min-[2800px]:text-4xl min-[2800px]:mb-10">{generalFilter.title}</h3>
                 <ColorsFilter colors={generalFilter.colorValues} />
-              </>
+              </div>
             ) : null}
             {generalFilter.id === 'gender' && generalFilter.genderValues ? (
               <>
-                <h3 className="text-base font-semibold text-[#272728] mb-5 min-[2800px]:text-4xl min-[2800px]:mb-10">{generalFilter.title}</h3>
+                <h3 className="text-base font-semibold text-[#272728] mb-2 min-[2800px]:text-4xl min-[2800px]:mb-10">{generalFilter.title}</h3>
                 <GenderFilter values={generalFilter.genderValues} />
               </>
             ) : null}

@@ -42,7 +42,7 @@ export function Slider({
 
 								document.documentElement.style.setProperty(
 									'--swiper-theme-color',
-									'#000'
+									'#0A4CF6'
 								)
 
 								document.documentElement.style.setProperty(
@@ -53,6 +53,10 @@ export function Slider({
 								document.documentElement.style.setProperty(
 									'--swiper-pagination-bullet-inactive-opacity',
 									'1'
+								)
+								document.documentElement.style.setProperty(
+									'--swiper-pagination-bullet-horizontal-gap',
+									'2px'
 								)
 
 								bulletElement.className = `${className}`
@@ -72,7 +76,6 @@ export function Slider({
 										background: image ? `center center / cover scroll no-repeat url(${image})` : undefined,
 									}}
 								></div>
-								<div className='h-full w-full absolute left-0 top-0 bg-black opacity-20'></div>
 								<div className='relative z-10 h-full  flex items-center justify-left'>
 									<div className='w-3/6 ml-10'>
 										{title && (
