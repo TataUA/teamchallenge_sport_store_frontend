@@ -72,10 +72,10 @@ const ResponsiveModal = ({ isOpen, onClose, children, wrapperClassname }: IProps
     >
       <div
         ref={modalRef}
-        className={cn('bg-white p-5 pt-0 w-full max-w-lg max-h-[85vh] overflow-y-auto',
+        className={cn('bg-white p-6 pt-0 w-full max-w-lg max-h-[85vh] overflow-y-auto',
           `${isMobile ? 'max-w-full' : 'max-w-lg'}`,
           `${isMobile 
-            ? 'rounded-t-3xl h-[85vh] transition-transform duration-300 ease-out'
+            ? 'rounded-t-3xl h-auto transition-transform duration-300 ease-out'
             : 'rounded-lg'}`,
           'min-[2800px]:p-10 min-[2800px]:rounded-3xl min-[2800px]:max-w-5xl', 
           'md: pt-6',
