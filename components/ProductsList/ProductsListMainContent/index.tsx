@@ -1,6 +1,5 @@
 
 // components
-import { ClientComponent } from "@/components/ClientComponent"
 import List from "../List"
 import ProductsFilters from "../ProductsFilters"
 
@@ -22,9 +21,7 @@ const ProductsListMainContent = (props: IProductsPageProps) => {
         <ProductsFilters {...props} />
       </div>
       {Array.isArray(products) && products.length ? (
-        <ClientComponent>
           <List products={products} searchParams={searchParams} />
-        </ClientComponent>
       ) : null}
       {Array.isArray(products) && !products.length ? (
         <div className="text-base min-[2800px]:text-3xl">

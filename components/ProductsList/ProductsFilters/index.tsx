@@ -17,8 +17,8 @@ const ProductsFilters = (props: IProductsFiltersProps) => {
 
   return (
   <div className="flex gap-2 min-[2800px]:gap-6">
-    <SortingFilters />
     <ClientComponent>
+      <SortingFilters />
       <GeneralFilters {...props} />
     </ClientComponent>
       </div>
