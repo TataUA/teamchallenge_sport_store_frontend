@@ -1,8 +1,8 @@
 'use server';
 
-const fetchProductsAction = async () => {
+const fetchProductsAction = async (subCategory: string) => {
   try {
-    const result = await fetch("https://api.sporthubsstore.com/products/", { next: { revalidate: 3600 } });
+    const result = await fetch(`https://api.sporthubsstore.com/products/search/?category=${subCategory}`, { next: { revalidate: 3600 } });
     if(result.status === 200) {
       const data = await result?.json()
       return data;
