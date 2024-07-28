@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 
 // components
 import List from "../List"
@@ -21,7 +22,12 @@ const ProductsListMainContent = (props: IProductsPageProps) => {
         <ProductsFilters {...props} />
       </div>
       {Array.isArray(products) && products.length ? (
+        <Suspense 
+          key={(searchParams.sub_category) + '' + searchParams.page} 
+          fallback={<List products={[]} searchParams={searchParams} />}
+        >
           <List products={products} searchParams={searchParams} />
+        </Suspense>
       ) : null}
       {Array.isArray(products) && !products.length ? (
         <div className="text-base min-[2800px]:text-3xl">
