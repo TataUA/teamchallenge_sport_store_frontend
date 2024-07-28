@@ -16,7 +16,7 @@ const NavigationComponent = ({subCategory}: {subCategory: string}) => {
             fill="none"
             className="size-5"
           >
-            <path d="M11.25 13.5L6.75 9L11.25 4.5" stroke="#272728" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M11.25 13.5L6.75 9L11.25 4.5" stroke="#272728" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </span>
         <span onClick={() => router.back()}>{subCategory}</span>

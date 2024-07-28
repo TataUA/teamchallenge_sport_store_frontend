@@ -28,8 +28,8 @@ const ListItem = (props: {product: IProduct}) => {
         <Slider
           productsList
           autoPlay={false} 
+          cardImage
           data={getArrayWithExtractedImgUrl(product) || []}
-          className={'h-[60vw] max-h-[400px] min-[2800px]:max-h-[800px]'}
           />
       </Link>
       <Link 

@@ -1,11 +1,15 @@
 'use client'
 
+import Image from 'next/image'
+
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
+
 import { SliderButtons } from './SliderButtons'
+
 import { cn } from '@/services/utils/cn'
 
 interface Slide {
@@ -19,6 +23,7 @@ interface SliderProps {
 	data: Slide[]
 	autoPlay?: boolean
 	homePageMainSlider?: boolean
+	cardImage?: boolean
 	productsList?: boolean
 	className?: string
 }
@@ -26,6 +31,7 @@ interface SliderProps {
 export function Slider({ 
 	data, 
 	autoPlay = true, 
+	cardImage,
 	className='',
 	}: SliderProps) {
 	return (
@@ -70,12 +76,24 @@ export function Slider({
 					>
 						{data?.map(({ id, image, title, subtitle }) => (
 							<SwiperSlide key={id || image}>
-								<div
-									className={cn('h-full w-full absolute left-0 top-0 bg-grey-900')}
-									style={{
-										background: image ? `center center / cover scroll no-repeat url(${image})` : undefined,
-									}}
-								></div>
+								{cardImage ? (
+									<div className='rounded-xl overflow-hidden'>
+										<Image alt='' 
+											style={{objectFit: "contain"}} 
+											src={image} 
+											width={850} 
+											height={1300} 
+										/>
+									</div>
+								) : (
+									<div
+										className={cn('h-full w-full absolute left-0 top-0 bg-grey-900')}
+										style={{
+											background: image ? `center center / cover scroll no-repeat url(${image})` : undefined,
+										}}
+									>
+									</div>
+								)}
 								<div className='relative z-10 h-full  flex items-center justify-left'>
 									<div className='w-3/6 ml-10'>
 										{title && (

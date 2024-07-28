@@ -12,6 +12,7 @@ import { IProduct } from "@/services/types"
 import getSortedProducts from "@/helpers/getSortedProducts"
 import getFilteredProducts from "@/helpers/getFilteredProducts"
 import getTranslatedSubcategoryFromUkraineToEnglish from "@/helpers/getTranslatedSubcategoryFromUkraineToEnglish"
+import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine"
 
 export const metadata = {
 	title: 'Products Page',
@@ -35,7 +36,7 @@ export interface IProductsPageInitialProps {
 
 
 const getSortedAndFilteredProducts = async ({filters, sub_category}:{filters: IFilters, sub_category: string}) => {
-	const products: IProduct[] = await fetchProductsAction()
+	const products: IProduct[] = await fetchProductsAction(getTranslatedSubcategoryFromEnglishToUkraine(sub_category))
 	const filteredProductBySubcategory = products.filter(product => 
 			(getTranslatedSubcategoryFromUkraineToEnglish(product.category.sub_category) === sub_category.toLowerCase()))
 	
