@@ -22,12 +22,12 @@ const SliderComponent = () => {
   }
   
   return (
-    <div className="rounded-[12px] overflow-hidden mb-4">
+    <div className="rounded-[12px] overflow-hidden mb-4 lg:max-w-[50vw]">
       <Slider
         productsList
         autoPlay={false}
+        cardImage
         data={getImagesData()}
-        className={'h-[90vw] min-h-[520px] lg:h-[50vw] lg:max-h-[800px] min-[2800px]:h-[1500px]'} 
         />
     </div>
   )
