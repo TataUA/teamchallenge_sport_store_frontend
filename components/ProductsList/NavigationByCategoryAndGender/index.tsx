@@ -17,7 +17,7 @@ const NavigationByCategoryAndGender = (props: IProps) => {
         <>
           <span className="capitalize">{getTranslatedGenderToUkraine(gender)}</span>
           <svg className="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="none">
-            <path d="M6.75 13.5L11.25 9L6.75 4.5" stroke="#272728" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6.75 13.5L11.25 9L6.75 4.5" stroke="#272728" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </>
       ) : null}
