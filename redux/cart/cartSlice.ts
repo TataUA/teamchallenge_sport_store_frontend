@@ -1,8 +1,11 @@
 import { IProduct } from '@/services/types'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+export interface IProductWithMaxQuantity extends IProduct {
+	maxQuantity: number
+}
 export interface ICartState {
-	products: IProduct[]
+	products: IProductWithMaxQuantity[]
 }
 
 const initialState: ICartState = {
@@ -13,7 +16,7 @@ const cartSlice = createSlice({
 	name: 'cart',
 	initialState,
 	reducers: {
-		setProduct: (state, { payload }: PayloadAction<IProduct>) => {
+		setProduct: (state, { payload }: PayloadAction<IProductWithMaxQuantity>) => {
 			const existingProductIndex = state.products.findIndex(
 				product => product.id === payload.id 
 				&& product.size[0].value.toLowerCase() === payload.size[0].value.toLowerCase()
