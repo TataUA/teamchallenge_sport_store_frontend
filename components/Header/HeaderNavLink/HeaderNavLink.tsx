@@ -45,7 +45,7 @@ const HeaderNavLink = () => {
 													<div 
 														className={cn('absolute z-10 bg-blue w-[18px] h-[18px] overflow-hidden rounded-full text-white flex justify-center items-center',
 															'font-semibold text-sm leading-4',
-															'top-[-30%] left-[50%] translate-x-[-50%]'
+															'top-0 right-0 transform translate-x-[50%] translate-y-[-50%]'
 														)}
 													>{cart.products?.length}</div>
 												) : null}
