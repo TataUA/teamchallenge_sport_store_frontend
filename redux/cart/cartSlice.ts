@@ -15,16 +15,23 @@ const cartSlice = createSlice({
 	reducers: {
 		setProduct: (state, { payload }: PayloadAction<IProduct>) => {
 			const existingProductIndex = state.products.findIndex(
-				product => product.id === payload.id && product.size === payload.size
+				product => product.id === payload.id 
+				&& product.size[0].value.toLowerCase() === payload.size[0].value.toLowerCase()
+				&& product.colors[0].color.title.toLowerCase() === product.colors[0].color.title.toLowerCase()
 			)
 
 			if (existingProductIndex === -1) {
 				state.products = [...state.products, payload]
+			} else {
+				state.products[existingProductIndex] = {...payload}
 			}
 		},
 
-		removeProductById: (state, { payload }: PayloadAction<number>) => {
-			state.products = state.products.filter(product => product.id !== payload)
+		removeProductById: (state, { payload }: PayloadAction<{id:number, color:string, size: string}>) => {
+			state.products = state.products.filter(product => !(product.id === payload.id
+				&& product.colors[0].color.title === payload.color
+				&& product.size[0].value === payload.size)
+			)
 		},
 	},
 })

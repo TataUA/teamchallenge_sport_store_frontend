@@ -1,7 +1,6 @@
 'use client'
 
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
@@ -33,7 +32,6 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 	const [isSuccessModalIsOpened, setIsSuccessModalIsOpened] = useState(false)
 
 	const dispatch = useDispatch()
-	const router = useRouter()
 
 	const currentProduct = useSelector(selectCurrentProduct)
 	const { sizes: sizesStored } = currentProduct
@@ -47,47 +45,42 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 		}
 	}
 
-	// Код компонента
 	const handleClickCartButton = () => {
 		if (!sizesStored?.length) {
 			dispatch(setIsSizeModalOpened(true))
 			return
 		}
 		setIsSuccessModalIsOpened(true)
-		// Создаем объект размера с выбранным значением
 		const selectedProductSize: ProductSize = {
-			id: 1, // Возможно, вам нужно получить реальный id размера
+			id: 1,
 			value: sizesStored,
 		}
-		// Получаем выбранный цвет. Если цвет не выбран, берем первый цвет в массиве colors
+
 		const selectedColor = currentProduct.color || product.colors[0]?.color.title
-		// Фильтруем quantity для выбранного размера и цвета
-		const filteredQuantities = product.quantity.filter(
-			q => q.size === sizesStored && q.color === selectedColor
+		const filteredQuantities = [...product.quantity].filter(
+			q => q.size === sizesStored && q.color.toLowerCase() === selectedColor.toLowerCase()
 		)
-		// Находим изображение, соответствующее выбранному цвету
+
 		const selectedImage =
 			product.colors.find(c => c.color.title === selectedColor)?.image_url ||
 			product.colors[0]?.image_url // Добавляем значение по умолчанию, если изображение не найдено
 
-		// Создаем объект продукта с выбранным размером, цветом, отфильтрованным quantity и изображением
 		const productWithSelectedSizeAndColor = {
 			...product,
 			size: [selectedProductSize],
-			quantity: filteredQuantities,
+			quantity: [{...filteredQuantities[0], quantity: 1}],
 			colors: [
 				{
-					image_url: selectedImage, // Сохраняем изображение выбранного цвета
+					image_url: selectedImage,
 					color: {
 						id:
 							product.colors.find(c => c.color.title === selectedColor)?.color
 								.id || 0,
-						title: selectedColor, // Обновляем title для выбранного цвета
+						title: selectedColor,
 					},
 				},
 			],
 		}
-		// Добавляем продукт с выбранным размером, цветом и изображением в корзину
 		dispatch(setProduct(productWithSelectedSizeAndColor))
 	}
 
