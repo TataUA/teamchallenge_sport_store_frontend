@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 
 // store
-import { removeProductById, setProduct } from '@/redux/cart/cartSlice'
+import { IProductWithMaxQuantity, removeProductById, setProduct } from '@/redux/cart/cartSlice'
 
 // types
 import { IProduct } from '@/services/types'
@@ -10,15 +10,15 @@ import { IProduct } from '@/services/types'
 import ProductItem from './ProductItem'
 import CartFooter from './CartFooter'
 
-const Cart = ({ products }: { products: IProduct[] }) => {
+const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
 	const dispatch = useDispatch()
 
 	const handleRemoveProduct = ({id, color, size}: {id: number, color:string, size: string}) => {
 		dispatch(removeProductById({id, color, size}))
 	}
 
-	const handleIncreaseOrDecreasProduct = (option: string, product: IProduct) => {
-		if(option ===  'inc') {
+	const handleIncreaseOrDecreasProduct = (option: string, product: IProductWithMaxQuantity) => {
+		if(option ===  'inc' && (product.quantity[0].quantity < product.maxQuantity)) {
 			const updatedProductWithIncreasedQuantity = {
 			...product,
 			quantity: [{...product.quantity[0], quantity: product.quantity[0].quantity + 1}],
