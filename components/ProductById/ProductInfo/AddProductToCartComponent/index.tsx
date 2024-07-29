@@ -69,6 +69,7 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 			...product,
 			size: [selectedProductSize],
 			quantity: [{...filteredQuantities[0], quantity: 1}],
+			maxQuantity: filteredQuantities[0].quantity,
 			colors: [
 				{
 					image_url: selectedImage,

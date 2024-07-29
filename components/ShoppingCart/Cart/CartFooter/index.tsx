@@ -8,7 +8,7 @@ const CartFooter = () => {
   const cart: {products: IProduct[]} = useSelector(selectCart)
 
   const total = cart.products?.reduce((accumulator, currentProduct) => {
-    return accumulator + Number(currentProduct.price);
+    return accumulator + (currentProduct.quantity[0].quantity * Number(currentProduct.price));
   }, 0);
 
   return (

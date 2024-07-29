@@ -1,13 +1,14 @@
 import Image from "next/image"
 
 import { IProduct } from "@/services/types"
+import { IProductWithMaxQuantity } from "@/redux/cart/cartSlice"
 
 import ButtonSvg from "@/components/Button/ButtonSvg"
 
 interface IProps {
-  product: IProduct
+  product: IProductWithMaxQuantity
   handleRemoveProduct: ({id, color, size}: {id: number, color:string, size: string}) => void
-  handleIncreaseOrDecreasProduct: (option:string, product: IProduct) => void
+  handleIncreaseOrDecreasProduct: (option:string, product: IProductWithMaxQuantity) => void
 }
 
 const ProductItem = (props: IProps) => {
