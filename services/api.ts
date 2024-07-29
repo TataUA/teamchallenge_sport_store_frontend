@@ -13,7 +13,8 @@ import { IProduct } from "./types";
 import getCorrectQueryParamsSearchQuery from "@/helpers/getCorrectQueryParamsSearchQuery";
 
 export const $instance = axios.create({
-  baseURL: "https://api.sporthubsstore.com/",
+  baseURL: "http://34.66.71.139:8000/",
+  // baseURL: "https://api.sporthubsstore.com/",
 });
 
 //Token

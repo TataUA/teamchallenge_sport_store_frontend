@@ -1,6 +1,6 @@
 export const sortingProductsFilers = [
   {
-    title: 'За популярністю',
+    title: 'Рекомендовані',
     id: 'popularity',
   },
   {

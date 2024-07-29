@@ -78,17 +78,17 @@ const Pagination = ({ pageCount }: Readonly<PaginationProps>) => {
         (pageCount <= maxVisiblePages)
       ) {
         pageNumbers.push(
-          <Link
+          <div
             key={i} 
-            href={createPageURLWithPageParams(i)}
-            className={cn("cursor-pointer text-[#B7B7B8] py-1 px-2 min-[2800px]:text-4xl", 
+            onClick={() => router.push(createPageURLWithPageParams(i))}
+            className={cn("relative cursor-pointer text-[#B7B7B8] py-1 px-2 min-[2800px]:text-4xl", 
               'min-[2800px]:after:size-5', {
-                'after:block after:bg-blue after:size-2 after:rounded-[50%] after:absolute': i == currentPage,
+                'after:block after:bg-blue after:size-2 after:rounded-[50%] after:absolute after:left-[50%] after:translate-x-[-50%]': i == currentPage,
                   'text-[#272728]': i == currentPage,
                 })}
           >
             {i}
-          </Link>
+          </div>
         );
       } else if (
         (i === currentPage - 2 && currentPage > 3) ||
@@ -103,7 +103,7 @@ const Pagination = ({ pageCount }: Readonly<PaginationProps>) => {
  
   return (
     <div className="px-3 max-[480px]:px-0">
-      <div className="flex justify-between m-auto max-w-[500px] min-[2800px]:max-w-[800px]">
+      <div className="flex justify-between items-center m-auto max-w-[500px] min-[2800px]:max-w-[800px]">
         <div>
           <PaginationArrow
             direction="left"
@@ -111,7 +111,7 @@ const Pagination = ({ pageCount }: Readonly<PaginationProps>) => {
             isDisabled={currentPage <= 1}
           />
         </div>
-        <ul className="flex w-full justify-center gap-5 text-base overflow-auto max-[480px]:gap-3">
+        <ul className="flex w-full justify-center gap-5 text-base py-2 overflow-auto max-[480px]:gap-3">
           {renderPageNumbers()}
         </ul>
         <div>
