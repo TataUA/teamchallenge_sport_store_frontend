@@ -2,18 +2,16 @@
 
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { unwrapResult } from "@reduxjs/toolkit";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
 import { Formik, Form, FormikHelpers, FormikErrors } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { loginUserThunk } from "@/redux/auth/authThunk";
-import { InputLabelField } from "./InputLabelField";
+import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { ResetPasswordRequestForm } from "../ResetPassword/ResetPasswordRequestForm";
 import { ResetPasswordButton } from "../ResetPassword/ResetPasswordButton";
 import wrong from "@/public/icons/wrong.svg";
-import saveTokensToCookiesAction from "@/app/actions/saveTokensToCookiesAction";
 
 export const schema = yup.object().shape({
   email: yup
@@ -60,15 +58,7 @@ export const LoginForm = () => {
     { resetForm, setErrors }: FormikHelpers<LoginFormValues>
   ) => {
     try {
-      const actionResultAccessToken = await dispatch(loginUserThunk(values));
-      const {
-        accessToken,
-        // refreshToken
-      } = unwrapResult(actionResultAccessToken);
-      saveTokensToCookiesAction({
-        accessToken,
-        refreshToken: "",
-      });
+      await dispatch(loginUserThunk(values));
 
       router.push("/profile");
       resetForm();

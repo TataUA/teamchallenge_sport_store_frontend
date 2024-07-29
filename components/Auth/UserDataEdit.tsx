@@ -7,7 +7,7 @@ import { Formik, Form, FormikHelpers } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { selectUserData } from "@/redux/auth/authSelector";
 import { editUserThunk } from "@/redux/auth/authThunk";
-import { InputLabelField } from "./InputLabelField";
+import { InputLabelField } from "@/components/Auth/InputLabelField";
 
 export const schema = yup.object().shape({
   name: yup
