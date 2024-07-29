@@ -45,7 +45,7 @@ const SearchResultComponent = (props: IProps) => {
             />
           ))}
           <div 
-            className="text-center bg-gray-200 py-2 rounded-xl"
+            className="text-base font-semibold text-center text-blue border-blue border-[1px] py-3 rounded-xl hover:text-white hover:bg-blue"
             onClick={() => handleClickButton()}
           >
             Всі результати пошуку

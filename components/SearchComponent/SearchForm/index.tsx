@@ -1,3 +1,4 @@
+'use client'
 
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -23,6 +24,7 @@ import { cn } from '@/services/utils/cn'
 import getCloseIconSVG from '@/helpers/getCloseIconSVG'
 import getTranslatedSubcategoryFromUkraineToEnglish from '@/helpers/getTranslatedSubcategoryFromUkraineToEnglish'
 import getOldQueryIconSVG from '@/helpers/getOldQueryIconSVG'
+import getArrowRightIconSVG from '@/helpers/getArrowRightIconSVG'
 
 interface IProps {
 	name: string
@@ -54,6 +56,18 @@ const SearchForm = (props: IProps) => {
 			dispatch(saveSearchQueryToArray(searchText))
 		}
 	}
+		
+	const handleKeyboardEvent = (event: React.KeyboardEvent<HTMLInputElement>) => {
+		if(event.key === 'Enter') {
+			event.preventDefault()
+			const recomendedCategories = categoriesListData.filter((category) => searchText && category.includes(searchText))
+			if(products?.length && (recomendedCategories?.length === 1)) {
+				router.push(`/products/${getTranslatedSubcategoryFromUkraineToEnglish(recomendedCategories[0])}/`)
+				onClose?.()
+			}
+		}
+	}
+
 	const handleClickResetButton = () => {
 		setSearchText('')
 		dispatch(setSearchResultProducts(null))
@@ -61,13 +75,18 @@ const SearchForm = (props: IProps) => {
 	}
 
 	const handleClickCloseIcon = () => {
-		handleClickResetButton()
-		onClose?.()
+		setSearchText('')
+		dispatch(setSearchResultProducts(null))
+		setSearchQuery('')
+
+		setTimeout(()=>{
+			onClose?.()
+		},100)
 	}
 
 	const handleClickCategory = (subCategory:string) => {
-      router.push(`/products/${getTranslatedSubcategoryFromUkraineToEnglish(subCategory)}/`)
-      if(onClose) onClose()
+		router.push(`/products/${getTranslatedSubcategoryFromUkraineToEnglish(subCategory)}/`)
+		if(onClose) onClose()
   }
 
 	const handleClickOldQuery = (query: string) => {
@@ -78,7 +97,21 @@ const SearchForm = (props: IProps) => {
 	
 	useEffect(()=>{
 		dispatch(setSearchQuery(searchText))
-	},[dispatch, searchText])
+		const recomendedCategories = categoriesListData.filter((category) => searchText && category.includes(searchText))
+		if(products?.length && recomendedCategories?.length 
+			&& ( products[0].category.sub_category.toLowerCase() === recomendedCategories[0])) return
+			
+			if(recomendedCategories?.length === 1 && !loading) {
+				dispatch(sendSearchQueryThunk(searchText))
+				dispatch(saveSearchQueryToArray(searchText))
+			}
+			
+		return () => {
+			dispatch(setSearchQuery(''))
+
+		}
+
+	},[dispatch, searchText, products, loading])
 
   return (
     <div>
@@ -90,7 +123,7 @@ const SearchForm = (props: IProps) => {
 					{iconsData.map(
 						icon =>
 							icon.name === name && (
-								<button className={cn('inline-block', {
+								<button type='submit' className={cn('inline-block', {
 									'pointer-events-none opacity-[25%]': !searchText
 								})} key={icon.name}>
 									<SvgComponent
@@ -107,6 +140,7 @@ const SearchForm = (props: IProps) => {
 						className={styles.search_text} 
 						value={searchText}
 						onChange={(e) => handleChangeInput(e)}
+						onKeyDown={(e) => handleKeyboardEvent(e)}
 					/> 
 					<div
 						className='[&>svg]:size-5 [&>svg]:fill-[#868687]'
@@ -136,9 +170,7 @@ const SearchForm = (props: IProps) => {
 									<span>
 										{item}
 									</span>
-									<span className='text-3xl'>
-										{'>'}
-									</span>
+									{getArrowRightIconSVG()}
 								</div>
 							))}
 					</div>
