@@ -26,7 +26,7 @@ const getCorrectQueryParamsSearchQuery = (query: string): string => {
   let queryParams = ''
   
   splittedWords.map((word) => {
-    if(word?.length < 3) return
+    if(word?.length < 2) return
     
     const categoryMatched = arrayOfCategories.filter(category => category.includes(word))
     const colorsMatched = arrayOfColors.filter(color => color.includes(word))

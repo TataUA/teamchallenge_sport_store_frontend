@@ -37,9 +37,13 @@ const SearchForm = (props: IProps) => {
 	const dispatch: AppDispatch = useDispatch()
 	const router = useRouter()
 
-  const {error, query, loading, previousQueries, products } = useSelector(selectSearch)
-	const [searchText, setSearchText] = useState(query)
+  const {
+		error, 
+		previousQueries, 
+		products 
+	} = useSelector(selectSearch)
 
+	const [searchText, setSearchText] = useState('')
 	const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchText(event.target.value?.toLowerCase())
 		if(error) {
@@ -97,21 +101,29 @@ const SearchForm = (props: IProps) => {
 	
 	useEffect(()=>{
 		dispatch(setSearchQuery(searchText))
-		const recomendedCategories = categoriesListData.filter((category) => searchText && category.includes(searchText))
-		if(products?.length && recomendedCategories?.length 
-			&& ( products[0].category.sub_category.toLowerCase() === recomendedCategories[0])) return
-			
-			if(recomendedCategories?.length === 1 && !loading) {
-				dispatch(sendSearchQueryThunk(searchText))
-				dispatch(saveSearchQueryToArray(searchText))
-			}
-			
 		return () => {
 			dispatch(setSearchQuery(''))
-
 		}
+	},[dispatch, searchText,])
 
-	},[dispatch, searchText, products, loading])
+	useEffect(()=>{
+		const recomendedCategories = categoriesListData.filter(
+			(category) => searchText && category.includes(searchText)
+		);
+	
+		if (recomendedCategories.length !== 1) return;
+		
+		const currentCategory = products?.[0]?.category.sub_category.toLowerCase();
+		if (currentCategory === recomendedCategories[0].toLowerCase()) return;
+		
+		const debouncedSearch = setTimeout(() => {
+			dispatch(sendSearchQueryThunk(searchText));
+			dispatch(saveSearchQueryToArray(searchText));
+		}, 300);
+
+		return () => clearTimeout(debouncedSearch);
+
+	},[dispatch, searchText])
 
   return (
     <div>

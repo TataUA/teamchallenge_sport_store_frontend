@@ -33,7 +33,8 @@ const SearchResultComponent = (props: IProps) => {
 
   return (
     <div className="pt-5">
-      {searchResult?.length ? (
+      {loading ? <Loader /> : null}
+      {!loading && searchResult?.length ? (
         <div>
           <h3 className="mb-4 text-[#868687]">Товари</h3>
           {searchResult.slice(0,4).map((product, index) => (
@@ -52,13 +53,12 @@ const SearchResultComponent = (props: IProps) => {
           </div>
         </div>
       ) : null}
-      {Array.isArray(searchResult) && !searchResult?.length ? (
+      {!loading && Array.isArray(searchResult) && !searchResult?.length ? (
         <>
           <h3 className="mt-4 text-center text-sm text-[#868687]">За вашим запитом нічого не знайдено</h3>
         </>
       ) : null}
-      {loading ? <Loader /> : null}
-      {error ? (
+      {!loading && error ? (
         <>
           <h3 className="text-center text-sm text-[#868687]">Вибачте, помилка під час запиту на сервер.</h3>
         </>

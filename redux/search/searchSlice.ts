@@ -59,8 +59,8 @@ const searchSlice = createSlice({
         state.loading = true
       })
       .addCase(sendSearchQueryThunk.fulfilled, (state, {payload}: PayloadAction<IProduct[]>) => {
-        state.products = [...payload]
         state.loading = false
+        state.products = [...payload]
       })
       .addCase(sendSearchQueryThunk.rejected, (state) => {
         state.loading = false
