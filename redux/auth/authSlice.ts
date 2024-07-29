@@ -3,9 +3,10 @@ import {
   registerUserThunk,
   loginUserThunk,
   currentUserThunk,
-  logoutUserThunk,
   editUserThunk,
-} from "./authThunk";
+  ErrorType,
+  updateAccessTokenThunk,
+} from "@/redux/auth/authThunk";
 
 export interface UserData {
   id?: number;
@@ -22,7 +23,7 @@ export interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   isRefreshing: boolean;
-  error: string[];
+  error: ErrorType | null;
 }
 
 const initialState: AuthState = {
@@ -31,7 +32,7 @@ const initialState: AuthState = {
   isAuthenticated: false,
   isLoading: false,
   isRefreshing: false,
-  error: [],
+  error: null,
 };
 
 const authSlice = createSlice({
@@ -45,6 +46,15 @@ const authSlice = createSlice({
           : null;
       state.isAuthenticated = !!state.accessToken;
     },
+    updateAccessToken(state, action: PayloadAction<{ accessToken: string }>) {
+      state.accessToken = action.payload.accessToken;
+    },
+    logoutUser(state) {
+      state.isAuthenticated = false;
+      state.accessToken = null;
+      state.user = null;
+      state.error = null;
+    },
   },
   extraReducers: (builder) =>
     builder
@@ -52,7 +62,7 @@ const authSlice = createSlice({
       .addCase(registerUserThunk.pending, (state) => {
         state.isLoading = true;
         state.isAuthenticated = false;
-        state.error = [];
+        state.error = null;
       })
       .addCase(
         registerUserThunk.fulfilled,
@@ -62,34 +72,41 @@ const authSlice = createSlice({
       )
       .addCase(registerUserThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
-        if (payload) {
-          payload.message.forEach((item: string) => state.error.push(item));
-        }
+        state.error = payload ?? { message: ["An error occurred"] };
       })
 
       //login
       .addCase(loginUserThunk.pending, (state) => {
         state.isLoading = true;
         state.isAuthenticated = false;
-        state.error = [];
+        state.error = null;
       })
-      .addCase(
-        loginUserThunk.fulfilled,
-        (state, { payload }: PayloadAction<{ accessToken: string }>) => {
-          state.isLoading = false;
-          state.isAuthenticated = true;
-          state.accessToken = payload.accessToken;
-        }
-      )
+      .addCase(loginUserThunk.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isAuthenticated = true;
+      })
       .addCase(loginUserThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
-        payload && state.error.push(payload);
+        state.error = payload ?? { message: ["An error occurred"] };
+      })
+
+      //update access token
+      .addCase(updateAccessTokenThunk.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateAccessTokenThunk.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(updateAccessTokenThunk.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload ?? { message: ["An error occurred"] };
       })
 
       //current
       .addCase(currentUserThunk.pending, (state) => {
         state.isLoading = true;
-        state.error = [];
+        state.error = null;
       })
       .addCase(
         currentUserThunk.fulfilled,
@@ -102,15 +119,13 @@ const authSlice = createSlice({
       .addCase(currentUserThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.isAuthenticated = false;
-        if (payload) {
-          payload.message.forEach((item: string) => state.error.push(item));
-        }
+        state.error = payload ?? { message: ["An error occurred"] };
       })
 
       //edit
       .addCase(editUserThunk.pending, (state) => {
         state.isRefreshing = true;
-        state.error = [];
+        state.error = null;
       })
       .addCase(
         editUserThunk.fulfilled,
@@ -121,28 +136,10 @@ const authSlice = createSlice({
       )
       .addCase(editUserThunk.rejected, (state, { payload }) => {
         state.isRefreshing = false;
-        if (payload) {
-          payload.message.forEach((item: string) => state.error.push(item));
-        }
-      })
-
-      //logout
-      .addCase(logoutUserThunk.pending, (state) => {
-        state.isLoading = true;
-        state.isAuthenticated = false;
-        state.error = [];
-      })
-      .addCase(logoutUserThunk.fulfilled, (state) => {
-        state.isLoading = false;
-        state.isAuthenticated = false;
-        state.accessToken = null;
-        state.user = null;
-      })
-      .addCase(logoutUserThunk.rejected, (state, { payload }) => {
-        state.isLoading = false;
-        payload && state.error.push(payload);
+        state.error = payload ?? { message: ["An error occurred"] };
       }),
 });
 
 export const authReducer = authSlice.reducer;
-export const { setAccessToken } = authSlice.actions;
+export const { setAccessToken, updateAccessToken, logoutUser } =
+  authSlice.actions;

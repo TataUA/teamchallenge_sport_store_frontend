@@ -1,37 +1,46 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
+import Cookies from "js-cookie";
+import { AppState } from "../store";
+import { UserData, logoutUser } from "./authSlice";
 import {
   registerUser,
-  RegisterResponseData,
   loginUser,
   currentUser,
-  logoutUser,
+  updateAccessToken,
+  editUser,
+  logoutUser as apiLogoutUser,
   setToken,
   clearToken,
   resetPasswordRequest,
   validateToken,
   resetPasswordConfirm,
-  LoginResponseData,
-  editUser,
 } from "@/services/api";
-import { AppState } from "../store";
-import { UserData } from "./authSlice";
+import {
+  RegisterResponseData,
+  LoginResponseData,
+} from "@/services/types/auth-api-types";
 import { RegisterFormValues } from "@/components/Auth/RegisterForm";
 import { LoginFormValues } from "@/components/Auth/LoginForm";
 import { UserDataEditFormValues } from "@/components/Auth/UserDataEdit";
 import { ResetPasswordValuesInterface } from "@/components/ResetPassword/ResetPasswordForm";
+import { handleTokenError } from "@/services/utils/handle-token-error";
+import { handleValidationErrors } from "@/services/utils/handle-validation-errors";
+import { handleSetTokens } from "@/services/utils/handle-set-tokens";
 
-interface Error {
-  message: string[];
+export interface ErrorType {
+  message?: string[];
+  messages?: { token_class: string; token_type: string; message: string }[];
 }
 
+//register
 export const registerUserThunk = createAsyncThunk<
   UserData,
   RegisterFormValues,
-  { rejectValue: Error }
+  { rejectValue: ErrorType }
 >("auth/register", async (values, thunkApi) => {
   try {
     const response: RegisterResponseData = await registerUser(values);
+
     return {
       id: response.id,
       name: response.first_name,
@@ -41,40 +50,60 @@ export const registerUserThunk = createAsyncThunk<
       email: response.email,
     };
   } catch (error: any) {
-    const errorMessages: string[] = error.phone_number ||
-      error.email || ["An error occurred"];
-    const errorObject: Error = {
-      message: errorMessages,
+    const errorObject = handleValidationErrors(error);
+    return thunkApi.rejectWithValue(errorObject);
+  }
+});
+
+//login
+export const loginUserThunk = createAsyncThunk<
+  void,
+  LoginFormValues,
+  { rejectValue: ErrorType }
+>("auth/login", async (values, thunkApi) => {
+  try {
+    const response: LoginResponseData = await loginUser(values);
+    handleSetTokens(response, thunkApi);
+
+    return;
+  } catch (error: any) {
+    const errorObject: ErrorType = {
+      message: error.detail || "An error occurred",
     };
 
     return thunkApi.rejectWithValue(errorObject);
   }
 });
 
-export const loginUserThunk = createAsyncThunk<
-  { 
-    accessToken: string, 
-    // refreshToken: string
-  },
-  LoginFormValues,
-  { rejectValue: string }
->("auth/login", async (values, thunkApi) => {
+//update token
+export const updateAccessTokenThunk = createAsyncThunk<
+  void,
+  { refreshToken: string },
+  { rejectValue: ErrorType }
+>("auth/refresh", async (values, thunkApi) => {
   try {
-    const response: LoginResponseData = await loginUser(values);
-    setToken(response.access);
-    return {
-      accessToken: response.access,
-      // refreshToken: response.refresh,
-    };
+    clearToken();
+
+    const response: LoginResponseData = await updateAccessToken(
+      values.refreshToken
+    );
+
+    handleSetTokens(response, thunkApi);
+    return;
   } catch (error: any) {
-    return thunkApi.rejectWithValue(error.detail || "An error occurred");
+    const errorObject: ErrorType = {
+      message: error.detail || "An error occurred",
+    };
+
+    return thunkApi.rejectWithValue(errorObject);
   }
 });
 
+//current
 export const currentUserThunk = createAsyncThunk<
   UserData,
   void,
-  { rejectValue: Error }
+  { rejectValue: ErrorType }
 >("auth/current", async (_, thunkApi) => {
   const state = thunkApi.getState() as AppState;
   const accessToken = state.auth.accessToken;
@@ -85,6 +114,7 @@ export const currentUserThunk = createAsyncThunk<
 
   try {
     const response: RegisterResponseData = await currentUser();
+
     return {
       id: response.id,
       name: response.first_name,
@@ -94,19 +124,59 @@ export const currentUserThunk = createAsyncThunk<
       email: response.email,
     };
   } catch (error: any) {
-    const errorMessages: string[] = ["An error occurred"];
-    const errorObject: Error = {
-      message: errorMessages,
+    if (error.detail === "Given token not valid for any token type") {
+      const refreshToken = Cookies.get("refreshToken");
+
+      if (refreshToken) {
+        try {
+          await thunkApi
+            .dispatch(updateAccessTokenThunk({ refreshToken }))
+            .unwrap();
+
+          const retryResponse: RegisterResponseData = await currentUser();
+          return {
+            id: retryResponse.id,
+            name: retryResponse.first_name,
+            surname: retryResponse.surname,
+            patronymic: retryResponse.last_name,
+            phone: retryResponse.phone_number,
+            email: retryResponse.email,
+          };
+        } catch (refreshError: any) {
+          return thunkApi.rejectWithValue({
+            message: refreshError.detail || "An error occurred",
+          });
+        }
+      }
+    }
+
+    const errorObject: ErrorType = {
+      messages: error.messages || [
+        {
+          token_class: "Unknown",
+          token_type: "Unknown",
+          message: "An error occurred",
+        },
+      ],
     };
+
     return thunkApi.rejectWithValue(errorObject);
   }
 });
 
+//edit
 export const editUserThunk = createAsyncThunk<
   UserData,
   UserDataEditFormValues,
-  { rejectValue: Error }
+  { rejectValue: ErrorType }
 >("auth/edit", async (values, thunkApi) => {
+  const state = thunkApi.getState() as AppState;
+  const accessToken = state.auth.accessToken;
+
+  if (accessToken) {
+    setToken(accessToken);
+  }
+
   try {
     const response: RegisterResponseData = await editUser(values);
     return {
@@ -118,27 +188,33 @@ export const editUserThunk = createAsyncThunk<
       email: response.email,
     };
   } catch (error: any) {
-    const errorMessages: string[] = error.phone_number ||
-      error.email || ["An error occurred"];
-    const errorObject: Error = {
-      message: errorMessages,
-    };
+    const tokenErrorHandled = await handleTokenError(error, thunkApi);
+    if (tokenErrorHandled) {
+      return thunkApi.rejectWithValue(tokenErrorHandled);
+    }
 
+    const errorObject = handleValidationErrors(error);
     return thunkApi.rejectWithValue(errorObject);
   }
 });
 
+//logout
 export const logoutUserThunk = createAsyncThunk<
-  {},
   void,
-  { rejectValue: string }
+  void,
+  { rejectValue: ErrorType }
 >("auth/logout", async (_, thunkApi) => {
   try {
-    await logoutUser();
+    await apiLogoutUser();
     clearToken();
-    return {};
+    Cookies.remove("refreshToken");
+    thunkApi.dispatch(logoutUser());
   } catch (error: any) {
-    return thunkApi.rejectWithValue(error.detail || "An error occurred");
+    const errorObject: ErrorType = {
+      message: error.detail || "An error occurred",
+    };
+
+    return thunkApi.rejectWithValue(errorObject);
   }
 });
 

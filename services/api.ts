@@ -7,52 +7,57 @@ import { UserDataEditFormValues } from "@/components/Auth/UserDataEdit";
 import { ResetPasswordValuesInterface } from "@/components/ResetPassword/ResetPasswordForm";
 
 // types
+import * as types from "./types/auth-api-types";
 import { IProduct } from "./types";
 
 // helpers
+import { getTokenFromLocalStorage } from "@/services/utils/get-access-token";
 import getCorrectQueryParamsSearchQuery from "@/helpers/getCorrectQueryParamsSearchQuery";
 
 export const $instance = axios.create({
-  // baseURL: "http://34.66.71.139:8000/",
-  baseURL: "https://api.sporthubsstore.com/",
+  baseURL: "http://34.66.71.139:8000/",
+  //baseURL: "https://api.sporthubsstore.com/",
 });
 
-//Token
+$instance.interceptors.request.use(
+  (config) => {
+    const token = getTokenFromLocalStorage();
+    if (token) {
+      config.headers["Authorization"] = `Bearer ${token}`;
+    } else {
+      config.headers["Authorization"] = "";
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+$instance.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+//handle token
 export const setToken = (token: string) => {
-  $instance.defaults.headers["Authorization"] = `Bearer ${token}`;
+  localStorage.setItem("persist:auth", JSON.stringify({ accessToken: token }));
 };
 
 export const clearToken = () => {
-  $instance.defaults.headers["Authorization"] = "";
+  localStorage.removeItem("persist:auth");
 };
 
 //register user
-export interface RegisterRequestData {
-  first_name: string;
-  surname: string;
-  last_name: string;
-  phone_number: string;
-  email: string;
-  password: string;
-  repeat_password: string;
-}
-
-export interface RegisterResponseData {
-  id?: number;
-  first_name: string;
-  surname: string;
-  last_name: string;
-  phone_number: string;
-  email: string;
-}
-
 export const registerUser = async (
   values: RegisterFormValues
-): Promise<RegisterResponseData> => {
+): Promise<types.RegisterResponseData> => {
   const { name, surname, patronymic, phone, email, password, repeatPassword } =
     values;
 
-  const requestData: RegisterRequestData = {
+  const requestData: types.RegisterRequestData = {
     first_name: name,
     surname,
     last_name: patronymic,
@@ -65,7 +70,7 @@ export const registerUser = async (
   clearToken();
 
   try {
-    const { data } = await $instance.post<RegisterResponseData>(
+    const { data } = await $instance.post<types.RegisterResponseData>(
       "/user/registration/",
       requestData
     );
@@ -76,14 +81,9 @@ export const registerUser = async (
 };
 
 //login user
-export interface LoginResponseData {
-  access: string;
-  // refresh: string;
-}
-
 export const loginUser = async (
   values: LoginFormValues
-): Promise<LoginResponseData> => {
+): Promise<types.LoginResponseData> => {
   const { email, password } = values;
 
   try {
@@ -94,8 +94,20 @@ export const loginUser = async (
   }
 };
 
+//update access token
+export const updateAccessToken = async (
+  refresh: string
+): Promise<types.LoginResponseData> => {
+  try {
+    const { data } = await $instance.post("/auth/token/refresh/", { refresh });
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
 //current user
-export const currentUser = async (): Promise<RegisterResponseData> => {
+export const currentUser = async (): Promise<types.RegisterResponseData> => {
   try {
     const { data } = await $instance.get("/user/me/");
     return data;
@@ -105,20 +117,12 @@ export const currentUser = async (): Promise<RegisterResponseData> => {
 };
 
 //edit user
-export interface EditUserRequestData {
-  first_name: string;
-  surname: string;
-  last_name: string;
-  phone_number: string;
-  email: string;
-}
-
 export const editUser = async (
   values: UserDataEditFormValues
-): Promise<RegisterResponseData> => {
+): Promise<types.RegisterResponseData> => {
   const { name, surname, patronymic, phone, email } = values;
 
-  const requestData: EditUserRequestData = {
+  const requestData: types.EditUserRequestData = {
     first_name: name,
     surname,
     last_name: patronymic,
@@ -127,7 +131,7 @@ export const editUser = async (
   };
 
   try {
-    const { data } = await $instance.put<RegisterResponseData>(
+    const { data } = await $instance.put<types.RegisterResponseData>(
       "/user/profile/",
       requestData
     );
@@ -184,9 +188,9 @@ export const sendSearchQueryApi = async (
   query: string
 ): Promise<IProduct[]> => {
   try {
-    const extractedParams = getCorrectQueryParamsSearchQuery(query)
-    if(!extractedParams) return []
-    
+    const extractedParams = getCorrectQueryParamsSearchQuery(query);
+    if (!extractedParams) return [];
+
     const { data } = await $instance.get(`products/search/?${extractedParams}`);
     return data;
   } catch (error: any) {

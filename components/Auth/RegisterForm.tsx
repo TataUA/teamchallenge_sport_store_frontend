@@ -6,8 +6,8 @@ import * as yup from "yup";
 import { Formik, Form, FormikHelpers } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { registerUserThunk } from "@/redux/auth/authThunk";
-import { InputLabelField } from "./InputLabelField";
-import { SuccessRegisterModal } from "./SuccessRegisterModal";
+import { InputLabelField } from "@/components/Auth/InputLabelField";
+import { SuccessRegisterModal } from "@/components/Auth/SuccessRegisterModal";
 
 export const schema = yup.object().shape({
   name: yup
