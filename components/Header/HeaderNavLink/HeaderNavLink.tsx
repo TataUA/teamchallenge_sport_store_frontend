@@ -34,21 +34,24 @@ const HeaderNavLink = () => {
 								icon => {
 									return icon.name === name && (
 										<span key={icon.name}
-											className='relative [&>svg]:hover:opacity-[50%] cursor-pointer'
+											className='[&>svg]:hover:opacity-[50%] cursor-pointer'
 										>
+											{name === 'cart' && cart.products?.length ? (
+												<div 
+													className={cn('relative z-20 bg-blue w-[18px] h-[18px] overflow-hidden rounded-full text-white flex justify-center items-center',
+														'font-semibold text-sm leading-4',
+														'left-[50%] top-[-25%] ',
+													)}
+												>{cart.products?.length}</div>
+											) : null}
 											<SvgComponent
 												key={icon.name}
 												viewBox={icon.viewBox}
 												path={icon.path}
+												classname={cn('',{
+													'relative z-10 top-[-18px]': name === 'cart' && cart.products?.length
+												})}
 											/>
-												{name === 'cart' && cart.products?.length ? (
-													<div 
-														className={cn('absolute z-10 bg-blue w-[18px] h-[18px] overflow-hidden rounded-full text-white flex justify-center items-center',
-															'font-semibold text-sm leading-4',
-															'top-0 right-0 transform translate-x-[50%] translate-y-[-50%]'
-														)}
-													>{cart.products?.length}</div>
-												) : null}
 										</span>
 									)
 								}
