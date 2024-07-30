@@ -1,5 +1,5 @@
 import Image from "next/image";
-
+import Link from "next/link";
 // utils
 import { cn } from "@/services/utils/cn";
 
@@ -30,9 +30,9 @@ const InfoSectionFooter = () => {
         <div className={infoSectionClassname}>
           <div className={subtitleClassname}>Інформація</div>
           <div className="list-none">
-            <li className={informationBlockClassanme}>Про компанію </li>
-            <li className={informationBlockClassanme}>Доставка і оплата</li>
-            <li className={informationBlockClassanme}>Повернення</li>
+            <li className={informationBlockClassanme}><Link href='/info/about'>Про компанію </Link> </li>
+            <li className={informationBlockClassanme}><Link href='/info/delivery'>Доставка і оплата</Link></li>
+            <li className={informationBlockClassanme}><Link href='/info/return'>Повернення</Link></li>
           </div>
         </div>
         <div  className={infoSectionClassname}>
