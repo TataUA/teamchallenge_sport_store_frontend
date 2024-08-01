@@ -5,7 +5,7 @@ import { useState } from "react"
 
 // redux
 import { selectCurrentProduct } from "@/redux/currentProduct/currentProductSelector"
-import { removeCurrentProductSize, setCurrentProductSize, setIsSizeModalOpened } from "@/redux/currentProduct/currentProductSlice"
+import { setCurrentProductSize, setIsSizeModalOpened } from "@/redux/currentProduct/currentProductSlice"
 
 // components
 import ResponsiveModal from "@/components/Shared/ResponsiveModal"
@@ -16,8 +16,6 @@ import SizeGridTables from "../SizeGridTables"
 import getArrowDownSVG from "@/helpers/getArrowDownSVG"
 import { cn } from "@/services/utils/cn"
 import getMessageIconSVG from "@/helpers/getMessageIconSVG"
-import FullSizeModalOnMobiles from "@/components/Shared/FullSizeModal"
-
 interface IProps {
   existedSizesFromDb: {color:string, quantity: number, size:string}[], 
   translatedSubCategory: string
@@ -91,13 +89,13 @@ const SizesModal = ({existedSizesFromDb, translatedSubCategory}: IProps) => {
               Розмірна сітка
             </span>
         </div>
-        <FullSizeModalOnMobiles 
+        <ResponsiveModal 
           isOpen={isSizeGridTablesOpened} 
           onClose={() => setIsSizGridTableOpened(false)}
-          buttonText='До товару'
         >
+          <h3 className="text-xl font-semibold mb-6 text-center">Таблиці розмірів</h3>
           <SizeGridTables />
-        </FullSizeModalOnMobiles>
+        </ResponsiveModal>
         <ResponsiveModal isOpen={isSizeModalOpened} onClose={() => dispatch(setIsSizeModalOpened(false))}>
           <div className="flex gap-6 flex-col">
             <h3 className="text-xl text-[#272728] pt-5 font-semibold text-center">Розмір</h3>

@@ -24,7 +24,7 @@ export const Navbar = ({ isModalOpen, setIsModalOpen }: NavbarProps) => {
           />
         </div>
         <div className="border-t border-border mb-4"></div>
-        <UsernavMobile />
+        <UsernavMobile onClose={() => setIsModalOpen(false)} />
       </Modal>
     </div>
   );

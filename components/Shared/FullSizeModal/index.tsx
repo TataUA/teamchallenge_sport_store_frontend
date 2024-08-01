@@ -1,5 +1,8 @@
+import React, { useState, useEffect } from 'react';
+
+import useHandleClickOutside from '@/hooks/useHandleClickOutside';
+
 import { cn } from '@/services/utils/cn';
-import React, { useState, useEffect, useRef } from 'react';
 
 interface IProps {
   isOpen: boolean;
@@ -10,14 +13,19 @@ interface IProps {
 }
 const FullSizeModalOnMobiles = ({ isOpen, onClose, children, wrapperClassname, buttonText }: IProps) => {
   const [isMobile, setIsMobile] = useState(false);
-  const modalRef = useRef<HTMLDivElement>(null);
   const [currentY, setCurrentY] = useState(0);
+  
+  const modalRef = useHandleClickOutside<HTMLDivElement>(onClose);
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
+
     window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    }
   }, []);
   
   useEffect(() => {
@@ -38,7 +46,6 @@ const FullSizeModalOnMobiles = ({ isOpen, onClose, children, wrapperClassname, b
     <div 
       className={cn('fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center',
         `${isMobile ? 'items-end' : 'items-center'}`)}
-      onClick={onClose}
     >
       <div
         ref={modalRef}

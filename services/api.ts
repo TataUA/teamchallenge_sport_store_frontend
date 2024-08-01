@@ -22,7 +22,7 @@ export const $instance = axios.create({
 $instance.interceptors.request.use(
   (config) => {
     const token = getTokenFromLocalStorage();
-    if (token) {
+    if (token && token !== 'null') {
       config.headers["Authorization"] = `Bearer ${token}`;
     } else {
       config.headers["Authorization"] = "";

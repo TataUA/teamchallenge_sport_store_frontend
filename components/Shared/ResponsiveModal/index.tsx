@@ -70,40 +70,45 @@ const ResponsiveModal = ({ isOpen, onClose, children, wrapperClassname }: IProps
         `${isMobile ? 'items-end' : 'items-center'}`)}
       onClick={onClose}
     >
-      <div
-        ref={modalRef}
-        className={cn('bg-white p-6 pt-0 w-full max-w-lg max-h-[85vh] overflow-y-auto',
-          `${isMobile ? 'max-w-full' : 'max-w-lg'}`,
-          `${isMobile 
-            ? 'rounded-t-3xl h-auto transition-transform duration-300 ease-out'
-            : 'rounded-lg'}`,
-          'min-[2800px]:p-10 min-[2800px]:rounded-3xl min-[2800px]:max-w-5xl', 
-          'md: pt-6',
-          `${wrapperClassname?.length ? wrapperClassname : ''}`,
-        )}
-        style={modalStyle}
-        onClick={(e) => e.stopPropagation()}
+      <div 
+      ref={modalRef}
+      className={cn('relative w-full',
+        `${isMobile ? 'max-w-full' : 'max-w-lg'}`,
+      )}
+      style={modalStyle}
+      onClick={(e) => e.stopPropagation()}
       >
         {isMobile && (
-          <div className='h-10 pt-5'>
-            <div 
-              className="w-10 h-1 bg-gray-300 rounded mx-auto mb-4"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            />
-          </div>
-          
-        )}
-        {!isMobile ? (
-          <button 
-            className="float-right text-2xl bg-transparent border-none cursor-pointer min-[2800px]:text-4xl"
-            onClick={onClose}
-          >
-            &times;
-          </button>
-        ) : null}
-        {children}
+            <div className='h-10 p-5 absolute z-30 bottom-[100%] left-[50%] transform translate-x-[-50%]'>
+              <div 
+                className="w-10 h-1 bg-gray-300 rounded mx-auto mb-4"
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+              />
+            </div>
+          )}
+        <div
+          className={cn('bg-white p-6 pt-0 w-full max-w-lg max-h-[85vh] overflow-y-auto',
+            `${isMobile ? 'max-w-full' : 'max-w-lg'}`,
+            `${isMobile 
+              ? 'rounded-t-3xl h-auto transition-transform duration-300 ease-out'
+              : 'rounded-lg'}`,
+            'min-[2800px]:p-10 min-[2800px]:rounded-3xl min-[2800px]:max-w-5xl', 
+            'md: pt-6',
+            `${wrapperClassname?.length ? wrapperClassname : ''}`,
+          )}
+        >
+          {!isMobile ? (
+            <button 
+              className="float-right text-2xl bg-transparent border-none cursor-pointer min-[2800px]:text-4xl"
+              onClick={onClose}
+            >
+              &times;
+            </button>
+          ) : null}
+          {children}
+        </div>
       </div>
     </div>
   );

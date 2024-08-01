@@ -6,7 +6,9 @@ import { LoginForm } from "@/components/Auth/LoginForm";
 export default function Page() {
   return (
     <div className="container">
-      <h1 className="mt-4 mb-2 text-2xl font-bold text-title">Авторизація</h1>
+      <h1 className="mt-4 mb-2 text-2xl font-pangram font-bold text-title leading-140">
+        Авторизація
+      </h1>
       <p className="mb-6 text-sm font-medium text-common">
         Увійдіть або зареєструйтесь щоб продовжити
       </p>
@@ -34,7 +36,7 @@ export default function Page() {
 
       <Link
         href="/signup"
-        className="flex items-center justify-center  w-full h-12 mb-2 px-6 border border-blue rounded-xl  bg-white text-base font-semibold text-blue hover:bg-active_lightblue transition-all"
+        className="flex items-center justify-center  w-full h-12 mb-2 px-6 border border-blue rounded-xl  bg-white text-base font-pangram font-semibold text-blue hover:bg-active_lightblue transition-all"
       >
         Зареєструватись
       </Link>

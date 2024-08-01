@@ -1,33 +1,42 @@
-export const footwearSizes = [
-  { size: 35, length: "22,5 - 23" },
-  { size: 36, length: "23 - 23,5" },
-  { size: 37, length: "23,5 - 24" },
-  { size: 38, length: "24 - 25" },
-  { size: 39, length: "25 - 26" },
-  { size: 40, length: "26 - 26,5" },
-  { size: 41, length: "26,5 - 27" },
-  { size: 42, length: "27,5 - 28" },
-  { size: 43, length: "28,5 - 29" },
-  { size: 44, length: "29 - 29,5" },
-  { size: 45, length: "29,5 - 30" },
-  { size: 46, length: "30 - 30,5" },
-  { size: 47, length: "31" },
-  { size: 48, length: "31,5+" }
-];
+export const footwearSizes = {
+  headers: ["Розмір", "Довжина, см"],
+  data: [
+    { size: 35, length: "22,5-23" },
+    { size: 36, length: "23-23,5" },
+    { size: 37, length: "23,5-24" },
+    { size: 38, length: "24-25" },
+    { size: 39, length: "25-26" },
+    { size: 40, length: "26-26,5" },
+    { size: 41, length: "26,5-27" },
+    { size: 42, length: "27,5-28" },
+    { size: 43, length: "28,5-29" },
+    { size: 44, length: "29-29,5" },
+    { size: 45, length: "29,5-30" },
+    { size: 46, length: "30-30,5" },
+    { size: 47, length: "31" },
+    { size: 48, length: "31,5+" }
+  ]
+};
 
-export const womenClothingSizes = [
-  { parameter: "Розмір", XS: "40-42", S: "42-44", M: "44-46", L: "46-48", XL: "48-50", XXL: "50-52" },
-  { parameter: "Зріст, см", XS: "160-168", S: "165-177", M: "167-178", L: "168-182", XL: "170-183", XXL: "172-188" },
-  { parameter: "Обхват грудей, см", XS: "80-85", S: "83-90", M: "85-95", L: "95-100", XL: "100-106", XXL: "102-107" },
-  { parameter: "Обхват талії, см", XS: "56-60", S: "60-64", M: "64-73", L: "75-80", XL: "80-85", XXL: "84-90" },
-  { parameter: "Обхват бедер, см", XS: "84-88", S: "88-94", M: "94-100", L: "102-105", XL: "105-110", XXL: "112-116" }
-];
+export const womenClothingSizes = {
+  headers: ["Розмір, EUR | INT", "Зріст, см", "Обхват грудей, см", "Обхват талії, см", "Обхват бедер, см"],
+  data: [
+    { size: "40-42 | XS", height: "160-168", chest: "80-85", waist: "56-60", hip: "84-88" },
+    { size: "42-44 | S", height: "160-168", chest: "80-85", waist: "56-60", hip: "84-88" },
+    { size: "44-46 | M", height: "160-168", chest: "80-85", waist: "56-60", hip: "84-88" },
+    { size: "46-48 | L", height: "160-168", chest: "80-85", waist: "56-60", hip: "84-88" },
+    { size: "46-48 | L", height: "160-168", chest: "80-85", waist: "56-60", hip: "84-88" },
+    { size: "50-52 | XXL", height: "160-168", chest: "80-85", waist: "56-60", hip: "84-88" }
+  ]
+};
 
-export const menClothingSizes = [
-  { parameter: "Розмір", S: "44-46", M: "46-48", L: "48-50", XL: "50-52", XXL: "52-54" },
-  { parameter: "Зріст, см", S: "170-185", M: "175-185", L: "185-193", XL: "188-197", XXL: "190-198" },
-  { parameter: "Обхват грудей, см", S: "88", M: "98-103", L: "98-103", XL: "104-110", XXL: "110-116" },
-  { parameter: "Ширина плечей, см", S: "38-40", M: "39-43", L: "41-46", XL: "43-47", XXL: "46-49" },
-  { parameter: "Обхват поясу, см", S: "78-85", M: "83-93", L: "93-96", XL: "98-104", XXL: "105-112" },
-  { parameter: "Обхват стегон, см", S: "92-96", M: "96-100", L: "98-104", XL: "102-108", XXL: "106-112" }
-];
+export const menClothingSizes = {
+  headers: ["Розмір, EUR | INT", "Зріст, см", "Обхват грудей, см", "Ширина плечей, см", "Обхват поясу, см", "Обхват стегон, см"],
+  data: [
+    { size: "44-46 | S", height: "170-185", chest: "88", shoulderWidth: "38-40", waist: "78-85", thigh: "92-96" },
+    { size: "46-48 | M", height: "175-185", chest: "98-103", shoulderWidth: "39-43", waist: "83-93", thigh: "96-100" },
+    { size: "48-50 | L", height: "185-193", chest: "98-103", shoulderWidth: "41-46", waist: "93-96", thigh: "98-104" },
+    { size: "50-52 | XL", height: "188-197", chest: "104-110", shoulderWidth: "43-47", waist: "98-104", thigh: "102-108" },
+    { size: "52-54 | XXL", height: "190-198", chest: "110-116", shoulderWidth: "46-49", waist: "105-112", thigh: "106-112" }
+  ]
+};
