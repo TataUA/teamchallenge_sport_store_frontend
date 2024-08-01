@@ -1,4 +1,4 @@
-import Delivery from '../../../components/Footer/Delivery';
+import Delivery from '@/components/Footer/Delivery';
 
 export default function DeliveryPage() {
   return (

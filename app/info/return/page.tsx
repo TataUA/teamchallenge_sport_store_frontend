@@ -1,4 +1,4 @@
-import Return from '../../../components/Footer/Return';
+import Return from '@/components/Footer/Return';
 
 export default function ReturnPage() {
   return (
