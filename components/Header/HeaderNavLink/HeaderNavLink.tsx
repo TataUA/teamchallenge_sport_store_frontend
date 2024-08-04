@@ -17,15 +17,17 @@ import { cn } from '@/services/utils/cn'
 // store
 import { selectCart } from '@/redux/cart/cartSelector'
 import { AppDispatch } from '@/redux/store'
-import { saveCartIdFromDb, setProduct } from '@/redux/cart/cartSlice'
+import { IProductWithMaxQuantity, saveCartIdFromDb, setProduct } from '@/redux/cart/cartSlice'
 
 // helpers
 import { getTokenFromLocalStorage } from '@/services/utils/get-access-token'
+import getBasketIdFromLocalStorage, { setBasketIdToLocalStorage } from '@/helpers/getBasketIdFromLocalStorage'
 
 // actions
 import createShoppingCartAction from '@/app/actions/createShoppingCartInDbAction'
 import fetchShoppingCartFromServerAction, { ICartResponseItem } from '@/app/actions/fetchShoppingCartFromServerAction'
 import fetchProductByIdClientAction from '@/app/actions/fetchProductByIdClientAction'
+import addProductToCartInDbAction from '@/app/actions/addProductToCartInDbAction'
 
 // types
 import { IProduct } from '@/services/types'
@@ -35,9 +37,13 @@ const HeaderNavLink = () => {
 	const mounted = useRef(false)
 
 	const dispatch: AppDispatch = useDispatch()
+	const token = getTokenFromLocalStorage();
 
 	useEffect(()  => {
-		const token = getTokenFromLocalStorage();
+
+		const saveProductsFromStoreToCartDb = (id: string, product: IProductWithMaxQuantity) => {
+			addProductToCartInDbAction(id, product)
+		}
 
 		const fetchProductByIdAndSave = async (item: ICartResponseItem) => {
 			const productData: IProduct = await fetchProductByIdClientAction(item.product, item.color, item.size)
@@ -66,8 +72,15 @@ const HeaderNavLink = () => {
 		const createCartInDb = async () => {
 			// якщо створюємо нову то ми отримаємо її ІД і можемо привязати його до юзера
 			const {id} = await createShoppingCartAction()
-			if(id) dispatch(saveCartIdFromDb(id))
-			// тут можливо треба продукти с редакса зберегти в корзину в БД
+			if(id) {
+				dispatch(saveCartIdFromDb(id))
+				setBasketIdToLocalStorage(id)
+				
+				// тут можливо треба продукти с редакса зберегти в корзину в БД
+				cart.products.forEach(product => {
+					saveProductsFromStoreToCartDb(id, product)
+				})
+			}
 		}
 
 		const fetchCartFromDb = async (idCart: string) => {
@@ -83,7 +96,9 @@ const HeaderNavLink = () => {
 		// для неавторизованих корзина тільки в Local Storage
 		if(token) {
 			// має бути перевірка чи має юзер корзину
-			const idCart = '462a7df0-9d55-4c58-958b-9239ad174099';
+			// const idCart = '462a7df0-9d55-4c58-958b-9239ad174099';
+			const idCart = getBasketIdFromLocalStorage()
+
 			if(idCart) {
 				fetchCartFromDb(idCart)
 			} else {
@@ -93,7 +108,7 @@ const HeaderNavLink = () => {
 		}
 
 			mounted.current = true
-	},[cart.id])
+	},[cart.id, token])
 
 	return (
 		<ul className='flex items-center'>
