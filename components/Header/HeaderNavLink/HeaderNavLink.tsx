@@ -66,15 +66,12 @@ const HeaderNavLink = () => {
 		const createCartInDb = async () => {
 			// якщо створюємо нову то ми отримаємо її ІД і можемо привязати його до юзера
 			const {id} = await createShoppingCartAction()
-
 			if(id) dispatch(saveCartIdFromDb(id))
-
 			// тут можливо треба продукти с редакса зберегти в корзину в БД
 		}
 
 		const fetchCartFromDb = async (idCart: string) => {
 			const response = await fetchShoppingCartFromServerAction(idCart)
-
 			if(response?.items.length) {
 				response?.items.forEach(async (item) => {
 					fetchProductByIdAndSave(item)
@@ -84,7 +81,7 @@ const HeaderNavLink = () => {
 
 		// взаємодія з сервером і корзино в БД тіфльки для авторизованих юзерів
 		// для неавторизованих корзина тільки в Local Storage
-		if(true) {
+		if(token) {
 			// має бути перевірка чи має юзер корзину
 			const idCart = '462a7df0-9d55-4c58-958b-9239ad174099';
 			if(idCart) {
