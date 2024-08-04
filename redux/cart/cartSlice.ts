@@ -3,14 +3,24 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface IProductWithMaxQuantity extends IProduct {
 	maxQuantity: number
+	idInBasketInDb?: number
 }
 export interface ICartState {
 	products: IProductWithMaxQuantity[]
+	id: string
+	error: boolean
+}
+export interface ICartCreatedResponse {
+	items: any[]
+	id: string
 }
 
 const initialState: ICartState = {
 	products: [],
+	id: '',
+	error: false,
 }
+
 
 const cartSlice = createSlice({
 	name: 'cart',
@@ -36,8 +46,13 @@ const cartSlice = createSlice({
 				&& product.size[0].value === payload.size)
 			)
 		},
+		saveCartIdFromDb: (state, { payload }: PayloadAction<string>) => {
+			state.id = payload
+		},
 	},
 })
 
 export const cartReducer = cartSlice.reducer
-export const { setProduct, removeProductById } = cartSlice.actions
+export const { setProduct, removeProductById,
+	saveCartIdFromDb,
+ 	} = cartSlice.actions
