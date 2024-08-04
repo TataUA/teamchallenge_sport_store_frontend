@@ -8,7 +8,7 @@ export default function Profile() {
     <ClientComponent>
       <PrivateRouteComponent>
         <div className="container">
-          <h1 className="mt-4 mb-6 text-2xl font-bold text-title">
+          <h1 className="mt-4 mb-6 text-2xl leading-140 font-pangram font-bold text-title">
             Особистий кабінет
           </h1>
           <UserData />
