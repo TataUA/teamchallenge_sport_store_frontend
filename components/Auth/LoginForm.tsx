@@ -92,53 +92,55 @@ export const LoginForm = () => {
       >
         {(formik) => (
           <Form autoComplete="off">
-            <div className="flex flex-col gap-4">
-              <InputLabelField
-                label="Електронна пошта"
-                name="email"
-                type="email"
-                inputMode="email"
-                placeholder="example@gmail.com"
-                formik={formik}
+            <div className="mb-2">
+              <div className="flex flex-col gap-4">
+                <InputLabelField
+                  label="Електронна пошта"
+                  name="email"
+                  type="email"
+                  inputMode="email"
+                  placeholder="example@gmail.com"
+                  formik={formik}
+                />
+
+                <InputLabelField
+                  label="Пароль"
+                  name="password"
+                  type="password"
+                  inputMode="text"
+                  placeholder="******"
+                  formik={formik}
+                />
+              </div>
+
+              <ResetPasswordButton
+                setShowPasswordResetBlock={setShowPasswordResetBlock}
+                showPasswordResetBlock={showPasswordResetBlock}
               />
 
-              <InputLabelField
-                label="Пароль"
-                name="password"
-                type="password"
-                inputMode="text"
-                placeholder="******"
-                formik={formik}
-              />
-            </div>
-
-            <ResetPasswordButton
-              setShowPasswordResetBlock={setShowPasswordResetBlock}
-              showPasswordResetBlock={showPasswordResetBlock}
-            />
-
-            {formik.errors &&
-              (formik.errors as ExtendedFormikErrors)._error && (
-                <div className="flex items-center mb-6 ">
-                  <Image
-                    src={wrong}
-                    width={18}
-                    height={18}
-                    alt="Іконка помилки"
-                  />
-                  <div className="ml-1.5 text-sm font-medium text-red">
-                    {(formik.errors as ExtendedFormikErrors)._error}
+              {formik.errors &&
+                (formik.errors as ExtendedFormikErrors)._error && (
+                  <div className="flex items-center mb-6 ">
+                    <Image
+                      src={wrong}
+                      width={18}
+                      height={18}
+                      alt="Іконка помилки"
+                    />
+                    <div className="ml-1.5 text-sm font-medium text-red">
+                      {(formik.errors as ExtendedFormikErrors)._error}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-            <button
-              type="submit"
-              disabled={formik.isSubmitting}
-              className="w-full h-12 mb-2 px-6  rounded-xl bg-blue text-base font-semibold text-white hover:bg-active_blue transition-all"
-            >
-              Увійти
-            </button>
+              <button
+                type="submit"
+                disabled={formik.isSubmitting}
+                className="w-full h-12 px-6  rounded-xl bg-blue text-base font-semibold font-pangram text-white hover:bg-active_blue transition-all"
+              >
+                Увійти
+              </button>
+            </div>
           </Form>
         )}
       </Formik>
