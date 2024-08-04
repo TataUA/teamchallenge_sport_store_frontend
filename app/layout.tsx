@@ -1,9 +1,12 @@
-// app/layout.tsx
+import type { Metadata } from "next";
 
+// fonts
+import { Nunito_Sans, Inter } from "@next/font/google";
+
+// components
 import Footer from "@/components/Footer/Footer";
 import { Header } from "@/components/Header/Header";
-import type { Metadata } from "next";
-import { Nunito_Sans, Inter } from "@next/font/google";
+
 import "./globals.css";
 
 export const nunitoSans = Nunito_Sans({
