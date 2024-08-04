@@ -4,7 +4,8 @@ export const getTokenFromLocalStorage = () => {
   if (tokenLocalStorage) {
     const authState = JSON.parse(tokenLocalStorage);
 
-    return authState.accessToken || "";
+    return  (authState.accessToken && (authState.accessToken !== 'null')) 
+      ? authState.accessToken : "";
   }
   return "";
 };
