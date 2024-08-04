@@ -14,9 +14,10 @@ import { IProduct } from "./types";
 import { getTokenFromLocalStorage } from "@/services/utils/get-access-token";
 import getCorrectQueryParamsSearchQuery from "@/helpers/getCorrectQueryParamsSearchQuery";
 
+export const apiBaseUrl = process.env.NODE_ENV === 'development' ? 'http://34.66.71.139:8000/' : 'https://api.sporthubsstore.com/';
+
 export const $instance = axios.create({
-  // baseURL: "http://34.66.71.139:8000/",
-  baseURL: "https://api.sporthubsstore.com/",
+  baseURL: apiBaseUrl,
 });
 
 $instance.interceptors.request.use(

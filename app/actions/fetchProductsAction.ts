@@ -1,8 +1,10 @@
 'use server';
 
+import { apiBaseUrl } from "@/services/api";
+
 const fetchProductsAction = async (subCategory: string) => {
   try {
-    const result = await fetch(`https://api.sporthubsstore.com/products/search/?category=${subCategory}`, { next: { revalidate: 3600 } });
+    const result = await fetch(`${apiBaseUrl}products/search/?category=${subCategory}`, { next: { revalidate: 3600 } });
     if(result.status === 200) {
       const data = await result?.json()
       return data;
