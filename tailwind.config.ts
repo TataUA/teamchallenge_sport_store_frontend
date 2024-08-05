@@ -8,7 +8,6 @@ const config: Config = {
   ],
   theme: {
     fontFamily: {
-      body: ['"PP Pangram Sans"', '"Open Sans"'],
       pangram: ["PP Pangram Sans", "sans-serif"],
       nunito: ["Nunito Sans", "sans-serif"],
       inter: ["Inter", "sans-serif"],

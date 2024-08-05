@@ -58,28 +58,33 @@ export const LoginForm = () => {
     { resetForm, setErrors }: FormikHelpers<LoginFormValues>
   ) => {
     try {
-      await dispatch(loginUserThunk(values));
+      const actionResult = await dispatch(loginUserThunk(values));
 
-      router.push("/profile");
-      resetForm();
-    } catch (rejectedValueOrSerializedError) {
-      const errorMessages: ExtendedFormikErrors = {};
+      if (loginUserThunk.fulfilled.match(actionResult)) {
+        router.push("/profile");
+        resetForm();
+      } else if (loginUserThunk.rejected.match(actionResult)) {
+        let errorData: any = actionResult.payload;
+        const errorMessages: ExtendedFormikErrors = {};
 
-      if (typeof rejectedValueOrSerializedError === "string") {
-        if (
-          rejectedValueOrSerializedError ===
-          "No active account found with the given credentials"
-        ) {
-          errorMessages._error =
-            "Неправильна адреса електронної пошти або пароль";
+        if (errorData && errorData.message) {
+          if (
+            errorData.message ===
+            "No active account found with the given credentials"
+          ) {
+            errorMessages._error =
+              "Неправильна адреса електронної пошти або пароль";
+          } else {
+            errorMessages._error = "Невідома помилка, спробуйте ще раз";
+          }
         } else {
-          errorMessages._error = "Невідома помилка, спробуйте ще раз";
+          errorMessages._error = errorData.message;
         }
-      } else {
-        errorMessages._error = "Невідома помилка, спробуйте ще раз";
-      }
 
-      setErrors(errorMessages);
+        setErrors(errorMessages);
+      }
+    } catch (error) {
+      console.error("Login failed in catch block:", error);
     }
   };
 
