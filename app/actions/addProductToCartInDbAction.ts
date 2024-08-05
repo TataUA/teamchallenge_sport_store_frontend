@@ -2,6 +2,7 @@
 
 import { apiBaseUrl } from "@/services/api";
 import { IProduct } from "@/services/types";
+import { ICartResponseItem } from "./fetchShoppingCartFromServerAction";
 
 const addProductToCartInDbAction = async (basketId: string, product:IProduct) => {
   try {
@@ -20,13 +21,16 @@ const addProductToCartInDbAction = async (basketId: string, product:IProduct) =>
       next: { revalidate: 3600 },
       body: JSON.stringify(preparedBody)
     });
+
     if(result.status === 201) {
-      const data = await result?.json()
+      const data: ICartResponseItem = await result?.json()
       return data;
     }
-    return [];
+
+    return {id: null};
   } catch (error: any) {
     console.log("🚀 ~ fetchProductsAction ~ error:", error.response)
+    return {id: null};
   }
 }
 
