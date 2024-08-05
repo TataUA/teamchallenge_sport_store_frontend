@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { AppDispatch } from "@/redux/store";
 import {
   selectIsAuthenticated,
@@ -22,6 +22,7 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
   const isLoading = useSelector(selectIsLoading);
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
@@ -35,9 +36,18 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
     fetchCurrentUser();
   }, [dispatch, router]);
 
+  useEffect(() => {
+    if (
+      isAuthenticated &&
+      (pathname === "/login" || pathname === "/register")
+    ) {
+      router.push("/profile");
+    }
+  }, [isAuthenticated, pathname, router]);
+
   if (isLoading) {
     return <Loader />;
   }
 
-  return <>{isAuthenticated ? children : null}</>;
+  return <>{children}</>;
 };
