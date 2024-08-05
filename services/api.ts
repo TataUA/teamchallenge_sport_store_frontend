@@ -51,6 +51,9 @@ export const clearToken = () => {
   localStorage.removeItem("accessToken");
 };
 
+export const getTokenFromLocalStorage = () => localStorage.getItem("accessToken");
+
+
 //register user
 export const registerUser = async (
   values: RegisterFormValues

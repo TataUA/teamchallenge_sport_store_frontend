@@ -20,8 +20,10 @@ import { AppDispatch } from '@/redux/store'
 import { IProductWithMaxQuantity, saveCartIdFromDb, setProduct } from '@/redux/cart/cartSlice'
 
 // helpers
-import { getTokenFromLocalStorage } from '@/services/utils/get-access-token'
 import getBasketIdFromLocalStorage, { setBasketIdToLocalStorage } from '@/helpers/getBasketIdFromLocalStorage'
+
+// api
+import { getTokenFromLocalStorage } from '@/services/api'
 
 // actions
 import createShoppingCartAction from '@/app/actions/createShoppingCartInDbAction'
@@ -37,9 +39,9 @@ const HeaderNavLink = () => {
 	const mounted = useRef(false)
 
 	const dispatch: AppDispatch = useDispatch()
-	const token = getTokenFromLocalStorage();
-
+	
 	useEffect(()  => {
+		const token = getTokenFromLocalStorage();
 
 		const saveProductsFromStoreToCartDb = (id: string, product: IProductWithMaxQuantity) => {
 			addProductToCartInDbAction(id, product)
@@ -85,6 +87,7 @@ const HeaderNavLink = () => {
 
 		const fetchCartFromDb = async (idCart: string) => {
 			const response = await fetchShoppingCartFromServerAction(idCart)
+			
 			if(response?.items.length) {
 				response?.items.forEach(async (item) => {
 					fetchProductByIdAndSave(item)
@@ -100,6 +103,7 @@ const HeaderNavLink = () => {
 			const idCart = getBasketIdFromLocalStorage()
 
 			if(idCart) {
+				if(!cart.id) dispatch(saveCartIdFromDb(idCart))
 				fetchCartFromDb(idCart)
 			} else {
 				// корзини немає і створюємо її
@@ -108,7 +112,7 @@ const HeaderNavLink = () => {
 		}
 
 			mounted.current = true
-	},[cart.id, token])
+	},[cart.id])
 
 	return (
 		<ul className='flex items-center'>
