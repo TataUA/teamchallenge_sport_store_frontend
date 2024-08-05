@@ -11,11 +11,14 @@ import CartFooter from './CartFooter'
 // actions
 import removeProductToCartInDbAction from '@/app/actions/removeProductToCartInDbAction'
 import updateQuantityProductInCartInDbAction from '@/app/actions/updateQuantityProductInCartInDbAction'
+import { getTokenFromLocalStorage } from '@/services/api'
 
 const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
 	const dispatch = useDispatch()
 
 	const cartDataStored = useSelector(selectCart)
+
+	const token = getTokenFromLocalStorage()
 
 	const handleRemoveProduct = ({id, color, size, itemIdInBasket}: {id: number, color:string, size: string, itemIdInBasket?:number}) => {
 		// видаляємо продукт с корзини в БД
@@ -29,7 +32,7 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
 				...product,
 				quantity: [{...product.quantity[0], quantity: product.quantity[0].quantity + 1}],
 			}
-			if(cartDataStored.id && updatedProductWithIncreasedQuantity.idInBasketInDb) {
+			if(token && cartDataStored.id && updatedProductWithIncreasedQuantity.idInBasketInDb) {
 				updateQuantityProductInCartInDbAction(
 					cartDataStored.id, 
 					updatedProductWithIncreasedQuantity, 
@@ -39,27 +42,27 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
 			dispatch(setProduct(updatedProductWithIncreasedQuantity))
 		}
 
-	if(option ===  'dec') {
-		if(product.quantity[0].quantity <= 1) {
-			handleRemoveProduct({
-				id: product.id, 
-				color: product.colors[0].color.title, 
-				size: product.size[0].value,
-				itemIdInBasket: product.idInBasketInDb,
-			})
-		} else {
-			const updatedProductWithDecreasedQuantity = {
-				...product,
-				quantity: [{...product.quantity[0], quantity: product.quantity[0].quantity - 1}],
-			}
-			if(cartDataStored.id && updatedProductWithDecreasedQuantity.idInBasketInDb) {
-				updateQuantityProductInCartInDbAction(
-					cartDataStored.id, 
-					updatedProductWithDecreasedQuantity, 
-					updatedProductWithDecreasedQuantity.idInBasketInDb
-				)
-			}
-			dispatch(setProduct(updatedProductWithDecreasedQuantity))
+		if(option ===  'dec') {
+			if(product.quantity[0].quantity <= 1) {
+				handleRemoveProduct({
+					id: product.id, 
+					color: product.colors[0].color.title, 
+					size: product.size[0].value,
+					itemIdInBasket: product.idInBasketInDb,
+				})
+			} else {
+				const updatedProductWithDecreasedQuantity = {
+					...product,
+					quantity: [{...product.quantity[0], quantity: product.quantity[0].quantity - 1}],
+				}
+				if(token && cartDataStored.id && updatedProductWithDecreasedQuantity.idInBasketInDb) {
+					updateQuantityProductInCartInDbAction(
+						cartDataStored.id, 
+						updatedProductWithDecreasedQuantity, 
+						updatedProductWithDecreasedQuantity.idInBasketInDb
+					)
+				}
+				dispatch(setProduct(updatedProductWithDecreasedQuantity))
 			}
 		}
 	}

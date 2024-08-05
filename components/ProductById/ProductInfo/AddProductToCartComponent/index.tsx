@@ -38,6 +38,7 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 
 	const currentProduct = useSelector(selectCurrentProduct)
 	const cart = useSelector(selectCart)
+	console.log("🚀 ~ AddProductToCartComponent ~ cart:", cart)
 	const { sizes: sizesStored } = currentProduct
 
 	const isShoesSizes = () => {
@@ -49,7 +50,7 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 		}
 	}
 
-	const handleClickCartButton = () => {
+	const handleClickCartButton = async () => {
 		if (!sizesStored?.length) {
 			dispatch(setIsSizeModalOpened(true))
 			return
@@ -86,8 +87,14 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 				},
 			],
 		}
-		if(cart.id) addProductToCartInDbAction(cart.id, productWithSelectedSizeAndColor)
-		dispatch(setProduct(productWithSelectedSizeAndColor))
+		if(cart.id) {
+			const response = await addProductToCartInDbAction(cart.id, productWithSelectedSizeAndColor)
+			if(response?.id) dispatch(setProduct(
+				{...productWithSelectedSizeAndColor, idInBasketInDb: response?.id}
+			))
+		} else {
+			dispatch(setProduct(productWithSelectedSizeAndColor))
+		}
 	}
 
 	useEffect(() => {
