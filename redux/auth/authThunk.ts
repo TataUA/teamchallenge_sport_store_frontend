@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import { AppState } from "../store";
 import { UserData, logoutUser } from "./authSlice";
 import {
   registerUser,
@@ -9,7 +8,6 @@ import {
   updateAccessToken,
   editUser,
   logoutUser as apiLogoutUser,
-  setToken,
   clearToken,
   resetPasswordRequest,
   validateToken,
@@ -63,7 +61,7 @@ export const loginUserThunk = createAsyncThunk<
 >("auth/login", async (values, thunkApi) => {
   try {
     const response: LoginResponseData = await loginUser(values);
-    handleSetTokens(response, thunkApi);
+    handleSetTokens(response);
 
     return;
   } catch (error: any) {
@@ -82,13 +80,11 @@ export const updateAccessTokenThunk = createAsyncThunk<
   { rejectValue: ErrorType }
 >("auth/refresh", async (values, thunkApi) => {
   try {
-    clearToken();
-
     const response: LoginResponseData = await updateAccessToken(
       values.refreshToken
     );
+    handleSetTokens(response);
 
-    handleSetTokens(response, thunkApi);
     return;
   } catch (error: any) {
     const errorObject: ErrorType = {
@@ -105,13 +101,6 @@ export const currentUserThunk = createAsyncThunk<
   void,
   { rejectValue: ErrorType }
 >("auth/current", async (_, thunkApi) => {
-  const state = thunkApi.getState() as AppState;
-  const accessToken = state.auth.accessToken;
-
-  if (accessToken) {
-    setToken(accessToken);
-  }
-
   try {
     const response: RegisterResponseData = await currentUser();
 
@@ -170,13 +159,6 @@ export const editUserThunk = createAsyncThunk<
   UserDataEditFormValues,
   { rejectValue: ErrorType }
 >("auth/edit", async (values, thunkApi) => {
-  const state = thunkApi.getState() as AppState;
-  const accessToken = state.auth.accessToken;
-
-  if (accessToken) {
-    setToken(accessToken);
-  }
-
   try {
     const response: RegisterResponseData = await editUser(values);
     return {
