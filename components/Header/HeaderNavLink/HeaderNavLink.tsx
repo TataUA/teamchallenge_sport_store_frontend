@@ -18,6 +18,7 @@ import { cn } from '@/services/utils/cn'
 import { selectCart } from '@/redux/cart/cartSelector'
 import { AppDispatch } from '@/redux/store'
 import { IProductWithMaxQuantity, saveCartIdFromDb, setProduct } from '@/redux/cart/cartSlice'
+import { selectUserData } from '@/redux/auth/authSelector'
 
 // helpers
 import getBasketIdFromLocalStorage, { setBasketIdToLocalStorage } from '@/helpers/getBasketIdFromLocalStorage'
@@ -36,15 +37,18 @@ import { IProduct } from '@/services/types'
 
 const HeaderNavLink = () => {
 	const cart = useSelector(selectCart)
+	const user = useSelector(selectUserData)
+
 	const mounted = useRef(false)
 
 	const dispatch: AppDispatch = useDispatch()
+
 	
 	useEffect(()  => {
 		const token = getTokenFromLocalStorage();
 
 		const saveProductsFromStoreToCartDb = (id: string, product: IProductWithMaxQuantity) => {
-			addProductToCartInDbAction(id, product)
+			return addProductToCartInDbAction(id, product)
 		}
 
 		const fetchProductByIdAndSave = async (item: ICartResponseItem) => {
@@ -79,8 +83,11 @@ const HeaderNavLink = () => {
 				setBasketIdToLocalStorage(id)
 				
 				// тут можливо треба продукти с редакса зберегти в корзину в БД
-				cart.products.forEach(product => {
-					saveProductsFromStoreToCartDb(id, product)
+				cart.products.forEach(async product => {
+					const response = await saveProductsFromStoreToCartDb(id, product)
+					if(response?.id) dispatch(setProduct(
+						{...product, idInBasketInDb: response?.id}
+					))
 				})
 			}
 		}
@@ -112,7 +119,7 @@ const HeaderNavLink = () => {
 		}
 
 			mounted.current = true
-	},[cart.id])
+	},[user?.id])
 
 	return (
 		<ul className='flex items-center'>
