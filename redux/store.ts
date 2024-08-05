@@ -18,11 +18,6 @@ import { currentProductReducer } from "./currentProduct/currentProductSlice";
 import { generalFiltersReducer } from "./generalFilters/generalFiltersSlice";
 import { searchReducer } from "./search/searchSlice";
 
-const authPersistConfig = {
-  key: "auth",
-  storage,
-  whitelist: ["accessToken"],
-};
 const cartPersistConfig = {
   key: "cart",
   storage,
@@ -36,10 +31,7 @@ const searchPersistConfig = {
 
 export const store = configureStore({
   reducer: {
-    auth: persistReducer<ReturnType<typeof authReducer>>(
-      authPersistConfig,
-      authReducer
-    ),
+    auth: authReducer,
     generalFilters: generalFiltersReducer,
     currentProduct: currentProductReducer,
     cart: persistReducer<ReturnType<typeof cartReducer>>(

@@ -8,14 +8,15 @@ const config: Config = {
   ],
   theme: {
     fontFamily: {
-      body: ['"PP Pangram Sans"', '"Open Sans"'],
       pangram: ["PP Pangram Sans", "sans-serif"],
       nunito: ["Nunito Sans", "sans-serif"],
       inter: ["Inter", "sans-serif"],
     },
     extend: {
       lineHeight: {
+        "129": "129%",
         "140": "140%", //використовуємо клас leading-140
+        "150": "150%",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
@@ -43,6 +44,7 @@ const config: Config = {
         border: "#CFCFCF",
         border_button: "#E7E7E8",
         white: "#fff",
+        gray: "#6E6E70",
         blue: "#0A4CF6",
         blue_trans5: "rgba(10, 76, 246, 0.05)",
         active_blue: "#0735AC",

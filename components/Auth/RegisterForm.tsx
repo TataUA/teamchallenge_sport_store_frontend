@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
-import { Formik, Form, FormikHelpers } from "formik";
+import { Formik, Form, FormikHelpers, FormikErrors } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { registerUserThunk } from "@/redux/auth/authThunk";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
@@ -104,6 +104,7 @@ export const RegisterForm = () => {
         setShowSuccessModal(true);
       } else if (registerUserThunk.rejected.match(actionResult)) {
         let errorData: any = actionResult.payload;
+        const errorMessages: Partial<FormikErrors<RegisterFormValues>> = {};
 
         if (
           errorData &&
@@ -111,23 +112,27 @@ export const RegisterForm = () => {
           Array.isArray(errorData.message)
         ) {
           if (
-            errorData.message.includes("user with this email already exists.")
+            errorData &&
+            errorData.message &&
+            Array.isArray(errorData.message)
           ) {
-            setErrors({ email: "Така пошта вже зареєстрована" });
-          } else if (
-            errorData.message.includes("Enter a valid email address.")
-          ) {
-            setErrors({ email: "Адреса введеної пошти не вірна" });
-          } else if (
-            errorData.message.includes("The phone number entered is not valid.")
-          ) {
-            setErrors({ phone: "Введений номер не вірний" });
-          } else if (
-            errorData.message.includes(
-              "user with this phone number already exists."
-            )
-          ) {
-            setErrors({ phone: "Такий номер вже зареєстрований" });
+            errorData.message.forEach((message: string) => {
+              if (message.includes("user with this email already exists.")) {
+                errorMessages.email = "Така пошта вже зареєстрована";
+              } else if (message.includes("Enter a valid email address.")) {
+                errorMessages.email = "Адреса введеної пошти не вірна";
+              } else if (
+                message.includes("The phone number entered is not valid.")
+              ) {
+                errorMessages.phone = "Введений номер не вірний";
+              } else if (
+                message.includes("user with this phone number already exists.")
+              ) {
+                errorMessages.phone = "Такий номер вже зареєстрований";
+              }
+            });
+
+            setErrors(errorMessages);
           }
         } else {
           console.error("Registration failed with general error:", errorData);

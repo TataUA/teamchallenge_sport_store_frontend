@@ -62,7 +62,7 @@ body {
   }
 
   .input {
-    @apply w-full border-b h-13 pt-5 pb-2 border-border outline-none focus:ring-0 text-base font-medium text-primary;
+    @apply w-full h-14 pt-6 pb-2 align-middle border-b border-border outline-none focus:ring-0 text-base font-medium font-pangram text-primary;
   }
 
   .input:-webkit-autofill {
@@ -76,7 +76,7 @@ body {
   }
 
   .label {
-    @apply text-base font-medium text-label;
+    @apply text-base font-medium font-pangram text-label;
   }
 
   .peer-placeholder-shown {
@@ -88,7 +88,7 @@ body {
   }
 
   .label_read {
-    @apply block mb-1 text-xs font-medium text-label;
+    @apply block mb-1 text-sm leading-129 font-medium font-pangram text-label;
   }
 
   .input_read {

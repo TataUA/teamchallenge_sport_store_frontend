@@ -11,7 +11,6 @@ import * as types from "./types/auth-api-types";
 import { IProduct } from "./types";
 
 // helpers
-import { getTokenFromLocalStorage } from "@/services/utils/get-access-token";
 import getCorrectQueryParamsSearchQuery from "@/helpers/getCorrectQueryParamsSearchQuery";
 
 export const apiBaseUrl = process.env.NODE_ENV === 'development' ? 'http://34.66.71.139:8000/' : 'https://api.sporthubsstore.com/';
@@ -22,8 +21,9 @@ export const $instance = axios.create({
 
 $instance.interceptors.request.use(
   (config) => {
-    const token = getTokenFromLocalStorage();
-    if (token && token !== 'null') {
+    const token = localStorage.getItem("accessToken");
+
+    if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
     } else {
       config.headers["Authorization"] = "";
@@ -44,11 +44,11 @@ $instance.interceptors.response.use(
 
 //handle token
 export const setToken = (token: string) => {
-  localStorage.setItem("persist:auth", JSON.stringify({ accessToken: token }));
+  localStorage.setItem("accessToken", token);
 };
 
 export const clearToken = () => {
-  localStorage.removeItem("persist:auth");
+  localStorage.removeItem("accessToken");
 };
 
 //register user

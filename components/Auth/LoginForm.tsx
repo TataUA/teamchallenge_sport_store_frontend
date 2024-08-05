@@ -58,28 +58,33 @@ export const LoginForm = () => {
     { resetForm, setErrors }: FormikHelpers<LoginFormValues>
   ) => {
     try {
-      await dispatch(loginUserThunk(values));
+      const actionResult = await dispatch(loginUserThunk(values));
 
-      router.push("/profile");
-      resetForm();
-    } catch (rejectedValueOrSerializedError) {
-      const errorMessages: ExtendedFormikErrors = {};
+      if (loginUserThunk.fulfilled.match(actionResult)) {
+        router.push("/profile");
+        resetForm();
+      } else if (loginUserThunk.rejected.match(actionResult)) {
+        let errorData: any = actionResult.payload;
+        const errorMessages: ExtendedFormikErrors = {};
 
-      if (typeof rejectedValueOrSerializedError === "string") {
-        if (
-          rejectedValueOrSerializedError ===
-          "No active account found with the given credentials"
-        ) {
-          errorMessages._error =
-            "Неправильна адреса електронної пошти або пароль";
+        if (errorData && errorData.message) {
+          if (
+            errorData.message ===
+            "No active account found with the given credentials"
+          ) {
+            errorMessages._error =
+              "Неправильна адреса електронної пошти або пароль";
+          } else {
+            errorMessages._error = "Невідома помилка, спробуйте ще раз";
+          }
         } else {
-          errorMessages._error = "Невідома помилка, спробуйте ще раз";
+          errorMessages._error = errorData.message;
         }
-      } else {
-        errorMessages._error = "Невідома помилка, спробуйте ще раз";
-      }
 
-      setErrors(errorMessages);
+        setErrors(errorMessages);
+      }
+    } catch (error) {
+      console.error("Login failed in catch block:", error);
     }
   };
 
@@ -92,53 +97,55 @@ export const LoginForm = () => {
       >
         {(formik) => (
           <Form autoComplete="off">
-            <div className="flex flex-col gap-4">
-              <InputLabelField
-                label="Електронна пошта"
-                name="email"
-                type="email"
-                inputMode="email"
-                placeholder="example@gmail.com"
-                formik={formik}
+            <div className="mb-2">
+              <div className="flex flex-col gap-4">
+                <InputLabelField
+                  label="Електронна пошта"
+                  name="email"
+                  type="email"
+                  inputMode="email"
+                  placeholder="example@gmail.com"
+                  formik={formik}
+                />
+
+                <InputLabelField
+                  label="Пароль"
+                  name="password"
+                  type="password"
+                  inputMode="text"
+                  placeholder="******"
+                  formik={formik}
+                />
+              </div>
+
+              <ResetPasswordButton
+                setShowPasswordResetBlock={setShowPasswordResetBlock}
+                showPasswordResetBlock={showPasswordResetBlock}
               />
 
-              <InputLabelField
-                label="Пароль"
-                name="password"
-                type="password"
-                inputMode="text"
-                placeholder="******"
-                formik={formik}
-              />
-            </div>
-
-            <ResetPasswordButton
-              setShowPasswordResetBlock={setShowPasswordResetBlock}
-              showPasswordResetBlock={showPasswordResetBlock}
-            />
-
-            {formik.errors &&
-              (formik.errors as ExtendedFormikErrors)._error && (
-                <div className="flex items-center mb-6 ">
-                  <Image
-                    src={wrong}
-                    width={18}
-                    height={18}
-                    alt="Іконка помилки"
-                  />
-                  <div className="ml-1.5 text-sm font-medium text-red">
-                    {(formik.errors as ExtendedFormikErrors)._error}
+              {formik.errors &&
+                (formik.errors as ExtendedFormikErrors)._error && (
+                  <div className="flex items-center mb-6 ">
+                    <Image
+                      src={wrong}
+                      width={18}
+                      height={18}
+                      alt="Іконка помилки"
+                    />
+                    <div className="ml-1.5 text-sm font-medium text-red">
+                      {(formik.errors as ExtendedFormikErrors)._error}
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
-            <button
-              type="submit"
-              disabled={formik.isSubmitting}
-              className="w-full h-12 mb-2 px-6  rounded-xl bg-blue text-base font-semibold text-white hover:bg-active_blue transition-all"
-            >
-              Увійти
-            </button>
+              <button
+                type="submit"
+                disabled={formik.isSubmitting}
+                className="w-full h-12 px-6  rounded-xl bg-blue text-base font-semibold font-pangram text-white hover:bg-active_blue transition-all"
+              >
+                Увійти
+              </button>
+            </div>
           </Form>
         )}
       </Formik>

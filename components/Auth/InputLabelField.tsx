@@ -134,7 +134,7 @@ export const InputLabelField = <T,>({
           <ErrorMessage
             name={String(name)}
             component="div"
-            className="ml-1.5 text-sm font-medium text-red"
+            className="ml-1.5 text-sm font-medium font-pangram text-red"
           />
         </div>
       )}
