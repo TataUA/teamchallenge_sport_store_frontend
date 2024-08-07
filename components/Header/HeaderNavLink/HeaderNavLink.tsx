@@ -82,6 +82,8 @@ const HeaderNavLink = () => {
 				dispatch(saveCartIdFromDb(basketId))
 				setBasketIdToLocalStorage(basketId)
 				
+				fetchCartFromDb(basketId)
+
 				// тут можливо треба продукти с редакса зберегти в корзину в БД
 				cart.products.forEach(async product => {
 					const response = await saveProductsFromStoreToCartDb(basketId, product)
