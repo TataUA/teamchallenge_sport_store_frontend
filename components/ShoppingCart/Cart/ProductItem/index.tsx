@@ -7,7 +7,7 @@ import ButtonSvg from "@/components/Button/ButtonSvg"
 
 interface IProps {
   product: IProductWithMaxQuantity
-  handleRemoveProduct: ({id, color, size}: {id: number, color:string, size: string}) => void
+  handleRemoveProduct: ({id, color, size, itemIdInBasket}: {id: number, color:string, size: string, itemIdInBasket?:number}) => void
   handleIncreaseOrDecreasProduct: (option:string, product: IProductWithMaxQuantity) => void
 }
 
@@ -38,7 +38,12 @@ const ProductItem = (props: IProps) => {
             nameSvg='delete'
             fill='#3E3E40'
             fillHovered='#868687'
-            onClick={() => handleRemoveProduct({id: product.id, color: product.colors[0].color.title, size: product.size[0].value})}
+            onClick={() => handleRemoveProduct({
+              id: product.id, 
+              color: product.colors[0].color.title, 
+              size: product.size[0].value,
+              itemIdInBasket: product.idInBasketInDb,
+            })}
           />
         </div>
 

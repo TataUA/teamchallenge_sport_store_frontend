@@ -1,41 +1,69 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 // store
 import { IProductWithMaxQuantity, removeProductById, setProduct } from '@/redux/cart/cartSlice'
-
-// types
-import { IProduct } from '@/services/types'
+import { selectCart } from '@/redux/cart/cartSelector'
 
 // components
 import ProductItem from './ProductItem'
 import CartFooter from './CartFooter'
 
+// actions
+import removeProductToCartInDbAction from '@/app/actions/removeProductToCartInDbAction'
+import updateQuantityProductInCartInDbAction from '@/app/actions/updateQuantityProductInCartInDbAction'
+import { getTokenFromLocalStorage } from '@/services/api'
+
 const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
 	const dispatch = useDispatch()
 
-	const handleRemoveProduct = ({id, color, size}: {id: number, color:string, size: string}) => {
-		dispatch(removeProductById({id, color, size}))
-	}
+	const cartDataStored = useSelector(selectCart)
+
+	const token = getTokenFromLocalStorage()
+
+	const handleRemoveProduct = ({id, color, size, itemIdInBasket}: {id: number, color:string, size: string, itemIdInBasket?:number}) => {
+		// видаляємо продукт с корзини в БД
+		if(itemIdInBasket && cartDataStored.id) removeProductToCartInDbAction(cartDataStored.id, itemIdInBasket)
+			dispatch(removeProductById({id, color, size}))
+		}
 
 	const handleIncreaseOrDecreasProduct = (option: string, product: IProductWithMaxQuantity) => {
 		if(option ===  'inc' && (product.quantity[0].quantity < product.maxQuantity)) {
 			const updatedProductWithIncreasedQuantity = {
-			...product,
-			quantity: [{...product.quantity[0], quantity: product.quantity[0].quantity + 1}],
+				...product,
+				quantity: [{...product.quantity[0], quantity: product.quantity[0].quantity + 1}],
+			}
+			if(token && cartDataStored.id && updatedProductWithIncreasedQuantity.idInBasketInDb) {
+				updateQuantityProductInCartInDbAction(
+					cartDataStored.id, 
+					updatedProductWithIncreasedQuantity, 
+					updatedProductWithIncreasedQuantity.idInBasketInDb
+				)
+			}
+			dispatch(setProduct(updatedProductWithIncreasedQuantity))
 		}
-		dispatch(setProduct(updatedProductWithIncreasedQuantity))
-	}
 
-	if(option ===  'dec') {
-		if(product.quantity[0].quantity <= 1) {
-			handleRemoveProduct({id: product.id, color: product.colors[0].color.title, size: product.size[0].value})
-		} else {
-			const updatedProductWithDecreasedQuantity = {
-			...product,
-			quantity: [{...product.quantity[0], quantity: product.quantity[0].quantity - 1}],
-		}
-		dispatch(setProduct(updatedProductWithDecreasedQuantity))
-		}
+		if(option ===  'dec') {
+			if(product.quantity[0].quantity <= 1) {
+				handleRemoveProduct({
+					id: product.id, 
+					color: product.colors[0].color.title, 
+					size: product.size[0].value,
+					itemIdInBasket: product.idInBasketInDb,
+				})
+			} else {
+				const updatedProductWithDecreasedQuantity = {
+					...product,
+					quantity: [{...product.quantity[0], quantity: product.quantity[0].quantity - 1}],
+				}
+				if(token && cartDataStored.id && updatedProductWithDecreasedQuantity.idInBasketInDb) {
+					updateQuantityProductInCartInDbAction(
+						cartDataStored.id, 
+						updatedProductWithDecreasedQuantity, 
+						updatedProductWithDecreasedQuantity.idInBasketInDb
+					)
+				}
+				dispatch(setProduct(updatedProductWithDecreasedQuantity))
+			}
 		}
 	}
 

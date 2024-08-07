@@ -18,9 +18,9 @@ import { setProduct } from '@/redux/cart/cartSlice'
 import { selectCurrentProduct } from '@/redux/currentProduct/currentProductSelector'
 import {
 	setCurrentProduct,
-	setDefaultCurrentProduct,
 	setIsSizeModalOpened,
 } from '@/redux/currentProduct/currentProductSlice'
+import { selectCart } from '@/redux/cart/cartSelector'
 
 // types
 import { IProduct, ProductSize } from '@/services/types'
@@ -28,12 +28,16 @@ import { IProduct, ProductSize } from '@/services/types'
 // data
 import { generalProductsFilers } from '@/components/ProductsList/ProductsFilters/filtersData'
 
+// zctions
+import addProductToCartInDbAction from '@/app/actions/addProductToCartInDbAction'
+
 const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 	const [isSuccessModalIsOpened, setIsSuccessModalIsOpened] = useState(false)
 
 	const dispatch = useDispatch()
 
 	const currentProduct = useSelector(selectCurrentProduct)
+	const cart = useSelector(selectCart)
 	const { sizes: sizesStored } = currentProduct
 
 	const isShoesSizes = () => {
@@ -45,14 +49,14 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 		}
 	}
 
-	const handleClickCartButton = () => {
+	const handleClickCartButton = async () => {
 		if (!sizesStored?.length) {
 			dispatch(setIsSizeModalOpened(true))
 			return
 		}
 		setIsSuccessModalIsOpened(true)
 		const selectedProductSize: ProductSize = {
-			id: 1,
+			id: product.size.filter(sizeItem => sizeItem.value.toLowerCase() === sizesStored.toLowerCase())[0].id,
 			value: sizesStored,
 		}
 
@@ -75,18 +79,24 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 					image_url: selectedImage,
 					color: {
 						id:
-							product.colors.find(c => c.color.title === selectedColor)?.color
+							product.colors.find(c => c.color.title.toLowerCase() === selectedColor.toLowerCase())?.color
 								.id || 0,
 						title: selectedColor,
 					},
 				},
 			],
 		}
-		dispatch(setProduct(productWithSelectedSizeAndColor))
+		if(cart.id) {
+			const response = await addProductToCartInDbAction(cart.id, productWithSelectedSizeAndColor)
+			if(response?.id) dispatch(setProduct(
+				{...productWithSelectedSizeAndColor, idInBasketInDb: response?.id}
+			))
+		} else {
+			dispatch(setProduct(productWithSelectedSizeAndColor))
+		}
 	}
 
 	useEffect(() => {
-		dispatch(setDefaultCurrentProduct())
 		dispatch(setCurrentProduct(product))
 	}, [dispatch, product])
 

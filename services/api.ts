@@ -13,9 +13,10 @@ import { IProduct } from "./types";
 // helpers
 import getCorrectQueryParamsSearchQuery from "@/helpers/getCorrectQueryParamsSearchQuery";
 
+export const apiBaseUrl = process.env.NODE_ENV === 'development' ? 'http://34.66.71.139:8000/' : 'https://api.sporthubsstore.com/';
+
 export const $instance = axios.create({
-  //baseURL: "http://34.66.71.139:8000/",
-  baseURL: "https://api.sporthubsstore.com/",
+  baseURL: apiBaseUrl,
 });
 
 $instance.interceptors.request.use(
@@ -49,6 +50,9 @@ export const setToken = (token: string) => {
 export const clearToken = () => {
   localStorage.removeItem("accessToken");
 };
+
+export const getTokenFromLocalStorage = () => localStorage.getItem("accessToken");
+
 
 //register user
 export const registerUser = async (
