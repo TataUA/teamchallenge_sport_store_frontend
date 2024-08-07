@@ -77,14 +77,14 @@ const HeaderNavLink = () => {
 
 		const createCartInDb = async () => {
 			// якщо створюємо нову то ми отримаємо її ІД і можемо привязати його до юзера
-			const {id} = await createShoppingCartAction()
-			if(id) {
-				dispatch(saveCartIdFromDb(id))
-				setBasketIdToLocalStorage(id)
+			const {basketId} = await createShoppingCartAction()
+			if(basketId) {
+				dispatch(saveCartIdFromDb(basketId))
+				setBasketIdToLocalStorage(basketId)
 				
 				// тут можливо треба продукти с редакса зберегти в корзину в БД
 				cart.products.forEach(async product => {
-					const response = await saveProductsFromStoreToCartDb(id, product)
+					const response = await saveProductsFromStoreToCartDb(basketId, product)
 					if(response?.id) dispatch(setProduct(
 						{...product, idInBasketInDb: response?.id}
 					))
@@ -107,11 +107,11 @@ const HeaderNavLink = () => {
 		if(token) {
 			// має бути перевірка чи має юзер корзину
 			// const idCart = '462a7df0-9d55-4c58-958b-9239ad174099';
-			const idCart = getBasketIdFromLocalStorage()
+			const basketIdLocalStorage = getBasketIdFromLocalStorage()
 
-			if(idCart) {
-				if(!cart.id) dispatch(saveCartIdFromDb(idCart))
-				fetchCartFromDb(idCart)
+			if(basketIdLocalStorage) {
+				if(!cart.id) dispatch(saveCartIdFromDb(basketIdLocalStorage))
+				fetchCartFromDb(basketIdLocalStorage)
 			} else {
 				// корзини немає і створюємо її
 				createCartInDb()

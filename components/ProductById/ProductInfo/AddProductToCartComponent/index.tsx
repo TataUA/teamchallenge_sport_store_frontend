@@ -38,7 +38,6 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 
 	const currentProduct = useSelector(selectCurrentProduct)
 	const cart = useSelector(selectCart)
-	console.log("🚀 ~ AddProductToCartComponent ~ cart:", cart)
 	const { sizes: sizesStored } = currentProduct
 
 	const isShoesSizes = () => {
