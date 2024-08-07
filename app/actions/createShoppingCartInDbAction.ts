@@ -1,28 +1,29 @@
 'use client';
 
-import { IProductWithMaxQuantity } from "@/redux/cart/cartSlice";
-import { apiBaseUrl } from "@/services/api";
+import { $instance} from "@/services/api";
 
 const createShoppingCartAction = async () => {
   try {
-    const result = await fetch(`${apiBaseUrl}baskets/`, { 
-      method: 'POST',
+    const result = await $instance.post('baskets/', {}, {
       headers: {
         'Content-Type': 'application/json'
-      },
-      next: { revalidate: 3600 }
+      }
     });
 
     if(result.status === 201) {
-      const data: {id:string, items: IProductWithMaxQuantity[]} = await result?.json()
-      return data;
+      const { data }: {data: {basket_id:string, user_id: number[]}} = result;
+      return {
+        basketId: data.basket_id,
+        userId: data.user_id
+      };
     }
 
-    return {id: '', items: []};
+    return {basketId: '', userId: 0};
     
   } catch (error: any) {
     console.log("🚀 ~ fetchProductsAction ~ error:", error.response)
-    return {id: '', items: []};
+
+    return {basketId: '', userId: 0}
   }
 }
 
