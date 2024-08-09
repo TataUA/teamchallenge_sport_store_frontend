@@ -147,15 +147,15 @@ export const LoginForm = () => {
                 Увійти
               </button>
             </div>
-            
-            <ResetPasswordRequestForm
-              emailValue={formik.values.email}
-              setShowPasswordResetBlock={setShowPasswordResetBlock}
-              showPasswordResetBlock={showPasswordResetBlock}
-            />
           </Form>
         )}
       </Formik>
+      
+      <ResetPasswordRequestForm
+        //emailValue={formik.values.email}
+        setShowPasswordResetBlock={setShowPasswordResetBlock}
+        showPasswordResetBlock={showPasswordResetBlock}
+      />
     </>
   );
 };

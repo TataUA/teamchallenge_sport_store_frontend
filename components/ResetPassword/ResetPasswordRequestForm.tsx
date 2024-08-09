@@ -20,7 +20,7 @@ const schema = yup.object().shape({
 });
 
 interface Props {
-  emailValue: string;
+  //emailValue: string;
   showPasswordResetBlock: boolean;
   setShowPasswordResetBlock: Dispatch<SetStateAction<boolean>>;
 }
@@ -171,7 +171,7 @@ export const ResetPasswordRequestForm = (props: Props) => {
                           type="email"
                           name="resetPasswordEmail"
                           placeholder={placeholderValue}
-                          value={props.emailValue}
+                          value={formik.values.resetPasswordEmail}
                           onFocus={() => {
                             setLabelClassname("");
                             setPlaceholderValue("");
