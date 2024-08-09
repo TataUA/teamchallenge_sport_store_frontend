@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import { ClientComponent } from "@/components/ClientComponent";
 import { RegisterForm } from "@/components/Auth/RegisterForm";
 import { PrivacyPolicy } from "@/components/Auth/PrivacyPolicy";

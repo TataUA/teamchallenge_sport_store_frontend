@@ -162,13 +162,13 @@ export const logoutUser = async () => {
 // };
 
 export const resetPasswordRequest = async (value: string) => {
-  await $instance.post("/user/password_reset", {
+  await $instance.post("/user/password_reset/", {
     email: value,
   });
 };
 
 export const validateToken = async (value: string) => {
-  await $instance.post("/user/password_reset/validate_token", {
+  await $instance.post("/user/password_reset/validate_token/", {
     token: value,
   });
 };
@@ -176,7 +176,7 @@ export const validateToken = async (value: string) => {
 export const resetPasswordConfirm = async (
   values: ResetPasswordValuesInterface
 ) => {
-  await $instance.post("/user/password_reset/validate_token", {
+  await $instance.post("/user/password_reset/validate_token/", {
     password: values.password,
     token: values.tokenValue,
   });

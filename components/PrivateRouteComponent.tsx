@@ -36,15 +36,6 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
     fetchCurrentUser();
   }, [dispatch, router]);
 
-  useEffect(() => {
-    if (
-      isAuthenticated &&
-      (pathname === "/login" || pathname === "/register")
-    ) {
-      router.push("/profile");
-    }
-  }, [isAuthenticated, pathname, router]);
-
   if (isLoading) {
     return <Loader />;
   }

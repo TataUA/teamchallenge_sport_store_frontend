@@ -129,7 +129,7 @@ export const InputLabelField = <T,>({
       </label>
 
       {isError && isTouched && hasBlurred && (
-        <div className="flex items-center mt-4 ">
+        <div className="flex items-center mt-4">
           <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
           <ErrorMessage
             name={String(name)}
