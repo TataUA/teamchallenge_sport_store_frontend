@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 
 // data
 import { headerNav, iconsData } from '@/constants'
@@ -17,7 +18,7 @@ import { cn } from '@/services/utils/cn'
 // store
 import { selectCart } from '@/redux/cart/cartSelector'
 import { AppDispatch } from '@/redux/store'
-import { IProductWithMaxQuantity, saveCartIdFromDb, setProduct } from '@/redux/cart/cartSlice'
+import { cleanCart, IProductWithMaxQuantity, saveCartIdFromDb, setProduct } from '@/redux/cart/cartSlice'
 import { selectUserData } from '@/redux/auth/authSelector'
 
 // helpers
@@ -43,6 +44,7 @@ const HeaderNavLink = () => {
 
 	const dispatch: AppDispatch = useDispatch()
 
+	const pathname = usePathname()
 	
 	useEffect(()  => {
 		const token = getTokenFromLocalStorage();
@@ -101,6 +103,8 @@ const HeaderNavLink = () => {
 				response?.items.forEach(async (item) => {
 					fetchProductByIdAndSave(item)
 				})
+			} else {
+				dispatch(cleanCart())
 			}
 		}
 
@@ -121,7 +125,7 @@ const HeaderNavLink = () => {
 		}
 
 			mounted.current = true
-	},[user?.id])
+	},[user?.id, pathname])
 
 	return (
 		<ul className='flex items-center'>
