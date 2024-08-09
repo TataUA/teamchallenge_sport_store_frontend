@@ -49,10 +49,16 @@ const cartSlice = createSlice({
 		saveCartIdFromDb: (state, { payload }: PayloadAction<string>) => {
 			state.id = payload
 		},
+		cleanCart: (state) => {
+			state.products = []
+		}
 	},
 })
 
 export const cartReducer = cartSlice.reducer
-export const { setProduct, removeProductById,
+export const { 
+	setProduct, 
+	removeProductById,
 	saveCartIdFromDb,
+	cleanCart,
  	} = cartSlice.actions
