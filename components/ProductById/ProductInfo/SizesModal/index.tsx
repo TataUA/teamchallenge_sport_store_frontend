@@ -1,7 +1,7 @@
 'use client'
 
 import { useDispatch, useSelector } from "react-redux"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 // redux
 import { selectCurrentProduct } from "@/redux/currentProduct/currentProductSelector"
@@ -52,6 +52,12 @@ const SizesModal = ({existedSizesFromDb, translatedSubCategory}: IProps) => {
     dispatch(setCurrentProductSize(size))
     dispatch(setIsSizeModalOpened(false))
   }
+
+  useEffect(()=>{
+    if(sizesStored) {
+      dispatch(setCurrentProductSize(''))
+    }
+  },[])
 
   return (
     <>
