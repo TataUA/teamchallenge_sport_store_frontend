@@ -119,8 +119,9 @@ export const LoginForm = () => {
               </div>
 
               <ResetPasswordButton
+                //emailValue={formik.values.email}
                 setShowPasswordResetBlock={setShowPasswordResetBlock}
-                showPasswordResetBlock={showPasswordResetBlock}
+                //showPasswordResetBlock={showPasswordResetBlock}
               />
 
               {formik.errors &&
@@ -146,14 +147,15 @@ export const LoginForm = () => {
                 Увійти
               </button>
             </div>
+            
+            <ResetPasswordRequestForm
+              emailValue={formik.values.email}
+              setShowPasswordResetBlock={setShowPasswordResetBlock}
+              showPasswordResetBlock={showPasswordResetBlock}
+            />
           </Form>
         )}
       </Formik>
-
-      <ResetPasswordRequestForm
-        setShowPasswordResetBlock={setShowPasswordResetBlock}
-        showPasswordResetBlock={showPasswordResetBlock}
-      />
     </>
   );
 };

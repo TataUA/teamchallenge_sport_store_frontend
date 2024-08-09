@@ -1,10 +1,10 @@
 "use client";
 
-import React from "react";
-import { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
-export interface Props {
-  showPasswordResetBlock: boolean;
+interface Props {
+ // emailValue: string;
+  //showPasswordResetBlock: boolean;
   setShowPasswordResetBlock: Dispatch<SetStateAction<boolean>>;
 }
 
