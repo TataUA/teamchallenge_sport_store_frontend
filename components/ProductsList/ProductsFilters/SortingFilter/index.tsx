@@ -45,16 +45,18 @@ const SortingFilters = () => {
         <h2 className="text-2xl font-bold mb-4 text-center min-[2800px]:text-4xl min-[2800px]:mb-8">Сортування</h2>
         {sortingProductsFilers.map((item, index) => (
           <div key={item.id} className="mb-4 min-[2800px]:mb-8">
-            <div className={cn("flex justify-between items-center px-4 [&>svg]:hidden", {
+            <div className={cn("flex justify-between items-center px-4 [&>svg]:fill-[#0A4CF6] [&>svg]:hidden [&>svg]:mb-2", {
               '[&>svg]:block': currentFilterValue === item.id.toLocaleLowerCase()
             })}>
               <Link 
-                className={cn("text-base mb-2 font-medium cursor-pointer hover:opacity-50 min-[2800px]:text-3xl", {
+                className={cn("text-base text-[#272728] mb-2 font-medium cursor-pointer hover:opacity-50 min-[2800px]:text-3xl", {
                   'text-[#0A4CF6]': currentFilterValue === item.id.toLocaleLowerCase()
                 })}
                 onClick={() => handleClick(item.id)}
                 href={createPageURLWithPageParams(item.id)}
-                >{item.title}</Link>
+                >
+                  {item.title}
+                </Link>
                 {getCheckedIconSVG()}
             </div>
             <hr />
