@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import { updateAccessTokenThunk } from "@/redux/auth/authThunk";
 import { logoutUser } from "@/redux/auth/authSlice";
-import { clearToken } from "../api";
+import { clearToken } from "@/services/api";
 
 export const handleTokenError = async (error: any, thunkApi: any) => {
   if (error.detail === "Given token not valid for any token type") {

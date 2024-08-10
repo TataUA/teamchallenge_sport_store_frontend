@@ -1,14 +1,13 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { usePathname, useRouter } from "next/navigation";
-import { AppDispatch } from "@/redux/store";
+import { useFetchCurrentUser } from "@/hooks/useFetchCurrentUser";
 import {
   selectIsAuthenticated,
   selectIsLoading,
 } from "@/redux/auth/authSelector";
-import { currentUserThunk } from "@/redux/auth/authThunk";
 import { Loader } from "./Loader";
 
 interface PrivateRouteComponentProps {
@@ -20,21 +19,22 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
 }) => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const isLoading = useSelector(selectIsLoading);
-  const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
   const pathname = usePathname();
 
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        await dispatch(currentUserThunk()).unwrap();
-      } catch (error: any) {
-        router.push("/login");
-      }
-    };
+  useFetchCurrentUser();
 
-    fetchCurrentUser();
-  }, [dispatch, router]);
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (isAuthenticated) {
+      if (pathname === "/login" || pathname === "/signup") {
+        router.push("/profile");
+      }
+    } else {
+      router.push("/login");
+    }
+  }, [isAuthenticated, isLoading, router, pathname]);
 
   if (isLoading) {
     return <Loader />;
