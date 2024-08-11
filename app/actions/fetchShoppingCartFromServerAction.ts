@@ -19,10 +19,18 @@ const fetchShoppingCartFromServerAction = async (id: string) => {
     
     if(result.status === 200) {
       const data: {id:string, items: ICartResponseItem[]} = await result?.json()
-      return data;
+      return {...data, reCreateBasket: false,};
     }
     
-    return null;
+    if(result.status === 404) {
+      const data: {detail: string} = await result?.json()
+      
+      if(data.detail.toLowerCase().includes("no basket matches the given query")) {
+        return {reCreateBasket: true, id:'', items: []}
+      }
+    }
+    
+    return {reCreateBasket: false, id:'', items: []};
   } catch (error: any) {
     console.log("🚀 ~ fetchProductsAction ~ error:", error.response)
   }
