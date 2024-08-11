@@ -22,6 +22,7 @@ import {
   cleanCart,
   IProductWithMaxQuantity,
   saveCartIdFromDb,
+  setLoadingCartFromDB,
   setProduct,
 } from "@/redux/cart/cartSlice";
 import { selectUserData } from "@/redux/auth/authSelector";
@@ -63,6 +64,12 @@ const HeaderNavLink = () => {
   useEffect(() => {
     const token = getTokenFromLocalStorage();
 
+    if(!token || mounted.current || cart.loading) {
+      return
+    }
+
+    dispatch(setLoadingCartFromDB(Boolean(token)))
+    
     const saveProductsFromStoreToCartDb = (
       id: string,
       product: IProductWithMaxQuantity
@@ -110,12 +117,21 @@ const HeaderNavLink = () => {
 			const response = await fetchShoppingCartFromServerAction(idCart)
       dispatch(cleanCart())
 			
-			if(response?.items.length) {
-				response?.items.forEach(async (item) => {
+      if(response?.reCreateBasket) {
+        createCartInDb()
+        return
+      }
+
+			if(response?.items?.length) {
+				response?.items.forEach(async (item, index) => {
 					fetchProductByIdAndSave(item)
+          if(index === (response.items.length - 1)) {
+            dispatch(setLoadingCartFromDB(false))
+          }
 				})
 			}
 		}
+
     const createCartInDb = async () => {
       // якщо створюємо нову то ми отримаємо її ІД і можемо привязати його до юзера
       const { basketId } = await createShoppingCartAction();
@@ -131,8 +147,10 @@ const HeaderNavLink = () => {
             basketId,
             product
           );
-          if (response?.id)
+          if (response?.id) {
             dispatch(setProduct({ ...product, idInBasketInDb: response?.id }));
+          }
+          dispatch(setLoadingCartFromDB(false))
         });
       }
     };
