@@ -81,11 +81,11 @@ const ResponsiveModal = ({ isOpen, onClose, children, wrapperClassname }: IProps
         {isMobile && (
             <div className='h-10 p-5 absolute z-30 bottom-[100%] left-[50%] transform translate-x-[-50%]'>
               <div 
-                className="w-10 h-1 bg-gray-300 rounded mx-auto mb-4"
+                className="w-14 h-1 bg-white rounded mx-auto mb-4"
                 onTouchStart={handleTouchStart}
                 onTouchMove={handleTouchMove}
                 onTouchEnd={handleTouchEnd}
-              />
+              /> 
             </div>
           )}
         <div

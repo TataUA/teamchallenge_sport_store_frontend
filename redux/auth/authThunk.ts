@@ -21,9 +21,9 @@ import { RegisterFormValues } from "@/components/Auth/RegisterForm";
 import { LoginFormValues } from "@/components/Auth/LoginForm";
 import { UserDataEditFormValues } from "@/components/Auth/UserDataEdit";
 import { ResetPasswordValuesInterface } from "@/components/ResetPassword/ResetPasswordForm";
-import { handleTokenError } from "@/services/utils/handle-token-error";
-import { handleValidationErrors } from "@/services/utils/handle-validation-errors";
-import { handleSetTokens } from "@/services/utils/handle-set-tokens";
+import { handleTokenError } from "@/helpers/handle-token-error";
+import { handleValidationErrors } from "@/helpers/handle-validation-errors";
+import { handleSetTokens } from "@/helpers/handle-set-tokens";
 
 export interface ErrorType {
   message?: string[];
