@@ -9,6 +9,7 @@ export interface ICartState {
 	products: IProductWithMaxQuantity[]
 	id: string
 	error: boolean
+	loading: boolean,
 }
 export interface ICartCreatedResponse {
 	items: any[]
@@ -19,6 +20,7 @@ const initialState: ICartState = {
 	products: [],
 	id: '',
 	error: false,
+	loading: false,
 }
 
 
@@ -36,7 +38,7 @@ const cartSlice = createSlice({
 			if (existingProductIndex === -1) {
 				state.products = [...state.products, payload]
 			} else {
-				state.products[existingProductIndex] = {...payload}
+				state.products[existingProductIndex] = {...payload, quantity: [{...payload.quantity[0], quantity: payload.quantity[0].quantity+1}] }
 			}
 		},
 
@@ -46,11 +48,32 @@ const cartSlice = createSlice({
 				&& product.size[0].value === payload.size)
 			)
 		},
+		handleIncreasProductQuantity: (state, { payload }: PayloadAction<IProductWithMaxQuantity>) => {
+			const existingProductIndex = state.products.findIndex(
+				product => product.id === payload.id 
+				&& product.size[0].value.toLowerCase() === payload.size[0].value.toLowerCase()
+				&& product.colors[0].color.title.toLowerCase() === product.colors[0].color.title.toLowerCase()
+			)
+
+			state.products[existingProductIndex] = {...payload, quantity: [{...payload.quantity[0], quantity: payload.quantity[0].quantity+1}] }
+		},
+		handleDecreasProductQuantity: (state, { payload }: PayloadAction<IProductWithMaxQuantity>) => {
+			const existingProductIndex = state.products.findIndex(
+				product => product.id === payload.id 
+				&& product.size[0].value.toLowerCase() === payload.size[0].value.toLowerCase()
+				&& product.colors[0].color.title.toLowerCase() === product.colors[0].color.title.toLowerCase()
+			)
+
+			state.products[existingProductIndex] = {...payload, quantity: [{...payload.quantity[0], quantity: payload.quantity[0].quantity-1}] }
+		},
 		saveCartIdFromDb: (state, { payload }: PayloadAction<string>) => {
 			state.id = payload
 		},
 		cleanCart: (state) => {
 			state.products = []
+		},
+		setLoadingCartFromDB: (state, { payload }: PayloadAction<boolean>) => {
+			state.loading = payload
 		}
 	},
 })
@@ -61,4 +84,7 @@ export const {
 	removeProductById,
 	saveCartIdFromDb,
 	cleanCart,
+	handleDecreasProductQuantity,
+	handleIncreasProductQuantity,
+	setLoadingCartFromDB
  	} = cartSlice.actions
