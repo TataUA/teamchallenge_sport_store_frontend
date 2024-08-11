@@ -106,6 +106,18 @@ const HeaderNavLink = () => {
       dispatch(setProduct(updatedProduct));
     };
 
+		const fetchCartFromDb = async (idCart: string) => {
+			const response = await fetchShoppingCartFromServerAction(idCart)
+			
+			if(response?.items.length) {
+				dispatch(cleanCart())
+				response?.items.forEach(async (item) => {
+					fetchProductByIdAndSave(item)
+				})
+			} else {
+				dispatch(cleanCart())
+			}
+		}
     const createCartInDb = async () => {
       // якщо створюємо нову то ми отримаємо її ІД і можемо привязати його до юзера
       const { basketId } = await createShoppingCartAction();
@@ -124,18 +136,6 @@ const HeaderNavLink = () => {
           if (response?.id)
             dispatch(setProduct({ ...product, idInBasketInDb: response?.id }));
         });
-      }
-    };
-
-    const fetchCartFromDb = async (idCart: string) => {
-      const response = await fetchShoppingCartFromServerAction(idCart);
-
-      if (response?.items.length) {
-        response?.items.forEach(async (item) => {
-          fetchProductByIdAndSave(item);
-        });
-      } else {
-        dispatch(cleanCart());
       }
     };
 
