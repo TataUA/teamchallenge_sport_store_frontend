@@ -108,14 +108,12 @@ const HeaderNavLink = () => {
 
 		const fetchCartFromDb = async (idCart: string) => {
 			const response = await fetchShoppingCartFromServerAction(idCart)
+      dispatch(cleanCart())
 			
 			if(response?.items.length) {
-				dispatch(cleanCart())
 				response?.items.forEach(async (item) => {
 					fetchProductByIdAndSave(item)
 				})
-			} else {
-				dispatch(cleanCart())
 			}
 		}
     const createCartInDb = async () => {
