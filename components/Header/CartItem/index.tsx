@@ -19,7 +19,7 @@ const CartItem = ({onClose}: {onClose: () => void}) => {
 						Кошик
 						{cart.products.length ? (
 							<span 
-								className={cn('relative z-20 bg-blue w-[18px] h-[18px] overflow-hidden rounded-full text-white flex justify-center items-center',
+								className={cn('relative z-[1] bg-blue w-[18px] h-[18px] overflow-hidden rounded-full text-white flex justify-center items-center',
 									'font-semibold text-sm leading-4',
 									'left-[110%] top-[-50%] ',
 								)}
