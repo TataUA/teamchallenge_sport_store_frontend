@@ -1,7 +1,13 @@
 import { useDispatch, useSelector } from 'react-redux'
 
 // store
-import { IProductWithMaxQuantity, removeProductById, setProduct } from '@/redux/cart/cartSlice'
+import { 
+	handleDecreasProductQuantity, 
+	handleIncreasProductQuantity, 
+	IProductWithMaxQuantity, 
+	removeProductById, 
+	setProduct
+} from '@/redux/cart/cartSlice'
 import { selectCart } from '@/redux/cart/cartSelector'
 
 // components
@@ -39,7 +45,7 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
 					updatedProductWithIncreasedQuantity.idInBasketInDb
 				)
 			}
-			dispatch(setProduct(updatedProductWithIncreasedQuantity))
+			dispatch(handleIncreasProductQuantity(product))
 		}
 
 		if(option ===  'dec') {
@@ -62,9 +68,13 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
 						updatedProductWithDecreasedQuantity.idInBasketInDb
 					)
 				}
-				dispatch(setProduct(updatedProductWithDecreasedQuantity))
+				dispatch(handleDecreasProductQuantity(product))
 			}
 		}
+	}
+
+	if(cartDataStored.loading) {
+		return null
 	}
 
 	return (
@@ -76,7 +86,7 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
 						({products.length})
 					</span>
 				</h3>
-				<ul className='h-[100%] overflow-scroll'>
+				<ul className='h-[100%] overflow-auto'>
 					{products.map((product, index) => (
 						<li key={product.id}>
 							<ProductItem 
