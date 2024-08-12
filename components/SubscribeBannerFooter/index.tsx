@@ -7,7 +7,7 @@ import Image from "next/image";
 import { cn } from "@/services/utils/cn";
 
 // assets
-import banner from '../../../public/images/footer/subscribe.png'
+import banner from '../../public/images/footer/subscribe.png'
 import getSuccessBlueIcon from "@/helpers/getSuccessBlueIconSVG";
 
 const SubscribeBannerFooter = () => {
