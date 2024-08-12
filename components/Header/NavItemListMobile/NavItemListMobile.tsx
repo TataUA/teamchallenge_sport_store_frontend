@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { ArrowLeftIcon, CloseIcon } from '../../../public/icons/header'
 import styles from '../Navbar.module.css'
+import { cn } from '@/services/utils/cn'
 
 interface NavItemListProps {
 	onClose: () => void
@@ -30,11 +31,13 @@ export const NavItemListMobile = ({ navItems, onClose }: NavItemListProps) => {
 			{navItems.map((item, index) => (
 				<div
 					key={item.title.label}
-					className='relative min-h-14 cursor-pointer flex flex-row justify-between py-3'
+					className='relative min-h-14 flex flex-row justify-between py-3'
 					onClick={() => handleToggleDropdown(index)}
 				>
-					<p>
-						<span className='text-button cursor-pointer text-primary font-medium line-height-150 tracking-wide-04 flex'>
+					<p className={cn('text-button cursor-pointer text-primary font-medium line-height-150 tracking-wide-04 flex [&+svg]:stroke-[#3E3E40]',
+						'[&+svg]:hover:stroke-[#0A4CF6] [&+svg]:active:[&+svg]:stroke-[#0A4CF6] hover:text-blue active:text-blue'
+					)}>
+						<span>
 							{item.title.label}
 						</span>
 					</p>
@@ -49,7 +52,6 @@ export const NavItemListMobile = ({ navItems, onClose }: NavItemListProps) => {
 					>
 						<path
 							d='M9 18L15 12L9 6'
-							stroke='#3E3E40'
 							strokeWidth='2'
 							strokeLinecap='round'
 							strokeLinejoin='round'
@@ -93,7 +95,9 @@ export const NavItemListMobile = ({ navItems, onClose }: NavItemListProps) => {
 											href={link.href}
 											className='relative min-h-14 items-center cursor-pointer flex flex-row justify-between'
 										>
-											<p className='text-button cursor-pointer text-primary font-medium line-height-150 tracking-wide-04 flex hover:text-blue'>
+											<p className={cn('text-button cursor-pointer text-primary font-medium line-height-150 tracking-wide-04 flex [&+svg]:stroke-[#3E3E40]',
+												'[&+svg]:hover:stroke-[#0A4CF6] [&+svg]:active:[&+svg]:stroke-[#0A4CF6] hover:text-blue active:text-blue'
+											)}>
 												<span>
 													{link.label}
 												</span>
@@ -109,7 +113,7 @@ export const NavItemListMobile = ({ navItems, onClose }: NavItemListProps) => {
 											>
 												<path
 													d='M9 18L15 12L9 6'
-													stroke='#3E3E40'
+													// stroke='#3E3E40'
 													strokeWidth='2'
 													strokeLinecap='round'
 													strokeLinejoin='round'

@@ -11,7 +11,7 @@ export const UsernavMobile = ({onClose}: {onClose: () => void}) => {
 			<ClientComponent>
 				<div className='min-h-14 cursor-pointer py-3'>
 						<Link href='/profile' onClick={() => onClose()}>
-							<p className='font-button cursor-pointer text-primary font-medium line-height-150 tracking-wide-04 flex'>
+							<p className='font-button cursor-pointer text-primary font-medium hover:text-[#0A4CF6] active:text-[#0A4CF6] line-height-150 tracking-wide-04 flex'>
 								Мій профіль
 							</p>
 						</Link>

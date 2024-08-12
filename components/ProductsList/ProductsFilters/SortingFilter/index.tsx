@@ -49,7 +49,7 @@ const SortingFilters = () => {
               '[&>svg]:block': currentFilterValue === item.id.toLocaleLowerCase()
             })}>
               <Link 
-                className={cn("text-base text-[#272728] mb-2 font-medium cursor-pointer hover:opacity-50 min-[2800px]:text-3xl", {
+                className={cn("text-base text-[#272728] mb-2 font-medium cursor-pointer hover:text-[#0A4CF6] min-[2800px]:text-3xl", {
                   'text-[#0A4CF6]': currentFilterValue === item.id.toLocaleLowerCase()
                 })}
                 onClick={() => handleClick(item.id)}
