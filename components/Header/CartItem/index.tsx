@@ -12,9 +12,9 @@ const CartItem = ({onClose}: {onClose: () => void}) => {
 	const cart = useSelector(selectCart)
 
   return (
-    <div className='min-h-14 cursor-pointer py-3'>
+    <div className='min-h-14 py-3'>
 			<Link href='/cart' onClick={() => onClose()}>
-				<p className='font-button cursor-pointer text-primary font-medium line-height-150 tracking-wide-04 flex'>
+				<p className='font-button cursor-pointer text-primary font-medium line-height-150 tracking-wide-04 flex hover:text-[#0A4CF6] active:text-[#0A4CF6]'>
 					<span>
 						Кошик
 						{cart.products.length ? (
