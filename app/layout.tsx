@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 // fonts
-import { Nunito_Sans, Inter } from "@next/font/google";
+import { Nunito_Sans, Inter } from "next/font/google";
 
 // components
 import Footer from "@/components/Footer/Footer";
