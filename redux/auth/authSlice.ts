@@ -22,12 +22,13 @@ export interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   isRefreshing: boolean;
+  isRegistrationComplete: boolean;
   error: ErrorType | null;
 }
 
 const initialState: AuthState = {
   user: null,
-
+  isRegistrationComplete: false,
   isAuthenticated: false,
   isLoading: false,
   isRefreshing: false,
@@ -40,7 +41,6 @@ const authSlice = createSlice({
   reducers: {
     logoutUser(state) {
       state.isAuthenticated = false;
-      //state.accessToken = null;
       state.user = null;
       state.error = null;
     },
@@ -55,6 +55,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUserThunk.fulfilled, (state) => {
         state.isLoading = false;
+        state.isRegistrationComplete = true;
       })
       .addCase(registerUserThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
