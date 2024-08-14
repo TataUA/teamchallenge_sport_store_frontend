@@ -12,6 +12,7 @@ import { IProduct } from "./types";
 
 // helpers
 import getCorrectQueryParamsSearchQuery from "@/helpers/getCorrectQueryParamsSearchQuery";
+import { ResetPasswordRequestValues } from "@/components/ResetPassword/ResetPasswordRequestForm";
 
 export const apiBaseUrl =
   process.env.NODE_ENV === "development"
@@ -73,8 +74,6 @@ export const registerUser = async (
     password,
     repeat_password: repeatPassword,
   };
-
-  clearToken();
 
   try {
     const { data } = await $instance.post<types.RegisterResponseData>(
@@ -158,16 +157,17 @@ export const logoutUser = async () => {
   }
 };
 
-// export const resetPasswordRequest = async (values: ResetPasswordValues) => {
-//   await $instance.post('/user/password_reset', {
-//     "email": values.resetPasswordEmail
-//   })
-// };
-
-export const resetPasswordRequest = async (value: string) => {
-  await $instance.post("/user/password_reset/", {
-    email: value,
+//reset password
+export const resetPasswordRequest = async (values: ResetPasswordRequestValues) => {
+  const {email} = values;
+  try {
+    const { data } = await $instance.post("/user/password_reset/", {
+    email,
   });
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  } 
 };
 
 export const validateToken = async (value: string) => {

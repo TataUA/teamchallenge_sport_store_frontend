@@ -129,7 +129,7 @@ const SearchForm = (props: IProps) => {
     <div>
 			<div className='flex gap-2 items-center justify-between'>
 				<form 
-					className={cn('flex w-full rounded-button gap-2 items-center bg-bgSearch px-4 py-2')} 
+					className={cn('flex w-full rounded-xl gap-2 items-center bg-bgSearch px-4 py-2')} 
 					onSubmit={handleSubmit}
 				>
 					{iconsData.map(

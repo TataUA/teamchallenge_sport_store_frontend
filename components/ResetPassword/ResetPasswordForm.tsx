@@ -4,11 +4,11 @@ import React from "react";
 import * as yup from "yup";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useState, useLayoutEffect, useRef } from 'react';
-import { gsap } from 'gsap';
+//import { gsap } from 'gsap';
 import Image from 'next/image';
 
-import { submitButtonClassName } from "./ResetPasswordRequestForm";
-import { animateInputField } from "./ResetPasswordRequestForm";
+//import { submitButtonClassName } from "./ResetPasswordRequestForm";
+//import { animateInputField } from "./ResetPasswordRequestForm";
 
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
@@ -82,16 +82,16 @@ export const ResetPasswordForm = (props: Props) => {
 
   const dispatch: AppDispatch = useDispatch();
 
-  gsap.registerPlugin();
+  //gsap.registerPlugin();
 
   const formRef: any = useRef();
 
   useLayoutEffect(() => {
-    animateInputField(animateField, formRef, ".Password-Input-Label");
+    //animateInputField(animateField, formRef, ".Password-Input-Label");
   }, [animateField]);
 
   useLayoutEffect(() => {
-    animateInputField(animateConfirmField, formRef, ".Confirm-Password-Input-Label");
+    //animateInputField(animateConfirmField, formRef, ".Confirm-Password-Input-Label");
   }, [animateConfirmField]);
 
 
@@ -259,7 +259,7 @@ export const ResetPasswordForm = (props: Props) => {
                         {/* <ErrorMessage name="confirmPassword" className={errorStyles} component="div" /> */}
                     </label>
                 </div>
-                <button type="submit" className={submitButtonClassName}>
+                <button type="submit" className={''}>
                     Змінити пароль
                 </button>
             </Form>
