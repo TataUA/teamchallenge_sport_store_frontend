@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Field, ErrorMessage, FormikProps } from "formik";
+import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/services/utils/cn";
 import wrong from "@/public/icons/wrong.svg";
 import eye_open from "@/public/icons/eye_open.svg";
@@ -28,6 +29,8 @@ export const InputLabelField = <T,>({
   const [isFieldFocused, setIsFieldFocused] = useState(false);
   const [hasBlurred, setHasBlurred] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const uniqueId = uuidv4();
 
   const isTouched = formik.touched[name];
   const isError = Boolean(formik.errors[name]);
@@ -74,7 +77,7 @@ export const InputLabelField = <T,>({
   return (
     <div className="relative">
       <Field
-        id={name}
+        id={uniqueId}
         type={type === "password" && showPassword ? "text" : type}
         name={name}
         inputMode={inputMode}
@@ -107,7 +110,7 @@ export const InputLabelField = <T,>({
       )}
 
       <label
-        htmlFor={name as string}
+        htmlFor={uniqueId}
         className={cn(
           "label absolute left-0 top-5 transform transition-all duration-300",
           {
@@ -122,7 +125,7 @@ export const InputLabelField = <T,>({
             "top-0 text-sm": formik.touched[name] || formik.values[name],
             "peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray peer-focus:top-0 peer-focus:text-sm peer-focus:text-blue":
               !formik.touched[name] && !formik.values[name],
-          }
+          },
         )}
       >
         {label}

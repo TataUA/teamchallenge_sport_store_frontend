@@ -54,17 +54,6 @@ const config: Config = {
         bgSearch: "#F3F3F3",
         blured: "rgba(14, 14, 16, 0.4)",
       },
-      fontSize: {
-        error: "12px",
-        basic: "14px",
-        button: "16px",
-        subheading: "20px",
-        heading: "24px",
-      },
-      borderRadius: {
-        button: "12px",
-        popup: "24px",
-      },
     },
   },
   plugins: [

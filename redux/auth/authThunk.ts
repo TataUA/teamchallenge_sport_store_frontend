@@ -24,6 +24,8 @@ import { ResetPasswordValuesInterface } from "@/components/ResetPassword/ResetPa
 import { handleTokenError } from "@/helpers/handle-token-error";
 import { handleValidationErrors } from "@/helpers/handle-validation-errors";
 import { handleSetTokens } from "@/helpers/handle-set-tokens";
+import { ResetPasswordRequestValues } from "@/components/ResetPassword/ResetPasswordRequestForm";
+import { experimental_taintObjectReference } from "react";
 
 export interface ErrorType {
   message?: string[];
@@ -191,6 +193,7 @@ export const logoutUserThunk = createAsyncThunk<
     clearToken();
     Cookies.remove("refreshToken");
     thunkApi.dispatch(logoutUser());
+    return;
   } catch (error: any) {
     const errorObject: ErrorType = {
       message: error.detail || "An error occurred",
@@ -200,27 +203,23 @@ export const logoutUserThunk = createAsyncThunk<
   }
 });
 
-// export const resetPasswordRequestThunk = createAsyncThunk(
-//   "reset-password/get-link",
-//   async (values: ResetPasswordValues, thunkApi) => {
-//     try {
-//       const response = await resetPasswordRequest(values);
-//       return response;
-//     } catch (error) {
-//       thunkApi.rejectWithValue({ message: (error as Error).message });
-//     }
-//   }
-// );
-
-export const resetPasswordRequestThunk = createAsyncThunk(
-  "reset-password/get-link",
-  async (value: string, thunkApi) => {
+//reset password
+export const resetPasswordRequestThunk = createAsyncThunk<
+  void,
+  ResetPasswordRequestValues,
+{rejectValue:ErrorType}>(
+  "auth/reset",
+  async (values, thunkApi) => {
     try {
-      const response = await resetPasswordRequest(value);
-      return response;
-    } catch (error) {
-      thunkApi.rejectWithValue({ message: (error as Error).message });
-    }
+      await resetPasswordRequest(values);
+      return ;
+    } catch (error: any) {
+    const errorObject: ErrorType = {
+      message: error.detail || "An error occurred",
+    };
+
+    return thunkApi.rejectWithValue(errorObject);
+  }
   }
 );
 
