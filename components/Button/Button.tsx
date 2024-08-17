@@ -22,6 +22,7 @@ export const Button = (props: ButtonProps) => {
   return (
     <button
       type={props.type}
+      onClick={props.onClick}
       disabled={props.disabled}
       className={cn(
         "w-full h-12 self-center px-6 rounded-xl text-base font-semibold font-pangram transition-all",

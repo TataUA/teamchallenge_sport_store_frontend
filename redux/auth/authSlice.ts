@@ -39,6 +39,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    resetRegistrationStatus(state) {
+      state.isRegistrationComplete = false;
+    },
     logoutUser(state) {
       state.isAuthenticated = false;
       state.user = null;
@@ -88,7 +91,7 @@ const authSlice = createSlice({
           state.isLoading = false;
           state.isAuthenticated = true;
           state.user = { ...payload };
-        }
+        },
       )
       .addCase(currentUserThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
@@ -106,7 +109,7 @@ const authSlice = createSlice({
         (state, { payload }: PayloadAction<UserData>) => {
           state.isRefreshing = false;
           state.user = { ...payload };
-        }
+        },
       )
       .addCase(editUserThunk.rejected, (state, { payload }) => {
         state.isRefreshing = false;
@@ -128,4 +131,4 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-export const { logoutUser } = authSlice.actions;
+export const { resetRegistrationStatus, logoutUser } = authSlice.actions;

@@ -1,20 +1,15 @@
 "use client";
 
-import React from "react";
-import * as yup from "yup";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useState, useLayoutEffect, useRef } from 'react';
-//import { gsap } from 'gsap';
-import Image from 'next/image';
-
-//import { submitButtonClassName } from "./ResetPasswordRequestForm";
-//import { animateInputField } from "./ResetPasswordRequestForm";
-
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import * as yup from "yup";
+import { Formik, Form, FormikHelpers } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { validateTokenThunk, resetPasswordThunk } from "@/redux/auth/authThunk";
-import ResetPasswordSuccessMessage from "./ResetPasswordSuccessMessage";
 
+import { InputLabelField } from "@/components/Auth/InputLabelField";
+import { Button } from "@/components/Button/Button";
+import { SuccessMessageModal } from "../Auth/SuccessMessageModal";
 
 const schema = yup.object().shape({
   password: yup
@@ -22,250 +17,125 @@ const schema = yup.object().shape({
     .min(6, "Пароль повинен містити не менше 6 символів")
     .matches(
       /^[A-Za-z0-9!@#$%^&*]+$/,
-      "Пароль може містити лише літери, цифри та символи"
+      "Пароль може містити латинські літери, цифри та символи !@#$%^&*",
     )
     .required("Це поле обов'язкове"),
-    confirmPassword: yup
+  repeatPassword: yup
     .string()
-    .min(6, "Пароль повинен містити не менше 6 символів")
-    .matches(
-        /^[A-Za-z0-9!@#$%^&*]+$/,
-        "Пароль може містити лише літери, цифри та символи"
-      )
-    .required("Це поле обов'язкове")
-    .test('passwords-match', 'Паролі не співпадають', function (value) {return this.parent.password === value})
+    .oneOf([yup.ref("password"), undefined], "Паролі повинні співпадати")
+    .required("Це поле обов'язкове"),
 });
 
-interface PasswordConfirmationValues {
-  password: string;
-  confirmPassword: string;
-  // tokenValue: string
+interface ResetPasswordFormProps {
+  confirmationToken: string;
 }
 
-const initialValues: PasswordConfirmationValues = {
-  password: "",
-  confirmPassword: "",
-  // tokenValue: ""
-};
+interface ResetPasswordFormValues {
+  password: string;
+  repeatPassword: string;
+  confirmationToken: string;
+}
 
-interface Props {
-    tokenValue: string
-  }
+const initialValues: ResetPasswordFormValues = {
+  password: "",
+  repeatPassword: "",
+  confirmationToken: "",
+};
 
 export interface ResetPasswordValuesInterface {
   password: string;
   confirmPassword: string;
-  tokenValue: string
+  tokenValue: string;
 }
 
-export const ResetPasswordForm = (props: Props) => {
-
-  const [passwordLabelClassname, setPasswordLabelClassname] = useState<string>("text-transparent");
-
-  const [confirmPasswordLabelClassname, setConfirmPasswordLabelClassname] = useState<string>("text-transparent");
-
-  const [passwordPlaceholderValue, setPasswordPlaceholderValue] = useState<string>("Пароль");
-
-  const [confirmPasswordPlaceholderValue, setConfirmPasswordPlaceholderValue] = useState<string>("Підтвердити пароль");
-
-  const [iconSymbolValue, setIconSymbolValue] = useState<string>("");
-
-  const [confirmIconSymbolValue, setConfirmIconSymbolValue] = useState<string>("");
-
-  const errorStyles = "text-red text-error font-medium";
-
-  const [animateField, setAnimateField] = useState<boolean>(false);
-
-  const [animateConfirmField, setAnimateConfirmField] = useState<boolean>(false);
-
-  const [showSuccessMessage, setShowSuccessMessage] = useState<boolean>(false);
-
+export const ResetPasswordForm = (props: ResetPasswordFormProps) => {
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  // const isRegistrationComplete = useSelector(selectIsRegistrationComplete);
   const dispatch: AppDispatch = useDispatch();
 
-  //gsap.registerPlugin();
-
-  const formRef: any = useRef();
-
-  useLayoutEffect(() => {
-    //animateInputField(animateField, formRef, ".Password-Input-Label");
-  }, [animateField]);
-
-  useLayoutEffect(() => {
-    //animateInputField(animateConfirmField, formRef, ".Confirm-Password-Input-Label");
-  }, [animateConfirmField]);
-
-
-  // const validateTokenUrl = "http://34.66.71.139:8000/user/password_reset/validate_token/";
-
-  // const resetPasswordUrl = "http://34.66.71.139:8000/user/password_reset/confirm/";
-
-
-  // async function confirmResetPassword (tokenValue: string, passwordValue: string) {
-  //   try {
-  //     const response = await fetch(resetPasswordUrl, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //               "password": passwordValue,
-  //               "token": tokenValue
-  //           }),
-  //     });
-  //     const result = await response.json();
-  //     console.log("Success:", result, response.status);
-  //     if (response.status === 200) {
-  //       redirect('/success-page')
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-  // }
-
-
-  // async function validateToken(value: string, password: string) {
-  //   try {
-  //     const response = await fetch(validateTokenUrl, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({"token": value}),
-  //     });
-  //     const result = await response.json();
-  //     console.log("Success:", result, response.status);
-  //     if (response.status === 200) {
-  //       confirmResetPassword(value, password)
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-  // }
-
-
-  const handleInputChange = (
-    fieldName: string,
-    fieldValue: string,
-    setFieldValue: Function
-  ) => {
-    setFieldValue(fieldName, fieldValue.trim()); 
-  };
-
   const handleSubmit = (
-    values: PasswordConfirmationValues,
-    { resetForm }: { resetForm: () => void }
+    values: ResetPasswordFormValues,
+    { resetForm, setErrors }: FormikHelpers<ResetPasswordFormValues>,
   ) => {
-    resetForm();
-    setConfirmIconSymbolValue("");
-    setIconSymbolValue("");
-    const resetPasswordData = {
-      password: values.password,
-      confirmPassword: values.confirmPassword,
-      tokenValue: props.tokenValue
+    try {
+      //   const actionResult = await fetchResetPasswordRequest(values);
+      // if (resetPasswordRequestThunk.fulfilled.match(actionResult)) {
+      //   resetForm();
+      //   setSentForm(true);
+      // } else if (resetPasswordRequestThunk.rejected.match(actionResult)) {
+      //   handleUserValidationErrors(actionResult, setErrors);
+      // }
+    } catch (error) {
+      console.error("Reset password failed in catch block:", error);
     }
-    dispatch(validateTokenThunk(props.tokenValue)).then((error: any) => {
-      if(!error) {
-        dispatch(resetPasswordThunk(resetPasswordData)).then((error: any) => {
-          if(!error) {
-            // redirect('/success-page')
-            setShowSuccessMessage(true)
-          }
-        })
-        
-      }
-    });
-    // validateToken(props.tokenValue, values.password)
 
+    resetForm();
+
+    // const resetPasswordData = {
+    //   password: values.password,
+    //   confirmPassword: values.confirmPassword,
+    //   tokenValue: props.tokenValue,
+    // };
+    // dispatch(validateTokenThunk(props.tokenValue)).then((error: any) => {
+    //   if (!error) {
+    //     dispatch(resetPasswordThunk(resetPasswordData)).then((error: any) => {
+    //       if (!error) {
+    //         // redirect('/success-page')
+    //         setShowSuccessMessage(true);
+    //       }
+    //     });
+    //   }
+    // });
+    // validateToken(props.tokenValue, values.password)
   };
 
   return (
-    <div ref={formRef}>
-        <Formik
+    <>
+      <Formik
         initialValues={initialValues}
         validationSchema={schema}
         onSubmit={handleSubmit}
-        >
+      >
         {(formik) => (
-            <Form autoComplete="off" className="text-button font-medium">
-                <div className="flex flex-col gap-y-2 mb-8">
-                    <label htmlFor="password" 
-                    className={`${iconSymbolValue !== "Correct mark" ? iconSymbolValue === "Wrong mark" ? "text-red" : "" : "text-green"}`}
-                    >
-                        <p className={`text-basic ${passwordLabelClassname} Password-Input-Label`}>Пароль</p>
-                        <div className={`flex flex-row justify-between items-top border-b-2 ${iconSymbolValue !== "Correct mark" ? iconSymbolValue === "Wrong mark" ? "border-red" : "" : "border-green"}`}>
-                            <Field
-                            className="h-13 w-full placeholder:text-button focus:outline-none pb-2 text-label text-basic"
-                            id="password"
-                            type="password"
-                            name="password"
-                            placeholder={passwordPlaceholderValue}
-                            value={formik.values.password}
-                            onFocus={() => {setPasswordLabelClassname(""); setPasswordPlaceholderValue("Має містити мінімум 6 знаків"); setAnimateField(true)}}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                handleInputChange(
-                                "password",
-                                e.target.value,
-                                formik.setFieldValue
-                                );
-                                e.target.value.length >= 6 ?  formik.values.confirmPassword.length >=6 ? formik.values.confirmPassword !== e.target.value ? (setConfirmIconSymbolValue("Wrong mark"), setIconSymbolValue("Wrong mark")) : (setConfirmIconSymbolValue("Correct mark"), setIconSymbolValue("Correct mark")) : setIconSymbolValue("Correct mark") : formik.values.confirmPassword === "" ? setIconSymbolValue("") : (setIconSymbolValue(""), setConfirmIconSymbolValue("Wrong mark"));
-                            }}
-                            />
-                            {
-                                iconSymbolValue === "Correct mark" ?
-                                <Image className="ml-2 mb-2" src={require("../../public/icons/reset-password/correct_mark.svg")} alt='close' width={24} height={24} />
-                                : iconSymbolValue === "Wrong mark" ?
-                                <Image className="ml-2 mb-2" src={require("../../public/icons/reset-password/wrong_mark.svg")} alt='close' width={24} height={24} />
-                                : 
-                                <></>
-                            }
-                        </div>
-                        <ErrorMessage className={errorStyles} name="password" component="div" />
-                    </label>
+          <Form autoComplete="off">
+            <div className="flex flex-col gap-2 mb-8">
+              <InputLabelField
+                label="Пароль"
+                name="password"
+                type="password"
+                inputMode="text"
+                placeholder="******"
+                formik={formik}
+              />
 
-                    <label htmlFor="confirmPassword"
-                    className={`${confirmIconSymbolValue !== "Correct mark" ? confirmIconSymbolValue === "Wrong mark" ? "text-red" : "" : "text-green"}`}
-                    >
-                        <p className={`text-basic ${confirmPasswordLabelClassname} Confirm-Password-Input-Label`}>Підтвердити пароль</p>
-                        <div className={`flex flex-row justify-between items-top border-b-2 ${confirmIconSymbolValue !== "Correct mark" ? confirmIconSymbolValue === "Wrong mark" ? "border-red" : "" : "border-green"}`}>
-                            <Field
-                            className="h-13 w-full placeholder:text-button focus:outline-none pb-2 text-label text-basic"
-                            autoComplete="off"
-                            id="confirmPassword"
-                            type="password"
-                            name="confirmPassword"
-                            placeholder={confirmPasswordPlaceholderValue}
-                            value={formik.values.confirmPassword}
-                            onFocus={() => {setConfirmPasswordLabelClassname(""); setConfirmPasswordPlaceholderValue("Має містити мінімум 6 знаків"); setAnimateConfirmField(true)}}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                handleInputChange(
-                                "confirmPassword",
-                                e.target.value,
-                                formik.setFieldValue
-                                );
-                                e.target.value.length >= 6 ?  formik.values.password.length >=6 ? formik.values.password !== e.target.value ? (setConfirmIconSymbolValue("Wrong mark"), setIconSymbolValue("Wrong mark")) : (setConfirmIconSymbolValue("Correct mark"), setIconSymbolValue("Correct mark")) : setConfirmIconSymbolValue("") : formik.values.password !== "" ? (setConfirmIconSymbolValue(""), setIconSymbolValue("Correct mark")) : setConfirmIconSymbolValue("");
-                            }}
-                            />
-                            {
-                                confirmIconSymbolValue === "Correct mark" ?
-                                <Image className="ml-2 mb-2" src={require("../../public/icons/reset-password/correct_mark.svg")} alt='close' width={24} height={24} />
-                                : confirmIconSymbolValue === "Wrong mark" ?
-                                <Image className="ml-2 mb-2" src={require("../../public/icons/reset-password/wrong_mark.svg")} alt='close' width={24} height={24} />
-                                : 
-                                <></>
-                            }
-                            
-                        </div>
-                        {confirmIconSymbolValue === "Wrong mark" ? <p className={errorStyles}>Паролі не співпадають</p> : <></>}
-                        {/* <ErrorMessage name="confirmPassword" className={errorStyles} component="div" /> */}
-                    </label>
-                </div>
-                <button type="submit" className={''}>
-                    Змінити пароль
-                </button>
-            </Form>
+              <InputLabelField
+                label="Повторити пароль"
+                name="repeatPassword"
+                type="password"
+                inputMode="text"
+                placeholder="******"
+                formik={formik}
+              />
+            </div>
+
+            <Button
+              type="submit"
+              subtype="primary"
+              title="Змінити пароль"
+              onClick={formik.handleSubmit}
+              disabled={formik.isSubmitting}
+            />
+          </Form>
         )}
-        </Formik>
-        <ResetPasswordSuccessMessage showSuccessMessage={showSuccessMessage}/>
-    </div>
+      </Formik>
+
+      <SuccessMessageModal
+        title="Пароль змінено"
+        text="Ваш пароль успішно змінено. Використовуйте новий пароль щоб увійти"
+        titleButton="На сторінку входу"
+        redirectButton={"/login"}
+        showSuccessModal={showSuccessModal}
+      />
+    </>
   );
 };
