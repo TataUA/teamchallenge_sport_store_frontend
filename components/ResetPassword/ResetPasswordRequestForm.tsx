@@ -8,9 +8,9 @@ import { Formik, Form, FormikHelpers } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { resetPasswordRequestThunk } from "@/redux/auth/authThunk";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
-import { ExtendedFormikErrors } from "@/components/Auth/LoginForm";
 import { Button } from "@/components/Button/Button";
 import close from "@/public/icons/close_icon.svg";
+import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
 
 const schema = yup.object().shape({
   email: yup
@@ -88,26 +88,7 @@ export const ResetPasswordRequestForm = (props: ResetPasswordRequestProps) => {
         resetForm();
         setSentForm(true);
       } else if (resetPasswordRequestThunk.rejected.match(actionResult)) {
-        //handleErrors(actionResult, setErrors);
-
-        let errorData: any = actionResult.payload;
-        const errorMessages: ExtendedFormikErrors = {};
-
-        if (errorData && errorData.message) {
-          if (
-            errorData.message ===
-            "No active account found with the given credentials"
-          ) {
-            errorMessages._error =
-              "Неправильна адреса електронної пошти або пароль";
-          } else {
-            errorMessages._error = "Невідома помилка, спробуйте ще раз";
-          }
-        } else {
-          errorMessages._error = errorData.message;
-        }
-
-        setErrors(errorMessages);
+        handleUserValidationErrors(actionResult, setErrors);
       }
     } catch (error) {
       console.error("Reset password failed in catch block:", error);
