@@ -7,6 +7,6 @@ export const selectIsLoading = (state: { auth: AuthState }) =>
   state.auth.isLoading;
 export const selectIsRefreshing = (state: { auth: AuthState }) =>
   state.auth.isRefreshing;
-export const selectIsRegistrationComplete = (state: { auth: AuthState }) =>
-  state.auth.isRegistrationComplete;
+export const selectIsSubmitingComplete = (state: { auth: AuthState }) =>
+  state.auth.isSubmitingComplete;
 export const selectError = (state: { auth: AuthState }) => state.auth.error;

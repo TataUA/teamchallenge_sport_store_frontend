@@ -6,7 +6,7 @@ import * as yup from "yup";
 import { Formik, Form, FormikHelpers, FormikErrors } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { registerUserThunk } from "@/redux/auth/authThunk";
-import { selectIsRegistrationComplete } from "@/redux/auth/authSelector";
+import { selectIsSubmitingComplete } from "@/redux/auth/authSelector";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { SuccessMessageModal } from "@/components/Auth/SuccessMessageModal";
 
@@ -89,14 +89,14 @@ const initialValues: RegisterFormValues = {
 export const RegisterForm = () => {
   const [phone, setPhone] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const isRegistrationComplete = useSelector(selectIsRegistrationComplete);
+  const isSubmitingComplete = useSelector(selectIsSubmitingComplete);
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    if (isRegistrationComplete) {
+    if (isSubmitingComplete) {
       setShowSuccessModal(true);
     }
-  }, [isRegistrationComplete]);
+  }, [isSubmitingComplete]);
 
   const handleSubmit = async (
     values: RegisterFormValues,

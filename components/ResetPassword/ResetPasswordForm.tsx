@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { usePathname } from "next/navigation";
 import * as yup from "yup";
 import { Formik, Form, FormikHelpers } from "formik";
 import { AppDispatch } from "@/redux/store";
-import { validateTokenThunk, resetPasswordThunk } from "@/redux/auth/authThunk";
-
+import { selectIsSubmitingComplete } from "@/redux/auth/authSelector";
+import { resetPasswordThunk } from "@/redux/auth/authThunk";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { Button } from "@/components/Button/Button";
-import { SuccessMessageModal } from "../Auth/SuccessMessageModal";
+import { SuccessMessageModal } from "@/components/Auth/SuccessMessageModal";
 
 const schema = yup.object().shape({
   password: yup
@@ -26,11 +27,7 @@ const schema = yup.object().shape({
     .required("Це поле обов'язкове"),
 });
 
-interface ResetPasswordFormProps {
-  confirmationToken: string;
-}
-
-interface ResetPasswordFormValues {
+export interface ResetPasswordFormValues {
   password: string;
   repeatPassword: string;
   confirmationToken: string;
@@ -42,51 +39,38 @@ const initialValues: ResetPasswordFormValues = {
   confirmationToken: "",
 };
 
-export interface ResetPasswordValuesInterface {
-  password: string;
-  confirmPassword: string;
-  tokenValue: string;
-}
-
-export const ResetPasswordForm = (props: ResetPasswordFormProps) => {
+export const ResetPasswordForm = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  // const isRegistrationComplete = useSelector(selectIsRegistrationComplete);
+  const isSubmitingComplete = useSelector(selectIsSubmitingComplete);
   const dispatch: AppDispatch = useDispatch();
 
-  const handleSubmit = (
+  const pathname = usePathname();
+  const tokenValue = pathname.substring(16, pathname.length);
+
+  useEffect(() => {
+    if (isSubmitingComplete) {
+      setShowSuccessModal(true);
+    }
+  }, [isSubmitingComplete]);
+
+  const handleSubmit = async (
     values: ResetPasswordFormValues,
     { resetForm, setErrors }: FormikHelpers<ResetPasswordFormValues>,
   ) => {
     try {
-      //   const actionResult = await fetchResetPasswordRequest(values);
-      // if (resetPasswordRequestThunk.fulfilled.match(actionResult)) {
-      //   resetForm();
-      //   setSentForm(true);
-      // } else if (resetPasswordRequestThunk.rejected.match(actionResult)) {
-      //   handleUserValidationErrors(actionResult, setErrors);
-      // }
+      const valuesWithToken = { ...values, confirmationToken: tokenValue };
+
+      const actionResult = await dispatch(resetPasswordThunk(valuesWithToken));
+
+      if (resetPasswordThunk.fulfilled.match(actionResult)) {
+        resetForm();
+      } else {
+        let errorData: any = actionResult.payload;
+        console.error("Reset password failed with general error:", errorData);
+      }
     } catch (error) {
       console.error("Reset password failed in catch block:", error);
     }
-
-    resetForm();
-
-    // const resetPasswordData = {
-    //   password: values.password,
-    //   confirmPassword: values.confirmPassword,
-    //   tokenValue: props.tokenValue,
-    // };
-    // dispatch(validateTokenThunk(props.tokenValue)).then((error: any) => {
-    //   if (!error) {
-    //     dispatch(resetPasswordThunk(resetPasswordData)).then((error: any) => {
-    //       if (!error) {
-    //         // redirect('/success-page')
-    //         setShowSuccessMessage(true);
-    //       }
-    //     });
-    //   }
-    // });
-    // validateToken(props.tokenValue, values.password)
   };
 
   return (

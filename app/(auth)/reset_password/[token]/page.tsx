@@ -1,13 +1,9 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { ResetPasswordForm } from "@/components/ResetPassword/ResetPasswordForm";
 import { ClientComponent } from "@/components/ClientComponent";
 
-export default function Resetpassword() {
-  const pathname = usePathname();
-  const tokenValue = pathname.substring(16, pathname.length);
-
+export default function Page() {
   return (
     <ClientComponent>
       <div className="container">
@@ -17,7 +13,7 @@ export default function Resetpassword() {
         <p className="mb-6 text-common font-medium text-sm leading-129">
           Вкажіть новий пароль
         </p>
-        <ResetPasswordForm confirmationToken={tokenValue} />
+        <ResetPasswordForm />
       </div>
     </ClientComponent>
   );

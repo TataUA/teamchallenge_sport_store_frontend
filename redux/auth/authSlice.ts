@@ -6,6 +6,7 @@ import {
   editUserThunk,
   ErrorType,
   updateAccessTokenThunk,
+  resetPasswordThunk,
 } from "@/redux/auth/authThunk";
 
 export interface UserData {
@@ -22,13 +23,13 @@ export interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   isRefreshing: boolean;
-  isRegistrationComplete: boolean;
+  isSubmitingComplete: boolean;
   error: ErrorType | null;
 }
 
 const initialState: AuthState = {
   user: null,
-  isRegistrationComplete: false,
+  isSubmitingComplete: false,
   isAuthenticated: false,
   isLoading: false,
   isRefreshing: false,
@@ -39,8 +40,8 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    resetRegistrationStatus(state) {
-      state.isRegistrationComplete = false;
+    resetSubmitingStatus(state) {
+      state.isSubmitingComplete = false;
     },
     logoutUser(state) {
       state.isAuthenticated = false;
@@ -58,7 +59,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUserThunk.fulfilled, (state) => {
         state.isLoading = false;
-        state.isRegistrationComplete = true;
+        state.isSubmitingComplete = true;
       })
       .addCase(registerUserThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
@@ -127,8 +128,22 @@ const authSlice = createSlice({
       .addCase(updateAccessTokenThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload ?? { message: ["An error occurred"] };
+      })
+
+      //reset
+      .addCase(resetPasswordThunk.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(resetPasswordThunk.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isSubmitingComplete = true;
+      })
+      .addCase(resetPasswordThunk.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload ?? { message: ["An error occurred"] };
       }),
 });
 
 export const authReducer = authSlice.reducer;
-export const { resetRegistrationStatus, logoutUser } = authSlice.actions;
+export const { resetSubmitingStatus, logoutUser } = authSlice.actions;
