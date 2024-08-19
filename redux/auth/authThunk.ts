@@ -10,7 +10,6 @@ import {
   logoutUser as apiLogoutUser,
   clearToken,
   resetPasswordRequest,
-  validateToken,
   resetPasswordConfirm,
 } from "@/services/api";
 import {
@@ -20,7 +19,7 @@ import {
 import { RegisterFormValues } from "@/components/Auth/RegisterForm";
 import { LoginFormValues } from "@/components/Auth/LoginForm";
 import { UserDataEditFormValues } from "@/components/Auth/UserDataEdit";
-import { ResetPasswordValuesInterface } from "@/components/ResetPassword/ResetPasswordForm";
+import { ResetPasswordFormValues } from "@/components/ResetPassword/ResetPasswordForm";
 import { handleTokenError } from "@/helpers/handleTokenError";
 import { handleValidationErrors } from "@/helpers/handleThunkValidationErrors";
 import { handleSetTokens } from "@/helpers/handleSetTokens";
@@ -207,38 +206,28 @@ export const resetPasswordRequestThunk = createAsyncThunk<
   void,
   ResetPasswordRequestValues,
   { rejectValue: ErrorType }
->("auth/reset", async (values, thunkApi) => {
+>("auth/resetRequest", async (values, thunkApi) => {
   try {
     await resetPasswordRequest(values);
     return;
   } catch (error: any) {
     const errorObject = handleValidationErrors(error);
 
-    console.log(errorObject);
     return thunkApi.rejectWithValue(errorObject);
   }
 });
 
-export const validateTokenThunk = createAsyncThunk(
-  "reset-password/validate-token",
-  async (value: string, thunkApi) => {
-    try {
-      const response = await validateToken(value);
-      return response;
-    } catch (error) {
-      thunkApi.rejectWithValue({ message: (error as Error).message });
-    }
-  },
-);
+export const resetPasswordThunk = createAsyncThunk<
+  void,
+  ResetPasswordFormValues,
+  { rejectValue: ErrorType }
+>("auth/resetConfirm", async (values, thunkApi) => {
+  try {
+    await resetPasswordConfirm(values);
+    return;
+  } catch (error: any) {
+    const errorObject = handleValidationErrors(error);
 
-export const resetPasswordThunk = createAsyncThunk(
-  "reset-password/confirm",
-  async (values: ResetPasswordValuesInterface, thunkApi) => {
-    try {
-      const response = await resetPasswordConfirm(values);
-      return response;
-    } catch (error) {
-      thunkApi.rejectWithValue({ message: (error as Error).message });
-    }
-  },
-);
+    return thunkApi.rejectWithValue(errorObject);
+  }
+});

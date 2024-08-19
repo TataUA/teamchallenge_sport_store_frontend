@@ -29,3 +29,13 @@ export interface EditUserRequestData {
   phone_number: string;
   email: string;
 }
+
+export interface resetPasswordConfirmData {
+  password: string;
+  token: string;
+}
+
+export interface resetPasswordConfirmRequestData {
+  password: string;
+  token: string;
+}

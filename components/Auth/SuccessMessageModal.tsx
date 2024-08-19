@@ -1,10 +1,10 @@
 "use client";
 
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { resetRegistrationStatus } from "@/redux/auth/authSlice";
+import { resetSubmitingStatus } from "@/redux/auth/authSlice";
 import { Button } from "@/components/Button/Button";
 import success from "@/public/icons/success_blue.svg";
 
@@ -21,7 +21,7 @@ export const SuccessMessageModal = (props: SuccessMessageModalProps) => {
   const router = useRouter();
 
   const handleRedirect = () => {
-    dispatch(resetRegistrationStatus());
+    dispatch(resetSubmitingStatus());
     router.push(props.redirectButton);
   };
 
