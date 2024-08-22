@@ -4,6 +4,7 @@ import { Slider } from "@/components/Slider-hero/Slider";
 import dataSlider from "../public/data/slider_data.json";
 import SubscribeBannerFooter from "@/components/SubscribeBannerFooter";
 import AboutUs from "@/components/AboutUs";
+import PopularCategories from "@/components/PopularCategories";
 
 export default async function Page() {
   return (
@@ -13,6 +14,7 @@ export default async function Page() {
         homePageMainSlider
         className={"min-h-[400px] h-[50dvh]"}
 			/> */}
+      <PopularCategories/>
 			<AboutUs/>
       <SubscribeBannerFooter />
     </>
