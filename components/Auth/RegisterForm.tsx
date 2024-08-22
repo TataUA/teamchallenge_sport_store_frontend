@@ -6,9 +6,9 @@ import * as yup from "yup";
 import { Formik, Form, FormikHelpers, FormikErrors } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { registerUserThunk } from "@/redux/auth/authThunk";
-import { selectIsRegistrationComplete } from "@/redux/auth/authSelector";
+import { selectIsSubmitingComplete } from "@/redux/auth/authSelector";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
-import { SuccessRegisterModal } from "@/components/Auth/SuccessRegisterModal";
+import { SuccessMessageModal } from "@/components/Auth/SuccessMessageModal";
 
 export const schema = yup.object().shape({
   name: yup
@@ -16,7 +16,7 @@ export const schema = yup.object().shape({
     .min(1)
     .matches(
       /^(?!.*[ыёъэЫЁЪЭ])[A-Za-zА-Яа-яЇїІіЄєҐґ']+$/,
-      "Це поле може містити лише латинські та українські літери"
+      "Це поле може містити лише латинські та українські літери",
     )
     .required("Це поле обов'язкове"),
   surname: yup
@@ -24,7 +24,7 @@ export const schema = yup.object().shape({
     .min(1)
     .matches(
       /^(?!.*[ыёъэЫЁЪЭ])[A-Za-zА-Яа-яЇїІіЄєҐґ']+$/,
-      "Це поле може містити лише латинські та українські літери"
+      "Це поле може містити лише латинські та українські літери",
     )
     .required("Це поле обов'язкове"),
   patronymic: yup
@@ -32,7 +32,7 @@ export const schema = yup.object().shape({
     .min(1)
     .matches(
       /^(?!.*[ыёъэЫЁЪЭ])[A-Za-zА-Яа-яЇїІіЄєҐґ']+$/,
-      "Це поле може містити лише латинські та українські літери"
+      "Це поле може містити лише латинські та українські літери",
     )
     .required("Це поле обов'язкове"),
   phone: yup
@@ -41,7 +41,7 @@ export const schema = yup.object().shape({
     .max(13, "Номер повинен містити 13 символів")
     .matches(
       /^\+380\d{9}$/,
-      "Номер телефону повинен бути у форматі +380*********"
+      "Номер телефону повинен бути у форматі +380*********",
     )
     .required("Це поле обов'язкове"),
   email: yup
@@ -49,7 +49,7 @@ export const schema = yup.object().shape({
     .email("Введіть дійсну електронну адресу")
     .matches(
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Невірний формат адреси електронної пошти"
+      "Невірний формат адреси електронної пошти",
     )
     .required("Це поле обов'язкове"),
   password: yup
@@ -57,7 +57,7 @@ export const schema = yup.object().shape({
     .min(6, "Пароль повинен містити не менше 6 символів")
     .matches(
       /^[A-Za-z0-9!@#$%^&*]+$/,
-      "Пароль може містити латинські літери, цифри та символи !@#$%^&*"
+      "Пароль може містити латинські літери, цифри та символи !@#$%^&*",
     )
     .required("Це поле обов'язкове"),
   repeatPassword: yup
@@ -89,18 +89,18 @@ const initialValues: RegisterFormValues = {
 export const RegisterForm = () => {
   const [phone, setPhone] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const isRegistrationComplete = useSelector(selectIsRegistrationComplete);
+  const isSubmitingComplete = useSelector(selectIsSubmitingComplete);
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    if (isRegistrationComplete) {
+    if (isSubmitingComplete) {
       setShowSuccessModal(true);
     }
-  }, [isRegistrationComplete]);
+  }, [isSubmitingComplete]);
 
   const handleSubmit = async (
     values: RegisterFormValues,
-    { resetForm, setErrors }: FormikHelpers<RegisterFormValues>
+    { resetForm, setErrors }: FormikHelpers<RegisterFormValues>,
   ) => {
     try {
       const actionResult = await dispatch(registerUserThunk(values));
@@ -108,7 +108,6 @@ export const RegisterForm = () => {
       if (registerUserThunk.fulfilled.match(actionResult)) {
         resetForm();
         setPhone("");
-        setShowSuccessModal(true);
       } else if (registerUserThunk.rejected.match(actionResult)) {
         let errorData: any = actionResult.payload;
         const errorMessages: Partial<FormikErrors<RegisterFormValues>> = {};
@@ -234,9 +233,12 @@ export const RegisterForm = () => {
         )}
       </Formik>
 
-      <SuccessRegisterModal
+      <SuccessMessageModal
+        title="Вітаємо!"
+        text="Ваш профіль був успішно створений"
+        titleButton="На сторінку входу"
+        redirectButton={"/login"}
         showSuccessModal={showSuccessModal}
-        setShowSuccessModal={setShowSuccessModal}
       />
     </>
   );

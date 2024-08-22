@@ -1,154 +1,135 @@
 "use client";
 
-import React, { Dispatch, SetStateAction } from "react";
-import * as yup from "yup";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useState, useLayoutEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { resetPasswordRequestThunk } from "@/redux/auth/authThunk";
+import React, { useState, Dispatch, SetStateAction, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { AppDispatch } from "@/redux/store";
-
-//import { Props } from "./ResetPasswordButton";
 import Image from "next/image";
+import * as yup from "yup";
+import { Formik, Form, FormikHelpers } from "formik";
+import { AppDispatch } from "@/redux/store";
+import { resetPasswordRequestThunk } from "@/redux/auth/authThunk";
+import { InputLabelField } from "@/components/Auth/InputLabelField";
+import { Button } from "@/components/Button/Button";
+import close from "@/public/icons/close_icon.svg";
+import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
 
 const schema = yup.object().shape({
-  resetPasswordEmail: yup
+  email: yup
     .string()
     .email("Введіть дійсну електронну адресу")
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      "Невірний формат адреси електронної пошти",
+    )
     .required("Це поле обов'язкове"),
 });
 
-interface Props {
-  //emailValue: string;
+interface ResetPasswordRequestProps {
   showPasswordResetBlock: boolean;
   setShowPasswordResetBlock: Dispatch<SetStateAction<boolean>>;
 }
 
-export interface ResetPasswordValues {
-  resetPasswordEmail: string;
+export interface ResetPasswordRequestValues {
+  email: string;
 }
 
-const initialValues: ResetPasswordValues = {
-  resetPasswordEmail: "",
+const initialValues: ResetPasswordRequestValues = {
+  email: "",
 };
 
-// setPopupContent("success message")
-
-// const url = `http://34.66.71.139:8000/user/password_reset/`;
-
-export const animateInputField = (
-  animationTrigger: boolean,
-  curentRef: any,
-  element: string
-) => {
-  if (animationTrigger) {
-    let ctxTo = gsap.context(() => {
-      gsap.from(element, {
-        duration: 0.5,
-        y: 20,
-      });
-    }, curentRef);
-    return () => ctxTo.revert();
-  }
-};
-
-export const submitButtonClassName =
-  "h-12 text-button bg-blue rounded-button text-white w-full font-semibold";
-export const inputClassName =
-  "block border-b-2 pb-2 w-full mb-8 text-label text-basic focus:outline-none";
-
-export const ResetPasswordRequestForm = (props: Props) => {
-  const [popupContent, setPopupContent] = useState<string>("form");
-
-  const [labelClassname, setLabelClassname] =
-    useState<string>("text-transparent");
-
-  const [placeholderValue, setPlaceholderValue] =
-    useState<string>("Електронна пошта");
-
-  const [userEmail, setUserEmail] = useState<string>("");
-
-  const [animateField, setAnimateField] = useState<boolean>(false);
+export const ResetPasswordRequestForm = (props: ResetPasswordRequestProps) => {
+  const [sentForm, setSentForm] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
 
   const dispatch: AppDispatch = useDispatch();
 
-  gsap.registerPlugin();
+  useEffect(() => {
+    if (props.showPasswordResetBlock) {
+      setSentForm(false);
+    }
+  }, [props.showPasswordResetBlock]);
 
-  const formRef: any = useRef();
+  useEffect(() => {
+    const handleKeyboardCloseForm = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        props.setShowPasswordResetBlock(false);
+      }
+    };
 
-  useLayoutEffect(() => {
-    animateInputField(animateField, formRef, ".Input-Label");
-  }, [animateField]);
+    document.addEventListener("keydown", handleKeyboardCloseForm);
 
-  const handleInputChange = (
-    fieldName: string,
-    fieldValue: string,
-    setFieldValue: Function
+    return () => {
+      document.removeEventListener("keydown", handleKeyboardCloseForm);
+    };
+  }, [props]);
+
+  const fetchResetPasswordRequest = async (
+    values: ResetPasswordRequestValues,
   ) => {
-    setFieldValue(fieldName, fieldValue.trim());
+    return await dispatch(resetPasswordRequestThunk(values));
   };
 
-  // async function postEmailValue(value: string) {
-  //   try {
-  //     const response = await fetch(url, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({"email": value}),
-  //     });
+  const resendResetPasswordRequest = async () => {
+    const requestData: ResetPasswordRequestValues = {
+      email: userEmail,
+    };
+    await fetchResetPasswordRequest(requestData);
+  };
 
-  //     const result = await response.json();
-  //     console.log("Success:", result);
-  //     setUserEmail(value);
-  //     setPopupContent("success message")
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-  // }
-
-  const handleSubmit = (
-    values: ResetPasswordValues,
-    { resetForm }: { resetForm: () => void }
+  const handleSubmit = async (
+    values: ResetPasswordRequestValues,
+    { resetForm, setErrors }: FormikHelpers<ResetPasswordRequestValues>,
   ) => {
-    resetForm();
-    dispatch(resetPasswordRequestThunk(values.resetPasswordEmail)).then(
-      (error: any) => {
-        if (!error) {
-          setUserEmail(values.resetPasswordEmail);
-          setPopupContent("success message");
-        }
+    try {
+      setUserEmail(values.email);
+
+      const actionResult = await fetchResetPasswordRequest(values);
+
+      if (resetPasswordRequestThunk.fulfilled.match(actionResult)) {
+        resetForm();
+        setSentForm(true);
+      } else if (resetPasswordRequestThunk.rejected.match(actionResult)) {
+        handleUserValidationErrors(actionResult, setErrors);
       }
-    );
-    // postEmailValue(values.resetPasswordEmail);
+    } catch (error) {
+      console.error("Reset password failed in catch block:", error);
+    }
   };
 
   return (
-    <div ref={formRef}>
+    <div>
       {props.showPasswordResetBlock ? (
-        <div className="fixed w-full h-screen top-0 left-0 flex justify-center content-center bg-blured">
-          <div className="self-center bg-white p-6 rounded-popup max-w-[88vw] max-h-[88vw] text-common text-basic font-medium">
+        <div
+          className="fixed w-full h-screen top-0 left-0 flex justify-center content-center bg-blured"
+          onClick={() => {
+            props.setShowPasswordResetBlock(false);
+          }}
+        >
+          <div
+            className="self-center p-6 bg-white rounded-3xl max-w-[88vw] max-h-[88vw] text-common text-sm leading-129 font-pangram font-medium"
+            onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+              e.stopPropagation()
+            }
+          >
             <div className="flex flex-row justify-between items-center mb-4">
-              <p className="text-subheading text-title font-bold">
-                Відновлення паролю
-              </p>
-              <p
+              <p className="text-xl text-title font-bold">Відновлення паролю</p>
+              <button
+                type="button"
                 onClick={() => {
                   props.setShowPasswordResetBlock(false);
                 }}
               >
                 <Image
-                  src={require("../../public/icons/reset-password/close_icon.svg")}
-                  alt="close"
-                  width={40}
-                  height={40}
+                  src={close}
+                  alt="Хрестик закриття форми"
+                  width={26}
+                  height={26}
                 />
-              </p>
+              </button>
             </div>
-            {popupContent === "form" ? (
+
+            {sentForm === false ? (
               <>
-                <p className="mb-4">
+                <p className="mb-6">
                   Вкажіть свою електронну адресу, і ми відправимо вам лист з
                   інструкцією
                 </p>
@@ -158,72 +139,50 @@ export const ResetPasswordRequestForm = (props: Props) => {
                   onSubmit={handleSubmit}
                 >
                   {(formik) => (
-                    <Form autoComplete="on">
-                      <label
-                        htmlFor="resetPasswordEmail"
-                        className="block mb-4"
-                      >
-                        <p className={`${labelClassname} Input-Label`}>
-                          Електронна пошта
-                        </p>
-                        <Field
-                          id="resetPasswordEmail"
+                    <Form autoComplete="off">
+                      <div className="mb-8">
+                        <InputLabelField
+                          label="Електронна пошта"
+                          name="email"
                           type="email"
-                          name="resetPasswordEmail"
-                          placeholder={placeholderValue}
-                          value={formik.values.resetPasswordEmail}
-                          onFocus={() => {
-                            setLabelClassname("");
-                            setPlaceholderValue("");
-                            setAnimateField(true);
-                          }}
-                          onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                          ) => {
-                            handleInputChange(
-                              "resetPasswordEmail",
-                              e.target.value,
-                              formik.setFieldValue
-                            );
-                          }}
-                          className={`placeholder:text-button ${inputClassName} mb-0`}
+                          inputMode="email"
+                          placeholder="example@gmail.com"
+                          formik={formik}
                         />
-                        <ErrorMessage
-                          name="resetPasswordEmail"
-                          component="div"
-                          className="text-red text-error font-medium"
-                        />
-                      </label>
+                      </div>
 
-                      <button type="submit" className={submitButtonClassName}>
-                        Надіслати інструкцію
-                      </button>
+                      <Button
+                        type="submit"
+                        subtype="primary"
+                        title="Надіслати інструкцію"
+                        onClick={formik.handleSubmit}
+                        disabled={formik.isSubmitting}
+                      />
                     </Form>
                   )}
                 </Formik>
               </>
             ) : (
               <div>
-                <p className="mb-4">
-                  Ми надіслали посилання для відновлення на адресу {userEmail}
+                <p className="mb-8">
+                  Ми надіслали посилання для відновлення на адресу
+                  <span className="font-bold">{userEmail}</span>
                 </p>
-                <button
-                  className={submitButtonClassName}
-                  onClick={() => {
-                    props.setShowPasswordResetBlock(false);
-                  }}
-                >
-                  На сторінку входу
-                </button>
-                <button
-                  className="h-12 text-button bg-white rounded-button w-full font-semibold border-2 mt-4"
-                  // onClick={() => {postEmailValue(userEmail)}}
-                  onClick={() => {
-                    dispatch(resetPasswordRequestThunk(userEmail));
-                  }}
-                >
-                  Надіслати посилання ще раз
-                </button>
+
+                <div className="flex flex-col gap-4">
+                  <Button
+                    type="button"
+                    subtype="primary"
+                    title="На сторінку входу"
+                    onClick={() => props.setShowPasswordResetBlock(false)}
+                  />
+                  <Button
+                    type="button"
+                    subtype="tertiary"
+                    title="Надіслати посилання ще раз"
+                    onClick={resendResetPasswordRequest}
+                  />
+                </div>
               </div>
             )}
           </div>
