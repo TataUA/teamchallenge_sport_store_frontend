@@ -7,8 +7,8 @@ export default function PopularCategories() {
       <h2 className="text-xl leading-140 font-semibold  mb-4 md:text-2xl md:leading-7 md:mb-8">
         Популярні категорії
       </h2>
-      <div className="relative h-[156px] ">
-        <div className="absolute left-0 right-0 w-[calc(100%+24px)] h-[156px] flex  ">
+      <div className="relative h-[156px] md:h-[300px]">
+        <div className="absolute left-0 right-0 w-[calc(100%+24px)] flex  ">
           <Slider
             data={popularCategories}
             autoPlay={false}
