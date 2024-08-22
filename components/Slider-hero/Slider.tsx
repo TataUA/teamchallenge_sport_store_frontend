@@ -12,6 +12,7 @@ import { SliderButtons } from "./SliderButtons";
 
 import { cn } from "@/services/utils/cn";
 import Link from "next/link";
+import ListItem from "../ProductsList/ListItem";
 
 interface Slide {
   id?: number;
@@ -22,14 +23,17 @@ interface Slide {
 }
 
 interface SliderProps {
-  data: Slide[];
+  data?: Slide[];
   autoPlay?: boolean;
   homePageMainSlider?: boolean;
   cardImage?: boolean;
   popularCat?: boolean;
+  bestSales?: boolean;
+  bestSalesItem?: boolean;
   productsList?: boolean;
   slidesPerView?: number;
   className?: string;
+  products?: [];
 }
 
 export function Slider({
@@ -37,8 +41,11 @@ export function Slider({
   autoPlay = true,
   cardImage,
   popularCat,
+	bestSales,
+	bestSalesItem,
   slidesPerView = 1,
-  className = "",
+	className = "",
+	products=[]
 }: SliderProps) {
   return (
     <section className="w-full">
@@ -47,7 +54,7 @@ export function Slider({
           <Swiper
             className="h-full"
             pagination={
-              popularCat
+              popularCat || bestSales || bestSalesItem
                 ? false
                 : {
                     type: "bullets",
@@ -85,65 +92,71 @@ export function Slider({
             loop={true}
             modules={[Autoplay, Navigation, Pagination]}
           >
-            {data?.map(({ id, image, title, subtitle, href }) => (
-              <SwiperSlide key={id || image}>
-                {cardImage ? (
-                  <div className="rounded-xl overflow-hidden">
-                    <Image
-                      alt=""
-                      style={{ objectFit: "contain" }}
-                      src={image}
-                      width={850}
-                      height={1300}
-                    />
-                  </div>
-                ) : popularCat ? (
-                  <div className="mr-2 md:mr-[25px] ">
-                    <Link href={href}>
-                      <div className="w-[108px] h-[108px] overflow-hidden rounded-xl mb-2 flex  justify-center md:w-[424px] md:h-[300px] md:relative">
+            {bestSales
+              ? products.map((product) => (
+                  <SwiperSlide key={product.id}>
+                    <ListItem bestSales={true} product={product} />
+                  </SwiperSlide>
+                ))
+              : data?.map(({ id, image, title, subtitle, href }) => (
+                  <SwiperSlide key={id || image}>
+                    {cardImage ? (
+                      <div className="rounded-xl overflow-hidden">
                         <Image
-                          width={108}
-                          height={108}
-                          src={image}
                           alt=""
-                          className="object-center object-cover md:w-[424px] md:h-[300px] "
+                          style={{ objectFit: "contain" }}
+                          src={image}
+                          width={850}
+                          height={1300}
                         />
                       </div>
-                      <h3 className="text-sm font-medium w-24 md:absolute md:bottom-6 md:left-10 md:w-full md:text-white md:text-xl tracking-[0.015]">
-                        {title}
-                      </h3>
-                    </Link>
-                  </div>
-                ) : (
-                  <div
-                    className={cn(
-                      "h-full w-full absolute left-0 top-0 bg-grey-900",
+                    ) : popularCat ? (
+                      <div className="mr-2 md:mr-[25px] ">
+                        <Link href={href}>
+                          <div className="w-[108px] h-[108px] overflow-hidden rounded-xl mb-2 flex  justify-center md:w-[424px] md:h-[300px] md:relative">
+                            <Image
+                              width={108}
+                              height={108}
+                              src={image}
+                              alt=""
+                              className="object-center object-cover md:w-[424px] md:h-[300px] "
+                            />
+                          </div>
+                          <h3 className="text-sm font-medium w-24 md:absolute md:bottom-6 md:left-10 md:w-full md:text-white md:text-xl tracking-[0.015]">
+                            {title}
+                          </h3>
+                        </Link>
+                      </div>
+                    ) : (
+                      <div
+                        className={cn(
+                          "h-full w-full absolute left-0 top-0 bg-grey-900",
+                        )}
+                        style={{
+                          background: image
+                            ? `center center / cover scroll no-repeat url(${image})`
+                            : undefined,
+                        }}
+                      ></div>
                     )}
-                    style={{
-                      background: image
-                        ? `center center / cover scroll no-repeat url(${image})`
-                        : undefined,
-                    }}
-                  ></div>
-                )}
-                {popularCat ? (
-                  <></>
-                ) : (
-                  <div className="relative z-10 h-full  flex items-center justify-left">
-                    <div className="w-3/6 ml-10">
-                      {title && (
-                        <p className="mb-8 font-normal text-xl  text-white">
-                          {title}
-                        </p>
-                      )}
-                      <p className="text-4xl font-semibold text-white">
-                        {subtitle}
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </SwiperSlide>
-            ))}
+                    {popularCat || bestSales ? (
+                      <></>
+                    ) : (
+                      <div className="relative z-10 h-full  flex items-center justify-left">
+                        <div className="w-3/6 ml-10">
+                          {title && (
+                            <p className="mb-8 font-normal text-xl  text-white">
+                              {title}
+                            </p>
+                          )}
+                          <p className="text-4xl font-semibold text-white">
+                            {subtitle}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </SwiperSlide>
+                ))}
           </Swiper>
         </ul>
       </div>
