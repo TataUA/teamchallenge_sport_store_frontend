@@ -10,7 +10,6 @@ import {
   logoutUser as apiLogoutUser,
   clearToken,
   resetPasswordRequest,
-  validateToken,
   resetPasswordConfirm,
 } from "@/services/api";
 import {
@@ -20,10 +19,11 @@ import {
 import { RegisterFormValues } from "@/components/Auth/RegisterForm";
 import { LoginFormValues } from "@/components/Auth/LoginForm";
 import { UserDataEditFormValues } from "@/components/Auth/UserDataEdit";
-import { ResetPasswordValuesInterface } from "@/components/ResetPassword/ResetPasswordForm";
-import { handleTokenError } from "@/helpers/handle-token-error";
-import { handleValidationErrors } from "@/helpers/handle-validation-errors";
-import { handleSetTokens } from "@/helpers/handle-set-tokens";
+import { ResetPasswordFormValues } from "@/components/ResetPassword/ResetPasswordForm";
+import { handleTokenError } from "@/helpers/handleTokenError";
+import { handleValidationErrors } from "@/helpers/handleThunkValidationErrors";
+import { handleSetTokens } from "@/helpers/handleSetTokens";
+import { ResetPasswordRequestValues } from "@/components/ResetPassword/ResetPasswordRequestForm";
 
 export interface ErrorType {
   message?: string[];
@@ -81,7 +81,7 @@ export const updateAccessTokenThunk = createAsyncThunk<
 >("auth/refresh", async (values, thunkApi) => {
   try {
     const response: LoginResponseData = await updateAccessToken(
-      values.refreshToken
+      values.refreshToken,
     );
     handleSetTokens(response);
 
@@ -191,6 +191,7 @@ export const logoutUserThunk = createAsyncThunk<
     clearToken();
     Cookies.remove("refreshToken");
     thunkApi.dispatch(logoutUser());
+    return;
   } catch (error: any) {
     const errorObject: ErrorType = {
       message: error.detail || "An error occurred",
@@ -200,50 +201,33 @@ export const logoutUserThunk = createAsyncThunk<
   }
 });
 
-// export const resetPasswordRequestThunk = createAsyncThunk(
-//   "reset-password/get-link",
-//   async (values: ResetPasswordValues, thunkApi) => {
-//     try {
-//       const response = await resetPasswordRequest(values);
-//       return response;
-//     } catch (error) {
-//       thunkApi.rejectWithValue({ message: (error as Error).message });
-//     }
-//   }
-// );
+//reset password
+export const resetPasswordRequestThunk = createAsyncThunk<
+  void,
+  ResetPasswordRequestValues,
+  { rejectValue: ErrorType }
+>("auth/resetRequest", async (values, thunkApi) => {
+  try {
+    await resetPasswordRequest(values);
+    return;
+  } catch (error: any) {
+    const errorObject = handleValidationErrors(error);
 
-export const resetPasswordRequestThunk = createAsyncThunk(
-  "reset-password/get-link",
-  async (value: string, thunkApi) => {
-    try {
-      const response = await resetPasswordRequest(value);
-      return response;
-    } catch (error) {
-      thunkApi.rejectWithValue({ message: (error as Error).message });
-    }
+    return thunkApi.rejectWithValue(errorObject);
   }
-);
+});
 
-export const validateTokenThunk = createAsyncThunk(
-  "reset-password/validate-token",
-  async (value: string, thunkApi) => {
-    try {
-      const response = await validateToken(value);
-      return response;
-    } catch (error) {
-      thunkApi.rejectWithValue({ message: (error as Error).message });
-    }
-  }
-);
+export const resetPasswordThunk = createAsyncThunk<
+  void,
+  ResetPasswordFormValues,
+  { rejectValue: ErrorType }
+>("auth/resetConfirm", async (values, thunkApi) => {
+  try {
+    await resetPasswordConfirm(values);
+    return;
+  } catch (error: any) {
+    const errorObject = handleValidationErrors(error);
 
-export const resetPasswordThunk = createAsyncThunk(
-  "reset-password/confirm",
-  async (values: ResetPasswordValuesInterface, thunkApi) => {
-    try {
-      const response = await resetPasswordConfirm(values);
-      return response;
-    } catch (error) {
-      thunkApi.rejectWithValue({ message: (error as Error).message });
-    }
+    return thunkApi.rejectWithValue(errorObject);
   }
-);
+});

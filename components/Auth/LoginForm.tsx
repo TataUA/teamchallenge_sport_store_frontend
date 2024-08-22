@@ -19,7 +19,7 @@ export const schema = yup.object().shape({
     .email("Введіть дійсну електронну адресу")
     .matches(
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Невірний формат адреси електронної пошти"
+      "Невірний формат адреси електронної пошти",
     )
     .required("Це поле обов'язкове"),
   password: yup
@@ -27,7 +27,7 @@ export const schema = yup.object().shape({
     .min(6, "Пароль повинен містити не менше 6 символів")
     .matches(
       /^[A-Za-z0-9!@#$%^&*]+$/,
-      "Пароль може містити лише літери, цифри та символи"
+      "Пароль може містити лише літери, цифри та символи",
     )
     .required("Це поле обов'язкове"),
 });
@@ -37,7 +37,7 @@ export interface LoginFormValues {
   password: string;
 }
 
-interface ExtendedFormikErrors extends FormikErrors<LoginFormValues> {
+export interface ExtendedFormikErrors extends FormikErrors<LoginFormValues> {
   _error?: string;
 }
 
@@ -55,7 +55,7 @@ export const LoginForm = () => {
 
   const handleSubmit = async (
     values: LoginFormValues,
-    { resetForm, setErrors }: FormikHelpers<LoginFormValues>
+    { resetForm, setErrors }: FormikHelpers<LoginFormValues>,
   ) => {
     try {
       const actionResult = await dispatch(loginUserThunk(values));
@@ -150,9 +150,8 @@ export const LoginForm = () => {
           </Form>
         )}
       </Formik>
-      
+
       <ResetPasswordRequestForm
-        //emailValue={formik.values.email}
         setShowPasswordResetBlock={setShowPasswordResetBlock}
         showPasswordResetBlock={showPasswordResetBlock}
       />

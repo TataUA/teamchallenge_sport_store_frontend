@@ -1,13 +1,12 @@
 import axios from "axios";
 
-// component
+// types
+import * as types from "./types/auth-api-types";
 import { RegisterFormValues } from "@/components/Auth/RegisterForm";
 import { LoginFormValues } from "@/components/Auth/LoginForm";
 import { UserDataEditFormValues } from "@/components/Auth/UserDataEdit";
-import { ResetPasswordValuesInterface } from "@/components/ResetPassword/ResetPasswordForm";
-
-// types
-import * as types from "./types/auth-api-types";
+import { ResetPasswordRequestValues } from "@/components/ResetPassword/ResetPasswordRequestForm";
+import { ResetPasswordFormValues } from "@/components/ResetPassword/ResetPasswordForm";
 import { IProduct } from "./types";
 
 // helpers
@@ -35,14 +34,14 @@ $instance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 $instance.interceptors.response.use(
   (response) => response,
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 //handle token
@@ -59,7 +58,7 @@ export const getTokenFromLocalStorage = () =>
 
 //register user
 export const registerUser = async (
-  values: RegisterFormValues
+  values: RegisterFormValues,
 ): Promise<types.RegisterResponseData> => {
   const { name, surname, patronymic, phone, email, password, repeatPassword } =
     values;
@@ -74,12 +73,10 @@ export const registerUser = async (
     repeat_password: repeatPassword,
   };
 
-  clearToken();
-
   try {
     const { data } = await $instance.post<types.RegisterResponseData>(
       "/user/registration/",
-      requestData
+      requestData,
     );
     return data;
   } catch (error: any) {
@@ -89,7 +86,7 @@ export const registerUser = async (
 
 //login user
 export const loginUser = async (
-  values: LoginFormValues
+  values: LoginFormValues,
 ): Promise<types.LoginResponseData> => {
   const { email, password } = values;
 
@@ -103,7 +100,7 @@ export const loginUser = async (
 
 //update access token
 export const updateAccessToken = async (
-  refresh: string
+  refresh: string,
 ): Promise<types.LoginResponseData> => {
   try {
     const { data } = await $instance.post("/auth/token/refresh/", { refresh });
@@ -125,7 +122,7 @@ export const currentUser = async (): Promise<types.RegisterResponseData> => {
 
 //edit user
 export const editUser = async (
-  values: UserDataEditFormValues
+  values: UserDataEditFormValues,
 ): Promise<types.RegisterResponseData> => {
   const { name, surname, patronymic, phone, email } = values;
 
@@ -140,7 +137,7 @@ export const editUser = async (
   try {
     const { data } = await $instance.put<types.RegisterResponseData>(
       "/user/profile/",
-      requestData
+      requestData,
     );
     return data;
   } catch (error: any) {
@@ -158,41 +155,46 @@ export const logoutUser = async () => {
   }
 };
 
-// export const resetPasswordRequest = async (values: ResetPasswordValues) => {
-//   await $instance.post('/user/password_reset', {
-//     "email": values.resetPasswordEmail
-//   })
-// };
-
-export const resetPasswordRequest = async (value: string) => {
-  await $instance.post("/user/password_reset/", {
-    email: value,
-  });
-};
-
-export const validateToken = async (value: string) => {
-  await $instance.post("/user/password_reset/validate_token/", {
-    token: value,
-  });
-};
-
-export const resetPasswordConfirm = async (
-  values: ResetPasswordValuesInterface
+//reset password
+export const resetPasswordRequest = async (
+  values: ResetPasswordRequestValues,
 ) => {
-  await $instance.post("/user/password_reset/validate_token/", {
-    password: values.password,
-    token: values.tokenValue,
-  });
+  const { email } = values;
+  try {
+    const { data } = await $instance.post("/user/password_reset/", {
+      email,
+    });
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
 };
 
-// export const resetPassword = async (values: ) => {
-//   await $instance.post('/user/password_reset', {
-//     "email": values
-//   })
-// };
+//reset password confirm
+export const resetPasswordConfirm = async (
+  values: ResetPasswordFormValues,
+): Promise<types.resetPasswordConfirmData> => {
+  const { password, repeatPassword, confirmationToken } = values;
 
+  const requestData: types.resetPasswordConfirmRequestData = {
+    password,
+    token: confirmationToken,
+  };
+
+  try {
+    const { data } = await $instance.post<types.resetPasswordConfirmData>(
+      "/user/password_reset/confirm/",
+      requestData,
+    );
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
+//search by query params
 export const sendSearchQueryApi = async (
-  query: string
+  query: string,
 ): Promise<IProduct[]> => {
   try {
     const extractedParams = getCorrectQueryParamsSearchQuery(query);
