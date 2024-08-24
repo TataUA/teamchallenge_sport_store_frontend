@@ -15,7 +15,7 @@ export const schema = yup.object().shape({
     .min(1)
     .matches(
       /^(?!.*[ыёъэЫЁЪЭ])[A-Za-zА-Яа-яЇїІіЄєҐґ']+$/,
-      "Це поле може містити лише латинські та українські літери"
+      "Це поле може містити лише латинські та українські літери",
     )
     .required("Це поле обов'язкове"),
   surname: yup
@@ -23,7 +23,7 @@ export const schema = yup.object().shape({
     .min(1)
     .matches(
       /^(?!.*[ыёъэЫЁЪЭ])[A-Za-zА-Яа-яЇїІіЄєҐґ']+$/,
-      "Це поле може містити лише латинські та українські літери"
+      "Це поле може містити лише латинські та українські літери",
     )
     .required("Це поле обов'язкове"),
   patronymic: yup
@@ -31,7 +31,7 @@ export const schema = yup.object().shape({
     .min(1)
     .matches(
       /^(?!.*[ыёъэЫЁЪЭ])[A-Za-zА-Яа-яЇїІіЄєҐґ']+$/,
-      "Це поле може містити лише латинські та українські літери"
+      "Це поле може містити лише латинські та українські літери",
     )
     .required("Це поле обов'язкове"),
   phone: yup
@@ -40,7 +40,7 @@ export const schema = yup.object().shape({
     .max(13, "Номер повинен містити 13 символів")
     .matches(
       /^\+380\d{9}$/,
-      "Номер телефону повинен бути у форматі +380*********"
+      "Номер телефону повинен бути у форматі +380*********",
     )
     .required("Це поле обов'язкове"),
   email: yup
@@ -48,12 +48,13 @@ export const schema = yup.object().shape({
     .email("Введіть дійсну електронну адресу")
     .matches(
       /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Невірний формат адреси електронної пошти"
+      "Невірний формат адреси електронної пошти",
     )
     .required("Це поле обов'язкове"),
 });
 
 export interface UserDataEditFormValues {
+  id: number | string;
   name: string;
   surname: string;
   patronymic: string;
@@ -71,6 +72,7 @@ export const UserDataEdit = (props: UserDataEditProps) => {
   const dispatch: AppDispatch = useDispatch();
 
   const initialValues: UserDataEditFormValues = {
+    id: user?.id || "",
     name: user?.name || "",
     surname: user?.surname || "",
     patronymic: user?.patronymic || "",
@@ -80,7 +82,7 @@ export const UserDataEdit = (props: UserDataEditProps) => {
 
   const handleSubmit = async (
     values: UserDataEditFormValues,
-    { resetForm, setErrors }: FormikHelpers<UserDataEditFormValues>
+    { resetForm, setErrors }: FormikHelpers<UserDataEditFormValues>,
   ) => {
     try {
       const actionResult = await dispatch(editUserThunk(values));
@@ -111,7 +113,7 @@ export const UserDataEdit = (props: UserDataEditProps) => {
             setErrors({ phone: "Введений номер не вірний" });
           } else if (
             errorData.message.includes(
-              "user with this phone number already exists."
+              "user with this phone number already exists.",
             )
           ) {
             setErrors({ phone: "Такий номер вже зареєстрований" });

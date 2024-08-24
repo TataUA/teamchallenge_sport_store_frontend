@@ -113,7 +113,7 @@ export const updateAccessToken = async (
 //current user
 export const currentUser = async (): Promise<types.RegisterResponseData> => {
   try {
-    const { data } = await $instance.get("/user/me/");
+    const { data } = await $instance.get("/user/view/");
     return data;
   } catch (error: any) {
     throw error.response.data;
@@ -124,7 +124,7 @@ export const currentUser = async (): Promise<types.RegisterResponseData> => {
 export const editUser = async (
   values: UserDataEditFormValues,
 ): Promise<types.RegisterResponseData> => {
-  const { name, surname, patronymic, phone, email } = values;
+  const { id, name, surname, patronymic, phone, email } = values;
 
   const requestData: types.EditUserRequestData = {
     first_name: name,
@@ -136,7 +136,7 @@ export const editUser = async (
 
   try {
     const { data } = await $instance.put<types.RegisterResponseData>(
-      "/user/profile/",
+      `/user/profile/${id}/`,
       requestData,
     );
     return data;

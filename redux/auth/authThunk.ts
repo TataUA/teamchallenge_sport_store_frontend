@@ -26,7 +26,7 @@ import { handleSetTokens } from "@/helpers/handleSetTokens";
 import { ResetPasswordRequestValues } from "@/components/ResetPassword/ResetPasswordRequestForm";
 
 export interface ErrorType {
-  message?: string[];
+  message?: string[] | string;
   messages?: { token_class: string; token_type: string; message: string }[];
 }
 

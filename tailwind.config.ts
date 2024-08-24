@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     fontFamily: {
       pangram: ["PP Pangram Sans", "sans-serif"],
-      nunito: ["Nunito Sans", "sans-serif"],
+      nunito: ["Nunito_Sans", "sans-serif"],
       inter: ["Inter", "sans-serif"],
     },
     extend: {
