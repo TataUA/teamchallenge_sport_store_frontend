@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikErrors } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { selectError } from "@/redux/auth/authSelector";
 import { loginUserThunk } from "@/redux/auth/authThunk";
@@ -36,6 +36,10 @@ export const schema = yup.object().shape({
 export interface LoginFormValues {
   email: string;
   password: string;
+}
+
+export interface ExtendedFormikErrors extends FormikErrors<LoginFormValues> {
+  _error?: string;
 }
 
 const initialValues: LoginFormValues = {
