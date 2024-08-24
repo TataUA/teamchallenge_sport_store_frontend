@@ -68,16 +68,13 @@ const authSlice = createSlice({
 
       //login
       .addCase(loginUserThunk.pending, (state) => {
-        state.isLoading = true;
         state.isAuthenticated = false;
         state.error = null;
       })
       .addCase(loginUserThunk.fulfilled, (state) => {
-        state.isLoading = false;
         state.isAuthenticated = true;
       })
       .addCase(loginUserThunk.rejected, (state, { payload }) => {
-        state.isLoading = false;
         state.error = payload ?? { message: ["An error occurred"] };
       })
 
