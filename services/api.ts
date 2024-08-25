@@ -5,7 +5,7 @@ import * as types from "./types/auth-api-types";
 import { RegisterFormValues } from "@/components/Auth/RegisterUser/RegisterForm";
 import { LoginFormValues } from "@/components/Auth/LoginForm";
 import { UserDataEditFormValues } from "@/components/Auth/EditUser/UserDataEdit";
-import { ResetPasswordRequestValues } from "@/components/ResetPassword/ResetPasswordRequestForm";
+import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 import { ResetPasswordFormValues } from "@/components/Auth/ResetPassword/ResetPasswordForm";
 import { IProduct } from "./types";
 
