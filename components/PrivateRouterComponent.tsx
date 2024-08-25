@@ -8,7 +8,7 @@ import {
   selectIsAuthenticated,
   selectIsLoading,
 } from "@/redux/auth/authSelector";
-import { Loader } from "./Loader";
+import { Loader } from "@/components/Loader";
 
 interface PrivateRouteComponentProps {
   children: React.ReactNode;
@@ -28,12 +28,12 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
     if (isLoading) return;
 
     if (isAuthenticated) {
-      if (pathname === "/login" || pathname === "/signup") {
+      if (pathname === "/auth/login" || pathname === "/auth/signup") {
         router.push("/profile");
       }
     } else {
-      if (pathname !== "/login" && pathname !== "/signup") {
-        router.push("/login");
+      if (pathname !== "/auth/login" && pathname !== "/auth/signup") {
+        router.push("/auth/login");
       }
     }
   }, [isAuthenticated, isLoading, router, pathname]);

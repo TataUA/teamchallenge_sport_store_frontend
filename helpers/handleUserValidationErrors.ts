@@ -1,6 +1,6 @@
 import { FormikErrors } from "formik";
 import { ExtendedFormikErrors } from "@/components/Auth/LoginForm";
-import { RegisterFormValues } from "@/components/Auth/RegisterForm";
+import { RegisterFormValues } from "@/components/Auth/RegisterUser/RegisterForm";
 
 export const handleUserValidationErrors = (
   actionResult: any,
@@ -18,7 +18,7 @@ export const handleUserValidationErrors = (
           )
         ) {
           errorMessages.email =
-            "Така адреса електронної пошти не зареєстрована";
+            "Ми не знайшли обліковий запис із цією адресою електронної пошти";
         }
       });
 

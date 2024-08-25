@@ -10,9 +10,9 @@ import { AppDispatch } from "@/redux/store";
 import { selectError } from "@/redux/auth/authSelector";
 import { loginUserThunk } from "@/redux/auth/authThunk";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
-import { ResetPasswordRequestForm } from "@/components/ResetPassword/ResetPasswordRequestForm";
-import { ResetPasswordButton } from "@/components/ResetPassword/ResetPasswordButton";
-import wrong from "@/public/icons/wrong.svg";
+import { ResetPasswordRequestForm } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
+import { ResetPasswordButton } from "@/components/Auth/ResetPassword/ResetPasswordButton";
+import wrong from "@/public/icons/auth/wrong.svg";
 
 export const schema = yup.object().shape({
   email: yup
