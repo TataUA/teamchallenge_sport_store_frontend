@@ -23,7 +23,7 @@ import { ResetPasswordFormValues } from "@/components/Auth/ResetPassword/ResetPa
 import { handleTokenError } from "@/helpers/handleTokenError";
 import { handleValidationErrors } from "@/helpers/handleThunkValidationErrors";
 import { handleSetTokens } from "@/helpers/handleSetTokens";
-import { ResetPasswordRequestValues } from "@/components/ResetPassword/ResetPasswordRequestForm";
+import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 
 export interface ErrorType {
   message?: string[] | string;
