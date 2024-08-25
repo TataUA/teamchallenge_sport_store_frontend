@@ -7,7 +7,7 @@ import Image from "next/image";
 import { AppDispatch } from "@/redux/store";
 import { selectUserData } from "@/redux/auth/authSelector";
 import { logoutUserThunk } from "@/redux/auth/authThunk";
-import success from "@/public/icons/success_blue.svg";
+import success from "@/public/icons/auth/success_blue.svg";
 
 interface UserDataSaveProps {
   setEditData: (edit: boolean) => void;

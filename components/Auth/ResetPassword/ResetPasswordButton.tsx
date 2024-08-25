@@ -3,8 +3,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 
 interface Props {
- // emailValue: string;
-  //showPasswordResetBlock: boolean;
   setShowPasswordResetBlock: Dispatch<SetStateAction<boolean>>;
 }
 

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { resetSubmitingStatus } from "@/redux/auth/authSlice";
 import { Button } from "@/components/Button/Button";
-import success from "@/public/icons/success_blue.svg";
+import success from "@/public/icons/auth/success_blue.svg";
 
 interface SuccessMessageModalProps {
   title: string;

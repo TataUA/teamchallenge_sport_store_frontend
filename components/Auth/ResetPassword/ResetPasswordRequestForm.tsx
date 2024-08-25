@@ -8,9 +8,9 @@ import { Formik, Form, FormikHelpers } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { resetPasswordRequestThunk } from "@/redux/auth/authThunk";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
+import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
 import { Button } from "@/components/Button/Button";
 import close from "@/public/icons/close_icon.svg";
-import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
 
 const schema = yup.object().shape({
   email: yup

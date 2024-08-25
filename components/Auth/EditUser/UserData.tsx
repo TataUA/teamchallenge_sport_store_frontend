@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectIsRefreshing } from "@/redux/auth/authSelector";
-import { Loader } from "../Loader";
-import { UserDataSave } from "@/components/Auth/UserDataSave";
-import { UserDataEdit } from "@/components/Auth/UserDataEdit";
+import { Loader } from "@/components/Loader";
+import { UserDataSave } from "@/components/Auth/EditUser/UserDataSave";
+import { UserDataEdit } from "@/components/Auth/EditUser/UserDataEdit";
 
 export const UserData = () => {
   const isRefreshing = useSelector(selectIsRefreshing);
