@@ -7,6 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { IProduct } from "@/services/types";
 
 import { SliderButtons } from "./SliderButtons";
 
@@ -33,7 +34,7 @@ interface SliderProps {
   productsList?: boolean;
   slidesPerView?: number;
   className?: string;
-  products?: [];
+  products?: IProduct[];
 }
 
 export function Slider({
@@ -112,7 +113,7 @@ export function Slider({
                       </div>
                     ) : popularCat ? (
                       <div className="mr-2 md:mr-[25px] ">
-                        <Link href={href}>
+                        <Link href={href ?? '#'}>
                           <div className="w-[108px] h-[108px] overflow-hidden rounded-xl mb-2 flex  justify-center md:w-[424px] md:h-[300px] md:relative">
                             <Image
                               width={108}

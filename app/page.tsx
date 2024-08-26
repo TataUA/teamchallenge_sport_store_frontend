@@ -22,6 +22,7 @@ export default async function Page() {
       <SortedProducts
         title="Новинки"
         fetchProducts={fetchProductsByNewAction}
+        
       />
       <SortedProducts
         title="Топ продажів"
