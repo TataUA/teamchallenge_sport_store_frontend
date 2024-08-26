@@ -7,18 +7,26 @@ export const HIDE_PAGE_PATH: HidePagePath[] = [
   },
   {
     pathname: "signup",
-    path: "/signup",
+    path: "/auth/signup",
   },
   {
     pathname: "login",
-    path: "/login",
+    path: "/auth/login",
   },
   {
     pathname: "profile",
-    path: "/profile",
+    path: "/auth/profile",
   },
   {
-    pathname: "reset_password",
+    pathname: "reset_password", //не ховає футер, треба доробити, скоріш за все через функцію, якщо ні то прибрати з типів
     path: "/reset_password/[token]",
+  },
+  {
+    pathname: "confirming_letter",
+    path: "/auth/confirming_letter",
+  },
+  {
+    pathname: "confirmed_email", //не ховає футер, треба доробити, скоріш за все через функцію, якщо ні то прибрати з типів
+    path: (activation_key: string) => `/auth/confirmed_email/${activation_key}`,
   },
 ];

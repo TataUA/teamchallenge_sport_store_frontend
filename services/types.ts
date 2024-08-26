@@ -1,74 +1,74 @@
 export interface NavLink {
-	key: string
-	label: string
-	href: string
-	links?: NavLink[] // Поддержка вложенных ссылок
+  key: string;
+  label: string;
+  href: string;
+  links?: NavLink[]; // Поддержка вложенных ссылок
 }
 
 export interface NavItem {
-	title: NavLink
-	links: NavLink[]
+  title: NavLink;
+  links: NavLink[];
 }
 
 export interface HidePagePath {
-	pathname: string
-	path: string
+  pathname: string;
+  path: string | ((...params: any[]) => string);
 }
 
 export type headerNavItem = {
-	href: string
-	name: string
-}
+  href: string;
+  name: string;
+};
 
 export type SvgProps = {
-	path: string
-	viewBox: string
-	fill?: string
-	name?: string
-	fillHovered?: string
-	isHovered?: boolean
-	classname?: string
-	stroke?: string
-	strokeHovered?: string
-}
+  path: string;
+  viewBox: string;
+  fill?: string;
+  name?: string;
+  fillHovered?: string;
+  isHovered?: boolean;
+  classname?: string;
+  stroke?: string;
+  strokeHovered?: string;
+};
 
 interface Category {
-	id: number
-	gender: string
-	sub_category: string
+  id: number;
+  gender: string;
+  sub_category: string;
 }
 
 export interface IColor {
-	id: number
-	title: string // Updated to match the provided object
+  id: number;
+  title: string; // Updated to match the provided object
 }
 
 export interface ProductSize {
-	id: number
-	value: string
+  id: number;
+  value: string;
 }
 
 interface ProductImage {
-	image_url: string
+  image_url: string;
 }
 
 export interface IColors {
-	image_url: string
-	color: IColor
+  image_url: string;
+  color: IColor;
 }
 
 export interface IProduct {
-	id: number
-	title: string
-	category: Category
-	description: string
-	price: string
-	colors: IColors[]
-	size: ProductSize[]
-	images: ProductImage[]
-	quantity: {
-		size: string
-		color: string
-		quantity: number
-	}[]
+  id: number;
+  title: string;
+  category: Category;
+  description: string;
+  price: string;
+  colors: IColors[];
+  size: ProductSize[];
+  images: ProductImage[];
+  quantity: {
+    size: string;
+    color: string;
+    quantity: number;
+  }[];
 }

@@ -174,7 +174,7 @@ export const resetPasswordRequest = async (
 export const resetPasswordConfirm = async (
   values: ResetPasswordFormValues,
 ): Promise<types.resetPasswordConfirmData> => {
-  const { password, repeatPassword, confirmationToken } = values;
+  const { password, confirmationToken } = values;
 
   const requestData: types.resetPasswordConfirmRequestData = {
     password,
