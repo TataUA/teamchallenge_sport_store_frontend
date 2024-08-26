@@ -1,14 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { Formik, Form, FormikHelpers, FormikErrors } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { registerUserThunk } from "@/redux/auth/authThunk";
-import { selectIsSubmitingComplete } from "@/redux/auth/authSelector";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
-import { SuccessMessageModal } from "@/components/Auth/SuccessMessageModal";
+import { useRouter } from "next/navigation";
 
 export const schema = yup.object().shape({
   name: yup
@@ -88,15 +87,8 @@ const initialValues: RegisterFormValues = {
 
 export const RegisterForm = () => {
   const [phone, setPhone] = useState("");
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const isSubmitingComplete = useSelector(selectIsSubmitingComplete);
   const dispatch: AppDispatch = useDispatch();
-
-  useEffect(() => {
-    if (isSubmitingComplete) {
-      setShowSuccessModal(true);
-    }
-  }, [isSubmitingComplete]);
+  const router = useRouter();
 
   const handleSubmit = async (
     values: RegisterFormValues,
@@ -106,8 +98,9 @@ export const RegisterForm = () => {
       const actionResult = await dispatch(registerUserThunk(values));
 
       if (registerUserThunk.fulfilled.match(actionResult)) {
-        resetForm();
         setPhone("");
+        resetForm();
+        router.push(`/auth/confirming_letter?email=${values.email}`);
       } else if (registerUserThunk.rejected.match(actionResult)) {
         let errorData: any = actionResult.payload;
         const errorMessages: Partial<FormikErrors<RegisterFormValues>> = {};
@@ -122,6 +115,7 @@ export const RegisterForm = () => {
             errorData.message &&
             Array.isArray(errorData.message)
           ) {
+            console.log("errors:", errorData);
             errorData.message.forEach((message: string) => {
               if (message.includes("user with this email already exists.")) {
                 errorMessages.email = "Така пошта вже зареєстрована";
@@ -232,14 +226,6 @@ export const RegisterForm = () => {
           </Form>
         )}
       </Formik>
-
-      <SuccessMessageModal
-        title="Вітаємо!"
-        text="Ваш профіль був успішно створений"
-        titleButton="На сторінку входу"
-        redirectButton={"/login"}
-        showSuccessModal={showSuccessModal}
-      />
     </>
   );
 };
