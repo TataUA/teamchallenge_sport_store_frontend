@@ -3,7 +3,7 @@ import axios from "axios";
 // types
 import * as types from "./types/auth-api-types";
 import { RegisterFormValues } from "@/components/Auth/RegisterUser/RegisterForm";
-import { LoginFormValues } from "@/components/Auth/LoginForm";
+import { LoginFormValues } from "@/components/Auth/LoginUser/LoginForm";
 import { UserDataEditFormValues } from "@/components/Auth/EditUser/UserDataEdit";
 import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 import { ResetPasswordFormValues } from "@/components/Auth/ResetPassword/ResetPasswordForm";
@@ -78,6 +78,18 @@ export const registerUser = async (
       "/user/registration/",
       requestData,
     );
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
+//resend confirmation email
+export const resendEmail = async (email: string) => {
+  try {
+    const { data } = await $instance.post("/user/resend/activation/", {
+      email,
+    });
     return data;
   } catch (error: any) {
     throw error.response.data;

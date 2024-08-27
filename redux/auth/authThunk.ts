@@ -11,13 +11,14 @@ import {
   clearToken,
   resetPasswordRequest,
   resetPasswordConfirm,
+  resendEmail,
 } from "@/services/api";
 import {
   RegisterResponseData,
   LoginResponseData,
 } from "@/services/types/auth-api-types";
 import { RegisterFormValues } from "@/components/Auth/RegisterUser/RegisterForm";
-import { LoginFormValues } from "@/components/Auth/LoginForm";
+import { LoginFormValues } from "@/components/Auth/LoginUser/LoginForm";
 import { UserDataEditFormValues } from "@/components/Auth/EditUser/UserDataEdit";
 import { ResetPasswordFormValues } from "@/components/Auth/ResetPassword/ResetPasswordForm";
 import { handleTokenError } from "@/helpers/handleTokenError";
@@ -53,6 +54,24 @@ export const registerUserThunk = createAsyncThunk<
   }
 });
 
+//resend confirmation email
+export const resendEmailThunk = createAsyncThunk<
+  void,
+  { email: string },
+  { rejectValue: ErrorType }
+>("auth/resendEmail", async ({ email }, thunkApi) => {
+  try {
+    await resendEmail(email);
+
+    return;
+  } catch (error: any) {
+    const errorObject: ErrorType = {
+      message: error.detail || "An error occurred",
+    };
+    return thunkApi.rejectWithValue(errorObject);
+  }
+});
+
 //login
 export const loginUserThunk = createAsyncThunk<
   void,
@@ -68,7 +87,6 @@ export const loginUserThunk = createAsyncThunk<
     const errorObject: ErrorType = {
       message: error.detail || "An error occurred",
     };
-
     return thunkApi.rejectWithValue(errorObject);
   }
 });
@@ -90,7 +108,6 @@ export const updateAccessTokenThunk = createAsyncThunk<
     const errorObject: ErrorType = {
       message: error.detail || "An error occurred",
     };
-
     return thunkApi.rejectWithValue(errorObject);
   }
 });
@@ -148,7 +165,6 @@ export const currentUserThunk = createAsyncThunk<
         },
       ],
     };
-
     return thunkApi.rejectWithValue(errorObject);
   }
 });
@@ -196,7 +212,6 @@ export const logoutUserThunk = createAsyncThunk<
     const errorObject: ErrorType = {
       message: error.detail || "An error occurred",
     };
-
     return thunkApi.rejectWithValue(errorObject);
   }
 });

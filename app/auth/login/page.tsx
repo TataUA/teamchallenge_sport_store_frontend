@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { ClientComponent } from "@/components/ClientComponent";
 import { PrivateRouteComponent } from "@/components/PrivateRouterComponent";
-import { LoginForm } from "@/components/Auth/LoginForm";
+import { LoginForm } from "@/components/Auth/LoginUser/LoginForm";
 import { PrivacyPolicy } from "@/components/Auth/PrivacyPolicy";
 
 export default function Page() {

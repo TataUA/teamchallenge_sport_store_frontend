@@ -52,6 +52,7 @@ const config: Config = {
         red: "#DF0707",
         green: "#42BE65",
         bgSearch: "#F3F3F3",
+        timer: "#b7b7b8",
         blured: "rgba(14, 14, 16, 0.4)",
       },
     },
