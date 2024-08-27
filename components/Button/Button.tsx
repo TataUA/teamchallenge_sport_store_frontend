@@ -26,7 +26,9 @@ export const Button = (props: ButtonProps) => {
       disabled={props.disabled}
       className={cn(
         "w-full h-12 self-center px-6 rounded-xl text-base font-semibold font-pangram transition-all",
-        buttonStyles[props.subtype],
+        props.disabled
+          ? "border-border_button bg-bgSearch text-timer"
+          : buttonStyles[props.subtype],
         `${props.styles}`,
       )}
     >

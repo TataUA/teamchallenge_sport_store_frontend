@@ -1,24 +1,20 @@
 "use client";
 
 import React from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { cn } from "@/services/utils/cn";
-import { Button } from "@/components/Button/Button";
+import { ClientComponent } from "@/components/ClientComponent";
+import { ConfirmationButtons } from "@/components/Auth/ConfirmEmail/ConfirmationButtons";
 import envelopBlue from "@/public/icons/auth/envelop_blue.svg";
 
 export default function Page() {
-  const router = useRouter();
   const searchParams = useSearchParams();
-  const email = searchParams.get("email");
+  const email = searchParams.get("email") || "";
 
-  const handleResendEmail = () => {
-    return;
-  };
-
-  const handleRedirect = () => {
-    router.push("/auth/login");
-  };
+  function getEmail() {
+    //move email to ConfirmationButtons
+  }
 
   return (
     <div
@@ -44,20 +40,9 @@ export default function Page() {
         Не отримали листа? Перевірте папку &#34;Спам&#34; або натисніть кнопку
         &#34;Надіслати лист повторно&#34;
       </p>
-      <div className="w-full flex flex-col gap-4">
-        <Button
-          type="submit"
-          subtype="primary"
-          title="Надіслати лист повторно"
-          onClick={handleResendEmail}
-        />
-        <Button
-          type="button"
-          subtype="secondary"
-          title="На сторіку входу"
-          onClick={handleRedirect}
-        />
-      </div>
+      <ClientComponent>
+        <ConfirmationButtons />
+      </ClientComponent>
     </div>
   );
 }
