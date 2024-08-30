@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,7 @@ import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { ResetPasswordRequestForm } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 import { ResetPasswordButton } from "@/components/Auth/ResetPassword/ResetPasswordButton";
 import wrong from "@/public/icons/auth/wrong.svg";
+import { clearError } from "@/redux/auth/authSlice";
 
 export const schema = yup.object().shape({
   email: yup
@@ -55,6 +56,12 @@ export const LoginForm = () => {
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
 
+  useEffect(() => {
+    return () => {
+      if (error) dispatch(clearError());
+    };
+  }, [dispatch, error]);
+
   const handleSubmit = async (
     values: LoginFormValues,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
@@ -64,6 +71,17 @@ export const LoginForm = () => {
 
       if (loginUserThunk.fulfilled.match(actionResult)) {
         router.push("/profile");
+      } else if (loginUserThunk.rejected.match(actionResult)) {
+        const errorMessage = actionResult.payload?.message;
+
+        if (
+          errorMessage ===
+          "User not activated, please activate your account by email"
+        ) {
+          router.push(`/auth/confirming_letter?email=${values.email}`);
+        } else {
+          console.error("Unexpected error message:", errorMessage);
+        }
       }
     } catch (error) {
       console.error("Login failed in catch block:", error);

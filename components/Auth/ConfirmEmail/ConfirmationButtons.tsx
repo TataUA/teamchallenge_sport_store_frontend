@@ -16,7 +16,7 @@ export const ConfirmationButtons = () => {
 
   const handleResendEmail = async () => {
     if (countdown === null) {
-      setCountdown(10); // 60с
+      setCountdown(60);
 
       try {
         await dispatch(resendEmailThunk({ email })).unwrap();

@@ -48,21 +48,18 @@ const authSlice = createSlice({
       state.user = null;
       state.error = null;
     },
+    clearError(state) {
+      state.error = null;
+    },
   },
   extraReducers: (builder) =>
     builder
       //register
       .addCase(registerUserThunk.pending, (state) => {
-        state.isLoading = true;
-        state.isAuthenticated = false;
         state.error = null;
       })
-      .addCase(registerUserThunk.fulfilled, (state) => {
-        state.isLoading = false;
-        state.isSubmitingComplete = true;
-      })
+      .addCase(registerUserThunk.fulfilled, (state) => {})
       .addCase(registerUserThunk.rejected, (state, { payload }) => {
-        state.isLoading = false;
         state.error = payload ?? { message: ["An error occurred"] };
       })
 
@@ -143,4 +140,5 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-export const { resetSubmitingStatus, logoutUser } = authSlice.actions;
+export const { resetSubmitingStatus, logoutUser, clearError } =
+  authSlice.actions;

@@ -12,10 +12,6 @@ export default function Page() {
   const searchParams = useSearchParams();
   const email = searchParams.get("email") || "";
 
-  function getEmail() {
-    //move email to ConfirmationButtons
-  }
-
   return (
     <div
       className={cn(

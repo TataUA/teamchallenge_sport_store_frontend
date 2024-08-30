@@ -96,6 +96,19 @@ export const resendEmail = async (email: string) => {
   }
 };
 
+//confirmed email
+export const confirmedEmail = async (confirmationToken: string) => {
+  try {
+    const { data } = await $instance.post(
+      `/user/confirm_email/${confirmationToken}/`,
+      confirmationToken,
+    );
+    return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
 //login user
 export const loginUser = async (
   values: LoginFormValues,

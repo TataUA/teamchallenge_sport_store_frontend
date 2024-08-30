@@ -31,7 +31,7 @@ export default function Page() {
           </div>
 
           <Link
-            href="/auth/signup" //will change on button?
+            href="/auth/signup" 
             className="flex items-center justify-center  w-full h-12 mb-2 px-6 border border-blue rounded-xl  bg-white text-base font-pangram font-semibold text-blue hover:bg-active_lightblue transition-all"
           >
             Зареєструватись

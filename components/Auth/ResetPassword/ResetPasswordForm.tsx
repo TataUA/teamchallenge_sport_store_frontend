@@ -45,7 +45,7 @@ export const ResetPasswordForm = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const pathname = usePathname();
-  const tokenValue = pathname.substring(16, pathname.length);
+  const tokenValue = pathname.substring(21, pathname.length);
 
   useEffect(() => {
     if (isSubmitingComplete) {
@@ -117,7 +117,7 @@ export const ResetPasswordForm = () => {
         title="Пароль змінено"
         text="Ваш пароль успішно змінено. Використовуйте новий пароль щоб увійти"
         titleButton="На сторінку входу"
-        redirectButton={"/login"}
+        redirectButton={"/auth/login"}
         showSuccessModal={showSuccessModal}
       />
     </>

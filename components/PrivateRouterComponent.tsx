@@ -29,7 +29,7 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
 
     if (isAuthenticated) {
       if (pathname === "/auth/login" || pathname === "/auth/signup") {
-        router.push("/profile");
+        router.push("/auth/profile");
       }
     } else {
       if (pathname !== "/auth/login" && pathname !== "/auth/signup") {
