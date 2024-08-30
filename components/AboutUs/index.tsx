@@ -1,62 +1,27 @@
 import Image from "next/image";
+import { aboutUs } from "./about-us.data";
 
 export default function AboutUs() {
   const itemClassname =
     "text-[#333] text-sm leading-140 text-center mb-[40px] md:mb-0 max-w-[335px] mx-auto md:mx-0 md:text-sm md:text-left min-[2800px]:min-w-3xl min-[2800px]:text-3xl ";
-  
+
   return (
     <div className="px-6 md:flex md:flex-col-reverse">
       <div>
         <ul className="mb-[72px] md:flex md:flex-row justify-between  md:gap-3 md:mb-[125px]">
-          <li className={itemClassname}>
-            <Image
-              alt="footer title"
-              src="/images/aboutUs/woman.png"
-              width={44}
-              height={44}
-              className="mb-4 ml-auto mr-auto md:w-6xl md:hidden"
-            />
-
-            <h3 className="mb-1 font-bold md:mb-[10px]">
-              Твій Спорт, Твій Стиль
-            </h3>
-            <p>
-              Пропонуємо спортивний одяг та взуття від провідних брендів.
-              Оригінал, не репліки. Відкрий для себе нові можливості разом з
-              нами!
-            </p>
-          </li>
-          <li className={itemClassname}>
-            <Image
-              alt="footer title"
-              src="/images/aboutUs/fitness.png"
-              width={54}
-              height={56}
-              className="mb-4 ml-auto mr-auto md:w-6xl md:hidden"
-            />
-
-            <h3 className="mb-1 font-bold md:mb-[10px]">Спорт для Кожного</h3>
-            <p>
-              Незалежно від рівня підготовки, у нас є все, що потрібно для твого
-              спорту. Почни свою подорож до здорового способу життя вже
-              сьогодні!
-            </p>
-          </li>
-          <li className={itemClassname}>
-            <Image
-              alt="footer title"
-              src="/images/aboutUs/marathon.png"
-              width={62}
-              height={62}
-              className="mb-4 ml-auto mr-auto md:w-6xl md:hidden"
-            />
-
-            <h3 className="mb-1 font-bold md:mb-[10px]">Рухайся Вільно</h3>
-            <p>
-              Відчуй комфорт і підтримку в кожному русі з нашими якісними
-              спортивними товарами. Ідеально підібрані для активного життя!
-            </p>
-          </li>
+          {aboutUs.map(({ title, subtitle, image }) => (
+            <li key={title} className={itemClassname}>
+              <Image
+                alt="sport icon"
+                src={image}
+                width={44}
+                height={44}
+                className="mb-4 ml-auto mr-auto md:w-6xl md:hidden"
+              />
+              <h3 className="text-base mb-1 font-bold md:mb-[10px]">{title}</h3>
+              <p>{subtitle}</p>
+            </li>
+          ))}
         </ul>
       </div>
       <div>

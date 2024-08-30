@@ -13,6 +13,7 @@ export default function PopularCategories() {
           autoPlay={false}
           popularCat
           slidesPerView={3.2}
+          loop={false}
         />
       </ul>
     </div>

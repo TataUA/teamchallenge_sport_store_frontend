@@ -26,6 +26,7 @@ interface Slide {
 interface SliderProps {
   data?: Slide[];
   autoPlay?: boolean;
+  loop?: boolean;
   homePageMainSlider?: boolean;
   cardImage?: boolean;
   popularCat?: boolean;
@@ -40,6 +41,7 @@ interface SliderProps {
 export function Slider({
   data,
   autoPlay = true,
+  loop=true,
   cardImage,
   popularCat,
 	bestSales,
@@ -90,7 +92,7 @@ export function Slider({
             }
             slidesPerView={slidesPerView}
             autoplay={autoPlay}
-            loop={true}
+            loop={loop}
             modules={[Autoplay, Navigation, Pagination]}
           >
             {bestSales
@@ -111,9 +113,9 @@ export function Slider({
                           height={1300}
                         />
                       </div>
-                    ) : popularCat ? (
+                    )  : popularCat ? (
                       <div className="mr-2 md:mr-[25px] ">
-                        <Link href={href ?? '#'}>
+                        <Link href={href ?? "#"}>
                           <div className="w-[108px] h-[108px] overflow-hidden rounded-xl mb-2 flex  justify-center md:w-[424px] md:h-[300px] md:relative">
                             <Image
                               width={108}
