@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+import Image from "next/image";
 // utils
 import { cn } from "@/services/utils/cn";
 import getArrayWithExtractedImgUrl from "@/helpers/getArrayWithExtractedImgUrl";
@@ -33,13 +33,22 @@ const ListItem = (props: ListItemProps) => {
         href={`/product/${product.id}`}
         className="rounded-[12px] overflow-hidden cursor-pointer"
       >
-        <Slider
-          productsList
-          autoPlay={false}
-          cardImage
-          bestSalesItem={bestSales}
-          data={getArrayWithExtractedImgUrl(product) || []}
-        />
+        {bestSales ? (
+          <Image
+            alt=""
+            style={{ objectFit: "contain" }}
+            src={product.colors[0].image_url}
+            width={850}
+            height={1300}
+          />
+        ) : (
+          <Slider
+            productsList
+            autoPlay={false}
+            cardImage
+            data={getArrayWithExtractedImgUrl(product) || []}
+          />
+        )}
       </Link>
       <Link
         href={`/product/${product.id}`}
