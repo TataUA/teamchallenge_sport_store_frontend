@@ -1,6 +1,6 @@
 import { ErrorType } from "@/redux/auth/authThunk";
 
-export const handleValidationErrors = (error: any): ErrorType => {
+export const handleThunkValidationErrors = (error: any): ErrorType => {
   let errorMessages: string[] = [];
 
   if (error.phone_number) {

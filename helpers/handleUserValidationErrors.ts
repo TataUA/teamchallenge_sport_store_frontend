@@ -19,6 +19,16 @@ export const handleUserValidationErrors = (
         ) {
           errorMessages.email =
             "Ми не знайшли обліковий запис із цією адресою електронної пошти";
+        } else if (message.includes("user with this email already exists.")) {
+          errorMessages.email = "Така пошта вже зареєстрована";
+        } else if (message.includes("Enter a valid email address.")) {
+          errorMessages.email = "Адреса введеної пошти не вірна";
+        } else if (message.includes("The phone number entered is not valid.")) {
+          errorMessages.phone = "Введений номер не вірний";
+        } else if (
+          message.includes("user with this phone number already exists.")
+        ) {
+          errorMessages.phone = "Такий номер вже зареєстрований";
         }
       });
 

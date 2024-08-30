@@ -12,9 +12,7 @@ export default function Page() {
           <h1 className="mt-4 mb-6 text-2xl leading-140 font-pangram font-bold text-title">
             Реєстрація
           </h1>
-
           <RegisterForm />
-
           <PrivacyPolicy />
         </div>
       </PrivateRouteComponent>

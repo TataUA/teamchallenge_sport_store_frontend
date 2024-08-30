@@ -8,6 +8,8 @@ import { AppDispatch } from "@/redux/store";
 import { selectUserData } from "@/redux/auth/authSelector";
 import { editUserThunk } from "@/redux/auth/authThunk";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
+import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
+import { Button } from "@/components/Button/Button";
 
 export const schema = yup.object().shape({
   name: yup
@@ -92,38 +94,10 @@ export const UserDataEdit = (props: UserDataEditProps) => {
         props.setEditData(false);
         props.setShowSuccessMessage(true);
       } else if (editUserThunk.rejected.match(actionResult)) {
-        let errorData: any = actionResult.payload;
-
-        if (
-          errorData &&
-          errorData.message &&
-          Array.isArray(errorData.message)
-        ) {
-          if (
-            errorData.message.includes("user with this email already exists.")
-          ) {
-            setErrors({ email: "Така пошта вже зареєстрована" });
-          } else if (
-            errorData.message.includes("Enter a valid email address.")
-          ) {
-            setErrors({ email: "Адреса введеної пошти не вірна" });
-          } else if (
-            errorData.message.includes("The phone number entered is not valid.")
-          ) {
-            setErrors({ phone: "Введений номер не вірний" });
-          } else if (
-            errorData.message.includes(
-              "user with this phone number already exists.",
-            )
-          ) {
-            setErrors({ phone: "Такий номер вже зареєстрований" });
-          }
-        } else {
-          console.error("Registration failed with general error:", errorData);
-        }
+        handleUserValidationErrors(actionResult, setErrors);
       }
     } catch (error) {
-      console.error("Registration failed in catch block:", error);
+      console.error("Edit user`s data failed in catch block:", error);
     }
   };
 
@@ -183,13 +157,13 @@ export const UserDataEdit = (props: UserDataEditProps) => {
               />
             </div>
 
-            <button
+            <Button
               type="submit"
+              subtype="primary"
+              title="Зберегти"
               disabled={formik.isSubmitting}
-              className="h-12 mb-2 px-6  rounded-xl bg-blue text-base font-semibold  text-white hover:bg-active_blue transition-all"
-            >
-              Зберегти
-            </button>
+              styles="mb-2"
+            />
           </Form>
         )}
       </Formik>

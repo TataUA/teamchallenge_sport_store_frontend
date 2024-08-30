@@ -5,7 +5,7 @@ interface ButtonProps {
   type: "button" | "submit";
   subtype: "primary" | "secondary" | "tertiary";
   title: string;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
   styles?: string;
 }
