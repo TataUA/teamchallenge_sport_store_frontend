@@ -5,7 +5,7 @@ interface ButtonProps {
   type: "button" | "submit";
   subtype: "primary" | "secondary" | "tertiary";
   title: string;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
   styles?: string;
 }
@@ -22,10 +22,13 @@ export const Button = (props: ButtonProps) => {
   return (
     <button
       type={props.type}
+      onClick={props.onClick}
       disabled={props.disabled}
       className={cn(
         "w-full h-12 self-center px-6 rounded-xl text-base font-semibold font-pangram transition-all",
-        buttonStyles[props.subtype],
+        props.disabled
+          ? "border-border_button bg-bgSearch text-timer"
+          : buttonStyles[props.subtype],
         `${props.styles}`,
       )}
     >

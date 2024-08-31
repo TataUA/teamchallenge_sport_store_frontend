@@ -6,6 +6,7 @@ import {
   editUserThunk,
   ErrorType,
   updateAccessTokenThunk,
+  resetPasswordThunk,
 } from "@/redux/auth/authThunk";
 
 export interface UserData {
@@ -22,13 +23,13 @@ export interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   isRefreshing: boolean;
-  isRegistrationComplete: boolean;
+  isSubmitingComplete: boolean;
   error: ErrorType | null;
 }
 
 const initialState: AuthState = {
   user: null,
-  isRegistrationComplete: false,
+  isSubmitingComplete: false,
   isAuthenticated: false,
   isLoading: false,
   isRefreshing: false,
@@ -39,9 +40,15 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    resetSubmitingStatus(state) {
+      state.isSubmitingComplete = false;
+    },
     logoutUser(state) {
       state.isAuthenticated = false;
       state.user = null;
+      state.error = null;
+    },
+    clearError(state) {
       state.error = null;
     },
   },
@@ -49,31 +56,22 @@ const authSlice = createSlice({
     builder
       //register
       .addCase(registerUserThunk.pending, (state) => {
-        state.isLoading = true;
-        state.isAuthenticated = false;
         state.error = null;
       })
-      .addCase(registerUserThunk.fulfilled, (state) => {
-        state.isLoading = false;
-        state.isRegistrationComplete = true;
-      })
+      .addCase(registerUserThunk.fulfilled, (state) => {})
       .addCase(registerUserThunk.rejected, (state, { payload }) => {
-        state.isLoading = false;
         state.error = payload ?? { message: ["An error occurred"] };
       })
 
       //login
       .addCase(loginUserThunk.pending, (state) => {
-        state.isLoading = true;
         state.isAuthenticated = false;
         state.error = null;
       })
       .addCase(loginUserThunk.fulfilled, (state) => {
-        state.isLoading = false;
         state.isAuthenticated = true;
       })
       .addCase(loginUserThunk.rejected, (state, { payload }) => {
-        state.isLoading = false;
         state.error = payload ?? { message: ["An error occurred"] };
       })
 
@@ -88,7 +86,7 @@ const authSlice = createSlice({
           state.isLoading = false;
           state.isAuthenticated = true;
           state.user = { ...payload };
-        }
+        },
       )
       .addCase(currentUserThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
@@ -106,7 +104,7 @@ const authSlice = createSlice({
         (state, { payload }: PayloadAction<UserData>) => {
           state.isRefreshing = false;
           state.user = { ...payload };
-        }
+        },
       )
       .addCase(editUserThunk.rejected, (state, { payload }) => {
         state.isRefreshing = false;
@@ -124,8 +122,23 @@ const authSlice = createSlice({
       .addCase(updateAccessTokenThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
         state.error = payload ?? { message: ["An error occurred"] };
+      })
+
+      //reset
+      .addCase(resetPasswordThunk.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(resetPasswordThunk.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isSubmitingComplete = true;
+      })
+      .addCase(resetPasswordThunk.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        state.error = payload ?? { message: ["An error occurred"] };
       }),
 });
 
 export const authReducer = authSlice.reducer;
-export const { logoutUser } = authSlice.actions;
+export const { resetSubmitingStatus, logoutUser, clearError } =
+  authSlice.actions;

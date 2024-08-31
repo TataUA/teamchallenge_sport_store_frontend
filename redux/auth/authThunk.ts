@@ -10,25 +10,25 @@ import {
   logoutUser as apiLogoutUser,
   clearToken,
   resetPasswordRequest,
-  validateToken,
   resetPasswordConfirm,
+  resendEmail,
+  confirmedEmail,
 } from "@/services/api";
 import {
   RegisterResponseData,
   LoginResponseData,
 } from "@/services/types/auth-api-types";
-import { RegisterFormValues } from "@/components/Auth/RegisterForm";
-import { LoginFormValues } from "@/components/Auth/LoginForm";
-import { UserDataEditFormValues } from "@/components/Auth/UserDataEdit";
-import { ResetPasswordValuesInterface } from "@/components/ResetPassword/ResetPasswordForm";
-import { handleTokenError } from "@/helpers/handle-token-error";
-import { handleValidationErrors } from "@/helpers/handle-validation-errors";
-import { handleSetTokens } from "@/helpers/handle-set-tokens";
-import { ResetPasswordRequestValues } from "@/components/ResetPassword/ResetPasswordRequestForm";
-import { experimental_taintObjectReference } from "react";
+import { RegisterFormValues } from "@/components/Auth/RegisterUser/RegisterForm";
+import { LoginFormValues } from "@/components/Auth/LoginUser/LoginForm";
+import { UserDataEditFormValues } from "@/components/Auth/EditUser/UserDataEdit";
+import { ResetPasswordFormValues } from "@/components/Auth/ResetPassword/ResetPasswordForm";
+import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
+import { handleTokenError } from "@/helpers/handleTokenError";
+import { handleThunkValidationErrors } from "@/helpers/handleThunkValidationErrors";
+import { handleSetTokens } from "@/helpers/handleSetTokens";
 
 export interface ErrorType {
-  message?: string[];
+  message?: string[] | string;
   messages?: { token_class: string; token_type: string; message: string }[];
 }
 
@@ -50,7 +50,41 @@ export const registerUserThunk = createAsyncThunk<
       email: response.email,
     };
   } catch (error: any) {
-    const errorObject = handleValidationErrors(error);
+    const errorObject = handleThunkValidationErrors(error);
+
+    return thunkApi.rejectWithValue(errorObject);
+  }
+});
+
+//confirmation email
+export const resendEmailThunk = createAsyncThunk<
+  void,
+  { email: string },
+  { rejectValue: ErrorType }
+>("auth/resendEmail", async ({ email }, thunkApi) => {
+  try {
+    await resendEmail(email);
+    return;
+  } catch (error: any) {
+    const errorObject: ErrorType = {
+      message: error.detail || "An error occurred",
+    };
+    return thunkApi.rejectWithValue(errorObject);
+  }
+});
+
+export const confirmedEmailThunk = createAsyncThunk<
+  void,
+  { confirmationToken: string },
+  { rejectValue: ErrorType }
+>("auth/confirmedEmail", async ({ confirmationToken }, thunkApi) => {
+  try {
+    await confirmedEmail(confirmationToken);
+    return;
+  } catch (error: any) {
+    const errorObject: ErrorType = {
+      message: error.detail || "An error occurred",
+    };
     return thunkApi.rejectWithValue(errorObject);
   }
 });
@@ -68,9 +102,8 @@ export const loginUserThunk = createAsyncThunk<
     return;
   } catch (error: any) {
     const errorObject: ErrorType = {
-      message: error.detail || "An error occurred",
+      message: error.detail || error.mag || "An error occurred",
     };
-
     return thunkApi.rejectWithValue(errorObject);
   }
 });
@@ -83,7 +116,7 @@ export const updateAccessTokenThunk = createAsyncThunk<
 >("auth/refresh", async (values, thunkApi) => {
   try {
     const response: LoginResponseData = await updateAccessToken(
-      values.refreshToken
+      values.refreshToken,
     );
     handleSetTokens(response);
 
@@ -92,7 +125,6 @@ export const updateAccessTokenThunk = createAsyncThunk<
     const errorObject: ErrorType = {
       message: error.detail || "An error occurred",
     };
-
     return thunkApi.rejectWithValue(errorObject);
   }
 });
@@ -150,7 +182,6 @@ export const currentUserThunk = createAsyncThunk<
         },
       ],
     };
-
     return thunkApi.rejectWithValue(errorObject);
   }
 });
@@ -177,7 +208,7 @@ export const editUserThunk = createAsyncThunk<
       return thunkApi.rejectWithValue(tokenErrorHandled);
     }
 
-    const errorObject = handleValidationErrors(error);
+    const errorObject = handleThunkValidationErrors(error);
     return thunkApi.rejectWithValue(errorObject);
   }
 });
@@ -198,7 +229,6 @@ export const logoutUserThunk = createAsyncThunk<
     const errorObject: ErrorType = {
       message: error.detail || "An error occurred",
     };
-
     return thunkApi.rejectWithValue(errorObject);
   }
 });
@@ -207,42 +237,29 @@ export const logoutUserThunk = createAsyncThunk<
 export const resetPasswordRequestThunk = createAsyncThunk<
   void,
   ResetPasswordRequestValues,
-{rejectValue:ErrorType}>(
-  "auth/reset",
-  async (values, thunkApi) => {
-    try {
-      await resetPasswordRequest(values);
-      return ;
-    } catch (error: any) {
-    const errorObject: ErrorType = {
-      message: error.detail || "An error occurred",
-    };
+  { rejectValue: ErrorType }
+>("auth/resetRequest", async (values, thunkApi) => {
+  try {
+    await resetPasswordRequest(values);
+    return;
+  } catch (error: any) {
+    const errorObject = handleThunkValidationErrors(error);
 
     return thunkApi.rejectWithValue(errorObject);
   }
-  }
-);
+});
 
-export const validateTokenThunk = createAsyncThunk(
-  "reset-password/validate-token",
-  async (value: string, thunkApi) => {
-    try {
-      const response = await validateToken(value);
-      return response;
-    } catch (error) {
-      thunkApi.rejectWithValue({ message: (error as Error).message });
-    }
-  }
-);
+export const resetPasswordThunk = createAsyncThunk<
+  void,
+  ResetPasswordFormValues,
+  { rejectValue: ErrorType }
+>("auth/resetConfirm", async (values, thunkApi) => {
+  try {
+    await resetPasswordConfirm(values);
+    return;
+  } catch (error: any) {
+    const errorObject = handleThunkValidationErrors(error);
 
-export const resetPasswordThunk = createAsyncThunk(
-  "reset-password/confirm",
-  async (values: ResetPasswordValuesInterface, thunkApi) => {
-    try {
-      const response = await resetPasswordConfirm(values);
-      return response;
-    } catch (error) {
-      thunkApi.rejectWithValue({ message: (error as Error).message });
-    }
+    return thunkApi.rejectWithValue(errorObject);
   }
-);
+});

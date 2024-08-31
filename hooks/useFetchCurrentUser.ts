@@ -11,14 +11,18 @@ export const useFetchCurrentUser = () => {
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
 
-    if (!accessToken || userData) return;
+    if (!accessToken) return;
 
     const fetchUser = async () => {
       try {
         await dispatch(currentUserThunk()).unwrap();
-      } catch (error: any) {}
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
     };
 
-    fetchUser();
+    if (!userData) {
+      fetchUser();
+    }
   }, [dispatch, userData]);
 };

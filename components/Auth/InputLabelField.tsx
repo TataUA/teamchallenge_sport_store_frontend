@@ -5,9 +5,9 @@ import Image from "next/image";
 import { Field, ErrorMessage, FormikProps } from "formik";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/services/utils/cn";
-import wrong from "@/public/icons/wrong.svg";
-import eye_open from "@/public/icons/eye_open.svg";
-import eye_close from "@/public/icons/eye_close.svg";
+import wrong from "@/public/icons/auth/wrong.svg";
+import eye_open from "@/public/icons/auth/eye_open.svg";
+import eye_close from "@/public/icons/auth/eye_close.svg";
 
 interface InputLabelFieldProps<T> {
   label: string;
