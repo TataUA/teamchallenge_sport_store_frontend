@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import * as yup from "yup";
 import { Formik, Form, FormikHelpers, FormikErrors } from "formik";
 import { AppDispatch } from "@/redux/store";
+
 import { registerUserThunk } from "@/redux/auth/authThunk";
 import { selectIsRegistrationComplete } from "@/redux/auth/authSelector";
+
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { SuccessRegisterModal } from "@/components/Auth/SuccessRegisterModal";
 
-export const schema = yup.object().shape({
+export const schemaRegisterForm = yup.object().shape({
   name: yup
     .string()
     .min(1)
@@ -76,7 +78,7 @@ export interface RegisterFormValues {
   repeatPassword: string;
 }
 
-const initialValues: RegisterFormValues = {
+export const initialValuesRegisterForm: RegisterFormValues = {
   name: "",
   surname: "",
   patronymic: "",
@@ -153,8 +155,8 @@ export const RegisterForm = () => {
   return (
     <>
       <Formik
-        initialValues={{ ...initialValues, phone }}
-        validationSchema={schema}
+        initialValues={{ ...initialValuesRegisterForm, phone }}
+        validationSchema={schemaRegisterForm}
         onSubmit={handleSubmit}
       >
         {(formik) => (
