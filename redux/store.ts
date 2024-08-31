@@ -17,6 +17,7 @@ import { cartReducer } from "./cart/cartSlice";
 import { currentProductReducer } from "./currentProduct/currentProductSlice";
 import { generalFiltersReducer } from "./generalFilters/generalFiltersSlice";
 import { searchReducer } from "./search/searchSlice";
+import { orderReducer } from "./order/orderSlice";
 
 const cartPersistConfig = {
   key: "cart",
@@ -33,6 +34,7 @@ export const store = configureStore({
   reducer: {
     auth: authReducer,
     generalFilters: generalFiltersReducer,
+    order: orderReducer,
     currentProduct: currentProductReducer,
     cart: persistReducer<ReturnType<typeof cartReducer>>(
       cartPersistConfig,
