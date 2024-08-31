@@ -53,13 +53,13 @@ const DeliverSection = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center gap-2 mb-4 flex-wrap">
         <h3 
           className="text-[#1A1A1C] text-2xl font-bold md:text-2xl lg:text-3xl min-[2800px]:lg:text-5xl"
         >
           Доставка
         </h3>
-        {!city && error ? (
+        {!city && (error || (allFileds === false)) ? (
           <div className="flex gap-2 items-center">
             <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
             <span
@@ -69,13 +69,13 @@ const DeliverSection = () => {
             </span>
           </div>
         ) : null}
-        {!department && !postOffice && (allFileds === false) ? (
+        {city && !department && !postOffice && (allFileds === false) ? (
           <div className="flex gap-2 items-center">
             <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
             <span
                 className='min-w-min whitespace-nowrap h-max-content text-red text-xs'
             >
-              Оберіть оберіть відділення або поштомат
+              Оберіть спосіб доставки
             </span>
           </div>
         ) : null}
