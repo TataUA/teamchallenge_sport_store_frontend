@@ -93,7 +93,7 @@ const CustomCitiesDropdown = ({error}: {error: boolean}) => {
                 onClick={toggleDropdown}
             >
                 <input 
-                    className={cn('w-full bg-gray-200 border border-gray-300 rounded px-4 py-[15px] pr-[56px] text-base font-medium text-[#868687]',
+                    className={cn('w-full bg-gray-200 border border-gray-300 rounded-lg px-4 py-[15px] pr-[56px] text-base font-medium text-[#868687]',
                         "focus:border-blue outline-none", {
                         'border-red': error,
                     })}
