@@ -12,8 +12,9 @@ import { handleChangeCardInfo } from "@/redux/order/orderSlice";
 import { cn } from "@/services/utils/cn";
 
 // assets
-import wrong from "@/public/icons/wrong.svg";
+import wrong from "@/public/icons/auth/wrong.svg";
 
+// this component is not used now, UI was changed on OrderPage
 const CardInfoForm = () => {
   const dispatch = useDispatch()
 
