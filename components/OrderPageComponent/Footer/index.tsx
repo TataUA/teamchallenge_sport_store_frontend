@@ -31,11 +31,11 @@ const Footer = () => {
       <div className="flex justify-center items-center mb-4">
         <div
         onClick={() => handleSubmit()}
-          className={cn("w-full py-[11px] px-6 text-[#fff] bg-blue rounded-xl text-center text-base font-semibold transition-all",
+          className={cn("w-full py-[16px] px-6 text-[#fff] bg-blue rounded-xl text-center text-base font-semibold transition-all",
             'hover:bg-[#284695]'
           )}
         >
-          Замовити та оплатити
+          Перейти до оплатити
         </div>
       </div>
     </div>
