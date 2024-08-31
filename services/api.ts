@@ -13,6 +13,7 @@ import { IProduct } from "./types";
 // helpers
 import getCorrectQueryParamsSearchQuery from "@/helpers/getCorrectQueryParamsSearchQuery";
 import { ResetPasswordRequestValues } from "@/components/ResetPassword/ResetPasswordRequestForm";
+import { DropdownItemCityNovaPoshta } from "@/components/OrderPageComponent/DeliverSection/CustomCitiesDropdown";
 
 export const apiBaseUrl =
   process.env.NODE_ENV === "development"
@@ -115,10 +116,19 @@ export const updateAccessToken = async (
 //current user
 export const currentUser = async (): Promise<types.RegisterResponseData> => {
   try {
-    const { data } = await $instance.get("/user/me/");
-    return data;
+    const response = await $instance.get("/user/me/");
+    if(response.data) return response.data
+
+    return {
+      id: 0,
+      first_name: '',
+      surname: '',
+      last_name: '',
+      phone_number: '',
+      email: '',
+    };
   } catch (error: any) {
-    throw error.response.data;
+    throw error.response;
   }
 };
 
@@ -200,6 +210,53 @@ export const sendSearchQueryApi = async (
 
     const { data } = await $instance.get(`products/search/?${extractedParams}`);
     return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
+interface INovaPoshtaCityResponse {
+  data: {
+    data: {TotalCount: number, Addresses: DropdownItemCityNovaPoshta[]}[]
+  }
+}
+
+export const getListOfCitiesNovaPoshta = async (
+  city: string
+): Promise< DropdownItemCityNovaPoshta[]> => {
+  try {
+    const { data }: INovaPoshtaCityResponse = await $instance.get(`/nova-post/settlements/${city}/`);
+    
+    if(data.data.length) {
+      return data.data[0].Addresses
+    }
+    
+    return [];
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
+interface INovaPoshtaDepartmentsResponse {
+  data: {
+    data: {Description: string}[]
+  }
+}
+
+export interface INovaPoshtaDepartmentItemResponse {
+  Description: string
+}
+
+export const getListOfDepartmentsInCityNovaPoshta = async (
+  city: string
+): Promise<INovaPoshtaDepartmentItemResponse[]> => {
+  try {
+    const { data }: INovaPoshtaDepartmentsResponse = await $instance.get(`/nova-post/warehouses/${city}/?limit=500`);
+
+    if(data.data.length) {
+      return data.data
+    }
+    return [];
   } catch (error: any) {
     throw error.response.data;
   }
