@@ -6,18 +6,17 @@ import { Formik, Form, FormikHelpers, FormikErrors } from "formik";
 import { AppDispatch } from "@/redux/store";
 
 import { registerUserThunk } from "@/redux/auth/authThunk";
-import { selectIsRegistrationComplete } from "@/redux/auth/authSelector";
 
 // components
 import { InputLabelField } from "@/components/Auth/InputLabelField";
-import { SuccessRegisterModal } from "@/components/Auth/SuccessRegisterModal";
-import { initialValuesRegisterForm, RegisterFormValues, schemaRegisterForm } from "@/components/Auth/RegisterForm";
+import { initialValuesRegisterForm, RegisterFormValues, schemaRegisterForm } from "@/components/Auth/RegisterUser/RegisterForm";
 
 
 const RegisterSection = () => {
   const [phone, setPhone] = useState("");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const isRegistrationComplete = useSelector(selectIsRegistrationComplete);
+  const isRegistrationComplete = false;
+  // const isRegistrationComplete = useSelector(selectIsRegistrationComplete);
   const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {

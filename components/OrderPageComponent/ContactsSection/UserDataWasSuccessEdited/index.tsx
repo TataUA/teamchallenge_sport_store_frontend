@@ -3,7 +3,7 @@ import React, {  ReactNode } from "react";
 import Image from "next/image";
 
 // assets
-import success from "@/public/icons/success_blue.svg";
+import success from "@/public/icons/auth/success_blue.svg";
 
 interface SuccessRegisterModalProps {
   showSuccessModal: boolean;
