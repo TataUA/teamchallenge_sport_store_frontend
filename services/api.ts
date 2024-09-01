@@ -1,9 +1,9 @@
 import axios from "axios";
 
 // types
-import * as types from "./types/auth-api-types";
-import { RegisterFormValues } from "@/components/Auth/RegisterUser/RegisterForm";
-import { LoginFormValues } from "@/components/Auth/LoginUser/LoginForm";
+import * as types from "@/services/types/auth-api-types";
+import { RegisterFormValues } from "@/services/types/auth-form-types";
+import { LoginFormValues } from "@/services/types/auth-form-types";
 import { UserDataEditFormValues } from "@/components/Auth/EditUser/UserDataEdit";
 import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 import { ResetPasswordFormValues } from "@/components/Auth/ResetPassword/ResetPasswordForm";
