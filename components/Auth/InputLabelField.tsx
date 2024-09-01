@@ -134,7 +134,7 @@ export const InputLabelField = <T,>({
         {label}
       </label>
 
-      {isError && errorMessage.trim() !== "" && (
+      {isError && errorMessage?.trim() !== "" && (
         <div className="flex items-center mt-4">
           <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
           <ErrorMessage
