@@ -35,7 +35,4 @@ export interface resetPasswordConfirmData {
   token: string;
 }
 
-export interface resetPasswordConfirmRequestData {
-  password: string;
-  token: string;
-}
+

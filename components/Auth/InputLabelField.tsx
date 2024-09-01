@@ -8,6 +8,7 @@ import { cn } from "@/services/utils/cn";
 import wrong from "@/public/icons/auth/wrong.svg";
 import eye_open from "@/public/icons/auth/eye_open.svg";
 import eye_close from "@/public/icons/auth/eye_close.svg";
+import { RegisterFormErrors } from "@/services/types/auth-errors-types";
 
 interface InputLabelFieldProps<T> {
   label: string;
@@ -27,13 +28,24 @@ export const InputLabelField = <T,>({
   formik,
 }: InputLabelFieldProps<T>) => {
   const [isFieldFocused, setIsFieldFocused] = useState(false);
-  const [hasBlurred, setHasBlurred] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const uniqueId = uuidv4();
 
   const isTouched = formik.touched[name];
-  const isError = Boolean(formik.errors[name]);
+  const isFieldError = Boolean(formik.errors[name]);
+  const errorMessage =
+    typeof formik.errors[name] === "string" ? formik.errors[name] : "";
+
+  const isPasswordError =
+    type === "password" &&
+    ((formik.errors as RegisterFormErrors).password ||
+      (formik.errors as RegisterFormErrors).repeatPassword) &&
+    formik.submitCount > 0;
+
+  const isError =
+    ((isFieldError && name !== "repeatPassword") || isPasswordError) &&
+    formik.submitCount > 0;
 
   const handleFocus = () => {
     setIsFieldFocused(true);
@@ -52,10 +64,7 @@ export const InputLabelField = <T,>({
   };
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    formik.setFieldValue(String(name), e.target.value, true);
-    formik.handleBlur(e);
     setIsFieldFocused(false);
-    setHasBlurred(true);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -87,10 +96,8 @@ export const InputLabelField = <T,>({
         onFocus={handleFocus}
         onBlur={handleBlur}
         className={cn("input peer", {
-          "border-blue":
-            (!formik.errors[name] && formik.touched[name]) ||
-            formik.values[name],
-          "border-red": formik.errors[name] && formik.touched[name],
+          "border-blue": !formik.errors[name] && isFieldFocused,
+          "border-red": isError,
         })}
       />
 
@@ -101,7 +108,7 @@ export const InputLabelField = <T,>({
           onClick={togglePasswordVisibility}
         >
           <Image
-            src={showPassword ? eye_open : eye_close}
+            src={showPassword ? eye_close : eye_open}
             width={24}
             height={24}
             alt={showPassword ? "hide password" : "show password"}
@@ -114,12 +121,8 @@ export const InputLabelField = <T,>({
         className={cn(
           "label absolute left-0 top-5 transform transition-all duration-300",
           {
-            "text-blue":
-              formik.touched[name] ||
-              (isFieldFocused && hasBlurred) ||
-              formik.values[name],
-            "text-red":
-              formik.errors[name] && formik.touched[name] && hasBlurred,
+            "text-blue": !formik.errors[name] && isFieldFocused,
+            "text-red": isError,
           },
           {
             "top-0 text-sm": formik.touched[name] || formik.values[name],
@@ -131,7 +134,7 @@ export const InputLabelField = <T,>({
         {label}
       </label>
 
-      {isError && isTouched && hasBlurred && (
+      {isError && errorMessage.trim() !== "" && (
         <div className="flex items-center mt-4">
           <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
           <ErrorMessage

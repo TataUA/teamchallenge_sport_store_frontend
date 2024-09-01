@@ -201,7 +201,7 @@ export const resetPasswordConfirm = async (
 ): Promise<types.resetPasswordConfirmData> => {
   const { password, confirmationToken } = values;
 
-  const requestData: types.resetPasswordConfirmRequestData = {
+  const requestData: types.resetPasswordConfirmData = {
     password,
     token: confirmationToken,
   };
