@@ -8,6 +8,7 @@ import SubscribeBannerFooter from "@/components/SubscribeBannerFooter";
 import AboutUs from "@/components/AboutUs";
 import PopularCategories from "@/components/PopularCategories";
 import SortedProducts from "@/components/SortedProducts";
+import PromBanner from "@/components/PromBanner";
 
 export default async function Page() {
   return (
@@ -18,12 +19,11 @@ export default async function Page() {
         className={"min-h-[400px] h-[50dvh]"}
 			/> */}
       <PopularCategories />
-
       <SortedProducts
         title="Новинки"
         fetchProducts={fetchProductsByNewAction}
-        
       />
+      <PromBanner />
       <SortedProducts
         title="Топ продажів"
         fetchProducts={fetchProductsByPopularAction}
