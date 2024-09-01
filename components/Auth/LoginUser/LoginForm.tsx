@@ -5,15 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
-import { Formik, Form, FormikErrors } from "formik";
+import { Formik, Form, FormikErrors, FormikProps } from "formik";
 import { AppDispatch } from "@/redux/store";
+import { clearError } from "@/redux/auth/authSlice";
 import { selectError } from "@/redux/auth/authSelector";
 import { loginUserThunk } from "@/redux/auth/authThunk";
+import { LoginFormValues } from "@/services/types/auth-form-types";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { ResetPasswordRequestForm } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 import { ResetPasswordButton } from "@/components/Auth/ResetPassword/ResetPasswordButton";
 import wrong from "@/public/icons/auth/wrong.svg";
-import { clearError } from "@/redux/auth/authSlice";
 
 export const schema = yup.object().shape({
   email: yup
@@ -33,11 +34,6 @@ export const schema = yup.object().shape({
     )
     .required("Це поле обов'язкове"),
 });
-
-export interface LoginFormValues {
-  email: string;
-  password: string;
-}
 
 export interface ExtendedFormikErrors extends FormikErrors<LoginFormValues> {
   _error?: string;
@@ -97,7 +93,7 @@ export const LoginForm = () => {
         validationSchema={schema}
         onSubmit={handleSubmit}
       >
-        {(formik) => (
+        {(formik: FormikProps<LoginFormValues>) => (
           <Form autoComplete="on">
             <div className="mb-2">
               <div className="flex flex-col gap-4">
@@ -115,7 +111,7 @@ export const LoginForm = () => {
                   name="password"
                   type="password"
                   inputMode="text"
-                  placeholder="******"
+                  placeholder="Не менше 6 символів"
                   formik={formik}
                 />
               </div>

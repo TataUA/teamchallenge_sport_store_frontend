@@ -1,6 +1,6 @@
 import { FormikErrors } from "formik";
+import { RegisterFormValues } from "@/services/types/auth-form-types";
 import { ExtendedFormikErrors } from "@/components/Auth/LoginUser/LoginForm";
-import { RegisterFormValues } from "@/components/Auth/RegisterUser/RegisterForm";
 
 export const handleUserValidationErrors = (
   actionResult: any,
