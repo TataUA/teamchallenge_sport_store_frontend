@@ -18,7 +18,7 @@ import ListItem from "../ProductsList/ListItem";
 interface Slide {
   id?: number;
   title?: string;
-  subtitle?: string;
+  link?: string;
   href?: string;
   image: string;
 }
@@ -41,14 +41,14 @@ interface SliderProps {
 export function Slider({
   data,
   autoPlay = true,
-  loop=true,
+  loop = true,
   cardImage,
   popularCat,
-	bestSales,
-	bestSalesItem,
+  bestSales,
+  bestSalesItem,
   slidesPerView = 1,
-	className = "",
-	products=[]
+  className = "",
+  products = [],
 }: SliderProps) {
   return (
     <section className="w-full">
@@ -101,7 +101,7 @@ export function Slider({
                     <ListItem bestSales={true} product={product} />
                   </SwiperSlide>
                 ))
-              : data?.map(({ id, image, title, subtitle, href }) => (
+              : data?.map(({ id, image, title, link, href }) => (
                   <SwiperSlide key={id || image}>
                     {cardImage ? (
                       <div className="rounded-xl overflow-hidden">
@@ -113,7 +113,7 @@ export function Slider({
                           height={1300}
                         />
                       </div>
-                    )  : popularCat ? (
+                    ) : popularCat ? (
                       <div className="mr-2 md:mr-[25px] ">
                         <Link href={href ?? "#"}>
                           <div className="w-[108px] h-[108px] overflow-hidden rounded-xl mb-2 flex  justify-center md:w-[424px] md:h-[300px] md:relative">
@@ -131,7 +131,8 @@ export function Slider({
                         </Link>
                       </div>
                     ) : (
-                      <div
+                      <Link
+                        href={link}
                         className={cn(
                           "h-full w-full absolute left-0 top-0 bg-grey-900",
                         )}
@@ -140,9 +141,9 @@ export function Slider({
                             ? `center center / cover scroll no-repeat url(${image})`
                             : undefined,
                         }}
-                      ></div>
+                      ></Link>
                     )}
-                    {popularCat || bestSales ? (
+                    {/* {popularCat || bestSales ? (
                       <></>
                     ) : (
                       <div className="relative z-10 h-full  flex items-center justify-left">
@@ -157,7 +158,7 @@ export function Slider({
                           </p>
                         </div>
                       </div>
-                    )}
+                    )} */}
                   </SwiperSlide>
                 ))}
           </Swiper>
