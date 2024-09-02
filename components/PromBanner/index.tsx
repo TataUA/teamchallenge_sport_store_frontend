@@ -2,7 +2,7 @@ import { cn } from "@/services/utils/cn";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function PromBanner() {
+export default async function PromBanner() {
   return (
     <div className="relative rounded-2xl w-[342px] h-[268px] mx-auto mb-12">
       <div className="absolute  w-[100%] h-[100%] bg-slate-300 overflow-hidden z-[-1]  rounded-2xl">
@@ -18,8 +18,8 @@ export default function PromBanner() {
         <h2
           className={cn(
             "text-base mb-2 font-bold",
-            // "max-[767px]:text-3xl max-[767px]:mb-2",
-            // "min-[2800px]:text-7xl",
+            "md:text-xl ",
+            "min-[2800px]:text-5xl",
           )}
         >
           Palermo Vintage Sneakers Collection
@@ -27,17 +27,15 @@ export default function PromBanner() {
         <p
           className={cn(
             "text-sm leading-[18px] tracking-[0.04em] mb-4",
-            // "max-[767px]:text-base max-[767px]:mb-6",
-            // "min-[2800px]:text-3xl",
+            "md:text-base",
+            "min-[2800px]:text-3xl",
           )}
         >
           Максимальний комфорт для активного життя. Обирайте найкраще для ваших
           досягнень!
         </p>
         <Link
-          // href="/products/t-shirts?gender=men&sub_category=t-shirts"
-          // href="/products/83"
-          href="/"
+          href="/product/83"
           className={cn(
             "min-w-[140px] tracking-[2%] bg-transparent rounded-lg px-4 py-[6px] border text-sm",
           )}
