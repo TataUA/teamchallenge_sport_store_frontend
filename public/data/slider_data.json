@@ -1,12 +1,12 @@
 [
   {
     "id": 1,
-    "image": "../images/hero/adidas_320-480_400.png",
-    "link": "/product/103"
+    "image": "/images/hero/adidas_320-480_400.png",
+    "href": "/product/103"
   },
   {
     "id": 2,
-    "image": "../images/hero/puma_320-480.png",
-    "link": "/product/30"
+    "image": "/images/hero/puma_320-480.png",
+    "href": "/product/30"
   }
 ]

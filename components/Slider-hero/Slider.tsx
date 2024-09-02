@@ -101,7 +101,7 @@ export function Slider({
                     <ListItem bestSales={true} product={product} />
                   </SwiperSlide>
                 ))
-              : data?.map(({ id, image, title, link, href }) => (
+              : data?.map(({ id, image, title, href }) => (
                   <SwiperSlide key={id || image}>
                     {cardImage ? (
                       <div className="rounded-xl overflow-hidden">
@@ -115,7 +115,7 @@ export function Slider({
                       </div>
                     ) : popularCat ? (
                       <div className="mr-2 md:mr-[25px] ">
-                        <Link href={href ?? "#"}>
+                        <Link href={href ?? "/"}>
                           <div className="w-[108px] h-[108px] overflow-hidden rounded-xl mb-2 flex  justify-center md:w-[424px] md:h-[300px] md:relative">
                             <Image
                               width={108}
@@ -132,7 +132,7 @@ export function Slider({
                       </div>
                     ) : (
                       <Link
-                        href={link}
+                        href={href ?? "/"}
                         className={cn(
                           "h-full w-full absolute left-0 top-0 bg-grey-900",
                         )}
