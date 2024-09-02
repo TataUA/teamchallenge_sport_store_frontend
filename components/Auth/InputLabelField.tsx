@@ -5,10 +5,10 @@ import Image from "next/image";
 import { Field, ErrorMessage, FormikProps } from "formik";
 import { v4 as uuidv4 } from "uuid";
 import { cn } from "@/services/utils/cn";
+import { RegisterFormErrors } from "@/services/types/auth-errors-types";
 import wrong from "@/public/icons/auth/wrong.svg";
 import eye_open from "@/public/icons/auth/eye_open.svg";
 import eye_close from "@/public/icons/auth/eye_close.svg";
-import { RegisterFormErrors } from "@/services/types/auth-errors-types";
 
 interface InputLabelFieldProps<T> {
   label: string;
@@ -32,7 +32,6 @@ export const InputLabelField = <T,>({
 
   const uniqueId = uuidv4();
 
-  const isTouched = formik.touched[name];
   const isFieldError = Boolean(formik.errors[name]);
   const errorMessage =
     typeof formik.errors[name] === "string" ? formik.errors[name] : "";
@@ -49,10 +48,6 @@ export const InputLabelField = <T,>({
 
   const handleFocus = () => {
     setIsFieldFocused(true);
-
-    if (!isTouched) {
-      formik.setFieldTouched(String(name), true, false);
-    }
 
     if (
       name === "phone" &&
@@ -79,7 +74,8 @@ export const InputLabelField = <T,>({
     }
   };
 
-  const togglePasswordVisibility = () => {
+  const togglePasswordVisibility = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     setShowPassword(!showPassword);
   };
 
@@ -91,7 +87,7 @@ export const InputLabelField = <T,>({
         name={name}
         inputMode={inputMode}
         value={formik.values[name]}
-        placeholder={formik.touched[name] ? placeholder : undefined}
+        placeholder={isFieldFocused ? placeholder : undefined}
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
@@ -101,19 +97,44 @@ export const InputLabelField = <T,>({
         })}
       />
 
-      {(name === "password" || name === "repeatPassword") && isTouched && (
-        <button
-          type="button"
-          className="absolute right-2 top-5 "
-          onClick={togglePasswordVisibility}
-        >
-          <Image
-            src={showPassword ? eye_close : eye_open}
-            width={24}
-            height={24}
-            alt={showPassword ? "hide password" : "show password"}
-          />
-        </button>
+      {(name === "password" || name === "repeatPassword") && (
+        <div className="absolute right-0 top-5 flex items-center">
+          {isFieldFocused || formik.values[name] ? (
+            <>
+              <button type="button" onMouseDown={togglePasswordVisibility}>
+                <Image
+                  src={showPassword ? eye_close : eye_open}
+                  width={24}
+                  height={24}
+                  alt={
+                    showPassword
+                      ? "Око - приховати пароль"
+                      : "Око - показати пароль"
+                  }
+                />
+              </button>
+
+              {isError && (
+                <Image
+                  src={wrong}
+                  width={24}
+                  height={24}
+                  alt="Іконка помилки в інпуті"
+                  className="ml-2"
+                />
+              )}
+            </>
+          ) : (
+            isError && (
+              <Image
+                src={wrong}
+                width={24}
+                height={24}
+                alt="Іконка помилки в інпуті"
+              />
+            )
+          )}
+        </div>
       )}
 
       <label
@@ -121,13 +142,16 @@ export const InputLabelField = <T,>({
         className={cn(
           "label absolute left-0 top-5 transform transition-all duration-300",
           {
-            "text-blue": !formik.errors[name] && isFieldFocused,
-            "text-red": isError,
+            "text-blue": isFieldFocused,
+            "text-red": isError && !isFieldFocused,
           },
           {
-            "top-0 text-sm": formik.touched[name] || formik.values[name],
+            "top-0 text-sm leading-114": formik.values[name] || isFieldFocused,
             "peer-placeholder-shown:top-2.5 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray peer-focus:top-0 peer-focus:text-sm peer-focus:text-blue":
-              !formik.touched[name] && !formik.values[name],
+              !formik.values[name],
+          },
+          {
+            "label top-5": !formik.values[name] && !isFieldFocused,
           },
         )}
       >
