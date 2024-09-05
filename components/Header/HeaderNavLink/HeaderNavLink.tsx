@@ -64,15 +64,15 @@ const HeaderNavLink = () => {
   useEffect(() => {
     const token = getTokenFromLocalStorage();
 
-    if(!token || mounted.current || cart.loading) {
-      return
+    if (!token || mounted.current || cart.loading) {
+      return;
     }
 
-    dispatch(setLoadingCartFromDB(Boolean(token)))
-    
+    dispatch(setLoadingCartFromDB(Boolean(token)));
+
     const saveProductsFromStoreToCartDb = (
       id: string,
-      product: IProductWithMaxQuantity
+      product: IProductWithMaxQuantity,
     ) => {
       return addProductToCartInDbAction(id, product);
     };
@@ -81,19 +81,19 @@ const HeaderNavLink = () => {
       const productData: IProduct = await fetchProductByIdClientAction(
         item.product,
         item.color,
-        item.size
+        item.size,
       );
 
       const colors = productData.colors.filter(
-        (colorItem) => colorItem.color.id === item.color
+        (colorItem) => colorItem.color.id === item.color,
       );
       const size = productData.size.filter(
-        (sizeItem) => sizeItem.id === item.size
+        (sizeItem) => sizeItem.id === item.size,
       );
       const filteredQuantities = [...productData.quantity].filter(
         (q) =>
           q.size === size[0]?.value &&
-          q.color.toLowerCase() === colors[0]?.color.title.toLowerCase()
+          q.color.toLowerCase() === colors[0]?.color.title.toLowerCase(),
       );
 
       const updatedProduct = {
@@ -113,24 +113,24 @@ const HeaderNavLink = () => {
       dispatch(setProduct(updatedProduct));
     };
 
-		const fetchCartFromDb = async (idCart: string) => {
-			const response = await fetchShoppingCartFromServerAction(idCart)
-      dispatch(cleanCart())
-			
-      if(response?.reCreateBasket) {
-        createCartInDb()
-        return
+    const fetchCartFromDb = async (idCart: string) => {
+      const response = await fetchShoppingCartFromServerAction(idCart);
+      dispatch(cleanCart());
+
+      if (response?.reCreateBasket) {
+        createCartInDb();
+        return;
       }
 
-			if(response?.items?.length) {
-				response?.items.forEach(async (item, index) => {
-					fetchProductByIdAndSave(item)
-          if(index === (response.items.length - 1)) {
-            dispatch(setLoadingCartFromDB(false))
+      if (response?.items?.length) {
+        response?.items.forEach(async (item, index) => {
+          fetchProductByIdAndSave(item);
+          if (index === response.items.length - 1) {
+            dispatch(setLoadingCartFromDB(false));
           }
-				})
-			}
-		}
+        });
+      }
+    };
 
     const createCartInDb = async () => {
       // якщо створюємо нову то ми отримаємо її ІД і можемо привязати його до юзера
@@ -145,12 +145,12 @@ const HeaderNavLink = () => {
         cart.products.forEach(async (product) => {
           const response = await saveProductsFromStoreToCartDb(
             basketId,
-            product
+            product,
           );
           if (response?.id) {
             dispatch(setProduct({ ...product, idInBasketInDb: response?.id }));
           }
-          dispatch(setLoadingCartFromDB(false))
+          dispatch(setLoadingCartFromDB(false));
         });
       }
     };
@@ -175,7 +175,7 @@ const HeaderNavLink = () => {
   }, [user?.id, pathname]);
 
   return (
-    <ul className="flex items-center">
+    <ul className="flex items-center gap-1">
       {headerNav.map(({ href, name }) => (
         <li className="py-2 px-2 h-10" key={name}>
           {name === "search" ? (
@@ -194,7 +194,7 @@ const HeaderNavLink = () => {
                           className={cn(
                             "relative z-20 bg-blue w-[18px] h-[18px] overflow-hidden rounded-full text-white flex justify-center items-center",
                             "font-semibold text-sm leading-4",
-                            "left-[50%] top-[-25%] "
+                            "left-[50%] top-[-25%] ",
                           )}
                         >
                           {cart.products?.length}
