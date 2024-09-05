@@ -1,9 +1,9 @@
 import Image from "next/image";
-import menuIcon from "../../public/icons/header/mob-menu.svg";
-import { Modal } from "../Modal/Modal";
-import { NavItemListMobile } from "./NavItemListMobile/NavItemListMobile";
-import { UsernavMobile } from "./UsernavMobile";
-import { NAV_ITEMS } from "./nav-items.data";
+import { Modal } from "@/components/Modal/Modal";
+import { NavItemListMobile } from "@/components/Header/NavItemListMobile/NavItemListMobile";
+import { UsernavMobile } from "@/components/Header/UsernavMobile";
+import { NAV_ITEMS } from "@/components/Header/nav-items.data";
+import menuIcon from "@/public/icons/header/mob-menu.svg";
 
 interface NavbarProps {
   isModalOpen: boolean;
@@ -17,13 +17,13 @@ export const Navbar = ({ isModalOpen, setIsModalOpen }: NavbarProps) => {
         <Image src={menuIcon} alt="menu" width={40} height={40} />
       </button>
       <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div className="mb-4">
+        <div className="mb-[16px]">
           <NavItemListMobile
             navItems={NAV_ITEMS}
             onClose={() => setIsModalOpen(false)}
           />
         </div>
-        <div className="border-t border-border mb-4"></div>
+        <div className="border-t border-border mb-[16px]"></div>
         <UsernavMobile onClose={() => setIsModalOpen(false)} />
       </Modal>
     </div>
