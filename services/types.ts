@@ -2,6 +2,7 @@ export interface NavLink {
   key: string;
   label: string;
   href: string;
+  image?: string;
   links?: NavLink[]; // Поддержка вложенных ссылок
 }
 
