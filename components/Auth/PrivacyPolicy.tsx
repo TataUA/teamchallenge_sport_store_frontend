@@ -4,7 +4,7 @@ import Link from "next/link";
 export const PrivacyPolicy = () => {
   return (
     <>
-      <p className="mb-7 text-xs leading-150 font-inter font-normal text-label">
+      <p className="text-xs leading-150 font-inter font-normal text-label">
         Натискаючи на кнопку я погоджуюсь з{" "}
         <Link href="" className="border-b border-border">
           умовами політики конфіденційності

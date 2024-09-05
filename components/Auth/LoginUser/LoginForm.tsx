@@ -14,6 +14,7 @@ import { LoginFormValues } from "@/services/types/auth-form-types";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { ResetPasswordRequestForm } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 import { ResetPasswordButton } from "@/components/Auth/ResetPassword/ResetPasswordButton";
+import { Button } from "@/components/Button/Button";
 import wrong from "@/public/icons/auth/wrong.svg";
 
 export const schema = yup.object().shape({
@@ -95,7 +96,7 @@ export const LoginForm = () => {
       >
         {(formik: FormikProps<LoginFormValues>) => (
           <Form autoComplete="on">
-            <div className="mb-2">
+            <div className="mb-4">
               <div className="flex flex-col gap-4">
                 <InputLabelField
                   label="Електронна пошта"
@@ -121,7 +122,7 @@ export const LoginForm = () => {
               />
 
               {error && (
-                <div className="flex items-center mb-6 ">
+                <div className="flex items-center mb-[8px] ">
                   <Image
                     src={wrong}
                     width={18}
@@ -137,13 +138,12 @@ export const LoginForm = () => {
                 </div>
               )}
 
-              <button
+              <Button
                 type="submit"
+                subtype="primary"
+                title="Увійти"
                 disabled={formik.isSubmitting}
-                className="w-full h-12 px-6  rounded-xl bg-blue text-base font-semibold font-pangram text-white hover:bg-active_blue transition-all"
-              >
-                Увійти
-              </button>
+              />
             </div>
           </Form>
         )}
