@@ -8,6 +8,7 @@ import SortedProducts from "@/components/SortedProducts";
 import PromBanner from "@/components/PromBanner";
 import AboutUs from "@/components/AboutUs";
 import SubscribeBannerFooter from "@/components/SubscribeBannerFooter";
+import Gender from "@/components/Gender";
 
 export default async function Page() {
   return (
@@ -17,6 +18,7 @@ export default async function Page() {
         homePageMainSlider
         className={"min-h-[400px] h-[50dvh] mb-12"}
       />
+      <Gender/>
       <PopularCategories />
       <SortedProducts
         title="Новинки"
