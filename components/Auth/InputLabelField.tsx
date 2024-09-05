@@ -140,7 +140,7 @@ export const InputLabelField = <T,>({
       <label
         htmlFor={uniqueId}
         className={cn(
-          "label absolute left-0 top-5 transform transition-all duration-300",
+          "label absolute left-0 top-[24px] transform transition-all duration-300",
           {
             "text-blue": isFieldFocused,
             "text-red": isError && !isFieldFocused,
@@ -151,7 +151,7 @@ export const InputLabelField = <T,>({
               !formik.values[name],
           },
           {
-            "label top-5": !formik.values[name] && !isFieldFocused,
+            "label top-[24px]": !formik.values[name] && !isFieldFocused,
           },
         )}
       >

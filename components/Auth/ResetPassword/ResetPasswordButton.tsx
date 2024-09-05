@@ -10,7 +10,7 @@ export const ResetPasswordButton = (props: Props) => {
   return (
     <button
       type="button"
-      className="block mt-2 mb-5 text-sm font-medium text-title border-b border-border"
+      className="block h-8 mt-2 mb-5 text-sm tracking-[0.32px] font-medium text-title underline"
       onClick={() => {
         props.setShowPasswordResetBlock(true);
       }}
