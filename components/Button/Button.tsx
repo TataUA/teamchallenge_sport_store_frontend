@@ -25,7 +25,7 @@ export const Button = (props: ButtonProps) => {
       onClick={props.onClick}
       disabled={props.disabled}
       className={cn(
-        "w-full h-[48px] self-center px-6 rounded-xl text-base font-semibold font-pangram transition-all",
+        "w-full h-[48px] self-center px-6 rounded-xl text-base tracking-custom_2 font-semibold font-pangram transition-all",
         props.disabled
           ? "border-border_button bg-bgSearch text-timer"
           : buttonStyles[props.subtype],

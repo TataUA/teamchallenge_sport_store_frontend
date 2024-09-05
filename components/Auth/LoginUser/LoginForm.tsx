@@ -96,7 +96,7 @@ export const LoginForm = () => {
       >
         {(formik: FormikProps<LoginFormValues>) => (
           <Form autoComplete="on">
-            <div className="mb-4">
+            <div className="mb-2">
               <div className="flex flex-col gap-4">
                 <InputLabelField
                   label="Електронна пошта"
@@ -122,7 +122,7 @@ export const LoginForm = () => {
               />
 
               {error && (
-                <div className="flex items-center mb-[8px] ">
+                <div className="flex items-center mb-2">
                   <Image
                     src={wrong}
                     width={18}

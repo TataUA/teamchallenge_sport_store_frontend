@@ -30,11 +30,14 @@ const config: Config = {
         "18": "72px",
       },
       height: {
-        "13": "52px",
+        // "13": "52px",
         "144": "574px",
       },
       margin: {
         "55": "165px",
+      },
+      letterSpacing: {
+        custom_2: "2%",
       },
       colors: {
         primary: "#272728",
