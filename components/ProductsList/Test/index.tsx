@@ -10,7 +10,10 @@ import { IProduct } from "@/services/types";
 import ListItem from "../ListItem";
 import Pagination from "../Pagination";
 
-export default function Test({ products }) {
+interface TestProps {
+  products: IProduct[];
+}
+export default function Test({ products }: TestProps) {
   const searchParams = useSearchParams();
   const page = searchParams.get("page");
 
