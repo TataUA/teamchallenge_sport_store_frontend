@@ -7,6 +7,7 @@ import {
   ErrorType,
   updateAccessTokenThunk,
   resetPasswordThunk,
+  confirmedEmailThunk,
 } from "@/redux/auth/authThunk";
 
 export interface UserData {
@@ -29,7 +30,7 @@ export interface AuthState {
 
 const initialState: AuthState = {
   user: null,
-  isSubmitingComplete: false,
+  isSubmitingComplete: false, //чи потрібно ще? перевірити!
   isAuthenticated: false,
   isLoading: false,
   isRefreshing: false,
@@ -56,10 +57,27 @@ const authSlice = createSlice({
     builder
       //register
       .addCase(registerUserThunk.pending, (state) => {
+        state.isRefreshing = true; //Додати лоадер!
         state.error = null;
       })
-      .addCase(registerUserThunk.fulfilled, (state) => {})
+      .addCase(registerUserThunk.fulfilled, (state) => {
+        state.isRefreshing = false;
+      })
       .addCase(registerUserThunk.rejected, (state, { payload }) => {
+        state.isRefreshing = false;
+        state.error = payload ?? { message: ["An error occurred"] };
+      })
+
+      //confirmed email
+      .addCase(confirmedEmailThunk.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(confirmedEmailThunk.fulfilled, (state) => {
+        state.isLoading = false;
+      })
+      .addCase(confirmedEmailThunk.rejected, (state, { payload }) => {
+        state.isLoading = false;
         state.error = payload ?? { message: ["An error occurred"] };
       })
 
