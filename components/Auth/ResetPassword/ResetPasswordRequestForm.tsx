@@ -165,7 +165,7 @@ export const ResetPasswordRequestForm = (props: ResetPasswordRequestProps) => {
             ) : (
               <div>
                 <p className="mb-8">
-                  Ми надіслали посилання для відновлення на адресу
+                  Ми надіслали посилання для відновлення на адресу{" "}
                   <span className="font-bold">{userEmail}</span>
                 </p>
 
