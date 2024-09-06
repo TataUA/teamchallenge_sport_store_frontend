@@ -83,7 +83,7 @@ export const confirmedEmailThunk = createAsyncThunk<
     return;
   } catch (error: any) {
     const errorObject: ErrorType = {
-      message: error.detail || "An error occurred",
+      message: error.msg || "An error occurred",
     };
     return thunkApi.rejectWithValue(errorObject);
   }
