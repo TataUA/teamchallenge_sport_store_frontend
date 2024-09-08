@@ -115,7 +115,7 @@ const OrderPageComponent = () => {
 
       try {
         const newOrder: IOrder = {
-        basketId: localStorage.getItem('basketId') || '',
+        basketId: JSON.parse(localStorage.getItem('basketId') || ""),
         first_name: userData?.name,
         last_name: userData.patronymic,
         email: userData.email,
@@ -144,6 +144,9 @@ const OrderPageComponent = () => {
     { name: 'phone', placeholder: 'Номер телефону', error: submitted && errors.hasOwnProperty('phone') },
     { name: 'email', placeholder: 'Електронна пошта', error: submitted && errors.hasOwnProperty('email') },
   ];
+
+  // console.log(JSON.parse(localStorage.getItem('basketId') || ""), typeof localStorage.getItem('basketId'));
+  
   
   return (
     <div className="pt-4">
