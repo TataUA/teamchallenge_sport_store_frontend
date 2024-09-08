@@ -4,15 +4,16 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
-import { Formik, Form, FormikHelpers } from "formik";
+import { Formik, Form, FormikHelpers, FormikProps } from "formik";
 import { AppDispatch } from "@/redux/store";
 
 import { registerUserThunk } from "@/redux/auth/authThunk";
 // import { selectIsRegistrationComplete } from "@/redux/auth/authSelector";
 
+import { RegisterFormValues } from "@/services/types/auth-form-types";
+import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { Button } from "@/components/Button/Button";
-import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
 
 export const schemaRegisterForm = yup.object().shape({
   name: yup
@@ -66,19 +67,10 @@ export const schemaRegisterForm = yup.object().shape({
     .required("Це поле обов'язкове"),
   repeatPassword: yup
     .string()
+    .min(6, "Пароль повинен містити не менше 6 символів")
     .oneOf([yup.ref("password"), undefined], "Паролі повинні співпадати")
     .required("Це поле обов'язкове"),
 });
-
-export interface RegisterFormValues {
-  name: string;
-  surname: string;
-  patronymic: string;
-  phone: string;
-  email: string;
-  password: string;
-  repeatPassword: string;
-}
 
 export const initialValuesRegisterForm: RegisterFormValues = {
   name: "",
@@ -99,6 +91,14 @@ export const RegisterForm = () => {
     values: RegisterFormValues,
     { resetForm, setErrors }: FormikHelpers<RegisterFormValues>,
   ) => {
+    if (values.password !== values.repeatPassword) {
+      setErrors({
+        password: "Паролі повинні співпадати",
+        repeatPassword: "Паролі повинні співпадати",
+      });
+      return;
+    }
+
     try {
       const actionResult = await dispatch(registerUserThunk(values));
 
@@ -121,7 +121,7 @@ export const RegisterForm = () => {
         validationSchema={schemaRegisterForm}
         onSubmit={handleSubmit}
       >
-        {(formik) => (
+        {(formik: FormikProps<RegisterFormValues>) => (
           <Form autoComplete="off" className="flex flex-col ">
             <div className="flex flex-col gap-4 mb-8">
               <InputLabelField
@@ -174,7 +174,7 @@ export const RegisterForm = () => {
                 name="password"
                 type="password"
                 inputMode="text"
-                placeholder="******"
+                placeholder="Не менше 6 символів"
                 formik={formik}
               />
 
@@ -183,7 +183,7 @@ export const RegisterForm = () => {
                 name="repeatPassword"
                 type="password"
                 inputMode="text"
-                placeholder="******"
+                placeholder="Не менше 6 символів"
                 formik={formik}
               />
             </div>

@@ -8,6 +8,7 @@ import Footer from "@/components/Footer/Footer";
 import { Header } from "@/components/Header/Header";
 
 import "./globals.css";
+import Head from "next/head";
 
 export const nunitoSans = Nunito_Sans({
   weight: ["400", "700", "800"],
@@ -19,23 +20,27 @@ export const interSans = Inter({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Sport Hub",
-  description: "Your best online store!",
-};
-
 interface RootLayoutProps {
   children: React.ReactNode;
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="uk" className="h-full">
-      <head />
+    <html lang="uk" className="h-full text-[16px]">
+      <Head>
+        <title>&#34;Sport Hub&#34;</title>
+        <meta
+          name="description"
+          content={`&#34;Your best online store!&#34;`}
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
       <body
         className={`relative wrapper h-full font-pangram ${nunitoSans.className} ${interSans.className} antialiased`}
       >
-        <Header />
+        <header>
+          <Header />
+        </header>
         <main className="relative flex-1">{children}</main>
         <Footer />
         <div id="modal-root"></div>

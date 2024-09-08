@@ -18,8 +18,8 @@ import {
   RegisterResponseData,
   LoginResponseData,
 } from "@/services/types/auth-api-types";
-import { RegisterFormValues } from "@/components/Auth/RegisterUser/RegisterForm";
-import { LoginFormValues } from "@/components/Auth/LoginUser/LoginForm";
+import { RegisterFormValues } from "@/services/types/auth-form-types";
+import { LoginFormValues } from "@/services/types/auth-form-types";
 import { UserDataEditFormValues } from "@/components/Auth/EditUser/UserDataEdit";
 import { ResetPasswordFormValues } from "@/components/Auth/ResetPassword/ResetPasswordForm";
 import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
@@ -83,7 +83,7 @@ export const confirmedEmailThunk = createAsyncThunk<
     return;
   } catch (error: any) {
     const errorObject: ErrorType = {
-      message: error.detail || "An error occurred",
+      message: error.msg || "An error occurred",
     };
     return thunkApi.rejectWithValue(errorObject);
   }

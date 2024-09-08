@@ -27,10 +27,14 @@ export default function Page() {
       <h1 className="mb-4 font-bold text-2xl leading-140 text-title">
         Підтвердіть свою електронну пошту
       </h1>
-      <p className="mb-6 font-medium text-sm text-common">
+      <p className="mb-4 font-medium text-sm text-common">
         Щоб завершити процес реєстрації підтвердіть свою електронну пошту,
         перейшовши за посиланням, надісланим на{" "}
         <span className="font-semibold">{email}</span>
+      </p>
+      <p className="mb-12 font-medium text-sm text-common">
+        Будь ласка, зверніть увагу, що посилання буде дійсним лише протягом 30
+        хвилин.
       </p>
       <p className="mb-12 font-medium text-xs text-secondary">
         Не отримали листа? Перевірте папку &#34;Спам&#34; або натисніть кнопку

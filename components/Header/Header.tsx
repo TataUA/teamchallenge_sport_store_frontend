@@ -13,8 +13,8 @@ export const Header = () => {
   };
 
   return (
-    <header className="container px-4 py-3 flex justify-between">
-      <div className="flex items-center gap-2">
+    <header className="h-16 py-3 px-4 flex justify-between">
+      <div className="h-10 flex items-center gap-[8px]">
         <Navbar isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
         <Logo onClick={handleLogoClick} />
       </div>
