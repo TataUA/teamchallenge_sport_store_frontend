@@ -153,8 +153,8 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 					<div
 						onClick={() => setIsSuccessModalIsOpened(false)}
 						className={cn(
-							'text-[#0A4CF6] rounded-xl border-[1px] border-[#0A4CF6] py-4 px-20 mb-3',
-							'hover:text-white hover:bg-[#0A4CF6] cursor-pointer'
+							'text-blue rounded-xl border-[1px] border-blue py-4 px-20 mb-3',
+							'hover:text-white hover:bg-blue cursor-pointer'
 						)}
 					>
 						Продовжити покупки
@@ -162,8 +162,8 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 					<Link
 						href={'/cart'}
 						className={cn(
-							'text-white bg-[#0A4CF6] rounded-xl py-4 px-20 mb-3 inline-block w-full',
-							'hover:text-[#0A4CF6] hover:bg-white hover:border-[#0A4CF6] border-[1px] cursor-pointer'
+							'text-white bg-blue rounded-xl py-4 px-20 mb-3 inline-block w-full',
+							'hover:text-blue hover:bg-white hover:border-blue border-[1px] cursor-pointer'
 						)}
 					>
 						Перейти в кошик

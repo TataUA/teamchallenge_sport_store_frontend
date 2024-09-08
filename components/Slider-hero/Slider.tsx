@@ -72,7 +72,7 @@ export function Slider({
 
                       document.documentElement.style.setProperty(
                         "--swiper-pagination-bullet-inactive-color",
-                        "#ffffff",
+                        "#FFFFFF",
                       );
 
                       document.documentElement.style.setProperty(
