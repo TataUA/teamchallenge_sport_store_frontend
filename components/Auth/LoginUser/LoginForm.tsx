@@ -70,7 +70,7 @@ export const LoginForm = () => {
       const actionResult = await dispatch(loginUserThunk(values));
 
       if (loginUserThunk.fulfilled.match(actionResult)) {
-        router.push("/profile");
+        router.push("/auth/profile");
       } else if (loginUserThunk.rejected.match(actionResult)) {
         const errorMessage = actionResult.payload?.message;
 

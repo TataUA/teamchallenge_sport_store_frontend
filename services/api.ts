@@ -139,7 +139,7 @@ export const updateAccessToken = async (
 //current user
 export const currentUser = async (): Promise<types.RegisterResponseData> => {
   try {
-    const response = await $instance.get("/user/me/");
+    const response = await $instance.get("/user/view/");
     if(response.data) return response.data
 
     return {
@@ -284,6 +284,34 @@ export const getListOfDepartmentsInCityNovaPoshta = async (
       return data.data
     }
     return [];
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
+export interface IOrder {
+  basketId: string
+  last_name: string
+  first_name: string
+  surname: string
+  email: string
+  city: string
+  delivery_method: string
+  street?: string
+  appartment?: string
+  payment_method: string
+  user: number
+}
+
+export const createOrder = async (
+  order: IOrder
+): Promise<any> => {
+  try {
+    const response = await $instance.post('/delivery/orders/create/', order);
+    console.log("🚀 ~ response:", response)
+
+    return response
+
   } catch (error: any) {
     throw error.response.data;
   }
