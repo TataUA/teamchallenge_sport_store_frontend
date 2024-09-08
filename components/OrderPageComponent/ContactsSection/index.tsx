@@ -7,9 +7,8 @@ import UserInfo from "./UserInfo"
 
 // store
 import { selectUserData } from "@/redux/auth/authSelector"
-import RegisterSection from "./RegisterSection"
 
-const ContactsSection = () => {
+const ContactsSection = ({children}:{children: any}) => {
   const user = useSelector(selectUserData);
   
   return (
@@ -19,7 +18,7 @@ const ContactsSection = () => {
       >
         Контактні дані
       </h3>
-      {user ? <UserInfo user={user} /> : <RegisterSection />}
+      {user ? <UserInfo user={user} /> : <>{children}</>}
       </div>
   )
 }
