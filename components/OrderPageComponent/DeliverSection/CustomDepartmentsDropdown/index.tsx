@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectOrder } from '@/redux/order/orderSelector';
 
 // slice
-import { setDepartmentToStore } from '@/redux/order/orderSlice';
+import { setDepartmentToStore, setPostOffice } from '@/redux/order/orderSlice';
 
 // services
 import { 
@@ -72,7 +72,11 @@ const CustomDepartmentsDropdown = (props: IProps) => {
     };
 
     const handleSelect = (item: any) => {
-        dispatch(setDepartmentToStore(item));
+        if(typeOfEntity === 'postOffice') {
+            dispatch(setPostOffice(item));
+        } else {
+            dispatch(setDepartmentToStore(item));
+        }
         setIsOpen(false);
     };
     
