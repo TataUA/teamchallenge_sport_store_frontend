@@ -73,7 +73,7 @@ const UserInfo = (props:IProps) => {
 
   const dispatch: AppDispatch = useDispatch();
 
-  const [editDataMode, setEditDataMode] = useState(true)
+  const [editDataMode, setEditDataMode] = useState(false)
   const [showSuccessMessage, setShowSuccessMessage] = useState(false)
 
   const initialValues: UserDataEditFormValues = {
