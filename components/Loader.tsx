@@ -10,7 +10,7 @@ export const Loader = () => {
       height="40"
       width="40"
       color="#0735AC"
-      secondaryColor="#0A4CF6"
+      secondaryColor="blue"
       ariaLabel="завантаження"
       wrapperClass="loader"
     />

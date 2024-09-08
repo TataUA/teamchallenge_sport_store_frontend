@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux"
+import Link from "next/link";
 
 import { selectCart } from "@/redux/cart/cartSelector"
 
@@ -20,9 +21,9 @@ const CartFooter = () => {
           <span className="text-base text-[#1A1A1C]">До оплати</span>
           <span className="text-xl text-[#1A1A1C]">{total} {' грн'}</span>
         </div>
-        <div className="bg-blue text-white py-3 w-full text-base font-semibold text-center rounded-xl">
+        <Link href='/order' className="block bg-blue text-white py-3 w-full text-base font-semibold text-center rounded-xl">
           Оформити замовлення
-        </div>
+        </Link>
       </div>
     </div>
   )

@@ -5,12 +5,13 @@ import * as types from "@/services/types/auth-api-types";
 import { RegisterFormValues } from "@/services/types/auth-form-types";
 import { LoginFormValues } from "@/services/types/auth-form-types";
 import { UserDataEditFormValues } from "@/components/Auth/EditUser/UserDataEdit";
-import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 import { ResetPasswordFormValues } from "@/components/Auth/ResetPassword/ResetPasswordForm";
 import { IProduct } from "./types";
 
 // helpers
 import getCorrectQueryParamsSearchQuery from "@/helpers/getCorrectQueryParamsSearchQuery";
+import { DropdownItemCityNovaPoshta } from "@/components/OrderPageComponent/DeliverSection/CustomCitiesDropdown";
+import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 
 export const apiBaseUrl =
   process.env.NODE_ENV === "development"
@@ -138,10 +139,19 @@ export const updateAccessToken = async (
 //current user
 export const currentUser = async (): Promise<types.RegisterResponseData> => {
   try {
-    const { data } = await $instance.get("/user/view/");
-    return data;
+    const response = await $instance.get("/user/view/");
+    if(response.data) return response.data
+
+    return {
+      id: 0,
+      first_name: '',
+      surname: '',
+      last_name: '',
+      phone_number: '',
+      email: '',
+    };
   } catch (error: any) {
-    throw error.response.data;
+    throw error.response;
   }
 };
 
@@ -227,6 +237,81 @@ export const sendSearchQueryApi = async (
 
     const { data } = await $instance.get(`products/search/?${extractedParams}`);
     return data;
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
+interface INovaPoshtaCityResponse {
+  data: {
+    data: {TotalCount: number, Addresses: DropdownItemCityNovaPoshta[]}[]
+  }
+}
+
+export const getListOfCitiesNovaPoshta = async (
+  city: string
+): Promise< DropdownItemCityNovaPoshta[]> => {
+  try {
+    const { data }: INovaPoshtaCityResponse = await $instance.get(`/nova-post/settlements/${city}/`);
+    
+    if(data.data.length) {
+      return data.data[0].Addresses
+    }
+    
+    return [];
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
+interface INovaPoshtaDepartmentsResponse {
+  data: {
+    data: {Description: string}[]
+  }
+}
+
+export interface INovaPoshtaDepartmentItemResponse {
+  Description: string
+}
+
+export const getListOfDepartmentsInCityNovaPoshta = async (
+  city: string
+): Promise<INovaPoshtaDepartmentItemResponse[]> => {
+  try {
+    const { data }: INovaPoshtaDepartmentsResponse = await $instance.get(`/nova-post/warehouses/${city}/?limit=500`);
+
+    if(data.data.length) {
+      return data.data
+    }
+    return [];
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
+export interface IOrder {
+  basketId: string
+  last_name: string
+  first_name: string
+  surname: string
+  email: string
+  city: string
+  delivery_method: string
+  street?: string
+  appartment?: string
+  payment_method: string
+  user: number
+}
+
+export const createOrder = async (
+  order: IOrder
+): Promise<any> => {
+  try {
+    const response = await $instance.post('/delivery/orders/create/', order);
+    console.log("🚀 ~ response:", response)
+
+    return response
+
   } catch (error: any) {
     throw error.response.data;
   }

@@ -6,13 +6,16 @@ import { useRouter } from "next/navigation";
 import * as yup from "yup";
 import { Formik, Form, FormikHelpers, FormikProps } from "formik";
 import { AppDispatch } from "@/redux/store";
+
 import { registerUserThunk } from "@/redux/auth/authThunk";
+// import { selectIsRegistrationComplete } from "@/redux/auth/authSelector";
+
 import { RegisterFormValues } from "@/services/types/auth-form-types";
 import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { Button } from "@/components/Button/Button";
 
-export const schema = yup.object().shape({
+export const schemaRegisterForm = yup.object().shape({
   name: yup
     .string()
     .min(1)
@@ -69,7 +72,7 @@ export const schema = yup.object().shape({
     .required("Це поле обов'язкове"),
 });
 
-const initialValues: RegisterFormValues = {
+export const initialValuesRegisterForm: RegisterFormValues = {
   name: "",
   surname: "",
   patronymic: "",
@@ -114,8 +117,8 @@ export const RegisterForm = () => {
   return (
     <>
       <Formik
-        initialValues={{ ...initialValues, phone }}
-        validationSchema={schema}
+        initialValues={{ ...initialValuesRegisterForm, phone }}
+        validationSchema={schemaRegisterForm}
         onSubmit={handleSubmit}
       >
         {(formik: FormikProps<RegisterFormValues>) => (

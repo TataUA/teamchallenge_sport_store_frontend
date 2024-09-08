@@ -52,7 +52,7 @@ const SizeFilter = (props: IProps) => {
             className={cn('list-none size-12 rounded-lg border-[1px] p-4 flex justify-center items-center cursor-pointer',
               'hover:bg-blue hover:text-white',
               'min-[2800px]:size-20 min-[2800px]:text-3xl', {
-                'border-[#0A4CF6] text-[#0A4CF6]': sizes.includes(size),
+                'border-blue text-blue': sizes.includes(size),
                 'pointer-events-none opacity-[50%]': !checkIsSizeExists(size)
               }
             )}
@@ -65,7 +65,7 @@ const SizeFilter = (props: IProps) => {
             className={cn('list-none size-12 rounded-lg border-[1px] p-4 flex justify-center items-center cursor-pointer',
               'hover:bg-blue hover:text-white',
               'min-[2800px]:size-20 min-[2800px]:text-3xl', {
-                'border-[#0A4CF6] text-[#0A4CF6]': sizes.includes(size),
+                'border-blue text-blue': sizes.includes(size),
                 'pointer-events-none opacity-[50%]': !checkIsSizeExists(size)
               }
             )}

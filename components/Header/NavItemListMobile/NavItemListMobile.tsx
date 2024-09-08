@@ -37,7 +37,7 @@ export const NavItemListMobile = ({ navItems, onClose }: NavItemListProps) => {
           <p
             className={cn(
               "text-button cursor-pointer text-primary font-medium line-height-150 tracking-wide-04 flex [&+svg]:stroke-[#3E3E40]",
-              "[&+svg]:hover:stroke-[#0A4CF6] [&+svg]:active:[&+svg]:stroke-[#0A4CF6] hover:text-blue active:text-blue",
+              "[&+svg]:hover:stroke-blue [&+svg]:active:[&+svg]:stroke-blue hover:text-blue active:text-blue",
             )}
           >
             <span>{item.title.label}</span>
@@ -99,7 +99,7 @@ export const NavItemListMobile = ({ navItems, onClose }: NavItemListProps) => {
                       <p
                         className={cn(
                           "text-button cursor-pointer text-primary font-medium line-height-150 tracking-wide-04 flex [&+svg]:stroke-[#3E3E40]",
-                          "[&+svg]:hover:stroke-[#0A4CF6] [&+svg]:active:[&+svg]:stroke-[#0A4CF6] hover:text-blue active:text-blue",
+                          "[&+svg]:hover:stroke-blue [&+svg]:active:[&+svg]:stroke-blue hover:text-blue active:text-blue",
                         )}
                       >
                         <span>{link.label}</span>

@@ -49,7 +49,7 @@ const SubscribeBannerFooter = () => {
         />
       </div>
       <div 
-        className={cn("pt-8 px-6 pb-12 min-h-[400px] relative z-[2] text-[#fff]")} 
+        className={cn("pt-8 px-6 pb-12 min-h-[400px] relative z-[2] text-white")} 
       >
         <form 
             onSubmit={handleSubscribeSubmit}
