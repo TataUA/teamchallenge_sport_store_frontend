@@ -1,3 +1,4 @@
+import { ClientComponent } from "@/components/ClientComponent"
 import OrderPageComponent from "@/components/OrderPageComponent"
 import SubscribeBannerFooter from "@/components/SubscribeBannerFooter"
 
@@ -8,7 +9,9 @@ const OrderPage = (props: any) => {
         Увага! Цей пет-проєкт створений виключно для навчальних цілей. Будь ласка, не вводьте свої реальні особитсі данні
       </p>
       <div className="p-6 pt-0">
-        <OrderPageComponent />
+        <ClientComponent>
+          <OrderPageComponent />
+        </ClientComponent>
       </div>
       <SubscribeBannerFooter />
     </>
