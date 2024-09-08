@@ -21,11 +21,6 @@ export interface IOrderState {
 		cash: boolean,
 		card: boolean,
 	}
-	cardInfo: {
-		numberCard: string,
-		expire: string,
-		cvv: string ,
-	},
 	allFileds: null | boolean
 }
 
@@ -46,11 +41,6 @@ const initialState: IOrderState = {
 	payment: {
 		cash: false,
 		card: false,
-	},
-	cardInfo: {
-		numberCard: '',
-		expire: '',
-		cvv: '',
 	},
 	allFileds: null,
 }
@@ -97,22 +87,6 @@ const orderSlice = createSlice({
 				return
 			}
 		},
-		handleChangeCardInfo(state, { payload }: PayloadAction<{value: string, name: string}>) {
-			if(payload.name === 'numberCard') {
-				state.cardInfo.numberCard = payload.value
-
-				return
-			}
-			if(payload.name === 'expire') {
-				state.cardInfo.expire = payload.value
-
-				return
-			}
-			if(payload.name === 'cvv') {
-				state.cardInfo.cvv = payload.value
-				return
-			}
-		},
 		handleClickCheckboxPayment(state, { payload }: PayloadAction<string>) {
 			if(payload === 'cash') {
 				state.payment.cash = !state.payment.cash
@@ -135,21 +109,35 @@ const orderSlice = createSlice({
 			state.postOffice = payload
 		},
 		validationAllFields(state) {
-			if(!state.city || (!state.department && !state.postOffice)) {
+			if(!state.city) {
 				state.allFileds = false
-			} else if (state.postOffice && (
+				return
+				
+			}  
+			
+			if(state.deliveryType.department && !state.department) {
+				state.allFileds = false
+				return
+			}
+
+			if(state.deliveryType.postOffice && !state.department) {
+				state.allFileds = false
+				return
+			}
+
+			if (state.deliveryType.deliveryMan && (
 				!state.deliveryAddress.street || !state.deliveryAddress.numberHouse
 			)) {
 				state.allFileds = false
-			} else if (!state.payment.card && !state.payment.cash) {
+				return
+			} 
+
+			if (!state.payment.card && !state.payment.cash) {
 				state.allFileds = false
-			} else if (state.payment.card && (
-				!state.cardInfo.numberCard || !state.cardInfo.expire || !state.cardInfo.cvv
-			)) {
-				state.allFileds = false
-			} else {
+				return
+			}  
+
 				state.allFileds = true
-			}
 		},
 	},
 })
@@ -163,6 +151,5 @@ export const {
 	setDepartmentToStore,
 	setPostOffice,
 	handleChangeDeliveryAddress,
-	handleChangeCardInfo,
 	validationAllFields,
 } = orderSlice.actions
