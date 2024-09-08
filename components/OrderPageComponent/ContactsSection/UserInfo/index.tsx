@@ -5,7 +5,6 @@ import { Form, Formik, FormikHelpers } from "formik"
 
 // components
 import { InputLabelField } from "@/components/Auth/InputLabelField"
-import { UserDataEditFormValues } from "@/components/Auth/UserDataEdit"
 
 // store
 import { AppDispatch } from "@/redux/store"
@@ -59,10 +58,10 @@ export const schema = yup.object().shape({
 import getPencilIconSVG from "@/helpers/getPencilIconSVG"
 
 // selector
-import { selectUserData } from "@/redux/auth/authSelector"
 import EditUserDataModal from "../EditUserDataModal";
 import { cn } from "@/services/utils/cn";
 import UserDataWasSuccessEdited from "../UserDataWasSuccessEdited";
+import { UserDataEditFormValues } from "@/components/Auth/EditUser/UserDataEdit";
 
 interface IProps {
   user: any
@@ -82,6 +81,7 @@ const UserInfo = (props:IProps) => {
     patronymic: user?.patronymic || "",
     phone: user?.phone || "",
     email: user?.email || "",
+    id: user?.id || "",
   };
 
   const handleSubmit = async (

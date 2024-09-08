@@ -10,10 +10,6 @@ import { selectOrder } from "@/redux/order/orderSelector";
 // actions
 import { handleClickCheckboxPayment } from "@/redux/order/orderSlice";
 
-// components
-import { InputLabelField } from "@/components/Auth/InputLabelField";
-import CardInfoForm from "./CardInfoForm";
-
 // assets
 import wrong from "@/public/icons/auth/wrong.svg";
 

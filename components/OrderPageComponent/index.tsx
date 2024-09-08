@@ -35,8 +35,6 @@ const OrderPageComponent = () => {
   const order = useSelector(selectOrder)
   const user = useSelector(selectUserData)
 
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-
   const dispatch: AppDispatch = useDispatch();
 
   const initialState = {
@@ -45,6 +43,7 @@ const OrderPageComponent = () => {
     patronymic: '',
     phone: '',
     email: '',
+    id: 0
   }
 
   interface IntInitialStateErrors {
@@ -53,14 +52,15 @@ const OrderPageComponent = () => {
     patronymic?: string,
     phone?: string,
     email?: string,
+    id?: number,
   }
   
   const [formData, setFormData] = useState(initialState);
   const [errors, setErrors] = useState<IntInitialStateErrors>({});
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
     setErrors(prevState => ({
       ...prevState,
       [name]: ''
@@ -75,8 +75,9 @@ const OrderPageComponent = () => {
     let newErrors:IntInitialStateErrors = {};
     
     Object.keys(formData).forEach(key => {
-      if (!formData[key]) {
-        newErrors[key] = "";
+      const typedKey = key as keyof typeof formData;
+      if (!formData[typedKey]) {
+        newErrors[typedKey] = undefined;
       }
     });
 
@@ -98,7 +99,7 @@ const OrderPageComponent = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
     
@@ -155,55 +156,54 @@ const OrderPageComponent = () => {
       >
         Оформлення замовлення
       </h1>
-          <form 
-            onSubmit={handleSubmit} 
-            className="flex flex-col gap-10 lg:gap-[60px] lg:pt-6 min-[2800px]:pt-8 min-[2800px]:gap-[60px]"
+      <form
+        onSubmit={handleSubmit} 
+        className="flex flex-col gap-10 lg:gap-[60px] lg:pt-6 min-[2800px]:pt-8 min-[2800px]:gap-[60px]"
+      >
+        <ContactsSection>
+        <div className="flex flex-col gap-4">
+          {fields.map((field) => (
+            <div key={field.name} className="mb-4 relative">
+              <input
+                type="text"
+                id={field.name}
+                name={field.name}
+                value={formData[field.name as keyof typeof formData]}
+                onChange={handleChange}
+                placeholder={field.placeholder}
+                className={cn('w-full border-b pb-2 pt-1 focus:outline-none placeholder-gray-500',{
+                  'border-gray': true,
+                  'border-red placeholder-red': field.error,
+                })}
+              />
+              {field.error && (
+                <>
+                  <div className={cn("flex items-center mt-4",{
+                    'absolute right-0 bottom-[8px] m-0': true
+                  })}>
+                  <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
+                  </div>
+                  <div className="absolute text-red text-xs">{errors[field.name as keyof typeof formData]}</div>
+                </>
+              )}
+            </div>
+          ))} 
+        </div>
+        </ContactsSection>
+        <DeliverSection />
+        <PaymentSection />
+        <ListProducts />
+        <div className="flex justify-center items-center mb-4">
+          <button
+            type="submit"
+            className={cn("w-full py-[16px] px-6 text-white bg-blue rounded-xl text-center text-base font-semibold transition-all",
+              'hover:bg-[#284695]'
+            )}
           >
-            <ContactsSection>
-            <div className="flex flex-col gap-4">
-              {fields.map((field) => (
-                <div key={field.name} className="mb-4 relative">
-                  <input
-                    type="text"
-                    id={field.name}
-                    name={field.name}
-                    value={formData[field.name]}
-                    onChange={handleChange}
-                    placeholder={field.placeholder}
-                    className={cn('w-full border-b pb-2 pt-1 focus:outline-none placeholder-gray-500',{
-                      'border-gray': true,
-                      'border-red placeholder-red': field.error,
-                    })}
-                  />
-                  {field.error && (
-                    <>
-                      <div className={cn("flex items-center mt-4",{
-                        'absolute right-0 bottom-[8px] m-0': true
-                      })}>
-                      <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
-                      </div>
-                      <div className="absolute text-red text-xs">{errors[field.name]}</div>
-                    </>
-                  )}
-                </div>
-              ))} 
-            </div>
-            </ContactsSection>
-            <DeliverSection />
-            <PaymentSection />
-            <ListProducts />
-            <div className="flex justify-center items-center mb-4">
-              <button
-                type="submit"
-                className={cn("w-full py-[16px] px-6 text-white bg-blue rounded-xl text-center text-base font-semibold transition-all",
-                  'hover:bg-[#284695]'
-                )}
-              >
-                Перейти до оплатити
-              </button>
-            </div>
-          </form>
-      
+            Перейти до оплатити
+          </button>
+        </div>
+      </form>
     </div>
   )
 }
