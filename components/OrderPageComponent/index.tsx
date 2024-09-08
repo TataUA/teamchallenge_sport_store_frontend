@@ -121,12 +121,13 @@ const OrderPageComponent = () => {
         last_name: userData.patronymic,
         email: userData.email,
         surname: userData.surname,
-        delivery_method: order.department?.Description || '',
+        delivery_method: getDeliveryMethod(),
+        branch: order.department?.Description || '',
         city: order.city?.Present || '',
         appartment: order.deliveryAddress.numberAppartment,
         street: order.deliveryAddress.street,
         user: userData?.id || 0,
-        payment_method: order.payment.card ? 'card' : 'cash',
+        payment_method: order.payment.card ? 'Card' : 'Upon Receipt',
       }
 
         const response = createOrder(newOrder)
@@ -137,6 +138,15 @@ const OrderPageComponent = () => {
       }
     }
   };
+
+
+  const getDeliveryMethod = () => {
+    if(order.deliveryType.department) return 'Branch'
+    if(order.deliveryType.deliveryMan) return 'Courier'
+    if(order.deliveryType.postOffice) return 'Parcel Locker'
+
+    return '';
+  }
 
   const fields = [
     { name: 'name', placeholder: "Ім'я", error: submitted && errors.hasOwnProperty('name') },
