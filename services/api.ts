@@ -297,6 +297,7 @@ export interface IOrder {
   email: string
   city: string
   delivery_method: string
+  branch: string
   street?: string
   appartment?: string
   payment_method: string
