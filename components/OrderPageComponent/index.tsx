@@ -76,7 +76,7 @@ const OrderPageComponent = () => {
     
     Object.keys(formData).forEach(key => {
       const typedKey = key as keyof typeof formData;
-      if (!formData[typedKey]) {
+      if (!formData[typedKey] && typedKey !== 'id') {
         newErrors[typedKey] = undefined;
       }
     });
@@ -98,13 +98,12 @@ const OrderPageComponent = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
     
     await dispatch(validationAllFields())
-
+    
     if(!user) {
       if (!validateForm()) return
     }
@@ -115,15 +114,18 @@ const OrderPageComponent = () => {
       console.log("Form submitted:", {...order, ...userData});
 
       try {
+        const match = order.city?.Present.match(/м\. [^,]+/)
+
         const newOrder: IOrder = {
-        basketId: JSON.parse(localStorage.getItem('basketId') || ""),
+        basket_id: JSON.parse(localStorage.getItem('basketId') || ""),
         first_name: userData?.name,
         last_name: userData.patronymic,
         email: userData.email,
         surname: userData.surname,
+        phone_number: userData.phone,
         delivery_method: getDeliveryMethod(),
         branch: order.department?.Description || '',
-        city: order.city?.Present || '',
+        city: match?.[0] ||  order.city?.Present || '',
         appartment: order.deliveryAddress.numberAppartment,
         street: order.deliveryAddress.street,
         user: userData?.id || 0,

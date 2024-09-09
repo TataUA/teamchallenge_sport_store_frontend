@@ -290,10 +290,11 @@ export const getListOfDepartmentsInCityNovaPoshta = async (
 };
 
 export interface IOrder {
-  basketId: string
+  basket_id: string
   last_name: string
   first_name: string
   surname: string
+  phone_number: string
   email: string
   city: string
   delivery_method: string
