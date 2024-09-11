@@ -1,5 +1,3 @@
-import fetchProductsByPopularAction from "./actions/fetchProductsByPopularAction";
-import fetchProductsByNewAction from "./actions/fetchProductsByNewAction";
 import { Slider } from "@/components/Slider-hero/Slider";
 import dataSlider from "../public/data/slider_data.json";
 
@@ -18,16 +16,20 @@ export default async function Page() {
         homePageMainSlider
         className={"min-h-[400px] h-[50dvh] mb-12"}
       />
-      <Gender/>
+      <Gender />
       <PopularCategories />
       <SortedProducts
-        title="Новинки"
-        fetchProducts={fetchProductsByNewAction}
+        title="Топ продажів"
+        page="/popular"
+        sort="popular"
+        limit={6}
       />
       <PromBanner />
       <SortedProducts
-        title="Топ продажів"
-        fetchProducts={fetchProductsByPopularAction}
+        title="Новинки"
+        page="/created_at"
+        sort="created_at"
+        limit={6}
       />
       <AboutUs />
       <SubscribeBannerFooter />

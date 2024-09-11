@@ -2,10 +2,10 @@
 
 import { apiBaseUrl } from "@/services/api";
 
-const fetchProductsByNewAction = async () => {
+const fetchSortedProductsAction = async (sort, limit) => {
   try {
     const result = await fetch(
-      `${apiBaseUrl}products/sort/?sort=created_at&limit=12`,
+      `${apiBaseUrl}products/sort/?sort=${sort}&limit=${limit}`,
       { next: { revalidate: 3600 } },
     );
     if (result.status === 200) {
@@ -18,4 +18,8 @@ const fetchProductsByNewAction = async () => {
   }
 };
 
-export default fetchProductsByNewAction;
+export default fetchSortedProductsAction;
+
+
+//created_at
+//popular

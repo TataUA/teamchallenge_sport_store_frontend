@@ -143,22 +143,6 @@ export function Slider({
                         }}
                       ></Link>
                     )}
-                    {/* {popularCat || bestSales ? (
-                      <></>
-                    ) : (
-                      <div className="relative z-10 h-full  flex items-center justify-left">
-                        <div className="w-3/6 ml-10">
-                          {title && (
-                            <p className="mb-8 font-normal text-xl  text-white">
-                              {title}
-                            </p>
-                          )}
-                          <p className="text-4xl font-semibold text-white">
-                            {subtitle}
-                          </p>
-                        </div>
-                      </div>
-                    )} */}
                   </SwiperSlide>
                 ))}
           </Swiper>
