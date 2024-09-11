@@ -1,12 +1,9 @@
 'use client'
 
 // components
-import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import {  useState } from "react"
+import {  useSelector } from "react-redux"
 import Image from "next/image"
-
-// dispatch  type
-import { AppDispatch } from "@/redux/store"
 
 // components
 import ContactsSection from "./ContactsSection"
@@ -16,9 +13,6 @@ import PaymentSection from "./PaymentSection"
 
 // utils
 import { cn } from "@/services/utils/cn"
-
-// slice
-import { validationAllFields } from "@/redux/order/orderSlice"
 
 // services
 import { createOrder, IOrder } from "@/services/api"
@@ -30,12 +24,17 @@ import { selectOrder } from "@/redux/order/orderSelector"
 // assets
 import wrong from "@/public/icons/auth/wrong.svg";
 
+  export interface IntInitialStateOrder {
+      deliveryType: 'Branch' | 'Courier' | 'Parcel Locker' | null,
+      city: string | null,
+      department: string | null,
+      payment: 'Card' | "Upon Receipt" | null,
+    }
+
 const OrderPageComponent = () => {
 
   const order = useSelector(selectOrder)
   const user = useSelector(selectUserData)
-
-  const dispatch: AppDispatch = useDispatch();
 
   const initialState = {
     name: '',
@@ -54,25 +53,69 @@ const OrderPageComponent = () => {
     email?: string,
     id?: number,
   }
+
+  const initialStateOrder: IntInitialStateOrder = {
+    deliveryType: null,
+    city: null,
+    department: null,
+    payment: null,
+  }
+
+  interface IntDeliveryErrors {
+    street?: string,
+    numberHouse?: string,
+    numberAppartment?: string,
+  }
+
+  const initialDeliveryAddress = {
+    street: '',
+    numberHouse: '',
+    numberAppartment: '',
+  }
   
   const [formData, setFormData] = useState(initialState);
   const [errors, setErrors] = useState<IntInitialStateErrors>({});
   const [submitted, setSubmitted] = useState(false);
 
+  const [orderState, setOrderState] = useState<IntInitialStateOrder>(initialStateOrder)
+  const [deliveryAddress, setDeliveryAddress] = useState(initialDeliveryAddress)
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setErrors(prevState => ({
-      ...prevState,
-      [name]: ''
-    }))
+
+    delete errors[name as keyof typeof errors];
     setFormData(prevState => ({
       ...prevState,
       [name]: value
     }));
   };
 
+  const handleChangeDeliveryAddress = (property: string, value:string) => {
+    setDeliveryAddress(prevState => ({
+          ...prevState,
+          [property]: value
+        })
+      );
+  };
+
+    const handleChangeOrder = (property: keyof IntInitialStateOrder, value:string) => {
+      setOrderState(prevState => {
+        if(prevState[property] === value) {
+          return ({
+            ...prevState,
+            [property]: ''
+          })
+        }
+        return ({
+          ...prevState,
+          [property]: value
+        })
+      });
+    };
+
   const validateForm = () => {
     let newErrors:IntInitialStateErrors = {};
+    let newErrorsDelivery: IntDeliveryErrors = {};
     
     Object.keys(formData).forEach(key => {
       const typedKey = key as keyof typeof formData;
@@ -80,6 +123,15 @@ const OrderPageComponent = () => {
         newErrors[typedKey] = undefined;
       }
     });
+
+    if(orderState.deliveryType === 'Courier') {
+      Object.keys(deliveryAddress).forEach(key => {
+        const typedKey = key as keyof typeof deliveryAddress;
+        if (!deliveryAddress[typedKey]) {
+          newErrorsDelivery[typedKey] = '';
+        }
+      });
+    }
 
     if ((formData.phone)) {
       if(formData.phone.length !== 13) {
@@ -98,57 +150,45 @@ const OrderPageComponent = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    
-    await dispatch(validationAllFields())
-    
+
     if(!user) {
       if (!validateForm()) return
     }
 
     const userData = user ? user : formData
     
-    if(order.allFileds) {
-      console.log("Form submitted:", {...order, ...userData});
-
-      try {
-        const match = order.city?.Present.match(/м\. [^,]+/)
-
-        const newOrder: IOrder = {
+    try {
+      const newOrder: IOrder = {
         basket_id: JSON.parse(localStorage.getItem('basketId') || ""),
         first_name: userData?.name,
         last_name: userData.patronymic,
         email: userData.email,
         surname: userData.surname,
         phone_number: userData.phone,
-        delivery_method: getDeliveryMethod(),
-        branch: order.department?.Description || '',
-        city: match?.[0] ||  order.city?.Present || '',
-        appartment: order.deliveryAddress.numberAppartment,
-        street: order.deliveryAddress.street,
+        delivery_method: orderState.deliveryType || '',
+        branch: orderState.department || '',
+        city: orderState.city || '',
+        appartment: deliveryAddress.numberAppartment,
+        street: deliveryAddress.street,
         user: userData?.id || 0,
         payment_method: order.payment.card ? 'Card' : 'Upon Receipt',
       }
-
-        const response = createOrder(newOrder)
-        console.log("🚀 ~ handleSubmit ~ response:", response)
-      } catch (error) {
-        console.log("🚀 ~ handleSubmit ~ error:", error)
-        
-      }
+      
+      const response = createOrder(newOrder)
+      console.log("🚀 ~ setTimeout ~ response:", response)
+    } catch (error) {
+      console.log("🚀 ~ handleSubmit ~ error:", error)
+      
     }
   };
 
+console.log({...orderState, ...deliveryAddress});
 
-  const getDeliveryMethod = () => {
-    if(order.deliveryType.department) return 'Branch'
-    if(order.deliveryType.deliveryMan) return 'Courier'
-    if(order.deliveryType.postOffice) return 'Parcel Locker'
-
-    return '';
-  }
+ 
 
   const fields = [
     { name: 'name', placeholder: "Ім'я", error: submitted && errors.hasOwnProperty('name') },
@@ -158,9 +198,6 @@ const OrderPageComponent = () => {
     { name: 'email', placeholder: 'Електронна пошта', error: submitted && errors.hasOwnProperty('email') },
   ];
 
-  // console.log(JSON.parse(localStorage.getItem('basketId') || ""), typeof localStorage.getItem('basketId'));
-  
-  
   return (
     <div className="pt-4">
       <h1 
@@ -202,8 +239,20 @@ const OrderPageComponent = () => {
           ))} 
         </div>
         </ContactsSection>
-        <DeliverSection />
-        <PaymentSection />
+        <DeliverSection 
+          orderState={orderState} 
+          deliveryAddress={deliveryAddress} 
+          setOrderState={setOrderState} 
+          handleChangeOrder={handleChangeOrder} 
+          handleChangeDeliveryAddress={handleChangeDeliveryAddress} 
+          submitted={submitted} 
+        />
+        <PaymentSection 
+          orderState={orderState} 
+          setOrderState={setOrderState} 
+          handleChangeOrder={handleChangeOrder} 
+          submitted={submitted} 
+        />
         <ListProducts />
         <div className="flex justify-center items-center mb-4">
           <button

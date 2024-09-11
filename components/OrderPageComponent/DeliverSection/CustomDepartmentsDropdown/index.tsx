@@ -2,17 +2,10 @@
 
 // core
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
-// selector
-import { selectOrder } from '@/redux/order/orderSelector';
-
-// slice
-import { setDepartmentToStore, setPostOffice } from '@/redux/order/orderSlice';
 
 // services
 import { 
-    getListOfCitiesNovaPoshta, 
     getListOfDepartmentsInCityNovaPoshta, 
     INovaPoshtaDepartmentItemResponse 
 } from '@/services/api';
@@ -20,40 +13,39 @@ import {
 // utils
 import { cn } from '@/services/utils/cn';
 
-// components
-import { DropdownItemCityNovaPoshta } from '../CustomCitiesDropdown';
-
 // assets
 import getArrowDownSVG from '@/helpers/getArrowDownSVG';
+import { IntInitialStateOrder } from '../..';
 
 interface IProps {
     typeOfEntity: string
-    selectedItem: INovaPoshtaDepartmentItemResponse | null
-    city: DropdownItemCityNovaPoshta | null
+    selectedItem?: INovaPoshtaDepartmentItemResponse
+    city: string,
+    handleChangeOrder: (propert:keyof IntInitialStateOrder, value: string)=>void
 }
 
 const CustomDepartmentsDropdown = (props: IProps) => {
-    const {typeOfEntity, selectedItem, city} = props
-
-    const dispatch = useDispatch()
+    const {typeOfEntity, city, handleChangeOrder} = props
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [data, setData] = useState<any[]>([]);
+
+    const [selected, setSelected] = useState()
 
     const fetchData = useCallback(async () => {
         if(!city) return
         
         setIsLoading(true);
         try {
-            const response = await getListOfDepartmentsInCityNovaPoshta(city?.MainDescription)
+            const response = await getListOfDepartmentsInCityNovaPoshta(city)
             if(typeOfEntity === 'postOffice') {
-                const filteredResponseOnlyPostOffices = response.filter(item => item.Description.toLowerCase().includes('поштомат'));
+                const filteredResponseOnlyPostOffices = response.filter(item => item.Description.toLowerCase().includes('поштомат')).map(item => (item.Description));
                 setData([...filteredResponseOnlyPostOffices])
                 return
             }
 
-            const filteredResponseWithoutPostOffices = response.filter(item => !item.Description.toLowerCase().includes('поштомат'));
+            const filteredResponseWithoutPostOffices = response.filter(item => !item.Description.toLowerCase().includes('поштомат')).map(item => (item.Description));
             setData([...filteredResponseWithoutPostOffices])
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -73,10 +65,11 @@ const CustomDepartmentsDropdown = (props: IProps) => {
 
     const handleSelect = (item: any) => {
         if(typeOfEntity === 'postOffice') {
-            dispatch(setPostOffice(item));
+            handleChangeOrder('department', item)
         } else {
-            dispatch(setDepartmentToStore(item));
+            handleChangeOrder('department', item)
         }
+        setSelected(item)
         setIsOpen(false);
     };
     
@@ -92,7 +85,7 @@ const CustomDepartmentsDropdown = (props: IProps) => {
                 onClick={toggleDropdown}
             >
                 <input className='w-full bg-gray-200 border border-gray-300 rounded-lg px-4 py-[15px] pr-[56px] text-base font-medium text-[#868687]' 
-                type="text" value={selectedItem ? selectedItem?.Description : undefined}
+                type="text" value={selected ? selected : undefined}
                     placeholder={typeOfEntity === 'department' ? 'Оберіть відділення' : 'Оберіть поштомат'}
                 />
                 {getArrowDownSVG()}
@@ -106,7 +99,7 @@ const CustomDepartmentsDropdown = (props: IProps) => {
                     {isLoading ? (
                         <div className="p-2 text-center">Loading...</div>
                     ) : (
-                        data.map((item: {Description: string}, index) => (
+                        data.map((item:string, index) => (
                             <div
                                 key={index}
                                 className={cn("p-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer",{
@@ -114,7 +107,7 @@ const CustomDepartmentsDropdown = (props: IProps) => {
                                 })}
                                 onClick={() => handleSelect(item)}
                             >
-                                {item.Description}
+                                {item}
                             </div>
                         ))
                     )}

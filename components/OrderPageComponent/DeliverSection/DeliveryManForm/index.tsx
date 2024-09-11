@@ -1,22 +1,16 @@
-// core
-import { useDispatch, useSelector } from "react-redux";
-
-// selector
-import { selectOrder } from "@/redux/order/orderSelector";
-
-// actions
-import { handleChangeDeliveryAddress } from "@/redux/order/orderSlice";
-
 // utils
 import { cn } from "@/services/utils/cn"
 
-const DeliveryManForm = () => {
-  const dispatch = useDispatch()
+interface IProps {
+   handleChangeDeliveryAddress: (propert:string, value: any)=>void
+   deliveryAddress: any
+}
 
-  const {deliveryAddress} = useSelector(selectOrder)
+const DeliveryManForm = (props: IProps) => {
+  const {handleChangeDeliveryAddress, deliveryAddress} = props
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, id: string) => {
-      dispatch(handleChangeDeliveryAddress({value: event.target.value, id}))
+      handleChangeDeliveryAddress(id, event.target.value)
   };
 
   const inputClassname = cn("w-full px-0 py-2 pt-5 border-b-[1px] border-[#CFCFCF] text-base font-medium text-[#868687]",
