@@ -2,7 +2,7 @@
 
 import { apiBaseUrl } from "@/services/api";
 
-const fetchSortedProductsAction = async (sort, limit) => {
+const fetchSortedProductsAction = async (sort: string, limit: number) => {
   try {
     const result = await fetch(
       `${apiBaseUrl}products/sort/?sort=${sort}&limit=${limit}`,
