@@ -7,16 +7,14 @@ interface SortedProductsProps {
   title: string;
   page: string;
   sort: string;
-  limit: number;
 }
 
 export default async function SortedProducts({
   title,
   page,
   sort,
-  limit,
 }: SortedProductsProps) {
-  const products = await fetchSortedProductsAction(sort, limit);
+  const products = await fetchSortedProductsAction(sort, 6);
 
   return (
     <div className="mb-12 px-6">
@@ -25,7 +23,7 @@ export default async function SortedProducts({
           {title}
         </h2>
         <Link
-          href={`/sortedProducts${page}`}
+          href={`/sortedProducts${page}?limit=12`}
           className=" flex gap-1 items-center text-sm text-[#083DC5]"
         >
           <p>Подивитись всі</p>

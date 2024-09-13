@@ -20,6 +20,3 @@ const fetchSortedProductsAction = async (sort: string, limit: number) => {
 
 export default fetchSortedProductsAction;
 
-
-//created_at
-//popular

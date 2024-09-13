@@ -22,14 +22,12 @@ export default async function Page() {
         title="Топ продажів"
         page="/popular"
         sort="popular"
-        limit={6}
       />
       <PromBanner />
       <SortedProducts
         title="Новинки"
         page="/created_at"
         sort="created_at"
-        limit={6}
       />
       <AboutUs />
       <SubscribeBannerFooter />
