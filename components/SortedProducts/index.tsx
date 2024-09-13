@@ -7,26 +7,24 @@ interface SortedProductsProps {
   title: string;
   page: string;
   sort: string;
-  limit: number;
 }
 
 export default async function SortedProducts({
   title,
   page,
   sort,
-  limit,
 }: SortedProductsProps) {
-  const products = await fetchSortedProductsAction(sort, limit);
+  const products = await fetchSortedProductsAction(sort, 6);
 
   return (
-    <div className="mb-12 px-6">
-      <div className="flex justify-between  items-center mb-4 md:mb-8">
+    <section className=" px-6 xl:px-[60px] xl:py-[52px] ">
+      <div className="flex justify-between  items-center mb-4 md:mb-8 xl:mb-8">
         <h2 className="text-xl leading-140 font-semibold  md:text-2xl md:leading-7 ">
           {title}
         </h2>
         <Link
-          href={`/sortedProducts${page}`}
-          className=" flex gap-1 items-center text-sm text-[#083DC5]"
+          href={`/sortedProducts${page}?limit=12`}
+          className=" flex gap-1 items-center text-sm text-[#083DC5] xl:text-base"
         >
           <p>Подивитись всі</p>
           <svg
@@ -36,7 +34,7 @@ export default async function SortedProducts({
             stroke="#083DC5"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="svgIcon"
+            className="svgIcon xl:w-6 xl:h-6"
           >
             <path
               d="M9 18L15 12L9 6"
@@ -53,8 +51,9 @@ export default async function SortedProducts({
           autoPlay={false}
           bestSales
           slidesPerView={2.1}
+          slidesPerViewDesktop={6}
         />
       </ul>
-    </div>
+    </section>
   );
 }

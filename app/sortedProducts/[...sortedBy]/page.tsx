@@ -1,5 +1,3 @@
-
-import { useSearchParams } from "next/navigation";
 import fetchSortedProductsAction from "@/app/actions/fetchSortedProductsAction";
 
 import { IProduct } from "@/services/types";
@@ -8,17 +6,14 @@ import getSortedProducts from "@/helpers/getSortedProducts";
 import getFilteredProducts from "@/helpers/getFilteredProducts";
 import Test from "@/components/ProductsList/Test";
 
-// export const metadata = {
-//   title: "Products Page",
-//   description: "Products Page with listed products",
-// };
+export const metadata = {
+  title: "Products Page",
+  description: "Products Page with listed products",
+};
 
 export interface IFilters {
-  sortedBy: string;
   page?: string;
-  sizes?: string;
-  price?: string;
-  color?: string;
+  limit?: number;
 }
 
 export interface IProductsPageInitialProps {
@@ -33,11 +28,13 @@ const getSortedAndFilteredProducts = async ({
   filters: IFilters;
   sortedBy: string;
 }) => {
-  const products: IProduct[] = await fetchSortedProductsAction(sortedBy, 12);
+  const products: IProduct[] = await fetchSortedProductsAction(
+    sortedBy,
+    filters.limit || 12,
+  );
 
   const sortedProducts = getSortedProducts({
     products: products,
-    direction: filters.sortedBy,
   });
 
   const arraOfFiltersFromFiltersObject = Object.entries({
@@ -52,14 +49,12 @@ const getSortedAndFilteredProducts = async ({
   return filteredProductsByGeneralFilters;
 };
 
-
 export default async function SortedProductsPage(
   props: IProductsPageInitialProps,
 ) {
-
   const products = await getSortedAndFilteredProducts({
     filters: props.searchParams,
-    sortedBy: props.params.sortedBy
+    sortedBy: props.params.sortedBy,
   });
   return (
     <section className="px-6 pt-4 pb-12">

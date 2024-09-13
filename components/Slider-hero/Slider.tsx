@@ -20,7 +20,11 @@ interface Slide {
   title?: string;
   link?: string;
   href?: string;
-  image: string;
+  image?: string;
+  images?: {
+    mobile: string;
+    desktop: string;
+  };
 }
 
 interface SliderProps {
@@ -34,6 +38,7 @@ interface SliderProps {
   bestSalesItem?: boolean;
   productsList?: boolean;
   slidesPerView?: number;
+  slidesPerViewDesktop?: number;
   className?: string;
   products?: IProduct[];
 }
@@ -47,6 +52,7 @@ export function Slider({
   bestSales,
   bestSalesItem,
   slidesPerView = 1,
+  slidesPerViewDesktop,
   className = "",
   products = [],
 }: SliderProps) {
@@ -94,6 +100,14 @@ export function Slider({
             autoplay={autoPlay}
             loop={loop}
             modules={[Autoplay, Navigation, Pagination]}
+            breakpoints={{
+              0: {
+                slidesPerView: slidesPerView,
+              },
+              1440: {
+                slidesPerView: slidesPerViewDesktop || slidesPerView,
+              },
+            }}
           >
             {bestSales
               ? products.map((product) => (
@@ -101,14 +115,14 @@ export function Slider({
                     <ListItem bestSales={true} product={product} />
                   </SwiperSlide>
                 ))
-              : data?.map(({ id, image, title, href }) => (
-                  <SwiperSlide key={id || image}>
+              : data?.map(({ id, image, images, title, href }) => (
+                  <SwiperSlide key={id}>
                     {cardImage ? (
                       <div className="rounded-xl overflow-hidden">
                         <Image
                           alt=""
                           style={{ objectFit: "contain" }}
-                          src={image}
+                          src={image || ""}
                           width={850}
                           height={1300}
                         />
@@ -120,7 +134,7 @@ export function Slider({
                             <Image
                               width={108}
                               height={108}
-                              src={image}
+                              src={image || ""}
                               alt=""
                               className="object-center object-cover md:w-[424px] md:h-[300px] "
                             />
@@ -131,17 +145,32 @@ export function Slider({
                         </Link>
                       </div>
                     ) : (
-                      <Link
-                        href={href ?? "/"}
-                        className={cn(
-                          "h-full w-full absolute left-0 top-0 bg-grey-900",
-                        )}
-                        style={{
-                          background: image
-                            ? `center center / cover scroll no-repeat url(${image})`
-                            : undefined,
-                        }}
-                      ></Link>
+                      <div>
+                        <Link
+                          href={href ?? "/"}
+                          className={cn(
+                            "h-full w-full absolute left-0 top-0",
+                            "xl:hidden",
+                          )}
+                          style={{
+                            background: images
+                              ? `center center / cover scroll no-repeat url(${images.mobile})`
+                              : undefined,
+                          }}
+                        ></Link>
+                        <Link
+                          href={href ?? "/"}
+                          className={cn(
+                            "hidden h-full w-full absolute left-0 top-0",
+                            "xl:block",
+                          )}
+                          style={{
+                            background: images
+                              ? `center center / cover scroll no-repeat url(${images.desktop})`
+                              : undefined,
+                          }}
+                        ></Link>
+                      </div>
                     )}
                   </SwiperSlide>
                 ))}
