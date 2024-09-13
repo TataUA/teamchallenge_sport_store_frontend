@@ -222,6 +222,10 @@ const OrderPageComponent = () => {
         });
         setTimeout(()=>{
           createOrder(newOrder)
+          localStorage.removeItem('basketId')
+          dispatch(cleanCart())
+          router.push("/payment");
+          
           return
         }, 500)
       } 
@@ -235,6 +239,10 @@ const OrderPageComponent = () => {
         });
         setTimeout(()=>{
           createOrder(newOrder)
+          localStorage.removeItem('basketId')
+          dispatch(cleanCart())
+          router.push("/payment");
+
           return
         }, 500)
       }
