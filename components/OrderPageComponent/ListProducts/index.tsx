@@ -69,7 +69,7 @@ const ListProducts = () => {
                     />
                   </div>
                   <div className='flex flex-col justify-evenly flex-1 shrink'>
-                    <span className="text-ellipsis whitespace-nowrap overflow-hidden">{product.title}</span>
+                    <span className="flex-1 text-ellipsis overflow-hidden">{product.title}</span>
                     <div className='flex gap-2 flex-wrap'>
                       <span className='text-[#868687] text-sm'>
                         Розмір: {isShoesSizes(product.size[0].value) ? `${product.size[0].value} UA` : product.size[0].value}

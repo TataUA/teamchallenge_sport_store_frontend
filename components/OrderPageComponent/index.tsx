@@ -2,7 +2,8 @@
 
 // components
 import {  useState } from "react"
-import {  useSelector } from "react-redux"
+import {  useDispatch, useSelector } from "react-redux"
+import { useRouter } from "next/navigation"
 import Image from "next/image"
 
 // components
@@ -13,6 +14,7 @@ import PaymentSection from "./PaymentSection"
 
 // utils
 import { cn } from "@/services/utils/cn"
+import { setBasketIdToLocalStorage } from "@/helpers/getBasketIdFromLocalStorage"
 
 // services
 import { createOrder, IOrder } from "@/services/api"
@@ -24,6 +26,16 @@ import { selectOrder } from "@/redux/order/orderSelector"
 // assets
 import wrong from "@/public/icons/auth/wrong.svg";
 
+// actions
+import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction"
+import addProductToCartInDbAction from "@/app/actions/addProductToCartInDbAction"
+
+// selector
+import { selectCart } from "@/redux/cart/cartSelector"
+
+// slice
+import { cleanCart } from "@/redux/cart/cartSlice"
+
   export interface IntInitialStateOrder {
       deliveryType: 'Branch' | 'Courier' | 'Parcel Locker' | null,
       city: string | null,
@@ -31,10 +43,27 @@ import wrong from "@/public/icons/auth/wrong.svg";
       payment: 'Card' | "Upon Receipt" | null,
     }
 
+  export interface IntInitialStateErrors {
+    name?: string,
+    surname?: string,
+    patronymic?: string,
+    phone?: string,
+    email?: string,
+    id?: number,
+    street?: string,
+    numberHouse?: string,
+    numberAppartment?: string,
+  }
+
 const OrderPageComponent = () => {
 
   const order = useSelector(selectOrder)
+  const cart = useSelector(selectCart)
   const user = useSelector(selectUserData)
+
+  const dispatch = useDispatch()
+
+  const router = useRouter()
 
   const initialState = {
     name: '',
@@ -45,26 +74,11 @@ const OrderPageComponent = () => {
     id: 0
   }
 
-  interface IntInitialStateErrors {
-    name?: string,
-    surname?: string,
-    patronymic?: string,
-    phone?: string,
-    email?: string,
-    id?: number,
-  }
-
   const initialStateOrder: IntInitialStateOrder = {
     deliveryType: null,
     city: null,
     department: null,
     payment: null,
-  }
-
-  interface IntDeliveryErrors {
-    street?: string,
-    numberHouse?: string,
-    numberAppartment?: string,
   }
 
   const initialDeliveryAddress = {
@@ -115,55 +129,65 @@ const OrderPageComponent = () => {
 
   const validateForm = () => {
     let newErrors:IntInitialStateErrors = {};
-    let newErrorsDelivery: IntDeliveryErrors = {};
-    
-    Object.keys(formData).forEach(key => {
-      const typedKey = key as keyof typeof formData;
-      if (!formData[typedKey] && typedKey !== 'id') {
-        newErrors[typedKey] = undefined;
+
+    if(!user) {
+      Object.keys(formData).forEach(key => {
+        const typedKey = key as keyof typeof formData;
+        if (!formData[typedKey] && typedKey !== 'id') {
+          newErrors[typedKey] = undefined;
+        }
+      });
+      
+      if ((formData.phone)) {
+        if(formData.phone.length !== 13) {
+          newErrors.phone = "Номер телефону некоректний"
+        };
+        if(!formData.phone.startsWith('+380')) { 
+          newErrors.phone = "Номер телефону повинен починатися з +380"
+        };
       }
-    });
+  
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (formData.email && !emailRegex.test(formData.email)) {
+        newErrors.email = "Невірний формат email";
+      }
+
+    }
 
     if(orderState.deliveryType === 'Courier') {
       Object.keys(deliveryAddress).forEach(key => {
         const typedKey = key as keyof typeof deliveryAddress;
         if (!deliveryAddress[typedKey]) {
-          newErrorsDelivery[typedKey] = '';
+          newErrors[typedKey] = '';
         }
       });
     }
 
-    if ((formData.phone)) {
-      if(formData.phone.length !== 13) {
-        newErrors.phone = "Номер телефону некоректний"
-      };
-      if(!formData.phone.startsWith('+380')) { 
-        newErrors.phone = "Номер телефону повинен починатися з +380"
-      };
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (formData.email && !emailRegex.test(formData.email)) {
-      newErrors.email = "Невірний формат email";
-    }
-
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return (Object.keys(newErrors).length === 0)
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
 
-    if(!user) {
-      if (!validateForm()) return
-    }
+    if (!validateForm()) return
+
+    if(!cart.products.length) return
+
 
     const userData = user ? user : formData
-    
+
     try {
+      let basketId = localStorage.getItem('basketId');
+      if(!basketId) {
+        const newBasket = await createShoppingCartAction()
+        basketId = newBasket.basketId
+        setBasketIdToLocalStorage(basketId)
+      }
+
       const newOrder: IOrder = {
-        basket_id: JSON.parse(localStorage.getItem('basketId') || ""),
+        basket_id: JSON.parse(basketId),
         first_name: userData?.name,
         last_name: userData.patronymic,
         email: userData.email,
@@ -177,18 +201,62 @@ const OrderPageComponent = () => {
         user: userData?.id || 0,
         payment_method: order.payment.card ? 'Card' : 'Upon Receipt',
       }
+
+      const response = await createOrder(newOrder)
+
+      if(response?.msg?.includes('Basket does not exist')) {
+        localStorage.removeItem('basketId')
+        const newBasket = await createShoppingCartAction()
+        
+        setBasketIdToLocalStorage(newBasket.basketId)
+        newOrder.basket_id = newBasket.basketId;
+
+        cart.products.forEach(async (product) => {
+          await addProductToCartInDbAction(
+            newBasket.basketId,
+            product,
+          );
+          
+        });
+        setTimeout(()=>{
+          createOrder(newOrder)
+          localStorage.removeItem('basketId')
+          dispatch(cleanCart())
+          router.push("/payment");
+          
+          return
+        }, 500)
+      } 
+
+      if(response?.msg?.includes('Your basket is empty')) {
+        cart.products.forEach(async (product) => {
+          await addProductToCartInDbAction(
+            basketId,
+            product,
+          );
+        });
+        setTimeout(()=>{
+          createOrder(newOrder)
+          localStorage.removeItem('basketId')
+          dispatch(cleanCart())
+          router.push("/payment");
+
+          return
+        }, 500)
+      }
+
+      if(response?.msg?.includes('Congratulations')) {
+        localStorage.removeItem('basketId')
+        dispatch(cleanCart())
+        router.push("/payment");
+        
+        return
+      }
       
-      const response = createOrder(newOrder)
-      console.log("🚀 ~ setTimeout ~ response:", response)
     } catch (error) {
       console.log("🚀 ~ handleSubmit ~ error:", error)
-      
     }
   };
-
-console.log({...orderState, ...deliveryAddress});
-
- 
 
   const fields = [
     { name: 'name', placeholder: "Ім'я", error: submitted && errors.hasOwnProperty('name') },
@@ -246,6 +314,7 @@ console.log({...orderState, ...deliveryAddress});
           handleChangeOrder={handleChangeOrder} 
           handleChangeDeliveryAddress={handleChangeDeliveryAddress} 
           submitted={submitted} 
+          errors={errors}
         />
         <PaymentSection 
           orderState={orderState} 
