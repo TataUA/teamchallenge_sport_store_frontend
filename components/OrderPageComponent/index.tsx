@@ -43,6 +43,18 @@ import { cleanCart } from "@/redux/cart/cartSlice"
       payment: 'Card' | "Upon Receipt" | null,
     }
 
+  export interface IntInitialStateErrors {
+    name?: string,
+    surname?: string,
+    patronymic?: string,
+    phone?: string,
+    email?: string,
+    id?: number,
+    street?: string,
+    numberHouse?: string,
+    numberAppartment?: string,
+  }
+
 const OrderPageComponent = () => {
 
   const order = useSelector(selectOrder)
@@ -62,26 +74,11 @@ const OrderPageComponent = () => {
     id: 0
   }
 
-  interface IntInitialStateErrors {
-    name?: string,
-    surname?: string,
-    patronymic?: string,
-    phone?: string,
-    email?: string,
-    id?: number,
-  }
-
   const initialStateOrder: IntInitialStateOrder = {
     deliveryType: null,
     city: null,
     department: null,
     payment: null,
-  }
-
-  interface IntDeliveryErrors {
-    street?: string,
-    numberHouse?: string,
-    numberAppartment?: string,
   }
 
   const initialDeliveryAddress = {
@@ -132,51 +129,52 @@ const OrderPageComponent = () => {
 
   const validateForm = () => {
     let newErrors:IntInitialStateErrors = {};
-    let newErrorsDelivery: IntDeliveryErrors = {};
-    
-    Object.keys(formData).forEach(key => {
-      const typedKey = key as keyof typeof formData;
-      if (!formData[typedKey] && typedKey !== 'id') {
-        newErrors[typedKey] = undefined;
+
+    if(!user) {
+      Object.keys(formData).forEach(key => {
+        const typedKey = key as keyof typeof formData;
+        if (!formData[typedKey] && typedKey !== 'id') {
+          newErrors[typedKey] = undefined;
+        }
+      });
+      
+      if ((formData.phone)) {
+        if(formData.phone.length !== 13) {
+          newErrors.phone = "Номер телефону некоректний"
+        };
+        if(!formData.phone.startsWith('+380')) { 
+          newErrors.phone = "Номер телефону повинен починатися з +380"
+        };
       }
-    });
+  
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (formData.email && !emailRegex.test(formData.email)) {
+        newErrors.email = "Невірний формат email";
+      }
+
+    }
 
     if(orderState.deliveryType === 'Courier') {
       Object.keys(deliveryAddress).forEach(key => {
         const typedKey = key as keyof typeof deliveryAddress;
         if (!deliveryAddress[typedKey]) {
-          newErrorsDelivery[typedKey] = '';
+          newErrors[typedKey] = '';
         }
       });
     }
 
-    if ((formData.phone)) {
-      if(formData.phone.length !== 13) {
-        newErrors.phone = "Номер телефону некоректний"
-      };
-      if(!formData.phone.startsWith('+380')) { 
-        newErrors.phone = "Номер телефону повинен починатися з +380"
-      };
-    }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (formData.email && !emailRegex.test(formData.email)) {
-      newErrors.email = "Невірний формат email";
-    }
-
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return (Object.keys(newErrors).length === 0)
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
 
+    if (!validateForm()) return
+
     if(!cart.products.length) return
 
-    if(!user) {
-      if (!validateForm()) return
-    }
 
     const userData = user ? user : formData
 
@@ -316,6 +314,7 @@ const OrderPageComponent = () => {
           handleChangeOrder={handleChangeOrder} 
           handleChangeDeliveryAddress={handleChangeDeliveryAddress} 
           submitted={submitted} 
+          errors={errors}
         />
         <PaymentSection 
           orderState={orderState} 

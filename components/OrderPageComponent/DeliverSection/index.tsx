@@ -17,7 +17,7 @@ import wrong from "@/public/icons/auth/wrong.svg";
 import getNovaPoshtaIconSVG from "@/helpers/getNovaPoshtaIconSVG";
 
 // types
-import { IntInitialStateOrder } from "..";
+import { IntInitialStateErrors, IntInitialStateOrder } from "..";
 
 interface IProps {
   orderState: IntInitialStateOrder, 
@@ -26,6 +26,7 @@ interface IProps {
   setOrderState: (e: any)=>void
   handleChangeOrder: (propert: keyof IntInitialStateOrder, value: any)=>void
   handleChangeDeliveryAddress: (propert:string, value: any)=>void
+  errors: IntInitialStateErrors
 }
 
 const DeliverSection = ({
@@ -34,7 +35,8 @@ const DeliverSection = ({
   submitted, 
   setOrderState, 
   handleChangeOrder, 
-  handleChangeDeliveryAddress
+  handleChangeDeliveryAddress,
+  errors: errorsOrderState
 }: IProps) => {
 
   const {deliveryType, city, department} = orderState;
@@ -50,10 +52,19 @@ const DeliverSection = ({
     handleChangeOrder(property as keyof IntInitialStateOrder, value)
     setError(false)
   };
-
+  
   useEffect(()=>{
     if(city && error) setError(false)
   },[city, error])
+
+  useEffect(()=>{
+    if(Object.keys(errorsOrderState || {}).length > 0) {
+      setError(true)
+    } else {
+      setError(false)
+    }
+  },[errorsOrderState, submitted])
+
 
   const checkboxClassname = cn("w-[18px] h-[18px] mr-2 rounded-[6px] border-[1px] outline-none border-[#868687]",
     'appearance-none checked:bg-blue checked:border-0',
@@ -80,7 +91,7 @@ const DeliverSection = ({
             </span>
           </div>
         ) : null}
-        {city && !department && (submitted) ? (
+        {city && (error || submitted) ? (
           <div className="flex gap-2 items-center">
             <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
             <span
