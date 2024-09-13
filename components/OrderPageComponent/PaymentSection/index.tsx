@@ -1,31 +1,26 @@
 'use client'
 
 // core
-import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
-
-// selector
-import { selectOrder } from "@/redux/order/orderSelector";
-
-// actions
-import { handleClickCheckboxPayment } from "@/redux/order/orderSlice";
-
 // assets
 import wrong from "@/public/icons/auth/wrong.svg";
 
 // utils
 import { cn } from "@/services/utils/cn";
 
-const PaymentSection = () => {
-  const dispatch = useDispatch()
+// types
+import { IntInitialStateOrder } from "..";
 
+interface IProps {
+  orderState: IntInitialStateOrder, 
+  submitted: boolean, 
+  setOrderState: (e: any)=>void
+  handleChangeOrder: (propert:keyof IntInitialStateOrder, value: string)=>void
+}
+
+const PaymentSection = (props: IProps) => {
+  const {orderState, submitted, handleChangeOrder} = props
   
-  const {payment, allFileds} = useSelector(selectOrder)
-
-  const handleOnChangePayment = (id: string) => {
-    dispatch(handleClickCheckboxPayment(id))
-  };
-
   const checkboxClassname = cn("w-[18px] h-[18px] mr-2 rounded-[6px] border-[1px] outline-none border-[#868687]",
     'appearance-none checked:bg-blue checked:border-0',
     'relative peer'
@@ -41,7 +36,7 @@ const PaymentSection = () => {
         >
           Оплата
         </h3>
-        {!payment.card && !payment.cash && (allFileds === false) ? (
+        {!orderState.payment && submitted ? (
           <div className="flex gap-2 items-center">
             <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
             <span
@@ -60,8 +55,8 @@ const PaymentSection = () => {
             id="cash" 
             name="cash" 
             value="cash" 
-            checked={payment.cash}
-            onChange={() => handleOnChangePayment("cash")} 
+            checked={orderState.payment === 'Upon Receipt'}
+            onChange={() => handleChangeOrder('payment', "Upon Receipt")} 
             />
             <svg 
               className="
@@ -91,8 +86,8 @@ const PaymentSection = () => {
             id="card" 
             name="card" 
             value="card" 
-            checked={payment.card}
-            onChange={() => handleOnChangePayment("card")} />
+            checked={orderState.payment === 'Card'}
+            onChange={() => handleChangeOrder('payment', "Card")} />
           <svg 
             className="
               absolute 
