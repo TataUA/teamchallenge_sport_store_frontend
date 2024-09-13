@@ -2,7 +2,8 @@
 
 // components
 import {  useState } from "react"
-import {  useSelector } from "react-redux"
+import {  useDispatch, useSelector } from "react-redux"
+import { useRouter } from "next/navigation"
 import Image from "next/image"
 
 // components
@@ -13,6 +14,7 @@ import PaymentSection from "./PaymentSection"
 
 // utils
 import { cn } from "@/services/utils/cn"
+import { setBasketIdToLocalStorage } from "@/helpers/getBasketIdFromLocalStorage"
 
 // services
 import { createOrder, IOrder } from "@/services/api"
@@ -24,6 +26,16 @@ import { selectOrder } from "@/redux/order/orderSelector"
 // assets
 import wrong from "@/public/icons/auth/wrong.svg";
 
+// actions
+import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction"
+import addProductToCartInDbAction from "@/app/actions/addProductToCartInDbAction"
+
+// selector
+import { selectCart } from "@/redux/cart/cartSelector"
+
+// slice
+import { cleanCart } from "@/redux/cart/cartSlice"
+
   export interface IntInitialStateOrder {
       deliveryType: 'Branch' | 'Courier' | 'Parcel Locker' | null,
       city: string | null,
@@ -34,7 +46,12 @@ import wrong from "@/public/icons/auth/wrong.svg";
 const OrderPageComponent = () => {
 
   const order = useSelector(selectOrder)
+  const cart = useSelector(selectCart)
   const user = useSelector(selectUserData)
+
+  const dispatch = useDispatch()
+
+  const router = useRouter()
 
   const initialState = {
     name: '',
@@ -155,15 +172,24 @@ const OrderPageComponent = () => {
     e.preventDefault();
     setSubmitted(true);
 
+    if(!cart.products.length) return
+
     if(!user) {
       if (!validateForm()) return
     }
 
     const userData = user ? user : formData
-    
+
     try {
+      let basketId = localStorage.getItem('basketId');
+      if(!basketId) {
+        const newBasket = await createShoppingCartAction()
+        basketId = newBasket.basketId
+        setBasketIdToLocalStorage(basketId)
+      }
+
       const newOrder: IOrder = {
-        basket_id: JSON.parse(localStorage.getItem('basketId') || ""),
+        basket_id: JSON.parse(basketId),
         first_name: userData?.name,
         last_name: userData.patronymic,
         email: userData.email,
@@ -177,18 +203,54 @@ const OrderPageComponent = () => {
         user: userData?.id || 0,
         payment_method: order.payment.card ? 'Card' : 'Upon Receipt',
       }
+
+      const response = await createOrder(newOrder)
+
+      if(response?.msg?.includes('Basket does not exist')) {
+        localStorage.removeItem('basketId')
+        const newBasket = await createShoppingCartAction()
+        
+        setBasketIdToLocalStorage(newBasket.basketId)
+        newOrder.basket_id = newBasket.basketId;
+
+        cart.products.forEach(async (product) => {
+          await addProductToCartInDbAction(
+            newBasket.basketId,
+            product,
+          );
+          
+        });
+        setTimeout(()=>{
+          createOrder(newOrder)
+          return
+        }, 500)
+      } 
+
+      if(response?.msg?.includes('Your basket is empty')) {
+        cart.products.forEach(async (product) => {
+          await addProductToCartInDbAction(
+            basketId,
+            product,
+          );
+        });
+        setTimeout(()=>{
+          createOrder(newOrder)
+          return
+        }, 500)
+      }
+
+      if(response?.msg?.includes('Congratulations')) {
+        localStorage.removeItem('basketId')
+        dispatch(cleanCart())
+        router.push("/payment");
+        
+        return
+      }
       
-      const response = createOrder(newOrder)
-      console.log("🚀 ~ setTimeout ~ response:", response)
     } catch (error) {
       console.log("🚀 ~ handleSubmit ~ error:", error)
-      
     }
   };
-
-console.log({...orderState, ...deliveryAddress});
-
- 
 
   const fields = [
     { name: 'name', placeholder: "Ім'я", error: submitted && errors.hasOwnProperty('name') },
