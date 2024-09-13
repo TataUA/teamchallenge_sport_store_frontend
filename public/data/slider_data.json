@@ -1,12 +1,26 @@
 [
   {
     "id": 1,
-    "image": "/images/hero/adidas_320-480_400.png",
+    "images": {
+      "mobile": "/images/hero/adidas_320-480_400.png",
+      "desktop": "/images/hero/adidas_990-1920_624.png"
+    },
     "href": "/product/103"
   },
   {
     "id": 2,
-    "image": "/images/hero/puma_320-480.png",
+    "images": {
+      "mobile": "/images/hero/puma_320-480.png",
+      "desktop": "/images/hero/puma_990-1920.png"
+    },
+    "href": "/product/30"
+  },
+  {
+    "id": 3,
+    "images": {
+      "mobile": "/images/hero/asics_320-480_400.png",
+      "desktop": "/images/hero/asics_990-1920_624.png"
+    },
     "href": "/product/30"
   }
 ]

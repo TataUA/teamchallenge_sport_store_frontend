@@ -14,21 +14,13 @@ export default async function Page() {
       <Slider
         data={dataSlider}
         homePageMainSlider
-        className={"min-h-[400px] h-[50dvh] mb-12"}
+        className={"min-h-[400px] h-[50dvh]"}
       />
       <Gender />
       <PopularCategories />
-      <SortedProducts
-        title="Топ продажів"
-        page="/popular"
-        sort="popular"
-      />
+      <SortedProducts title="Топ продажів" page="/popular" sort="popular" />
       <PromBanner />
-      <SortedProducts
-        title="Новинки"
-        page="/created_at"
-        sort="created_at"
-      />
+      <SortedProducts title="Новинки" page="/created_at" sort="created_at" />
       <AboutUs />
       <SubscribeBannerFooter />
     </>

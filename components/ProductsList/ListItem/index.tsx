@@ -25,7 +25,7 @@ const ListItem = (props: ListItemProps) => {
       className={cn(
         "flex flex-col gap-2 pb-5",
         bestSales
-          ? "w-[167px]"
+          ? "w-[167px] min-[1440px]:w-[196px] "
           : "w-[32.33333%] max-[767px]:w-[48.5%] max-[767px]:pb-4 max-[370px]:w-[100%] min-[1250px]:w-[24%] min-[2800px]:gap-6",
       )}
     >
@@ -36,10 +36,10 @@ const ListItem = (props: ListItemProps) => {
         {bestSales ? (
           <Image
             alt=""
-            style={{ objectFit: "contain" }}
             src={product.colors[0].image_url}
-            width={850}
-            height={1300}
+            width={167}
+            height={252}
+            className="w-[196px] object-contain"
           />
         ) : (
           <Slider
