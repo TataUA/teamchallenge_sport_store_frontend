@@ -14,7 +14,7 @@ import PaymentSection from "./PaymentSection"
 
 // utils
 import { cn } from "@/services/utils/cn"
-import { setBasketIdToLocalStorage } from "@/helpers/getBasketIdFromLocalStorage"
+import getBasketIdFromLocalStorage, { setBasketIdToLocalStorage } from "@/helpers/getBasketIdFromLocalStorage"
 
 // services
 import { createOrder, IOrder } from "@/services/api"
@@ -179,7 +179,7 @@ const OrderPageComponent = () => {
     const userData = user ? user : formData
 
     try {
-      let basketId = localStorage.getItem('basketId');
+      let basketId = getBasketIdFromLocalStorage();
       if(!basketId) {
         const newBasket = await createShoppingCartAction()
         basketId = newBasket.basketId
@@ -187,7 +187,7 @@ const OrderPageComponent = () => {
       }
 
       const newOrder: IOrder = {
-        basket_id: JSON.parse(basketId),
+        basket_id: basketId,
         first_name: userData?.name,
         last_name: userData.patronymic,
         email: userData.email,
