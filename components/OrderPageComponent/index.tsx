@@ -199,7 +199,7 @@ const OrderPageComponent = () => {
         appartment: deliveryAddress.numberAppartment,
         street: deliveryAddress.street,
         user: userData?.id || 0,
-        payment_method: order.payment.card ? 'Card' : 'Upon Receipt',
+        payment_method: orderState.payment || 'Upon Receipt',
       }
 
       const response = await createOrder(newOrder)
@@ -220,10 +220,7 @@ const OrderPageComponent = () => {
         });
         setTimeout(()=>{
           createOrder(newOrder)
-          localStorage.removeItem('basketId')
-          dispatch(cleanCart())
-          router.push("/payment");
-          
+          successfulyRedirect(orderState.payment)
           return
         }, 500)
       } 
@@ -237,19 +234,13 @@ const OrderPageComponent = () => {
         });
         setTimeout(()=>{
           createOrder(newOrder)
-          localStorage.removeItem('basketId')
-          dispatch(cleanCart())
-          router.push("/payment");
-
+          successfulyRedirect(orderState.payment)
           return
         }, 500)
       }
 
       if(response?.msg?.includes('Congratulations')) {
-        localStorage.removeItem('basketId')
-        dispatch(cleanCart())
-        router.push("/payment");
-        
+        successfulyRedirect(orderState.payment)
         return
       }
       
@@ -257,6 +248,18 @@ const OrderPageComponent = () => {
       console.log("🚀 ~ handleSubmit ~ error:", error)
     }
   };
+
+  const successfulyRedirect = (typePayment: string | null) => {
+    dispatch(cleanCart())
+    localStorage.removeItem('basketId')
+
+    if(typePayment === 'Card') {
+      router.push("/payment");
+    } else {
+      router.push("/order/success");
+    }
+  }
+  
 
   const fields = [
     { name: 'name', placeholder: "Ім'я", error: submitted && errors.hasOwnProperty('name') },

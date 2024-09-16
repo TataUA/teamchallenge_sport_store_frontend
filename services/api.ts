@@ -140,9 +140,11 @@ export const updateAccessToken = async (
 export const currentUser = async (): Promise<types.RegisterResponseData> => {
   try {
     const response = await $instance.get("/user/view/");
-    if(response.data) return response.data
 
+    if(response.data) return response.data
+    
     return {
+
       id: 0,
       first_name: '',
       surname: '',
@@ -151,6 +153,10 @@ export const currentUser = async (): Promise<types.RegisterResponseData> => {
       email: '',
     };
   } catch (error: any) {
+    if(error.response.status === 401) {
+      localStorage.removeItem('accessToken')
+      console.log(error.message);
+    }
     throw error.response;
   }
 };
