@@ -1,12 +1,10 @@
 'use client'
 
 // components
-import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import {  useState } from "react"
+import {  useDispatch, useSelector } from "react-redux"
+import { useRouter } from "next/navigation"
 import Image from "next/image"
-
-// dispatch  type
-import { AppDispatch } from "@/redux/store"
 
 // components
 import ContactsSection from "./ContactsSection"
@@ -16,9 +14,7 @@ import PaymentSection from "./PaymentSection"
 
 // utils
 import { cn } from "@/services/utils/cn"
-
-// slice
-import { validationAllFields } from "@/redux/order/orderSlice"
+import getBasketIdFromLocalStorage, { setBasketIdToLocalStorage } from "@/helpers/getBasketIdFromLocalStorage"
 
 // services
 import { createOrder, IOrder } from "@/services/api"
@@ -30,12 +26,44 @@ import { selectOrder } from "@/redux/order/orderSelector"
 // assets
 import wrong from "@/public/icons/auth/wrong.svg";
 
+// actions
+import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction"
+import addProductToCartInDbAction from "@/app/actions/addProductToCartInDbAction"
+
+// selector
+import { selectCart } from "@/redux/cart/cartSelector"
+
+// slice
+import { cleanCart } from "@/redux/cart/cartSlice"
+
+  export interface IntInitialStateOrder {
+      deliveryType: 'Branch' | 'Courier' | 'Parcel Locker' | null,
+      city: string | null,
+      department: string | null,
+      payment: 'Card' | "Upon Receipt" | null,
+    }
+
+  export interface IntInitialStateErrors {
+    name?: string,
+    surname?: string,
+    patronymic?: string,
+    phone?: string,
+    email?: string,
+    id?: number,
+    street?: string,
+    numberHouse?: string,
+    numberAppartment?: string,
+  }
+
 const OrderPageComponent = () => {
 
   const order = useSelector(selectOrder)
+  const cart = useSelector(selectCart)
   const user = useSelector(selectUserData)
 
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch()
+
+  const router = useRouter()
 
   const initialState = {
     name: '',
@@ -46,107 +74,189 @@ const OrderPageComponent = () => {
     id: 0
   }
 
-  interface IntInitialStateErrors {
-    name?: string,
-    surname?: string,
-    patronymic?: string,
-    phone?: string,
-    email?: string,
-    id?: number,
+  const initialStateOrder: IntInitialStateOrder = {
+    deliveryType: null,
+    city: null,
+    department: null,
+    payment: null,
+  }
+
+  const initialDeliveryAddress = {
+    street: '',
+    numberHouse: '',
+    numberAppartment: '',
   }
   
   const [formData, setFormData] = useState(initialState);
   const [errors, setErrors] = useState<IntInitialStateErrors>({});
   const [submitted, setSubmitted] = useState(false);
 
+  const [orderState, setOrderState] = useState<IntInitialStateOrder>(initialStateOrder)
+  const [deliveryAddress, setDeliveryAddress] = useState(initialDeliveryAddress)
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setErrors(prevState => ({
-      ...prevState,
-      [name]: ''
-    }))
+
+    delete errors[name as keyof typeof errors];
     setFormData(prevState => ({
       ...prevState,
       [name]: value
     }));
   };
 
+  const handleChangeDeliveryAddress = (property: string, value:string) => {
+    setDeliveryAddress(prevState => ({
+          ...prevState,
+          [property]: value
+        })
+      );
+  };
+
+    const handleChangeOrder = (property: keyof IntInitialStateOrder, value:string) => {
+      setOrderState(prevState => {
+        if(prevState[property] === value) {
+          return ({
+            ...prevState,
+            [property]: ''
+          })
+        }
+        return ({
+          ...prevState,
+          [property]: value
+        })
+      });
+    };
+
   const validateForm = () => {
     let newErrors:IntInitialStateErrors = {};
-    
-    Object.keys(formData).forEach(key => {
-      const typedKey = key as keyof typeof formData;
-      if (!formData[typedKey]) {
-        newErrors[typedKey] = undefined;
-      }
-    });
 
-    if ((formData.phone)) {
-      if(formData.phone.length !== 13) {
-        newErrors.phone = "Номер телефону некоректний"
-      };
-      if(!formData.phone.startsWith('+380')) { 
-        newErrors.phone = "Номер телефону повинен починатися з +380"
-      };
+    if(!user) {
+      Object.keys(formData).forEach(key => {
+        const typedKey = key as keyof typeof formData;
+        if (!formData[typedKey] && typedKey !== 'id') {
+          newErrors[typedKey] = undefined;
+        }
+      });
+      
+      if ((formData.phone)) {
+        if(formData.phone.length !== 13) {
+          newErrors.phone = "Номер телефону некоректний"
+        };
+        if(!formData.phone.startsWith('+380')) { 
+          newErrors.phone = "Номер телефону повинен починатися з +380"
+        };
+      }
+  
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (formData.email && !emailRegex.test(formData.email)) {
+        newErrors.email = "Невірний формат email";
+      }
+
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (formData.email && !emailRegex.test(formData.email)) {
-      newErrors.email = "Невірний формат email";
+    if(orderState.deliveryType === 'Courier') {
+      Object.keys(deliveryAddress).forEach(key => {
+        const typedKey = key as keyof typeof deliveryAddress;
+        if (!deliveryAddress[typedKey]) {
+          newErrors[typedKey] = '';
+        }
+      });
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return (Object.keys(newErrors).length === 0)
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
-    
-    await dispatch(validationAllFields())
 
-    if(!user) {
-      if (!validateForm()) return
-    }
+    if (!validateForm()) return
+
+    if(!cart.products.length) return
+
 
     const userData = user ? user : formData
-    
-    if(order.allFileds) {
-      console.log("Form submitted:", {...order, ...userData});
 
-      try {
-        const newOrder: IOrder = {
-        basketId: JSON.parse(localStorage.getItem('basketId') || ""),
+    try {
+      let basketId = getBasketIdFromLocalStorage();
+      if(!basketId) {
+        const newBasket = await createShoppingCartAction()
+        basketId = newBasket.basketId
+        setBasketIdToLocalStorage(basketId)
+      }
+
+      const newOrder: IOrder = {
+        basket_id: basketId,
         first_name: userData?.name,
         last_name: userData.patronymic,
         email: userData.email,
         surname: userData.surname,
-        delivery_method: getDeliveryMethod(),
-        branch: order.department?.Description || '',
-        city: order.city?.Present || '',
-        appartment: order.deliveryAddress.numberAppartment,
-        street: order.deliveryAddress.street,
+        phone_number: userData.phone,
+        delivery_method: orderState.deliveryType || '',
+        branch: orderState.department || '',
+        city: orderState.city || '',
+        appartment: deliveryAddress.numberAppartment,
+        street: deliveryAddress.street,
         user: userData?.id || 0,
         payment_method: order.payment.card ? 'Card' : 'Upon Receipt',
       }
 
-        const response = createOrder(newOrder)
-        console.log("🚀 ~ handleSubmit ~ response:", response)
-      } catch (error) {
-        console.log("🚀 ~ handleSubmit ~ error:", error)
+      const response = await createOrder(newOrder)
+
+      if(response?.msg?.includes('Basket does not exist')) {
+        localStorage.removeItem('basketId')
+        const newBasket = await createShoppingCartAction()
         
+        setBasketIdToLocalStorage(newBasket.basketId)
+        newOrder.basket_id = newBasket.basketId;
+
+        cart.products.forEach(async (product) => {
+          await addProductToCartInDbAction(
+            newBasket.basketId,
+            product,
+          );
+          
+        });
+        setTimeout(()=>{
+          createOrder(newOrder)
+          localStorage.removeItem('basketId')
+          dispatch(cleanCart())
+          router.push("/payment");
+          
+          return
+        }, 500)
+      } 
+
+      if(response?.msg?.includes('Your basket is empty')) {
+        cart.products.forEach(async (product) => {
+          await addProductToCartInDbAction(
+            basketId,
+            product,
+          );
+        });
+        setTimeout(()=>{
+          createOrder(newOrder)
+          localStorage.removeItem('basketId')
+          dispatch(cleanCart())
+          router.push("/payment");
+
+          return
+        }, 500)
       }
+
+      if(response?.msg?.includes('Congratulations')) {
+        localStorage.removeItem('basketId')
+        dispatch(cleanCart())
+        router.push("/payment");
+        
+        return
+      }
+      
+    } catch (error) {
+      console.log("🚀 ~ handleSubmit ~ error:", error)
     }
   };
-
-
-  const getDeliveryMethod = () => {
-    if(order.deliveryType.department) return 'Branch'
-    if(order.deliveryType.deliveryMan) return 'Courier'
-    if(order.deliveryType.postOffice) return 'Parcel Locker'
-
-    return '';
-  }
 
   const fields = [
     { name: 'name', placeholder: "Ім'я", error: submitted && errors.hasOwnProperty('name') },
@@ -156,9 +266,6 @@ const OrderPageComponent = () => {
     { name: 'email', placeholder: 'Електронна пошта', error: submitted && errors.hasOwnProperty('email') },
   ];
 
-  // console.log(JSON.parse(localStorage.getItem('basketId') || ""), typeof localStorage.getItem('basketId'));
-  
-  
   return (
     <div className="pt-4">
       <h1 
@@ -200,8 +307,21 @@ const OrderPageComponent = () => {
           ))} 
         </div>
         </ContactsSection>
-        <DeliverSection />
-        <PaymentSection />
+        <DeliverSection 
+          orderState={orderState} 
+          deliveryAddress={deliveryAddress} 
+          setOrderState={setOrderState} 
+          handleChangeOrder={handleChangeOrder} 
+          handleChangeDeliveryAddress={handleChangeDeliveryAddress} 
+          submitted={submitted} 
+          errors={errors}
+        />
+        <PaymentSection 
+          orderState={orderState} 
+          setOrderState={setOrderState} 
+          handleChangeOrder={handleChangeOrder} 
+          submitted={submitted} 
+        />
         <ListProducts />
         <div className="flex justify-center items-center mb-4">
           <button

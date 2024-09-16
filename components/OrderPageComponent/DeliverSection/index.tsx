@@ -1,15 +1,8 @@
 'use client'
 
 // core
-import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-
-// selector
-import { selectOrder } from "@/redux/order/orderSelector";
-
-// slice
-import { handleClickCheckboxDelivery } from "@/redux/order/orderSlice";
+import { useEffect, useState } from "react";
 
 // components
 import CustomCitiesDropdown from "./CustomCitiesDropdown";
@@ -23,26 +16,55 @@ import { cn } from "@/services/utils/cn";
 import wrong from "@/public/icons/auth/wrong.svg";
 import getNovaPoshtaIconSVG from "@/helpers/getNovaPoshtaIconSVG";
 
-const DeliverSection = () => {
-  const dispatch = useDispatch()
+// types
+import { IntInitialStateErrors, IntInitialStateOrder } from "..";
+
+interface IProps {
+  orderState: IntInitialStateOrder, 
+  deliveryAddress: any, 
+  submitted: boolean, 
+  setOrderState: (e: any)=>void
+  handleChangeOrder: (propert: keyof IntInitialStateOrder, value: any)=>void
+  handleChangeDeliveryAddress: (propert:string, value: any)=>void
+  errors: IntInitialStateErrors
+}
+
+const DeliverSection = ({
+  orderState, 
+  deliveryAddress, 
+  submitted, 
+  setOrderState, 
+  handleChangeOrder, 
+  handleChangeDeliveryAddress,
+  errors: errorsOrderState
+}: IProps) => {
+
+  const {deliveryType, city, department} = orderState;
 
   const [error, setError] = useState(false)
   
-  const {deliveryType, city, department, postOffice, allFileds} = useSelector(selectOrder)
-
-  const handleOnChangeDelivery = (id: string) => {
+  const handleOnChangeDelivery = (property:string, value: string) => {
     if(!city) {
       setError(true)
       return
     }
     
-    dispatch(handleClickCheckboxDelivery(id))
+    handleChangeOrder(property as keyof IntInitialStateOrder, value)
     setError(false)
   };
-
+  
   useEffect(()=>{
     if(city && error) setError(false)
   },[city, error])
+
+  useEffect(()=>{
+    if(Object.keys(errorsOrderState || {}).length > 0) {
+      setError(true)
+    } else {
+      setError(false)
+    }
+  },[errorsOrderState, submitted])
+
 
   const checkboxClassname = cn("w-[18px] h-[18px] mr-2 rounded-[6px] border-[1px] outline-none border-[#868687]",
     'appearance-none checked:bg-blue checked:border-0',
@@ -59,7 +81,7 @@ const DeliverSection = () => {
         >
           Доставка
         </h3>
-        {!city && (error || (allFileds === false)) ? (
+        {!city && (error || (submitted)) ? (
           <div className="flex gap-2 items-center">
             <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
             <span
@@ -69,7 +91,7 @@ const DeliverSection = () => {
             </span>
           </div>
         ) : null}
-        {city && !department && !postOffice && (allFileds === false) ? (
+        {city && (error || submitted) ? (
           <div className="flex gap-2 items-center">
             <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
             <span
@@ -80,17 +102,17 @@ const DeliverSection = () => {
           </div>
         ) : null}
       </div>
-      <CustomCitiesDropdown error={error} />
+      <CustomCitiesDropdown handleChangeOrder={handleChangeOrder} setError={setError} error={error} />
       <div className={cn("mb-4",{'opacity-[50%]': !city})}>
         <label className={labelCheckboxClassname}>
           <input 
             className={checkboxClassname} 
             type="checkbox" 
-            id="department" 
-            name="department" 
-            value="department" 
-            checked={deliveryType.department}
-            onChange={() => handleOnChangeDelivery("department")} 
+            id="Branch" 
+            name="Branch" 
+            value="Branch" 
+            checked={deliveryType === 'Branch'}
+            onChange={() => handleOnChangeDelivery("deliveryType", "Branch")} 
           />
           <svg 
             className="
@@ -105,18 +127,18 @@ const DeliverSection = () => {
           <span className={titleCheckboxClassname}>Відділення Нова пошта</span>
           {getNovaPoshtaIconSVG()}
         </label>
-        {deliveryType.department ? <CustomDepartmentsDropdown city={city} selectedItem={department} typeOfEntity='department' /> : null}
+        {deliveryType === 'Branch'&& city ? <CustomDepartmentsDropdown handleChangeOrder={handleChangeOrder} city={city} typeOfEntity='department' /> : null}
       </div>
       <div className={cn("mb-4",{'opacity-[50%]': !city})}>
         <label className={labelCheckboxClassname}>
           <input 
             className={checkboxClassname} 
             type="checkbox" 
-            id="postOffice" 
-            name="postOffice" 
-            value="postOffice" 
-            checked={deliveryType.postOffice}
-            onChange={() => handleOnChangeDelivery("postOffice")} 
+            id="Parcel Locker" 
+            name="Parcel Locker" 
+            value="Parcel Locker" 
+            checked={deliveryType === 'Parcel Locker'}
+            onChange={() => handleOnChangeDelivery("deliveryType", 'Parcel Locker')} 
             />
             <svg 
               className="
@@ -131,18 +153,18 @@ const DeliverSection = () => {
           <span className={titleCheckboxClassname}>Поштомат Нова пошта</span>
           {getNovaPoshtaIconSVG()}
         </label>
-        {deliveryType.postOffice ? <CustomDepartmentsDropdown city={city} selectedItem={postOffice} typeOfEntity='postOffice' /> : null}
+        {deliveryType === 'Parcel Locker' && city ? <CustomDepartmentsDropdown handleChangeOrder={handleChangeOrder} city={city} typeOfEntity='postOffice' /> : null}
       </div>
       <div className={cn("",{'opacity-[50%]': !city})}>
         <label className={labelCheckboxClassname}>
           <input 
             className={checkboxClassname} 
             type="checkbox" 
-            id="deliveryMan" 
-            name="deliveryMan" 
-            value="deliveryMan" 
-            checked={deliveryType.deliveryMan}
-            onChange={() => handleOnChangeDelivery("deliveryMan")} 
+            id="Courier" 
+            name="Courier" 
+            value="Courier" 
+            checked={deliveryType === 'Courier'}
+            onChange={() => handleOnChangeDelivery("deliveryType", "Courier")} 
           />
           <svg 
             className="
@@ -157,7 +179,7 @@ const DeliverSection = () => {
           <span className={titleCheckboxClassname}>Курєром Нова пошта</span>
           {getNovaPoshtaIconSVG()}
         </label>
-        {deliveryType.deliveryMan ? <DeliveryManForm /> : null}
+        {deliveryType === 'Courier' ? <DeliveryManForm deliveryAddress={deliveryAddress} handleChangeDeliveryAddress={handleChangeDeliveryAddress} /> : null}
       </div>
     </div>
   )

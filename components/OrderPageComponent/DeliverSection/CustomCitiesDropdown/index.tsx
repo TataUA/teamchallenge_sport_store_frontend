@@ -2,47 +2,38 @@
 
 // core
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 // assets
 import getArrowDownSVG from '@/helpers/getArrowDownSVG';
-import { selectOrder } from '@/redux/order/orderSelector';
-
-// slice
-import { setCityToStore } from '@/redux/order/orderSlice';
 
 // services
 import { getListOfCitiesNovaPoshta } from '@/services/api';
 
 // utils
 import { cn } from '@/services/utils/cn';
+import { IntInitialStateOrder } from '../..';
 
 export interface DropdownItemCityNovaPoshta {
-    AddressDeliveryAllowed: boolean;
-    Area: string;
-    DeliveryCity: string;
     MainDescription: string;
-    ParentRegionCode: string;
-    ParentRegionTypes: string;
     Present: string;
-    Ref: string;
-    Region: string;
-    RegionTypes: string;
-    RegionTypesCode: string;
-    SettlementTypeCode: string;
-    StreetsAvailability: boolean;
-    Warehouses: number;
 }
 
-const CustomCitiesDropdown = ({error}: {error: boolean}) => {
-    const dispatch = useDispatch()
-
-    const {city: selectedItem} = useSelector(selectOrder)
+const CustomCitiesDropdown = ({
+    error, 
+    setError,
+    handleChangeOrder,
+}: {
+    error: boolean, 
+    setError: (arg: boolean)=>void,
+    handleChangeOrder: (propert:keyof IntInitialStateOrder, value: string)=>void,
+}) => {
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [city, setCity] = useState<string>('');
     const [data, setData] = useState<any[]>([]);
+
+    const [selectedItem, setSelectedItem] = useState('')
 
     const fetchData = useCallback(async () => {
         setIsLoading(true);
@@ -58,6 +49,7 @@ const CustomCitiesDropdown = ({error}: {error: boolean}) => {
     },[city])
 
     const toggleDropdown = () => {
+        setError(false)
         if (!isOpen && city) {
             fetchData();
         }
@@ -65,12 +57,13 @@ const CustomCitiesDropdown = ({error}: {error: boolean}) => {
     };
 
     const handleSelect = (item: DropdownItemCityNovaPoshta) => {
-        dispatch(setCityToStore(item));
+        handleChangeOrder('city', item.MainDescription)
+        setSelectedItem(item.MainDescription)
         setIsOpen(false);
     };
 
     const handleCityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if(selectedItem) dispatch(setCityToStore(null))
+        if(selectedItem) handleChangeOrder('city', '')
         setCity(event.target.value)
         setIsOpen(true);
     };
@@ -98,7 +91,7 @@ const CustomCitiesDropdown = ({error}: {error: boolean}) => {
                         'border-red': error,
                     })}
                     type="text" 
-                    value={selectedItem ? selectedItem.Present : city}
+                    value={selectedItem ? selectedItem : city}
                     placeholder='Оберіть місто'
                     onChange={handleCityChange}    
                 />

@@ -290,10 +290,11 @@ export const getListOfDepartmentsInCityNovaPoshta = async (
 };
 
 export interface IOrder {
-  basketId: string
+  basket_id: string
   last_name: string
   first_name: string
   surname: string
+  phone_number: string
   email: string
   city: string
   delivery_method: string
@@ -306,14 +307,14 @@ export interface IOrder {
 
 export const createOrder = async (
   order: IOrder
-): Promise<any> => {
+): Promise<{msg: string}> => {
   try {
     const response = await $instance.post('/delivery/orders/create/', order);
     console.log("🚀 ~ response:", response)
 
-    return response
+    return {msg: response.data.msg}
 
   } catch (error: any) {
-    throw error.response.data;
+    return {msg: error.response.data.msg}
   }
 };

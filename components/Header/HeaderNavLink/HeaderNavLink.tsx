@@ -64,11 +64,9 @@ const HeaderNavLink = () => {
   useEffect(() => {
     const token = getTokenFromLocalStorage();
 
-    if (!token || mounted.current || cart.loading) {
+    if (mounted.current || cart.loading) {
       return;
     }
-
-    dispatch(setLoadingCartFromDB(Boolean(token)));
 
     const saveProductsFromStoreToCartDb = (
       id: string,
@@ -129,10 +127,13 @@ const HeaderNavLink = () => {
             dispatch(setLoadingCartFromDB(false));
           }
         });
+        dispatch(setLoadingCartFromDB(false));
       }
     };
 
     const createCartInDb = async () => {
+      dispatch(setLoadingCartFromDB(true));
+
       // якщо створюємо нову то ми отримаємо її ІД і можемо привязати його до юзера
       const { basketId } = await createShoppingCartAction();
       if (basketId) {
@@ -153,6 +154,7 @@ const HeaderNavLink = () => {
           dispatch(setLoadingCartFromDB(false));
         });
       }
+      dispatch(setLoadingCartFromDB(false));
     };
 
     // взаємодія з сервером і корзино в БД тіфльки для авторизованих юзерів
@@ -169,6 +171,8 @@ const HeaderNavLink = () => {
         // корзини немає і створюємо її
         createCartInDb();
       }
+    } else if(!getBasketIdFromLocalStorage()) {
+        createCartInDb();
     }
 
     mounted.current = true;
