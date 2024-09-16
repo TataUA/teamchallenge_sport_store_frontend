@@ -128,24 +128,26 @@ export function Slider({
                         />
                       </div>
                     ) : popularCat ? (
-                      <div className="mr-2 md:mr-[25px] ">
+                      <li className="mr-2 xl:mr-6">
                         <Link href={href ?? "/"}>
-                          <div className="w-[108px] h-[108px] overflow-hidden rounded-xl mb-2 flex  justify-center md:w-[424px] md:h-[300px] md:relative">
+                          <div className="w-[108px] h-[108px] overflow-hidden rounded-xl mb-2 flex  justify-center xl:w-[312px] xl:h-[180px] xl:relative xl:rounded-2xl">
                             <Image
                               width={108}
                               height={108}
                               src={image || ""}
                               alt=""
-                              className="object-center object-cover md:w-[424px] md:h-[300px] "
+                              className="object-center object-cover xl:w-full xl:h-full "
                             />
                           </div>
-                          <h3 className="text-sm font-medium w-24 md:absolute md:bottom-6 md:left-10 md:w-full md:text-white md:text-xl tracking-[0.015]">
-                            {title}
-                          </h3>
+                          <div>
+                            <h3 className="text-sm font-medium w-24 xl:absolute md:bottom-6 md:left-6 md:w-full md:text-white md:text-xl tracking-[0.015]">
+                              {title}
+                            </h3>
+                          </div>
                         </Link>
-                      </div>
+                      </li>
                     ) : (
-                      <div>
+                      <div className="xl:h-[624px]">
                         <Link
                           href={href ?? "/"}
                           className={cn(
