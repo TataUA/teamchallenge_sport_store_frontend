@@ -15,7 +15,7 @@ export default async function PromBanner() {
             alt="image"
           />
         </div>
-        <div className="hidden w-[100%] h-[100%] overflow-hidden rounded-2xl z-[-1] xl:absolute xl:block ">
+        <div className="hidden xl:w-[100%] xl:h-[100%] overflow-hidden rounded-2xl z-[-1] xl:absolute xl:block ">
           <Image
             src="/images/prom-banner/prom-banner-desktop.png"
             layout="fill"
@@ -48,7 +48,7 @@ export default async function PromBanner() {
           <Link
             href="/product/83"
             className={cn(
-              "min-w-[140px] tracking-[2%] bg-transparent rounded-lg px-4 py-[6px] border text-sm xl:px-6 xl:py-3",
+              "min-w-[140px] tracking-[2%] bg-transparent rounded-lg px-4 py-[6px] border text-sm xl:px-6 xl:py-3 xl:rounded-xl",
             )}
           >
             Детальніше

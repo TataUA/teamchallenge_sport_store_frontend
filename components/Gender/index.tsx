@@ -12,12 +12,17 @@ export default function Gender() {
           {NAV_ITEMS.map((item) => (
             <li
               key={item.title.key}
-              className="relative bg-[#6f6f6f] rounded-lg w-[167px] h-[88px] flex items-center pl-4 overflow-hidden xl:w-[652px]  xl:h-[240px]"
+              className="relative bg-[#6f6f6f] rounded-lg w-[167px] h-[88px] flex items-center pl-4 overflow-hidden xl:w-[652px] xl:h-[240px] xl:rounded-2xl"
             >
               <Link href={item.title.href}>
-                <h2 className="absolute inset-0 flex items-center left-4 text-white text-base font-semibold z-10 xl:text-2xl  xl:left-[40px]">
-                  {item.title.label}
-                </h2>
+                <div className="absolute flex flex-col justify-center left-4 z-10  text-white  xl:left-[40px] xl:bottom-8">
+                  <h2 className="text-base font-semibold  xl:text-2xl xl:mb-6">
+                    {item.title.label}
+                  </h2>
+                  <button className="hidden xl:inline-block w-[124px] tracking-[2%] bg-transparent rounded-lg px-4 py-[6px] border text-sm xl:px-6 xl:py-3 xl:rounded-xl">
+                    Дивитися
+                  </button>
+                </div>
 
                 <Image
                   src={item.title.image ?? ""}

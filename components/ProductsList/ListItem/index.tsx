@@ -25,7 +25,7 @@ const ListItem = (props: ListItemProps) => {
       className={cn(
         "flex flex-col gap-2 pb-5",
         bestSales
-          ? "w-[167px] min-[1440px]:w-[196px] "
+          ? "w-[167px] xl:w-[200px] "
           : "w-[32.33333%] max-[767px]:w-[48.5%] max-[767px]:pb-4 max-[370px]:w-[100%] min-[1250px]:w-[24%] min-[2800px]:gap-6",
       )}
     >

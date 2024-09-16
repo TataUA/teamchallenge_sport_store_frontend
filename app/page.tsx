@@ -14,7 +14,7 @@ export default async function Page() {
       <Slider
         data={dataSlider}
         homePageMainSlider
-        className={"min-h-[400px] h-[50dvh]"}
+        className={"min-h-[400px] h-[50dvh] xl:min-h-[624px]"}
       />
       <Gender />
       <PopularCategories />
