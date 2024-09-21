@@ -1,5 +1,6 @@
 'use client'
 
+import { cn } from "@/services/utils/cn";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -54,7 +55,10 @@ const PaymentPage = (props: any) => {
             <div className="bg-blue bg-opacity-5 p-6 pt-[52px] pb-8 rounded-lg shadow-md w-full max-w-md mb-8">
               <h2 className="font-semibold mb-[52px] text-center text-title text-5xl leading-[52px]">9 857 грн</h2>
               <div className="mb-4">
-                <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700">
+                <label 
+                  htmlFor="cardNumber" 
+                  className="block text-sm font-medium text-blue"
+                >
                   Номер картки
                 </label>
                 <input
@@ -62,17 +66,21 @@ const PaymentPage = (props: any) => {
                   id="cardNumber"
                   value={cardNumber}
                   onChange={handleCardNumberChange}
-                  placeholder="1234 5678 9123 5678"
+                  placeholder="Номер картки має містити 16 цифр"
                   required
-                  className={("mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50")}
+                  className={cn("mt-1 block w-full pb-2 shadow-sm",
+                    'bg-transparent border-b-[1px] border-timer',
+                    'focus:border-blue active:border-blue focus-within:border-blue focus-visible:border-blue outline-none',
+                  )}
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="expiryDate" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="expiryDate" className="block text-sm font-medium text-blue">
                   Термін дії
                 </label>
                 <input
                   type="text"
+                  id='expiryDate'
                   value={expiryDate}
                   onChange={(e) => {
                     const value = e.target.value.replace(/\D/g, '');
@@ -82,21 +90,28 @@ const PaymentPage = (props: any) => {
                   }}
                   placeholder="MM / YY"
                   maxLength={7}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                  className={cn("mt-1 block w-full pb-2 shadow-sm",
+                    'bg-transparent border-b-[1px] border-timer',
+                    'focus:border-blue active:border-blue focus-within:border-blue focus-visible:border-blue outline-none',
+                  )}
                   required
                 />
               </div>
-              <div className="mb-6">
-                <label htmlFor="cvv" className="block text-sm font-medium text-gray-700">
+              <div>
+                <label htmlFor="cvv" className="block text-sm font-medium text-blue">
                   CVV
                 </label>
                 <input
                   type="text"
+                  id='cvv'
                   value={cvv}
                   onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').slice(0, 3))}
                   placeholder="123"
                   maxLength={3}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                  className={cn("mt-1 block w-full pb-2 shadow-sm",
+                    'bg-transparent border-b-[1px] border-timer',
+                    'focus:border-blue active:border-blue focus-within:border-blue focus-visible:border-blue outline-none',
+                  )}
                   required
                 />
               </div>
