@@ -254,7 +254,7 @@ const OrderPageComponent = () => {
     localStorage.removeItem('basketId')
 
     if(typePayment === 'Card') {
-      router.push("/payment");
+      router.push("/order/payment");
     } else {
       router.push("/order/success");
     }
