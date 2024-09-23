@@ -71,6 +71,8 @@ export const LoginForm = () => {
       } else if (loginUserThunk.rejected.match(actionResult)) {
         const errorMessage = actionResult.payload?.message;
 
+        console.log(errorMessage)
+
         if (
           errorMessage ===
           "User not activated, please activate your account by email"
