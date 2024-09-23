@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
-import { Formik, Form, FormikErrors, FormikProps } from "formik";
+import { Formik, Form, FormikProps } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { clearError } from "@/redux/auth/authSlice";
 import { selectError } from "@/redux/auth/authSelector";
