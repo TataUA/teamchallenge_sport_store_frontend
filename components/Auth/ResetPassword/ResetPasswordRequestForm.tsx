@@ -11,6 +11,8 @@ import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
 import { Button } from "@/components/Button/Button";
 import close from "@/public/icons/close_icon.svg";
+import { ClientComponent } from "@/components/ClientComponent";
+import { ConfirmationButtons } from "../ConfirmEmail/ConfirmationButtons";
 
 const schema = yup.object().shape({
   email: yup
@@ -66,13 +68,6 @@ export const ResetPasswordRequestForm = (props: ResetPasswordRequestProps) => {
     values: ResetPasswordRequestValues,
   ) => {
     return await dispatch(resetPasswordRequestThunk(values));
-  };
-
-  const resendResetPasswordRequest = async () => {
-    const requestData: ResetPasswordRequestValues = {
-      email: userEmail,
-    };
-    await fetchResetPasswordRequest(requestData);
   };
 
   const handleSubmit = async (
@@ -169,20 +164,13 @@ export const ResetPasswordRequestForm = (props: ResetPasswordRequestProps) => {
                   <span className="font-bold">{userEmail}</span>
                 </p>
 
-                <div className="flex flex-col gap-4">
-                  <Button
-                    type="button"
-                    subtype="primary"
-                    title="На сторінку входу"
-                    onClick={() => props.setShowPasswordResetBlock(false)}
+                <ClientComponent>
+                  <ConfirmationButtons
+                    email={userEmail}
+                    resendButtonTitle="Надіслати посилання ще раз"
+                    actionThunk={fetchResetPasswordRequest}
                   />
-                  <Button
-                    type="button"
-                    subtype="tertiary"
-                    title="Надіслати посилання ще раз"
-                    onClick={resendResetPasswordRequest}
-                  />
-                </div>
+                </ClientComponent>
               </div>
             )}
           </div>

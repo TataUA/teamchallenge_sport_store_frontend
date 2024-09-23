@@ -61,7 +61,13 @@ export const LoginForm = () => {
 
   const handleSubmit = async (
     values: LoginFormValues,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
+    {
+      setSubmitting,
+      setErrors,
+    }: {
+      setSubmitting: (isSubmitting: boolean) => void;
+      setErrors: (errors: any) => void;
+    },
   ) => {
     try {
       const actionResult = await dispatch(loginUserThunk(values));
@@ -76,6 +82,14 @@ export const LoginForm = () => {
           "User not activated, please activate your account by email"
         ) {
           router.push(`/auth/confirming_letter?email=${values.email}`);
+        } else if (
+          errorMessage ===
+          "The activation key to confirm the user's expired. Please request a new one."
+        ) {
+          setErrors({
+            _error:
+              "Ключ активації користувача закінчився. Будь ласка, запросіть новий.",
+          });
         } else {
           console.error("Unexpected error message:", errorMessage);
         }
@@ -94,7 +108,11 @@ export const LoginForm = () => {
         validationSchema={schema}
         onSubmit={handleSubmit}
       >
-        {(formik: FormikProps<LoginFormValues>) => (
+        {(
+          formik: FormikProps<LoginFormValues> & {
+            errors: ExtendedFormikErrors;
+          },
+        ) => (
           <Form autoComplete="on">
             <div className="mb-2">
               <div className="flex flex-col gap-4">
@@ -121,7 +139,7 @@ export const LoginForm = () => {
                 setShowPasswordResetBlock={setShowPasswordResetBlock}
               />
 
-              {error && (
+              {(error || formik.errors._error) && (
                 <div className="flex items-center mb-2">
                   <Image
                     src={wrong}
@@ -130,10 +148,13 @@ export const LoginForm = () => {
                     alt="Іконка помилки"
                   />
                   <div className="ml-1.5 text-sm font-medium text-red">
-                    {error.message ===
-                    "No active account found with the given credentials"
-                      ? "Неправильна адреса електронної пошти або пароль"
-                      : error.message || "Невідома помилка, спробуйте ще раз"}
+                    {formik.errors._error
+                      ? formik.errors._error
+                      : error?.message ===
+                          "No active account found with the given credentials"
+                        ? "Неправильна адреса електронної пошти або пароль"
+                        : error?.message ||
+                          "Невідома помилка, спробуйте ще раз"}
                   </div>
                 </div>
               )}

@@ -2,26 +2,33 @@
 
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { AppDispatch } from "@/redux/store";
-import { resendEmailThunk } from "@/redux/auth/authThunk";
 import { Button } from "@/components/Button/Button";
 
-export const ConfirmationButtons = () => {
-  const [countdown, setCountdown] = useState<number | null>(null);
-  const router = useRouter();
-  const dispatch = useDispatch<AppDispatch>();
-  const searchParams = useSearchParams();
-  const email = searchParams.get("email") || "";
+interface ConfirmationButtonsProps {
+  email: string;
+  resendButtonTitle: string;
+  actionThunk: (data: { email: string }) => any;
+}
 
-  const handleResendEmail = async () => {
+export const ConfirmationButtons = ({
+  email,
+  resendButtonTitle,
+  actionThunk,
+}: ConfirmationButtonsProps) => {
+  const [countdown, setCountdown] = useState<number | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+
+  const handleResend = async () => {
     if (countdown === null) {
       setCountdown(60);
 
       try {
-        await dispatch(resendEmailThunk({ email })).unwrap();
+        await dispatch(actionThunk({ email })).unwrap();
       } catch (error) {
-        console.error("Resend email failed in catch block:", error);
+        console.error("Resend action failed in catch block:", error);
       }
 
       const interval = setInterval(() => {
@@ -54,16 +61,14 @@ export const ConfirmationButtons = () => {
         type="submit"
         subtype="primary"
         title={
-          countdown !== null
-            ? `${formatTime(countdown)}`
-            : "Надіслати лист повторно"
+          countdown !== null ? `${formatTime(countdown)}` : resendButtonTitle
         }
-        onClick={handleResendEmail}
+        onClick={handleResend}
         disabled={countdown !== null}
       />
       <Button
         type="button"
-        subtype="secondary"
+        subtype="tertiary"
         title="На сторіку входу"
         onClick={handleRedirect}
       />

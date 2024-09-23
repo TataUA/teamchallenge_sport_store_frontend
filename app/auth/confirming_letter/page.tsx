@@ -7,6 +7,7 @@ import { cn } from "@/services/utils/cn";
 import { ClientComponent } from "@/components/ClientComponent";
 import { ConfirmationButtons } from "@/components/Auth/ConfirmEmail/ConfirmationButtons";
 import envelopBlue from "@/public/icons/auth/envelop_blue.svg";
+import { resendEmailThunk } from "@/redux/auth/authThunk";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -41,7 +42,13 @@ export default function Page() {
         &#34;Надіслати лист повторно&#34;
       </p>
       <ClientComponent>
-        <ConfirmationButtons />
+        <div className="w-full mb-16">
+          <ConfirmationButtons
+            email={email}
+            resendButtonTitle="Надіслати лист повторно"
+            actionThunk={resendEmailThunk}
+          />
+        </div>
       </ClientComponent>
     </div>
   );
