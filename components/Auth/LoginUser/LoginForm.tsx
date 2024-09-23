@@ -63,10 +63,8 @@ export const LoginForm = () => {
     values: LoginFormValues,
     {
       setSubmitting,
-      setErrors,
     }: {
       setSubmitting: (isSubmitting: boolean) => void;
-      setErrors: (errors: any) => void;
     },
   ) => {
     try {
@@ -82,14 +80,6 @@ export const LoginForm = () => {
           "User not activated, please activate your account by email"
         ) {
           router.push(`/auth/confirming_letter?email=${values.email}`);
-        } else if (
-          errorMessage ===
-          "The activation key to confirm the user's expired. Please request a new one."
-        ) {
-          setErrors({
-            _error:
-              "Ключ активації користувача закінчився. Будь ласка, запросіть новий.",
-          });
         } else {
           console.error("Unexpected error message:", errorMessage);
         }
@@ -108,11 +98,7 @@ export const LoginForm = () => {
         validationSchema={schema}
         onSubmit={handleSubmit}
       >
-        {(
-          formik: FormikProps<LoginFormValues> & {
-            errors: ExtendedFormikErrors;
-          },
-        ) => (
+        {(formik: FormikProps<LoginFormValues>) => (
           <Form autoComplete="on">
             <div className="mb-2">
               <div className="flex flex-col gap-4">
@@ -139,8 +125,8 @@ export const LoginForm = () => {
                 setShowPasswordResetBlock={setShowPasswordResetBlock}
               />
 
-              {(error || formik.errors._error) && (
-                <div className="flex items-center mb-2">
+              {error && (
+                <div className="flex items-center mb-6">
                   <Image
                     src={wrong}
                     width={18}
@@ -148,13 +134,13 @@ export const LoginForm = () => {
                     alt="Іконка помилки"
                   />
                   <div className="ml-1.5 text-sm font-medium text-red">
-                    {formik.errors._error
-                      ? formik.errors._error
-                      : error?.message ===
-                          "No active account found with the given credentials"
-                        ? "Неправильна адреса електронної пошти або пароль"
-                        : error?.message ||
-                          "Невідома помилка, спробуйте ще раз"}
+                    {error.message ===
+                    "No active account found with the given credentials"
+                      ? "Неправильна адреса електронної пошти або пароль"
+                      : error.message ===
+                          "The activation key to confirm the user's expired. Please request a new one."
+                        ? "Ключ активації користувача закінчився. Будь ласка, запросіть новий."
+                        : error.message || "Невідома помилка, спробуйте ще раз"}
                   </div>
                 </div>
               )}
