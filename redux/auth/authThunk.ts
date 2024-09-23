@@ -102,7 +102,7 @@ export const loginUserThunk = createAsyncThunk<
     return;
   } catch (error: any) {
     const errorObject: ErrorType = {
-      message: error.detail || error.mag || "An error occurred",
+      message: error.detail || error.msg || "An error occurred",
     };
     return thunkApi.rejectWithValue(errorObject);
   }
