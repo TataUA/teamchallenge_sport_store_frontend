@@ -182,7 +182,6 @@ const OrderPageComponent = () => {
 
     try {
       createOrderHelper({userData, orderState, deliveryAddress, cart}, successfulyRedirect)
-
     } catch (error) {
       console.log("🚀 ~ handleSubmit ~ error:", error)
     }

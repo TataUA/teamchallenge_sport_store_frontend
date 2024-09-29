@@ -59,6 +59,7 @@ const CustomCitiesDropdown = ({
     const handleSelect = (item: DropdownItemCityNovaPoshta) => {
         handleChangeOrder('city', item.MainDescription)
         setSelectedItem(item.MainDescription)
+        setCity(item.MainDescription)
         setIsOpen(false);
     };
 
@@ -91,7 +92,7 @@ const CustomCitiesDropdown = ({
                         'border-red': error,
                     })}
                     type="text" 
-                    value={selectedItem ? selectedItem : city}
+                    value={city}
                     placeholder='Оберіть місто'
                     onChange={handleCityChange}    
                 />
