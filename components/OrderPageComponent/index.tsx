@@ -36,6 +36,7 @@ import { selectCart } from "@/redux/cart/cartSelector"
 
 // slice
 import { cleanCart } from "@/redux/cart/cartSlice"
+import AnimatedLabelInputCustom from "../Shared/AnimatedLabelInputCustom"
 
 
   export interface IntInitialStateOrder {
@@ -220,20 +221,21 @@ const OrderPageComponent = () => {
         className="flex flex-col gap-10 lg:gap-[60px] lg:pt-6 min-[2800px]:pt-8 min-[2800px]:gap-[60px]"
       >
         <ContactsSection>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col">
           {fields.map((field) => (
-            <div key={field.name} className="mb-4 relative">
-              <input
-                type="text"
-                id={field.name}
-                name={field.name}
-                value={formData[field.name as keyof typeof formData]}
-                onChange={handleChange}
-                placeholder={field.placeholder}
-                className={cn('w-full border-b pb-2 pt-1 focus:outline-none placeholder-gray-500',{
+            <div key={field.name} className="relative">
+              <AnimatedLabelInputCustom
+                classname={cn('w-full border-b pb-2 pt-1 focus:outline-none placeholder-gray-500',{
                   'border-gray': true,
                   'border-red placeholder-red': field.error,
                 })}
+                type="text" 
+                value={formData[field.name as keyof typeof formData] || ''}
+                placeholder={field.placeholder}
+                label={field.placeholder} 
+                onChange={handleChange}
+                id={field.name}
+                name={field.name}
               />
               {field.error && (
                 <>

@@ -1,12 +1,13 @@
 'use client'
 
+import AnimatedLabelInputCustom from "@/components/Shared/AnimatedLabelInputCustom"
 // utils
 import { cn } from "@/services/utils/cn"
 import { useState } from "react"
 
 interface IProps {
-   handleChangeDeliveryAddress: (propert:string, value: any)=>void
-   deliveryAddress: any
+  handleChangeDeliveryAddress: (propert:string, value: any)=>void
+  deliveryAddress: any
 }
 
 interface Errors {
@@ -55,31 +56,34 @@ const DeliveryManForm = (props: IProps) => {
   return (
     <div className="mt-2">
       <div className="mb-2">
-        <input 
-          className={inputClassname}
+        <AnimatedLabelInputCustom
+          classname={inputClassname}
           type="text" 
           value={deliveryAddress.street}
           placeholder="Вулиця" 
+          label="Вулиця" 
           onChange={(event) => handleChange(event, 'street')}
         />
         {errors.street && <p className={errorClassname}>{errors.street}</p>}
       </div>
       <div className="mb-2">
-        <input 
-          className={inputClassname}
-          value={deliveryAddress.numberHouse}
+        <AnimatedLabelInputCustom
+          classname={inputClassname}
           type="text" 
+          value={deliveryAddress.numberHouse}
           placeholder="Номер будинку" 
+          label="Номер будинку" 
           onChange={(event) => handleChange(event, 'numberHouse')}
         />
         {errors.numberHouse && <p className={errorClassname}>{errors.numberHouse}</p>}
       </div>
       <div className="mb-2">
-        <input 
-          className={inputClassname}
-          value={deliveryAddress.numberAppartment}
+        <AnimatedLabelInputCustom
+          classname={inputClassname}
           type="text" 
+          value={deliveryAddress.numberAppartment}
           placeholder="Номер квартири" 
+          label="Номер квартири" 
           onChange={(event) => handleChange(event, 'numberAppartment')}
         />
         {errors.numberAppartment && <p className={errorClassname}>{errors.numberAppartment}</p>}
