@@ -1,5 +1,6 @@
 'use client'
 
+import AnimatedLabelInputCustom from "@/components/Shared/AnimatedLabelInputCustom";
 import { cn } from "@/services/utils/cn";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -8,9 +9,11 @@ const PaymentPage = (props: any) => {
   const [cardNumber, setCardNumber] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
   const [cvv, setCvv] = useState('');
+
   const router = useRouter();
 
   const [cardNumberError, setCardNumberError] = useState('');
+  const [expiryDateError, setExpiryDateError] = useState('');
 
   const formatCardNumber = (value: string) => {
     const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
@@ -38,6 +41,33 @@ const PaymentPage = (props: any) => {
     setCardNumber(formattedInput);
   };
 
+  const handleExpiryDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const input = e.target.value.replace(/\D/g, '');
+    let formattedInput = input;
+    
+    if (input.length >= 2) {
+      const month = parseInt(input.slice(0, 2));
+      if (month < 1 || month > 12) {
+        setExpiryDateError('Недійсний місяць');
+      } else {
+        setExpiryDateError('');
+      }
+      formattedInput = `${input.slice(0, 2)} / ${input.slice(2, 4)}`;
+    } else {
+      setExpiryDateError('');
+    }
+
+    if (input.length === 4) {
+      const year = parseInt(input.slice(2, 4));
+      const currentYear = new Date().getFullYear() % 100;
+      if (year < currentYear) {
+        setExpiryDateError('Термін дії картки минув');
+      }
+    }
+
+    setExpiryDate(formattedInput.trim());
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (cardNumber.replace(/\s/g, '').length !== 16) {
@@ -55,64 +85,44 @@ const PaymentPage = (props: any) => {
             <div className="bg-blue bg-opacity-5 p-6 pt-[52px] pb-8 rounded-lg shadow-md w-full max-w-md mb-8">
               <h2 className="font-semibold mb-[52px] text-center text-title text-5xl leading-[52px]">9 857 грн</h2>
               <div className="mb-4">
-                <label 
-                  htmlFor="cardNumber" 
-                  className="block text-sm font-medium text-blue"
-                >
-                  Номер картки
-                </label>
-                <input
-                  type="text"
-                  id="cardNumber"
-                  value={cardNumber}
-                  onChange={handleCardNumberChange}
-                  placeholder="Номер картки має містити 16 цифр"
-                  required
-                  className={cn("mt-1 block w-full pb-2 shadow-sm",
+                <AnimatedLabelInputCustom
+                  classname={cn("mt-1 block w-full pb-2 shadow-sm",
                     'bg-transparent border-b-[1px] border-timer',
                     'focus:border-blue active:border-blue focus-within:border-blue focus-visible:border-blue outline-none',
                   )}
+                  value={cardNumber}
+                  placeholder={'Номер картки має містити 16 цифр'}
+                  label={'Номер картки'} 
+                  required
+                  onChange={handleCardNumberChange}
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="expiryDate" className="block text-sm font-medium text-blue">
-                  Термін дії
-                </label>
-                <input
-                  type="text"
-                  id='expiryDate'
-                  value={expiryDate}
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/\D/g, '');
-                    if (value.length <= 4) {
-                      setExpiryDate(value.replace(/(\d{2})(\d{0,2})/, '$1 / $2').trim());
-                    }
-                  }}
-                  placeholder="MM / YY"
-                  maxLength={7}
-                  className={cn("mt-1 block w-full pb-2 shadow-sm",
+                <AnimatedLabelInputCustom
+                  classname={cn("mt-1 block w-full pb-2 shadow-sm",
                     'bg-transparent border-b-[1px] border-timer',
                     'focus:border-blue active:border-blue focus-within:border-blue focus-visible:border-blue outline-none',
                   )}
+                  value={expiryDate}
+                  placeholder={'MM / YY'}
+                  label={'Термін дії'} 
+                  maxLength={7}
                   required
+                  onChange={handleExpiryDateChange}
                 />
               </div>
               <div>
-                <label htmlFor="cvv" className="block text-sm font-medium text-blue">
-                  CVV
-                </label>
-                <input
-                  type="text"
-                  id='cvv'
-                  value={cvv}
-                  onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').slice(0, 3))}
-                  placeholder="123"
-                  maxLength={3}
-                  className={cn("mt-1 block w-full pb-2 shadow-sm",
+                <AnimatedLabelInputCustom
+                  classname={cn("mt-1 block w-full pb-2 shadow-sm",
                     'bg-transparent border-b-[1px] border-timer',
                     'focus:border-blue active:border-blue focus-within:border-blue focus-visible:border-blue outline-none',
                   )}
-                  required
+                  value={cvv}
+                  placeholder={'CVV'}
+                  label={'CVV'}
+                  maxLength={3}
+                  required 
+                  onChange={(e) => setCvv(e.target.value.replace(/\D/g, '').slice(0, 3))}
                 />
               </div>
             </div>
@@ -126,6 +136,7 @@ const PaymentPage = (props: any) => {
             {cardNumberError && (
               <p className="mt-2 text-center text-sm text-red">{cardNumberError}</p>
             )}
+            {expiryDateError && <p className="mt-2 text-center text-sm text-red">{expiryDateError}</p>}
           </form>
       </section>
     </div>
