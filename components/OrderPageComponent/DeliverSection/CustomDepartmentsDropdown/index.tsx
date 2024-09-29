@@ -1,7 +1,7 @@
 'use client'
 
 // core
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 
 // services
@@ -31,7 +31,7 @@ const CustomDepartmentsDropdown = (props: IProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [data, setData] = useState<any[]>([]);
 
-    const [selected, setSelected] = useState()
+    const [selected, setSelected] = useState('')
 
     const fetchData = useCallback(async () => {
         if(!city) return
@@ -71,8 +71,7 @@ const CustomDepartmentsDropdown = (props: IProps) => {
         }
         setSelected(item)
         setIsOpen(false);
-    };
-    
+    };    
 
     return (
         <div className="relative w-full mb-4">
@@ -85,7 +84,8 @@ const CustomDepartmentsDropdown = (props: IProps) => {
                 onClick={toggleDropdown}
             >
                 <input className='w-full bg-gray-200 border border-gray-300 rounded-lg px-4 py-[15px] pr-[56px] text-base font-medium text-[#868687]' 
-                type="text" value={selected ? selected : undefined}
+                    type="text" 
+                    value={selected ? selected : undefined}
                     placeholder={typeOfEntity === 'department' ? 'Оберіть відділення' : 'Оберіть поштомат'}
                 />
                 {getArrowDownSVG()}

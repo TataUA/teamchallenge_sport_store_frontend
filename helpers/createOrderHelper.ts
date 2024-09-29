@@ -57,10 +57,14 @@ const createOrderHelper = async (data: any, callback: () => void) => {
 
       if(response?.msg?.includes('Your basket is empty')) {
         cart.products.forEach(async (product: IProduct) => {
-          await addProductToCartInDbAction(
+          const response = await addProductToCartInDbAction(
             basketId,
             product,
           );
+
+          // if(response?.detail === 'Sorry, but this product is out of stock') {
+            // return
+          // }
         });
 
         setTimeout(()=>{
