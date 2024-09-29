@@ -4,11 +4,16 @@ import { Suspense } from "react"
 import List from "../List"
 import ProductsFilters from "../ProductsFilters"
 
-// types
-import { IProductsPageProps } from ".."
-
 // helpers
 import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine"
+
+// types
+import { IProduct } from "@/services/types"
+import { IProductsPageInitialProps } from "@/app/products/[...sub_category]/page"
+
+interface IProductsPageProps extends IProductsPageInitialProps {
+	products: IProduct[] | []
+}
 
 const ProductsListMainContent = (props: IProductsPageProps) => {
   const {products, searchParams, params} = props

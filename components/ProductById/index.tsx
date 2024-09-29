@@ -5,15 +5,20 @@ import { IProduct } from "@/services/types"
 import NavigationComponent from "./NavigationComponent"
 import ProductInfo from "./ProductInfo"
 
+// actions
+import fetchProductByIdAction from "@/app/actions/fetchProductByIdAction";
+
 interface IProps {
-  product: IProduct
+  id: string
 }
 
-const ProductById = (props: IProps) => {
+const ProductById = async (props: IProps) => {
+  const product = await fetchProductByIdAction(props.id)
+
   return (
     <div>
-      <NavigationComponent subCategory={props.product.category.sub_category} />
-      <ProductInfo {...props} />
+      <NavigationComponent subCategory={product.category.sub_category} />
+      <ProductInfo product={product} />
     </div>
   )
 }

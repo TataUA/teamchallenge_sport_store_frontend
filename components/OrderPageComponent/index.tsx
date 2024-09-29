@@ -14,6 +14,7 @@ import PaymentSection from "./PaymentSection"
 
 // utils
 import { cn } from "@/services/utils/cn"
+import createOrderHelper from "@/helpers/createOrderHelper"
 import getBasketIdFromLocalStorage, { setBasketIdToLocalStorage } from "@/helpers/getBasketIdFromLocalStorage"
 
 // services
@@ -35,6 +36,7 @@ import { selectCart } from "@/redux/cart/cartSelector"
 
 // slice
 import { cleanCart } from "@/redux/cart/cartSlice"
+
 
   export interface IntInitialStateOrder {
       deliveryType: 'Branch' | 'Courier' | 'Parcel Locker' | null,
@@ -179,85 +181,24 @@ const OrderPageComponent = () => {
     const userData = user ? user : formData
 
     try {
-      let basketId = getBasketIdFromLocalStorage();
-      if(!basketId) {
-        const newBasket = await createShoppingCartAction()
-        basketId = newBasket.basketId
-        setBasketIdToLocalStorage(basketId)
-      }
-
-      const newOrder: IOrder = {
-        basket_id: basketId,
-        first_name: userData?.name,
-        last_name: userData.patronymic,
-        email: userData.email,
-        surname: userData.surname,
-        phone_number: userData.phone,
-        delivery_method: orderState.deliveryType || '',
-        branch: orderState.department || '',
-        city: orderState.city || '',
-        appartment: deliveryAddress.numberAppartment,
-        street: deliveryAddress.street,
-        user: userData?.id || 0,
-        payment_method: orderState.payment || 'Upon Receipt',
-      }
-
-      const response = await createOrder(newOrder)
-
-      if(response?.msg?.includes('Basket does not exist')) {
-        localStorage.removeItem('basketId')
-        const newBasket = await createShoppingCartAction()
-        
-        setBasketIdToLocalStorage(newBasket.basketId)
-        newOrder.basket_id = newBasket.basketId;
-
-        cart.products.forEach(async (product) => {
-          await addProductToCartInDbAction(
-            newBasket.basketId,
-            product,
-          );
-          
-        });
-        setTimeout(()=>{
-          createOrder(newOrder)
-          successfulyRedirect(orderState.payment)
-          return
-        }, 500)
-      } 
-
-      if(response?.msg?.includes('Your basket is empty')) {
-        cart.products.forEach(async (product) => {
-          await addProductToCartInDbAction(
-            basketId,
-            product,
-          );
-        });
-        setTimeout(()=>{
-          createOrder(newOrder)
-          successfulyRedirect(orderState.payment)
-          return
-        }, 500)
-      }
-
-      if(response?.msg?.includes('Congratulations')) {
-        successfulyRedirect(orderState.payment)
-        return
-      }
       
+      // if(orderState.payment === 'Card') {
+      //   router.push("/order/payment");
+      //   return;
+      // } 
+
+      createOrderHelper({userData, orderState, deliveryAddress, cart}, successfulyRedirect)
+
     } catch (error) {
       console.log("🚀 ~ handleSubmit ~ error:", error)
     }
   };
 
-  const successfulyRedirect = (typePayment: string | null) => {
+  const successfulyRedirect = () => {
     dispatch(cleanCart())
     localStorage.removeItem('basketId')
 
-    if(typePayment === 'Card') {
-      router.push("/order/payment");
-    } else {
-      router.push("/order/success");
-    }
+    router.push("/order/success");
   }
   
 

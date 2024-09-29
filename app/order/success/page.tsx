@@ -1,9 +1,31 @@
+'use client'
+
 import Image from "next/image";
 import Link from "next/link"
+import { useEffect } from "react";
 
 import cartImg from "@/public/icons/cart/cart-img.png";
 
+import getBasketIdFromLocalStorage, { setBasketIdToLocalStorage } from "@/helpers/getBasketIdFromLocalStorage";
+
+import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction";
+
 const SuccessPage = (props: any) => {
+
+  useEffect(() => {
+    if(getBasketIdFromLocalStorage()) {
+      localStorage.removeItem('basketId')
+    }
+    
+    createShoppingCartAction()
+    .then((data)=>{
+      setBasketIdToLocalStorage(data.basketId)
+    })
+    .catch((error) => {
+      console.log("🚀 ~ createShoppingCartAction ~ error:", error)
+    })
+  },[])
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-12 p-6">
       <div className="flex flex-col items-center justify-center text-center">

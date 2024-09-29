@@ -36,25 +36,25 @@ export const UserDataSave = (props: UserDataSaveProps) => {
         </div>
       )}
 
-      <div className="w-full mb-4 p-6 flex flex-col gap-5 rounded-xl bg-blue_trans5">
+      <div className="w-full mb-4 p-6 flex flex-col gap-5 rounded-xl bg-blue_trans5 overflow-hidden">
         <div className="flex">
-          <label className="mr-4 label_read">
+          <label className="mr-4 label_read max-w-[45%] overflow-hidden">
             Ім&apos;я
             <input
               type="text"
               value={user?.name}
               readOnly
-              className="w-2/4 input_read"
+              className="input_read"
             />
           </label>
 
-          <label className="label_read">
+          <label className="label_read max-w-[45%] overflow-hidden">
             Прізвище
             <input
               type="text"
               value={user?.surname}
               readOnly
-              className="w-2/4 input_read"
+              className="input_read"
             />
           </label>
         </div>

@@ -6,7 +6,7 @@ const fetchProductsByGenderAction = async (gender: string) => {
   try {
     const result = await fetch(
       `${apiBaseUrl}products/search/?gender=${gender}`,
-      { next: { revalidate: 3600 } },
+      { next: { revalidate: 3600, tags: ['productsByGender'] } },
     );
     if (result.status === 200) {
       const data = await result?.json();

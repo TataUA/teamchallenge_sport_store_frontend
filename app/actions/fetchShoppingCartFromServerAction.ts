@@ -15,7 +15,7 @@ export interface ICartResponseItem {
 
 const fetchShoppingCartFromServerAction = async (id: string) => {
   try {
-    const result = await fetch(`${apiBaseUrl}baskets/${id}/`, { next: { revalidate: 3600 } });
+    const result = await fetch(`${apiBaseUrl}baskets/${id}/`, { next: { revalidate: 3600, tags: ['cart'] } });
     
     if(result.status === 200) {
       const data: {id:string, items: ICartResponseItem[]} = await result?.json()
