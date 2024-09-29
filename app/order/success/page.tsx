@@ -2,17 +2,32 @@
 
 import Image from "next/image";
 import Link from "next/link"
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
+// assets
 import cartImg from "@/public/icons/cart/cart-img.png";
 
+// helpers
 import getBasketIdFromLocalStorage, { setBasketIdToLocalStorage } from "@/helpers/getBasketIdFromLocalStorage";
 
+// actions
 import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction";
+import fetchShoppingCartFromServerAction from "@/app/actions/fetchShoppingCartFromServerAction";
+
+// redux
+import { useDispatch } from "react-redux";
+import { saveCartIdFromDb } from "@/redux/cart/cartSlice";
 
 const SuccessPage = (props: any) => {
+  const mounted = useRef(false)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
+    if(mounted.current) {
+      return
+    }
+
     if(getBasketIdFromLocalStorage()) {
       localStorage.removeItem('basketId')
     }
@@ -20,10 +35,14 @@ const SuccessPage = (props: any) => {
     createShoppingCartAction()
     .then((data)=>{
       setBasketIdToLocalStorage(data.basketId)
+      dispatch(saveCartIdFromDb(data.basketId))
+      fetchShoppingCartFromServerAction(data.basketId)
     })
     .catch((error) => {
       console.log("🚀 ~ createShoppingCartAction ~ error:", error)
     })
+
+    mounted.current = true
   },[])
 
   return (

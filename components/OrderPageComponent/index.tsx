@@ -181,12 +181,6 @@ const OrderPageComponent = () => {
     const userData = user ? user : formData
 
     try {
-      
-      // if(orderState.payment === 'Card') {
-      //   router.push("/order/payment");
-      //   return;
-      // } 
-
       createOrderHelper({userData, orderState, deliveryAddress, cart}, successfulyRedirect)
 
     } catch (error) {
@@ -197,6 +191,11 @@ const OrderPageComponent = () => {
   const successfulyRedirect = () => {
     dispatch(cleanCart())
     localStorage.removeItem('basketId')
+
+    if(orderState.payment === 'Card') {
+      router.push("/order/payment");
+      return;
+    } 
 
     router.push("/order/success");
   }
