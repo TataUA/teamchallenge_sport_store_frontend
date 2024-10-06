@@ -2,7 +2,10 @@
 
 // core
 import React, { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
 
+// selectors
+import { selectOrder } from '@/redux/order/orderSelector';
 
 // services
 import { 
@@ -27,32 +30,50 @@ interface IProps {
 const CustomDepartmentsDropdown = (props: IProps) => {
     const {typeOfEntity, city, handleChangeOrder} = props
 
+    const orderData = useSelector(selectOrder);
+
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [emptyResponse, setEmptyResponse] = useState<boolean>(false);
     const [data, setData] = useState<any[]>([]);
 
     const [selected, setSelected] = useState('')
 
     const fetchData = useCallback(async () => {
-        if(!city) return
+        if(!orderData.city?.ref) return
         
         setIsLoading(true);
         try {
-            const response = await getListOfDepartmentsInCityNovaPoshta(city)
+            const response = await getListOfDepartmentsInCityNovaPoshta(orderData.city?.ref)
             if(typeOfEntity === 'postOffice') {
                 const filteredResponseOnlyPostOffices = response.filter(item => item.Description.toLowerCase().includes('поштомат')).map(item => (item.Description));
+
                 setData([...filteredResponseOnlyPostOffices])
+
+                if(!filteredResponseOnlyPostOffices.length) {
+                    setEmptyResponse(true)
+                }
                 return
             }
 
             const filteredResponseWithoutPostOffices = response.filter(item => !item.Description.toLowerCase().includes('поштомат')).map(item => (item.Description));
+
             setData([...filteredResponseWithoutPostOffices])
-          } catch (error) {
+
+            if(!filteredResponseWithoutPostOffices.length) {
+                setEmptyResponse(true)
+            }
+
+        } catch (error) {
+
             console.error('Error fetching data:', error);
-          } finally {
+
+        } finally {
+
             setIsLoading(false);
+
         }
-    },[city, typeOfEntity])
+    },[orderData.city?.ref, typeOfEntity])
 
     const toggleDropdown = () => {
         if(!city) return
@@ -111,6 +132,12 @@ const CustomDepartmentsDropdown = (props: IProps) => {
                             </div>
                         ))
                     )}
+                </div>
+            )}
+            {emptyResponse && (
+                <div className='text-gray text-xs'>
+                    <span>У вибраному населеному пункті немає доступних відділень чи поштоматів.</span>
+                    <span>Виберіть інший пункт доставки будь ласка.</span>
                 </div>
             )}
         </div>
