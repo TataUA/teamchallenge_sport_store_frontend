@@ -38,9 +38,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body
         className={`relative wrapper h-full font-pangram ${nunitoSans.className} ${interSans.className} antialiased`}
       >
-        <header>
-          <Header />
-        </header>
+        <Header />
+
         <main className="relative flex-1">{children}</main>
         <Footer />
         <div id="modal-root"></div>

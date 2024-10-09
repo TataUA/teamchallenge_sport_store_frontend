@@ -1,14 +1,19 @@
-'use client'
+"use client";
 
-import { ClientComponent } from '../ClientComponent'
-import HeaderNavLink from './HeaderNavLink/HeaderNavLink'
+import { cn } from "@/services/utils/cn";
+import { ClientComponent } from "../ClientComponent";
+import HeaderNavLink from "./HeaderNavLink/HeaderNavLink";
 
-export const Usernav = () => {
-	return (
-		<div className='flex items-center'>
-			<ClientComponent>
-				<HeaderNavLink />
-			</ClientComponent>
-		</div>
-	)
+interface UserNavProps {
+  className?: string;
 }
+
+export const Usernav = ({ className }: UserNavProps) => {
+  return (
+    <div className={cn("flex items-center ", className)}>
+      <ClientComponent>
+        <HeaderNavLink />
+      </ClientComponent>
+    </div>
+  );
+};
