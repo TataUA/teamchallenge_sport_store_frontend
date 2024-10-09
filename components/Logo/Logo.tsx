@@ -13,10 +13,8 @@ export const Logo = ({ newStyle, className }: LogoProps) => {
     <Link className={className} href="/">
       <Image
         src={logoIcon}
-        width={140}
-        height={14}
         alt="Logo"
-        className={`${newStyle}`}
+        className={`w-[140px] h-[14px] lg:w-[200px] lg:h-[20px] ${newStyle}`}
       />
     </Link>
   );

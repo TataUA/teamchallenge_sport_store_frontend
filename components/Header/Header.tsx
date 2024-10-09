@@ -13,11 +13,11 @@ export const Header = () => {
   };
 
   return (
-    <header className="h-16 py-3 px-4 flex  items-center">
+    <header className="h-16 py-3 px-4 flex lg:justify-between  items-center">
       <Navbar isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-      <Logo onClick={handleLogoClick} className="py-[13px] pl-2" />
+      <Logo onClick={handleLogoClick} className="py-[13px] pl-2 lg:p-0" />
 
-      <Usernav className="ml-auto" />
+      <Usernav className="ml-auto lg:ml-[26px]" />
     </header>
   );
 };

@@ -12,20 +12,27 @@ interface NavbarProps {
 
 export const Navbar = ({ isModalOpen, setIsModalOpen }: NavbarProps) => {
   return (
-    <div className="flex items-center justify-center">
-      <button className="border-none" onClick={() => setIsModalOpen(true)}>
-        <Image src={menuIcon} alt="menu" width={40} height={40} />
-      </button>
-      <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div className="mb-[16px]">
-          <NavItemListMobile
-            navItems={NAV_ITEMS}
-            onClose={() => setIsModalOpen(false)}
-          />
-        </div>
-        <div className="border-t border-border mb-[16px]"></div>
-        <UsernavMobile onClose={() => setIsModalOpen(false)} />
-      </Modal>
-    </div>
+    <>
+      <div className="flex items-center justify-center lg:hidden">
+        <button className="border-none" onClick={() => setIsModalOpen(true)}>
+          <Image src={menuIcon} alt="menu" width={40} height={40} />
+        </button>
+        <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
+          <div className="mb-[16px]">
+            <NavItemListMobile
+              navItems={NAV_ITEMS}
+              onClose={() => setIsModalOpen(false)}
+            />
+          </div>
+          <div className="border-t border-border mb-[16px]"></div>
+          <UsernavMobile onClose={() => setIsModalOpen(false)} />
+        </Modal>
+      </div>
+      <div className="hidden lg:flex max-w-[200px]  w-full gap-6">
+        <div className=" ">Чоловіки</div>
+        <div className="text-border ">|</div>
+        <div className="">Жінки</div>
+      </div>
+    </>
   );
 };
