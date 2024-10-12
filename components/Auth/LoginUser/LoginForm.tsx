@@ -2,19 +2,23 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import * as yup from "yup";
 import { Formik, Form, FormikErrors, FormikProps } from "formik";
+
 import { AppDispatch } from "@/redux/store";
 import { clearError } from "@/redux/auth/authSlice";
 import { selectError } from "@/redux/auth/authSelector";
-import { loginUserThunk } from "@/redux/auth/authThunk";
+import { currentUserThunk, loginUserThunk } from "@/redux/auth/authThunk";
+
 import { LoginFormValues } from "@/services/types/auth-form-types";
+
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { ResetPasswordRequestForm } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 import { ResetPasswordButton } from "@/components/Auth/ResetPassword/ResetPasswordButton";
 import { Button } from "@/components/Button/Button";
+
 import wrong from "@/public/icons/auth/wrong.svg";
 
 export const schema = yup.object().shape({
@@ -40,17 +44,23 @@ export interface ExtendedFormikErrors extends FormikErrors<LoginFormValues> {
   _error?: string;
 }
 
+interface LoginFormProps {
+  onClose?: () => void;
+}
+
 const initialValues: LoginFormValues = {
   email: "",
   password: "",
 };
 
-export const LoginForm = () => {
+export const LoginForm = (props: LoginFormProps) => {
   const [showPasswordResetBlock, setShowPasswordResetBlock] =
     useState<boolean>(false);
 
   const error = useSelector(selectError);
+
   const dispatch: AppDispatch = useDispatch();
+
   const router = useRouter();
 
   useEffect(() => {
@@ -71,7 +81,9 @@ export const LoginForm = () => {
       const actionResult = await dispatch(loginUserThunk(values));
 
       if (loginUserThunk.fulfilled.match(actionResult)) {
+        await dispatch(currentUserThunk()).unwrap();
         router.push("/auth/profile");
+        props.onClose?.();
       } else if (loginUserThunk.rejected.match(actionResult)) {
         const errorMessage = actionResult.payload?.message;
 

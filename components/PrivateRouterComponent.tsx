@@ -3,11 +3,14 @@
 import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { usePathname, useRouter } from "next/navigation";
-import { useFetchCurrentUser } from "@/hooks/useFetchCurrentUser";
+
 import {
   selectIsAuthenticated,
   selectIsLoading,
 } from "@/redux/auth/authSelector";
+
+import { useIsMobile } from "@/hooks/useIsMobile";
+
 import { Loader } from "@/components/Loader";
 
 interface PrivateRouteComponentProps {
@@ -17,26 +20,27 @@ interface PrivateRouteComponentProps {
 export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
   children,
 }) => {
-  const isAuthenticated = useSelector(selectIsAuthenticated);
   const isLoading = useSelector(selectIsLoading);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+
   const router = useRouter();
   const pathname = usePathname();
 
-  useFetchCurrentUser();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (isLoading) return;
 
     if (isAuthenticated) {
       if (pathname === "/auth/login" || pathname === "/auth/signup") {
-        router.push("/auth/profile");
+        router.replace("/auth/profile");
       }
     } else {
-      if (pathname !== "/auth/login" && pathname !== "/auth/signup") {
-        router.push("/auth/login");
+      if (pathname === "/auth/login" || pathname === "/auth/signup") {
+        router.push(isMobile ? "" : "/");
       }
     }
-  }, [isAuthenticated, isLoading, router, pathname]);
+  }, [isAuthenticated, isLoading, isMobile, router, pathname]);
 
   if (isLoading) {
     return <Loader />;

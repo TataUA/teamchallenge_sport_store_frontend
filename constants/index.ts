@@ -2,7 +2,7 @@ import { SvgProps, headerNavItem } from "@/services/types";
 
 export const headerNav: headerNavItem[] = [
   { href: "", name: "search" },
-  { href: "/auth/profile", name: "user" },
+  { href: "", name: "user" },
   { href: "/cart", name: "cart" },
 ];
 
