@@ -4,80 +4,76 @@ import { createOrder, IOrder } from "@/services/api";
 import addProductToCartInDbAction from "@/app/actions/addProductToCartInDbAction";
 import { IProduct } from "@/services/types";
 
-const createOrderHelper = async (data: any, callback: () => void) => {
-  const {userData, orderState, deliveryAddress, cart} = data
+const createOrderHelper = async (data: any, successfulyRedirect: (data: any) => void): Promise<any> => {
+  const { userData, orderState, deliveryAddress, cart } = data;
 
+  const getOrCreateBasketId = async (): Promise<string> => {
     let basketId = getBasketIdFromLocalStorage();
-      if(!basketId) {
-        const newBasket = await createShoppingCartAction()
+    if (!basketId) {
+      const newBasket = await createShoppingCartAction();
+      basketId = newBasket.basketId;
+      setBasketIdToLocalStorage(basketId);
+    }
+    return basketId;
+  };
 
-        basketId = newBasket.basketId
-        setBasketIdToLocalStorage(basketId)
-      }
+  const createNewOrder = (basketId: string): IOrder => {
+    const fullAddressParts = orderState.city.split(',');
+    return {
+      basket_id: basketId,
+      first_name: userData?.name,
+      last_name: userData.patronymic,
+      email: userData.email,
+      surname: userData.surname,
+      phone_number: userData.phone,
+      delivery_method: orderState.deliveryType || '',
+      branch: orderState.department || '',
+      city: (fullAddressParts[0] + ',' + fullAddressParts[1]) || '',
+      appartment: deliveryAddress.numberAppartment,
+      street: deliveryAddress.street,
+      user: userData?.id || 0,
+      payment_method: orderState.payment || 'Upon Receipt',
+    };
+  };
 
-      const newOrder: IOrder = {
-        basket_id: basketId,
-        first_name: userData?.name,
-        last_name: userData.patronymic,
-        email: userData.email,
-        surname: userData.surname,
-        phone_number: userData.phone,
-        delivery_method: orderState.deliveryType || '',
-        branch: orderState.department || '',
-        city: orderState.city || '',
-        appartment: deliveryAddress.numberAppartment,
-        street: deliveryAddress.street,
-        user: userData?.id || 0,
-        payment_method: orderState.payment || 'Upon Receipt',
-      }
+  const addProductsToCart = async (basketId: string, products: IProduct[]): Promise<void> => {
+    await Promise.all(products.map(async product => {
+      const response = await addProductToCartInDbAction(basketId, product)
+      
+      return response
+    }));
+  };
 
-      const response = await createOrder(newOrder)
+  try {
+    let basketId = await getOrCreateBasketId();
+    let newOrder = createNewOrder(basketId);
+    let response = await createOrder(newOrder);
 
-      if(response?.msg?.includes('Basket does not exist') || response?.msg?.includes('You cannot place an order from someone')) {
-        localStorage.removeItem('basketId')
-        const newBasket = await createShoppingCartAction()
-        
-        setBasketIdToLocalStorage(newBasket.basketId)
-        newOrder.basket_id = newBasket.basketId;
+    if (response?.data.msg?.includes('Basket does not exist') || response?.data.msg?.includes('You cannot place an order from someone')) {
+      localStorage.removeItem('basketId');
+      const newBasket = await createShoppingCartAction();
+      basketId = newBasket.basketId;
+      setBasketIdToLocalStorage(basketId);
+      newOrder.basket_id = basketId;
 
-        cart.products.forEach(async (product: IProduct) => {
-          await addProductToCartInDbAction(
-            newBasket.basketId,
-            product,
-          );
-          
-        });
+      const addedProducts = await addProductsToCart(basketId, cart.products);
+      
+      response = await createOrder(newOrder);
+    } else if (response?.data.msg?.includes('Your basket is empty')) {
+      const addedProducts = await addProductsToCart(basketId, cart.products);
 
-        setTimeout(()=>{
-          createOrder(newOrder)
-          callback()
-          return
-        }, 500)
-      } 
+      response = await createOrder(newOrder);
+    } 
 
-      if(response?.msg?.includes('Your basket is empty')) {
-        cart.products.forEach(async (product: IProduct) => {
-          const response = await addProductToCartInDbAction(
-            basketId,
-            product,
-          );
+    if (response?.data.msg?.includes('Congratulations') || response?.data.msg?.includes('created successfully')) {
+      return successfulyRedirect(response.data);
+    }
 
-          // if(response?.detail === 'Sorry, but this product is out of stock') {
-            // return
-          // }
-        });
-
-        setTimeout(()=>{
-          createOrder(newOrder)
-          callback()
-          return
-        }, 500)
-      }
-
-      if(response?.msg?.includes('Congratulations')) {
-        callback()
-        return
-      }
-}
+    throw new Error('Unexpected response from server');
+  } catch (error) {
+    console.error("Error in createOrderHelper:", error);
+    throw error;
+  }
+};
 
 export default createOrderHelper;
