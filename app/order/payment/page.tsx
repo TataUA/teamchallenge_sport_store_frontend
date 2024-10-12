@@ -17,19 +17,17 @@ export default function Page(props: any) {
         if (paymentFormData) {
             const paymentForm = paymentFormData as string;
             if (typeof paymentForm === 'string') {
-              console.log("🚀 ~ useEffect ~ paymentForm:", paymentForm)
-                const decodedForm = decodeURIComponent(paymentForm)
+
+              const decodedForm = decodeURIComponent(paymentForm)
                     .replace(/\\"/g, '"')
                     .replace(/\n/g, '')
                     .replace(/>\s+</g, '><')
                     .trim();
-                    console.log("🚀 ~ useEffect ~ decodedForm:", decodedForm)
+
                 setPaymentForm(decodedForm);
             }
         }
     }, [paymentFormData]);
-
-    console.log({paymentForm, searchParams}, props);
 
 	return (
         <div className='p-6'>
