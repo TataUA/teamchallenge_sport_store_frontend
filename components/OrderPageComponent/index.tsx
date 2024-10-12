@@ -15,10 +15,6 @@ import PaymentSection from "./PaymentSection"
 // utils
 import { cn } from "@/services/utils/cn"
 import createOrderHelper from "@/helpers/createOrderHelper"
-import getBasketIdFromLocalStorage, { setBasketIdToLocalStorage } from "@/helpers/getBasketIdFromLocalStorage"
-
-// services
-import { createOrder, IOrder } from "@/services/api"
 
 // selectors
 import { selectUserData } from "@/redux/auth/authSelector"
@@ -27,17 +23,12 @@ import { selectOrder } from "@/redux/order/orderSelector"
 // assets
 import wrong from "@/public/icons/auth/wrong.svg";
 
-// actions
-import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction"
-import addProductToCartInDbAction from "@/app/actions/addProductToCartInDbAction"
-
 // selector
 import { selectCart } from "@/redux/cart/cartSelector"
 
 // slice
 import { cleanCart } from "@/redux/cart/cartSlice"
 import AnimatedLabelInputCustom from "../Shared/AnimatedLabelInputCustom"
-
 
   export interface IntInitialStateOrder {
       deliveryType: 'Branch' | 'Courier' | 'Parcel Locker' | null,
@@ -188,18 +179,18 @@ const OrderPageComponent = () => {
     }
   };
 
-  const successfulyRedirect = () => {
+  const successfulyRedirect = (response: any) => {
     dispatch(cleanCart())
     localStorage.removeItem('basketId')
 
     if(orderState.payment === 'Card') {
-      router.push("/order/payment");
+      const encodedPaymentForm = encodeURIComponent(response.payment_form);
+      router.push(`/order/payment?paymentForm=${encodedPaymentForm}`);
       return;
     } 
 
     router.push("/order/success");
   }
-  
 
   const fields = [
     { name: 'name', placeholder: "Ім'я", error: submitted && errors.hasOwnProperty('name') },
