@@ -1,20 +1,21 @@
 'use client'
 
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Script from 'next/script';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react'
 
 declare var SDK_Button: any;
 
 export default function Page(props: any) {
-  const {searchParams} = props
+  const searchParams = useSearchParams();
+  const paymentFormData = searchParams.get('paymentForm');
 
   const [paymentForm, setPaymentForm] = useState('');
 
   useEffect(() => {
-        if (searchParams.paymentForm) {
-            const paymentForm = searchParams.paymentForm as string;
+        if (paymentFormData) {
+            const paymentForm = paymentFormData as string;
             if (typeof paymentForm === 'string') {
               console.log("🚀 ~ useEffect ~ paymentForm:", paymentForm)
                 const decodedForm = decodeURIComponent(paymentForm)
@@ -26,7 +27,7 @@ export default function Page(props: any) {
                 setPaymentForm(decodedForm);
             }
         }
-    }, [searchParams]);
+    }, [paymentFormData]);
 
     console.log({paymentForm, searchParams}, props);
 
