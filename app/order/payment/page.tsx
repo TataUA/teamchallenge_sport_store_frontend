@@ -28,7 +28,7 @@ export default function Page(props: any) {
         }
     }, [searchParams]);
 
-    console.log({paymentForm, searchParams});
+    console.log({paymentForm, searchParams}, props);
 
 	return (
         <div className='p-6'>
