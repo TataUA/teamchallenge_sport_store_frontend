@@ -165,6 +165,7 @@ const OrderPageComponent = () => {
     }
 
     setErrors(newErrors);
+    console.log({newErrors, orderState, deliveryAddress});
     
     return (Object.keys(newErrors).length === 0)
   };
@@ -192,6 +193,7 @@ const OrderPageComponent = () => {
 
     if(orderState.payment === 'Card') {
       const encodedPaymentForm = encodeURIComponent(response.payment_form);
+      console.log("🚀 ~ successfulyRedirect ~ encodedPaymentForm:", encodedPaymentForm)
       router.push(`/order/payment?paymentForm=${encodedPaymentForm}`);
       return;
     } 
