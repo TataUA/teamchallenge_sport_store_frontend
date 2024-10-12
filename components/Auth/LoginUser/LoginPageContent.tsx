@@ -1,0 +1,64 @@
+"use client";
+
+import React from "react";
+import { useRouter } from "next/navigation";
+
+import { useIsMobile } from "@/hooks/useIsMobile";
+
+import { ClientComponent } from "@/components/ClientComponent";
+import { PrivateRouteComponent } from "@/components/PrivateRouterComponent";
+import { LoginForm } from "@/components/Auth/LoginUser/LoginForm";
+import { PrivacyPolicy } from "@/components/Auth/PrivacyPolicy";
+import { Button } from "@/components/Button/Button";
+
+interface LoginPageContentProps {
+  onClose?: () => void;
+  setShowRegistration?: (show: boolean) => void;
+}
+
+export const LoginPageContent = (props: LoginPageContentProps) => {
+  const isMobile = useIsMobile();
+
+  const router = useRouter();
+
+  const handleRegistrationClick = () => {
+    if (isMobile) {
+      return router.push("/auth/signup");
+    }
+    props.setShowRegistration?.(true);
+  };
+
+  return (
+    <>
+      <ClientComponent>
+        <PrivateRouteComponent>
+          <div>
+            <h1 className="mb-2 text-2xl leading-140 font-pangram font-bold text-title">
+              Авторизація
+            </h1>
+            <p className="mb-6 text-sm leading-129 font-pangram font-medium text-common">
+              Увійдіть або зареєструйтесь щоб продовжити
+            </p>
+            <LoginForm onClose={props.onClose} />
+            <PrivacyPolicy />
+            <div className="flex mt-[21px] mb-[21px] justify-center items-center">
+              <div className="w-full flex items-center">
+                <div className="flex-1 h-px mr-3 bg-border"></div>
+                <p className=" text-sm leading-129 font-medium font-pangram text-gray">
+                  або
+                </p>
+                <div className="flex-1 h-px ml-3 bg-border"></div>
+              </div>
+            </div>
+            <Button
+              type="button"
+              subtype="secondary"
+              title="Зареєструватись"
+              onClick={handleRegistrationClick}
+            />
+          </div>
+        </PrivateRouteComponent>
+      </ClientComponent>
+    </>
+  );
+};

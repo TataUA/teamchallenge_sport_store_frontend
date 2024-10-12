@@ -5,13 +5,14 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import * as yup from "yup";
 import { Formik, Form, FormikHelpers, FormikProps } from "formik";
-import { AppDispatch } from "@/redux/store";
 
+import { AppDispatch } from "@/redux/store";
 import { registerUserThunk } from "@/redux/auth/authThunk";
-// import { selectIsRegistrationComplete } from "@/redux/auth/authSelector";
 
 import { RegisterFormValues } from "@/services/types/auth-form-types";
+
 import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
+
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { Button } from "@/components/Button/Button";
 
@@ -72,6 +73,10 @@ export const schemaRegisterForm = yup.object().shape({
     .required("Це поле обов'язкове"),
 });
 
+interface RegisterFormProps {
+  onClose?: () => void;
+}
+
 export const initialValuesRegisterForm: RegisterFormValues = {
   name: "",
   surname: "",
@@ -82,7 +87,7 @@ export const initialValuesRegisterForm: RegisterFormValues = {
   repeatPassword: "",
 };
 
-export const RegisterForm = () => {
+export const RegisterForm = (props: RegisterFormProps) => {
   const [phone, setPhone] = useState("");
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
@@ -105,6 +110,7 @@ export const RegisterForm = () => {
       if (registerUserThunk.fulfilled.match(actionResult)) {
         setPhone("");
         resetForm();
+        props.onClose?.();
         router.push(`/auth/confirming_letter?email=${values.email}`);
       } else if (registerUserThunk.rejected.match(actionResult)) {
         handleUserValidationErrors(actionResult, setErrors);

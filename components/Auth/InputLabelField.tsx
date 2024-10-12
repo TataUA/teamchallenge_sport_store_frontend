@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Field, ErrorMessage, FormikProps } from "formik";
 import { v4 as uuidv4 } from "uuid";
+
 import { cn } from "@/services/utils/cn";
 import { RegisterFormErrors } from "@/services/types/auth-errors-types";
+
 import wrong from "@/public/icons/auth/wrong.svg";
 import eye_open from "@/public/icons/auth/eye_open.svg";
 import eye_close from "@/public/icons/auth/eye_close.svg";
@@ -97,10 +99,10 @@ export const InputLabelField = <T,>({
         })}
       />
 
-      {(name === "password" || name === "repeatPassword") && (
-        <div className="absolute right-0 top-5 flex items-center">
-          {isFieldFocused || formik.values[name] ? (
-            <>
+      <div className="absolute right-0 top-5 flex items-center">
+        {isFieldFocused || formik.values[name] ? (
+          <>
+            {(name === "password" || name === "repeatPassword") && (
               <button type="button" onMouseDown={togglePasswordVisibility}>
                 <Image
                   src={showPassword ? eye_close : eye_open}
@@ -113,29 +115,29 @@ export const InputLabelField = <T,>({
                   }
                 />
               </button>
+            )}
 
-              {isError && (
-                <Image
-                  src={wrong}
-                  width={24}
-                  height={24}
-                  alt="Іконка помилки в інпуті"
-                  className="ml-2"
-                />
-              )}
-            </>
-          ) : (
-            isError && (
+            {isError && (
               <Image
                 src={wrong}
                 width={24}
                 height={24}
                 alt="Іконка помилки в інпуті"
+                className="ml-2"
               />
-            )
-          )}
-        </div>
-      )}
+            )}
+          </>
+        ) : (
+          isError && (
+            <Image
+              src={wrong}
+              width={24}
+              height={24}
+              alt="Іконка помилки в інпуті"
+            />
+          )
+        )}
+      </div>
 
       <label
         htmlFor={uniqueId}

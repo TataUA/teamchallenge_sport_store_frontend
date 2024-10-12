@@ -13,6 +13,9 @@ const config: Config = {
       inter: ["Inter", "sans-serif"],
     },
     extend: {
+      screens: {
+        "1440": "1440px",
+      },
       lineHeight: {
         "114": "114%",
         "129": "129%",
