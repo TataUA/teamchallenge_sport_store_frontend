@@ -11,6 +11,7 @@ export interface ICartResponseItem {
   created_at: string
   updated_at: number
   basket: number
+  detail?: string
 }
 
 const fetchShoppingCartFromServerAction = async (id: string) => {

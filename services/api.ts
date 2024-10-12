@@ -321,14 +321,14 @@ export interface IOrder {
 
 export const createOrder = async (
   order: IOrder
-): Promise<{msg: string}> => {
+): Promise<{data: {msg: string, order?: string, payment_form?: string}}> => {
   try {
     const response = await $instance.post('/delivery/orders/create/', order);
-    console.log("🚀 ~ response:", response)
 
-    return {msg: response.data.msg}
+    return response
 
   } catch (error: any) {
-    return {msg: error.response.data.msg}
+    console.log("🚀 ~ error:", error)
+    return {data: {msg: error.response.data.msg}};
   }
 };
