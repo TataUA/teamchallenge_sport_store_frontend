@@ -10,22 +10,25 @@ declare var SDK_Button: any;
 export default function Page(props: any) {
   const {searchParams} = props
 
-  const router = useRouter();
   const [paymentForm, setPaymentForm] = useState('');
 
   useEffect(() => {
         if (searchParams.paymentForm) {
             const paymentForm = searchParams.paymentForm as string;
             if (typeof paymentForm === 'string') {
+              console.log("🚀 ~ useEffect ~ paymentForm:", paymentForm)
                 const decodedForm = decodeURIComponent(paymentForm)
                     .replace(/\\"/g, '"')
                     .replace(/\n/g, '')
                     .replace(/>\s+</g, '><')
                     .trim();
+                    console.log("🚀 ~ useEffect ~ decodedForm:", decodedForm)
                 setPaymentForm(decodedForm);
             }
         }
     }, [searchParams]);
+
+    console.log({paymentForm, searchParams});
 
 	return (
         <div className='p-6'>
@@ -35,6 +38,8 @@ export default function Page(props: any) {
               onLoad={()=>{
                 (window as any).SDK_Button = SDK_Button;
                 if (typeof SDK_Button !== 'undefined' && !customElements.get('sdk-button')) {
+                  console.log('sdk-button define success');
+                  
                   customElements.define('sdk-button', SDK_Button)
                 }
               }}
