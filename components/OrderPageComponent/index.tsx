@@ -47,6 +47,7 @@ import AnimatedLabelInputCustom from "../Shared/AnimatedLabelInputCustom"
     street?: string,
     numberHouse?: string,
     numberAppartment?: string,
+    department?: string,
   }
 
 const OrderPageComponent = () => {
@@ -151,13 +152,20 @@ const OrderPageComponent = () => {
     if(orderState.deliveryType === 'Courier') {
       Object.keys(deliveryAddress).forEach(key => {
         const typedKey = key as keyof typeof deliveryAddress;
-        if (!deliveryAddress[typedKey]) {
+        if (!deliveryAddress[typedKey] && (typedKey !== 'numberAppartment')) {
           newErrors[typedKey] = '';
         }
       });
     }
 
+    if(orderState.deliveryType && orderState.deliveryType !== 'Courier') {
+      if (!orderState.department) {
+        newErrors['department'] = 'Не вибране відділення або поштомат';
+      }
+    }
+
     setErrors(newErrors);
+    
     return (Object.keys(newErrors).length === 0)
   };
 
@@ -168,7 +176,6 @@ const OrderPageComponent = () => {
     if (!validateForm()) return
 
     if(!cart.products.length) return
-
 
     const userData = user ? user : formData
 
@@ -258,7 +265,7 @@ const OrderPageComponent = () => {
           submitted={submitted} 
         />
         <ListProducts />
-        <div className="flex justify-center items-center mb-4">
+        <div className="flex flex-col justify-center items-center mb-4">
           <button
             type="submit"
             className={cn("w-full py-[16px] px-6 text-white bg-blue rounded-xl text-center text-base font-semibold transition-all",
@@ -267,6 +274,9 @@ const OrderPageComponent = () => {
           >
             Перейти до оплатити
           </button>
+          {Object.keys(errors).length > 0 ? (
+            <div className="mt-3 text-red text-xs">Вибрані не всі поля або помилка при заповненні</div>
+            ) : null}
         </div>
       </form>
     </div>
