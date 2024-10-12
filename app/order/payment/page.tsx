@@ -1,34 +1,33 @@
 'use client'
 
-import { useRouter } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import Script from 'next/script';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import React from 'react'
 
 declare var SDK_Button: any;
 
 export default function Page(props: any) {
-  const {searchParams} = props
+  const searchParams = useSearchParams();
+  const paymentFormData = searchParams.get('paymentForm');
 
   const [paymentForm, setPaymentForm] = useState('');
 
   useEffect(() => {
-        if (searchParams.paymentForm) {
-            const paymentForm = searchParams.paymentForm as string;
+        if (paymentFormData) {
+            const paymentForm = paymentFormData as string;
             if (typeof paymentForm === 'string') {
-              console.log("🚀 ~ useEffect ~ paymentForm:", paymentForm)
-                const decodedForm = decodeURIComponent(paymentForm)
+
+              const decodedForm = decodeURIComponent(paymentForm)
                     .replace(/\\"/g, '"')
                     .replace(/\n/g, '')
                     .replace(/>\s+</g, '><')
                     .trim();
-                    console.log("🚀 ~ useEffect ~ decodedForm:", decodedForm)
+
                 setPaymentForm(decodedForm);
             }
         }
-    }, [searchParams]);
-
-    console.log({paymentForm, searchParams});
+    }, [paymentFormData]);
 
 	return (
         <div className='p-6'>
