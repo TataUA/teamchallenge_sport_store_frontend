@@ -81,7 +81,7 @@ const DeliverSection = ({
         >
           Доставка
         </h3>
-        {!city && (error || (submitted)) ? (
+        {!city && (error && (submitted)) ? (
           <div className="flex gap-2 items-center">
             <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
             <span
@@ -91,7 +91,7 @@ const DeliverSection = ({
             </span>
           </div>
         ) : null}
-        {city && (error || submitted) ? (
+        {city && deliveryType && (deliveryType !== 'Courier') && !department && submitted ? (
           <div className="flex gap-2 items-center">
             <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
             <span

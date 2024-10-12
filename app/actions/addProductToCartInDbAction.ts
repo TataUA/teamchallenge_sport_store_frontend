@@ -22,15 +22,15 @@ const addProductToCartInDbAction = async (basketId: string, product:IProduct) =>
       body: JSON.stringify(preparedBody)
     });
 
+    const data: ICartResponseItem = await result?.json()
     if(result.status === 201) {
-      const data: ICartResponseItem = await result?.json()
       return data;
     }
 
-    return {id: null};
+    return {id: null, detail: data.detail};
   } catch (error: any) {
     console.log("🚀 ~ fetchProductsAction ~ error:", error.response)
-    return {id: null};
+    return {id: null, detail: error.response.data.detail};
   }
 }
 

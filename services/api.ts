@@ -250,18 +250,26 @@ export const sendSearchQueryApi = async (
 
 interface INovaPoshtaCityResponse {
   data: {
-    data: {TotalCount: number, Addresses: DropdownItemCityNovaPoshta[]}[]
+    data: any[]
   }
+}
+
+export interface NovaPoshCityResponseDataItem {
+  SettlementTypeDescription: string
+  Description: string
+  RegionsDescription: string
+  AreaDescription: string
+  Ref: string
 }
 
 export const getListOfCitiesNovaPoshta = async (
   city: string
-): Promise< DropdownItemCityNovaPoshta[]> => {
+): Promise< NovaPoshCityResponseDataItem[]> => {
   try {
     const { data }: INovaPoshtaCityResponse = await $instance.get(`/nova-post/settlements/${city}/`);
     
     if(data.data.length) {
-      return data.data[0].Addresses
+      return data.data.filter(item => Number(item.Warehouse) > 0)
     }
     
     return [];
@@ -281,10 +289,10 @@ export interface INovaPoshtaDepartmentItemResponse {
 }
 
 export const getListOfDepartmentsInCityNovaPoshta = async (
-  city: string
+  ref: string
 ): Promise<INovaPoshtaDepartmentItemResponse[]> => {
   try {
-    const { data }: INovaPoshtaDepartmentsResponse = await $instance.get(`/nova-post/warehouses/${city}/?limit=500`);
+    const { data }: INovaPoshtaDepartmentsResponse = await $instance.get(`/nova-post/warehouses/${ref}/`);
 
     if(data.data.length) {
       return data.data
@@ -313,14 +321,14 @@ export interface IOrder {
 
 export const createOrder = async (
   order: IOrder
-): Promise<{msg: string}> => {
+): Promise<{data: {msg: string, order?: string, payment_form?: string}}> => {
   try {
     const response = await $instance.post('/delivery/orders/create/', order);
-    console.log("🚀 ~ response:", response)
 
-    return {msg: response.data.msg}
+    return response
 
   } catch (error: any) {
-    return {msg: error.response.data.msg}
+    console.log("🚀 ~ error:", error)
+    return {data: {msg: error.response.data.msg}};
   }
 };

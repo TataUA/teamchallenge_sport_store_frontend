@@ -15,10 +15,6 @@ import PaymentSection from "./PaymentSection"
 // utils
 import { cn } from "@/services/utils/cn"
 import createOrderHelper from "@/helpers/createOrderHelper"
-import getBasketIdFromLocalStorage, { setBasketIdToLocalStorage } from "@/helpers/getBasketIdFromLocalStorage"
-
-// services
-import { createOrder, IOrder } from "@/services/api"
 
 // selectors
 import { selectUserData } from "@/redux/auth/authSelector"
@@ -27,17 +23,12 @@ import { selectOrder } from "@/redux/order/orderSelector"
 // assets
 import wrong from "@/public/icons/auth/wrong.svg";
 
-// actions
-import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction"
-import addProductToCartInDbAction from "@/app/actions/addProductToCartInDbAction"
-
 // selector
 import { selectCart } from "@/redux/cart/cartSelector"
 
 // slice
 import { cleanCart } from "@/redux/cart/cartSlice"
 import AnimatedLabelInputCustom from "../Shared/AnimatedLabelInputCustom"
-
 
   export interface IntInitialStateOrder {
       deliveryType: 'Branch' | 'Courier' | 'Parcel Locker' | null,
@@ -56,6 +47,7 @@ import AnimatedLabelInputCustom from "../Shared/AnimatedLabelInputCustom"
     street?: string,
     numberHouse?: string,
     numberAppartment?: string,
+    department?: string,
   }
 
 const OrderPageComponent = () => {
@@ -160,13 +152,20 @@ const OrderPageComponent = () => {
     if(orderState.deliveryType === 'Courier') {
       Object.keys(deliveryAddress).forEach(key => {
         const typedKey = key as keyof typeof deliveryAddress;
-        if (!deliveryAddress[typedKey]) {
+        if (!deliveryAddress[typedKey] && (typedKey !== 'numberAppartment')) {
           newErrors[typedKey] = '';
         }
       });
     }
 
+    if(orderState.deliveryType && orderState.deliveryType !== 'Courier') {
+      if (!orderState.department) {
+        newErrors['department'] = 'Не вибране відділення або поштомат';
+      }
+    }
+
     setErrors(newErrors);
+    
     return (Object.keys(newErrors).length === 0)
   };
 
@@ -178,7 +177,6 @@ const OrderPageComponent = () => {
 
     if(!cart.products.length) return
 
-
     const userData = user ? user : formData
 
     try {
@@ -188,18 +186,18 @@ const OrderPageComponent = () => {
     }
   };
 
-  const successfulyRedirect = () => {
+  const successfulyRedirect = (response: any) => {
     dispatch(cleanCart())
     localStorage.removeItem('basketId')
 
     if(orderState.payment === 'Card') {
-      router.push("/order/payment");
+      const encodedPaymentForm = encodeURIComponent(response.payment_form);
+      router.push(`/order/payment?paymentForm=${encodedPaymentForm}`);
       return;
     } 
 
     router.push("/order/success");
   }
-  
 
   const fields = [
     { name: 'name', placeholder: "Ім'я", error: submitted && errors.hasOwnProperty('name') },
@@ -267,7 +265,7 @@ const OrderPageComponent = () => {
           submitted={submitted} 
         />
         <ListProducts />
-        <div className="flex justify-center items-center mb-4">
+        <div className="flex flex-col justify-center items-center mb-4">
           <button
             type="submit"
             className={cn("w-full py-[16px] px-6 text-white bg-blue rounded-xl text-center text-base font-semibold transition-all",
@@ -276,6 +274,9 @@ const OrderPageComponent = () => {
           >
             Перейти до оплатити
           </button>
+          {Object.keys(errors).length > 0 ? (
+            <div className="mt-3 text-red text-xs">Вибрані не всі поля або помилка при заповненні</div>
+            ) : null}
         </div>
       </form>
     </div>

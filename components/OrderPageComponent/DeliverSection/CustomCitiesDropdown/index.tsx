@@ -2,20 +2,25 @@
 
 // core
 import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 // assets
 import getArrowDownSVG from '@/helpers/getArrowDownSVG';
 
+// selectors
+import { setCityToStore } from '@/redux/order/orderSlice';
+
 // services
-import { getListOfCitiesNovaPoshta } from '@/services/api';
+import { getListOfCitiesNovaPoshta, NovaPoshCityResponseDataItem } from '@/services/api';
 
 // utils
 import { cn } from '@/services/utils/cn';
 import { IntInitialStateOrder } from '../..';
 
 export interface DropdownItemCityNovaPoshta {
-    MainDescription: string;
-    Present: string;
+    mainDescription: string;
+    fullAddress: string;
+    ref: string;
 }
 
 const CustomCitiesDropdown = ({
@@ -27,22 +32,36 @@ const CustomCitiesDropdown = ({
     setError: (arg: boolean)=>void,
     handleChangeOrder: (propert:keyof IntInitialStateOrder, value: string)=>void,
 }) => {
+    const dispatch = useDispatch()
 
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [city, setCity] = useState<string>('');
     const [data, setData] = useState<any[]>([]);
+    const [emptyResponse, setEmptyResponse] = useState<boolean>(false);
+    const [errorResponse, setErrorResponse] = useState<boolean>(false);
 
     const [selectedItem, setSelectedItem] = useState('')
 
     const fetchData = useCallback(async () => {
+        if(!city || !city.length) {
+            return
+        }
+
         setIsLoading(true);
+
         try {
             const response = await getListOfCitiesNovaPoshta(city)
             
             setData([...response]);
+
+            if(!response.length) {
+                setEmptyResponse(true)
+            }
+
         } catch (error) {
             console.error('Error fetching data:', error);
+            setErrorResponse(true)
         } finally {
             setIsLoading(false);
         }
@@ -56,17 +75,32 @@ const CustomCitiesDropdown = ({
         setIsOpen(!isOpen);
     };
 
-    const handleSelect = (item: DropdownItemCityNovaPoshta) => {
-        handleChangeOrder('city', item.MainDescription)
-        setSelectedItem(item.MainDescription)
-        setCity(item.MainDescription)
+    const handleSelect = (item: NovaPoshCityResponseDataItem) => {
+        const presentString = `${item.SettlementTypeDescription} ${item.Description}, ${item.RegionsDescription ? item.RegionsDescription + ' район, ' : ''}${item.AreaDescription} область`;
+        
+        dispatch(setCityToStore({mainDescription: item.Description, ref: item.Ref, fullAddress: presentString}))
+        
+        handleChangeOrder('city', presentString)
+        
+        setSelectedItem(presentString)
+        
+        setCity(presentString)
+        
         setIsOpen(false);
     };
 
     const handleCityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if(selectedItem) handleChangeOrder('city', '')
+        if(selectedItem) {
+            handleChangeOrder('city', '')
+        }
+        
         setCity(event.target.value)
+        
         setIsOpen(true);
+        
+        setEmptyResponse(false)
+        
+        setErrorResponse(false)
     };
 
     useEffect(()=>{
@@ -100,14 +134,14 @@ const CustomCitiesDropdown = ({
             </div>
             {isOpen && (
                 <div className={cn(
-                  "absolute top-full left-0 w-full bg-white border border-gray-300 rounded mt-1 max-h-[300px] overflow-y-auto z-10 hidden", {
+                    "absolute top-full left-0 w-full bg-white border border-gray-300 rounded mt-1 max-h-[300px] overflow-y-auto z-10 hidden", {
                     'block': isOpen && city && data.length
-                  })}
+                    })}
                 >
                     {isLoading ? (
                         <div className="p-2 text-center">Loading...</div>
                     ) : (
-                        data.map((item: DropdownItemCityNovaPoshta, index) => (
+                        data.map((item: NovaPoshCityResponseDataItem, index) => (
                             <div
                                 key={index}
                                 className={cn("p-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer",{
@@ -115,10 +149,21 @@ const CustomCitiesDropdown = ({
                                 })}
                                 onClick={() => handleSelect(item)}
                             >
-                                {item.Present}
+                                {`${item.SettlementTypeDescription} ${item.Description}, ${item.RegionsDescription ? item.RegionsDescription + ' район, ' : ''}${item.AreaDescription} область`}
                             </div>
                         ))
                     )}
+                </div>
+            )}
+            {emptyResponse && (
+                <div className='text-gray text-xs'>
+                    <span>Немає данних про таке місто.</span>
+                    <span>Виберіть інший пункт доставки будь ласка.</span>
+                </div>
+            )}
+            {errorResponse && (
+                <div className='text-gray text-xs'>
+                    <span>Сталася помиллка під час запиту. Напишіть в службу підтримки.</span>
                 </div>
             )}
         </div>

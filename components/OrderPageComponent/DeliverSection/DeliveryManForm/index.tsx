@@ -25,16 +25,20 @@ const DeliveryManForm = (props: IProps) => {
     switch (id) {
       case 'street':
         if (!value) return "Вулиця обов'язкова";
-        if (!/^[a-zA-Zа-яА-ЯіІїЇєЄ0-9\s'-]+$/.test(value)) return "Недійсна назва вулиці";
-        if ((value.match(/\d/g) || []).length > 5) return "Забагато цифр у назві вулиці";
+        if (!/^[a-zA-Zа-яА-ЯіІїЇєЄ0-9\s'-]+$/.test(value)) 
+            return "Недійсна назва вулиці";
+        if (!/[a-zA-Zа-яА-ЯіІїЇєЄ]/.test(value)) 
+            return "Назва вулиці повинна містити хоча б одну літеру";
+        if ((value.match(/\d/g) || []).length > 5) 
+        return "Забагато цифр у назві вулиці";
         break;
       case 'numberHouse':
         if (!value) return "Номер будинку обов'язковий";
         if (!/^[0-9]+[A-Za-zа-яА-ЯіІїЇєЄ]?$/.test(value)) return "Недійсний номер будинку";
         break;
       case 'numberAppartment':
-        if (!value) return "Номер квартири обов'язковий";
-        if (!/^[0-9]+$/.test(value)) return "Номер квартири повинен містити лише цифри";
+        if (value && !/^[0-9]+$/.test(value)) 
+        return "Номер квартири повинен містити лише цифри";
         break;
     }
   };
