@@ -97,7 +97,7 @@ export function Slider({
                   }
             }
             slidesPerView={slidesPerView}
-            // autoplay={autoPlay}
+            autoplay={autoPlay}
             loop={loop}
             modules={[Autoplay, Navigation, Pagination]}
             breakpoints={{

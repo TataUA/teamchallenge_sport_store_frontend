@@ -2,16 +2,16 @@
   {
     "id": 1,
     "images": {
-      "mobile": "/images/hero/adidas_320-480_400.png",
-      "desktop": "/images/hero/adidas_990-1920_624.png"
+      "mobile": "/images/hero/adidas_320-480_400.jpg",
+      "desktop": "/images/hero/adidas_990-1920_624.jpg"
     },
     "href": "/product/103"
   },
   {
     "id": 2,
     "images": {
-      "mobile": "/images/hero/puma_320-480.png",
-      "desktop": "/images/hero/puma_990-1920.png"
+      "mobile": "/images/hero/puma_320-480.jpg",
+      "desktop": "/images/hero/puma_990-1920.jpg"
     },
     "href": "/product/30"
   },

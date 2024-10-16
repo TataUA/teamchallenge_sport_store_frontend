@@ -8,7 +8,7 @@ export default async function PromBanner() {
       <div className=" mx-auto relative rounded-2xl w-[342px] h-[268px]  xl:w-[1320px]  xl:h-[432px] ">
         <div className="absolute  w-[100%] h-[100%] bg-slate-300 overflow-hidden z-[-1]  rounded-2xl  xl:hidden">
           <Image
-            src="/images/prom-banner/prom-banner-mobile.png"
+            src="/images/prom-banner/prom-banner-mobile.jpg"
             layout="fill"
             objectFit="cover"
             quality={100}
@@ -17,7 +17,7 @@ export default async function PromBanner() {
         </div>
         <div className="hidden xl:w-[100%] xl:h-[100%] overflow-hidden rounded-2xl z-[-1] xl:absolute xl:block ">
           <Image
-            src="/images/prom-banner/prom-banner-desktop.png"
+            src="/images/prom-banner/prom-banner-desktop.jpg"
             layout="fill"
             objectFit="cover"
             quality={100}

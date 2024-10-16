@@ -6,7 +6,7 @@ export const NAV_ITEMS: NavItem[] = [
       key: "men",
       label: "Чоловіки",
       href: "/productsGender/men",
-      image: "/images/gender/man.png",
+      image: "/images/gender/man.jpg",
     },
     links: [
       {
@@ -64,7 +64,7 @@ export const NAV_ITEMS: NavItem[] = [
       key: "women",
       label: "Жінки",
       href: "/productsGender/women",
-      image: "/images/gender/women.png",
+      image: "/images/gender/women.jpg",
     },
     links: [
       {
