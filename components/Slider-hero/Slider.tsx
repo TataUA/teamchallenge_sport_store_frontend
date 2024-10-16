@@ -97,7 +97,7 @@ export function Slider({
                   }
             }
             slidesPerView={slidesPerView}
-            autoplay={autoPlay}
+            // autoplay={autoPlay}
             loop={loop}
             modules={[Autoplay, Navigation, Pagination]}
             breakpoints={{
@@ -118,7 +118,7 @@ export function Slider({
               : data?.map(({ id, image, images, title, href }) => (
                   <SwiperSlide key={id}>
                     {cardImage ? (
-                      <div className="rounded-xl overflow-hidden">
+                      <div className="rounded-xl overflow-hidden container">
                         <Image
                           alt=""
                           style={{ objectFit: "contain" }}

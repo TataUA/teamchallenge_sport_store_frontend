@@ -18,8 +18,8 @@
   {
     "id": 3,
     "images": {
-      "mobile": "/images/hero/asics_320-480_400.png",
-      "desktop": "/images/hero/asics_990-1920_624.png"
+      "mobile": "/images/hero/asics_320-480_400.jpg",
+      "desktop": "/images/hero/asics_990-1440_624.jpg"
     },
     "href": "/product/30"
   }
