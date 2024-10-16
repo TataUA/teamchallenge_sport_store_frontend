@@ -7,7 +7,7 @@ import Image from "next/image";
 import { cn } from "@/services/utils/cn";
 
 // assets
-import banner from "../../public/images/footer/subscribe.png";
+import banner from "../../public/images/footer/subscribe.jpg";
 import getSuccessBlueIcon from "@/helpers/getSuccessBlueIconSVG";
 
 const SubscribeBannerFooter = () => {
@@ -82,7 +82,6 @@ const SubscribeBannerFooter = () => {
             value={email}
             placeholder="Електронна пошта"
             onChange={handleEmailChange}
-           
           />
           <br />
           <button

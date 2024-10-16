@@ -16,6 +16,7 @@ export default async function Page() {
         homePageMainSlider
         className={"min-h-[400px] h-[50dvh] xl:min-h-[624px]"}
       />
+
       <Gender />
       <PopularCategories />
       <SortedProducts title="Топ продажів" page="/popular" sort="popular" />
