@@ -12,6 +12,7 @@ import { IProduct } from "./types";
 import getCorrectQueryParamsSearchQuery from "@/helpers/getCorrectQueryParamsSearchQuery";
 import { DropdownItemCityNovaPoshta } from "@/components/OrderPageComponent/DeliverSection/CustomCitiesDropdown";
 import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
+import cleanAllLocalStorageData from "@/helpers/cleanAllLocalStorageData";
 
 export const apiBaseUrl =
   process.env.NODE_ENV === "development"
@@ -141,20 +142,19 @@ export const currentUser = async (): Promise<types.RegisterResponseData> => {
   try {
     const response = await $instance.get("/user/view/");
 
-    if(response.data) return response.data
-    
-    return {
+    if (response.data) return response.data;
 
+    return {
       id: 0,
-      first_name: '',
-      surname: '',
-      last_name: '',
-      phone_number: '',
-      email: '',
+      first_name: "",
+      surname: "",
+      last_name: "",
+      phone_number: "",
+      email: "",
     };
   } catch (error: any) {
-    if(error.response.status === 401) {
-      localStorage.removeItem('accessToken')
+    if (error.response.status === 401) {
+      localStorage.removeItem("accessToken");
       console.log(error.message);
     }
     throw error.response;
@@ -190,6 +190,7 @@ export const editUser = async (
 export const logoutUser = async () => {
   try {
     const { data } = await $instance.post("/user/logout/");
+    cleanAllLocalStorageData();
     return data;
   } catch (error: any) {
     throw error.response.data;
@@ -250,28 +251,30 @@ export const sendSearchQueryApi = async (
 
 interface INovaPoshtaCityResponse {
   data: {
-    data: any[]
-  }
+    data: any[];
+  };
 }
 
 export interface NovaPoshCityResponseDataItem {
-  SettlementTypeDescription: string
-  Description: string
-  RegionsDescription: string
-  AreaDescription: string
-  Ref: string
+  SettlementTypeDescription: string;
+  Description: string;
+  RegionsDescription: string;
+  AreaDescription: string;
+  Ref: string;
 }
 
 export const getListOfCitiesNovaPoshta = async (
-  city: string
-): Promise< NovaPoshCityResponseDataItem[]> => {
+  city: string,
+): Promise<NovaPoshCityResponseDataItem[]> => {
   try {
-    const { data }: INovaPoshtaCityResponse = await $instance.get(`/nova-post/settlements/${city}/`);
-    
-    if(data.data.length) {
-      return data.data.filter(item => Number(item.Warehouse) > 0)
+    const { data }: INovaPoshtaCityResponse = await $instance.get(
+      `/nova-post/settlements/${city}/`,
+    );
+
+    if (data.data.length) {
+      return data.data.filter((item) => Number(item.Warehouse) > 0);
     }
-    
+
     return [];
   } catch (error: any) {
     throw error.response.data;
@@ -280,22 +283,24 @@ export const getListOfCitiesNovaPoshta = async (
 
 interface INovaPoshtaDepartmentsResponse {
   data: {
-    data: {Description: string}[]
-  }
+    data: { Description: string }[];
+  };
 }
 
 export interface INovaPoshtaDepartmentItemResponse {
-  Description: string
+  Description: string;
 }
 
 export const getListOfDepartmentsInCityNovaPoshta = async (
-  ref: string
+  ref: string,
 ): Promise<INovaPoshtaDepartmentItemResponse[]> => {
   try {
-    const { data }: INovaPoshtaDepartmentsResponse = await $instance.get(`/nova-post/warehouses/${ref}/`);
+    const { data }: INovaPoshtaDepartmentsResponse = await $instance.get(
+      `/nova-post/warehouses/${ref}/`,
+    );
 
-    if(data.data.length) {
-      return data.data
+    if (data.data.length) {
+      return data.data;
     }
     return [];
   } catch (error: any) {
@@ -304,31 +309,32 @@ export const getListOfDepartmentsInCityNovaPoshta = async (
 };
 
 export interface IOrder {
-  basket_id: string
-  last_name: string
-  first_name: string
-  surname: string
-  phone_number: string
-  email: string
-  city: string
-  delivery_method: string
-  branch: string
-  street?: string
-  appartment?: string
-  payment_method: string
-  user: number
+  basket_id: string;
+  last_name: string;
+  first_name: string;
+  surname: string;
+  phone_number: string;
+  email: string;
+  city: string;
+  delivery_method: string;
+  branch: string;
+  street?: string;
+  appartment?: string;
+  payment_method: string;
+  user: number;
 }
 
 export const createOrder = async (
-  order: IOrder
-): Promise<{data: {msg: string, order?: string, payment_form?: string}}> => {
+  order: IOrder,
+): Promise<{
+  data: { msg: string; order?: string; payment_form?: string };
+}> => {
   try {
-    const response = await $instance.post('/delivery/orders/create/', order);
+    const response = await $instance.post("/delivery/orders/create/", order);
 
-    return response
-
+    return response;
   } catch (error: any) {
-    console.log("🚀 ~ error:", error)
-    return {data: {msg: error.response.data.msg}};
+    console.log("🚀 ~ error:", error);
+    return { data: { msg: error.response.data.msg } };
   }
 };
