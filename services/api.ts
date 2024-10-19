@@ -296,7 +296,24 @@ export const getListOfDepartmentsInCityNovaPoshta = async (
 ): Promise<INovaPoshtaDepartmentItemResponse[]> => {
   try {
     const { data }: INovaPoshtaDepartmentsResponse = await $instance.get(
-      `/nova-post/warehouses/${ref}/`,
+      `/nova-post/warehouses/${ref}/?limit=500`,
+    );
+    if (data.data.length) {
+      return data.data;
+    }
+    return [];
+  } catch (error: any) {
+    throw error.response.data;
+  }
+};
+
+export const getListOfStreetsInCityNovaPoshta = async (
+  ref: string,
+  street: string,
+): Promise<any[]> => {
+  try {
+    const { data }: INovaPoshtaDepartmentsResponse = await $instance.get(
+      `/nova-post/search_streets/${street}/${ref}/?limit=500`,
     );
 
     if (data.data.length) {
