@@ -26,6 +26,7 @@ import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/Rese
 import { handleTokenError } from "@/helpers/handleTokenError";
 import { handleThunkValidationErrors } from "@/helpers/handleThunkValidationErrors";
 import { handleSetTokens } from "@/helpers/handleSetTokens";
+import { cleanCart } from "../cart/cartSlice";
 
 export interface ErrorType {
   message?: string[] | string;
@@ -224,6 +225,7 @@ export const logoutUserThunk = createAsyncThunk<
     clearToken();
     Cookies.remove("refreshToken");
     thunkApi.dispatch(logoutUser());
+    thunkApi.dispatch(cleanCart());
     return;
   } catch (error: any) {
     const errorObject: ErrorType = {
