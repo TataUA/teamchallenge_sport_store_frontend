@@ -211,78 +211,90 @@ const OrderPageComponent = () => {
 
   return (
     <div className="pt-4">
-      <h1 
-      className="text-[#1A1A1C] text-2xl font-bold md:text-2xl lg:text-3xl min-[2800px]:lg:text-5xl"
-      >
+      <h1 className="text-[#1A1A1C] text-2xl font-bold md:text-2xl lg:text-3xl min-[2800px]:lg:text-5xl">
         Оформлення замовлення
       </h1>
       <form
-        onSubmit={handleSubmit} 
+        onSubmit={handleSubmit}
         className="flex flex-col gap-10 lg:gap-[60px] lg:pt-6 min-[2800px]:pt-8 min-[2800px]:gap-[60px]"
       >
         <ContactsSection>
-        <div className="flex flex-col">
-          {fields.map((field) => (
-            <div key={field.name} className="relative">
-              <AnimatedLabelInputCustom
-                classname={cn('w-full border-b pb-2 pt-1 focus:outline-none placeholder-gray-500',{
-                  'border-gray': true,
-                  'border-red placeholder-red': field.error,
-                })}
-                type="text" 
-                value={formData[field.name as keyof typeof formData] || ''}
-                placeholder={field.placeholder}
-                label={field.placeholder} 
-                onChange={handleChange}
-                id={field.name}
-                name={field.name}
-              />
-              {field.error && (
-                <>
-                  <div className={cn("flex items-center mt-4",{
-                    'absolute right-0 bottom-[8px] m-0': true
-                  })}>
-                  <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
-                  </div>
-                  <div className="absolute text-red text-xs">{errors[field.name as keyof typeof formData]}</div>
-                </>
-              )}
-            </div>
-          ))} 
-        </div>
+          <div className="flex flex-col">
+            {fields.map((field) => (
+              <div
+                key={field.name}
+                className={`relative ${field.error ? "error" : ""}`}
+              >
+                <AnimatedLabelInputCustom
+                  classname={`${field.error ? "error" : ""}`}
+                  classnameInput={`${field.error ? "border-red" : ""}`}
+                  classnameLabel={`${field.error ? "text-red" : ""}`}
+                  type="text"
+                  value={formData[field.name as keyof typeof formData] || ""}
+                  placeholder={field.placeholder}
+                  label={field.placeholder}
+                  onChange={handleChange}
+                  id={field.name}
+                  name={field.name}
+                />
+                {field.error && (
+                  <>
+                    <div
+                      className={cn("flex items-center mt-4", {
+                        "absolute right-0 bottom-[24px] m-0": true,
+                      })}
+                    >
+                      <Image
+                        src={wrong}
+                        width={18}
+                        height={18}
+                        alt="Іконка помилки"
+                      />
+                    </div>
+                    <div className="absolute text-red text-xs">
+                      {errors[field.name as keyof typeof formData]}
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
         </ContactsSection>
-        <DeliverSection 
-          orderState={orderState} 
-          deliveryAddress={deliveryAddress} 
-          setOrderState={setOrderState} 
-          handleChangeOrder={handleChangeOrder} 
-          handleChangeDeliveryAddress={handleChangeDeliveryAddress} 
-          submitted={submitted} 
+        <DeliverSection
+          orderState={orderState}
+          deliveryAddress={deliveryAddress}
+          setOrderState={setOrderState}
+          handleChangeOrder={handleChangeOrder}
+          handleChangeDeliveryAddress={handleChangeDeliveryAddress}
+          submitted={submitted}
           errors={errors}
         />
-        <PaymentSection 
-          orderState={orderState} 
-          setOrderState={setOrderState} 
-          handleChangeOrder={handleChangeOrder} 
-          submitted={submitted} 
+        <PaymentSection
+          orderState={orderState}
+          setOrderState={setOrderState}
+          handleChangeOrder={handleChangeOrder}
+          submitted={submitted}
         />
         <ListProducts />
         <div className="flex flex-col justify-center items-center mb-4">
           <button
             type="submit"
-            className={cn("w-full py-[16px] px-6 text-white bg-blue rounded-xl text-center text-base font-semibold transition-all",
-              'hover:bg-[#284695]'
+            className={cn(
+              "w-full py-[16px] px-6 text-white bg-blue rounded-xl text-center text-base font-semibold transition-all",
+              "hover:bg-[#284695]",
             )}
           >
             Перейти до оплатити
           </button>
           {Object.keys(errors).length > 0 ? (
-            <div className="mt-3 text-red text-xs">Вибрані не всі поля або помилка при заповненні</div>
-            ) : null}
+            <div className="mt-3 text-red text-xs">
+              Вибрані не всі поля або помилка при заповненні
+            </div>
+          ) : null}
         </div>
       </form>
     </div>
-  )
+  );
 }
 
 export default OrderPageComponent
