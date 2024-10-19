@@ -60,10 +60,6 @@ const DeliveryManForm = (props: IProps) => {
     handleChangeDeliveryAddress(id, value);
   };
 
-  const inputClassname = cn("w-full px-0 py-2 pt-5 border-b-[1px] border-[#CFCFCF] text-base font-medium text-[#868687]",
-    "outline-none focus:border-blue "
-  )
-
   const errorClassname = "text-red text-sm mt-1";
 
   return (
@@ -76,7 +72,6 @@ const DeliveryManForm = (props: IProps) => {
       </div>
       <div className="mb-2">
         <AnimatedLabelInputCustom
-          classname={inputClassname}
           type="text" 
           value={deliveryAddress.numberHouse}
           placeholder="Номер будинку" 
@@ -87,7 +82,6 @@ const DeliveryManForm = (props: IProps) => {
       </div>
       <div className="mb-2">
         <AnimatedLabelInputCustom
-          classname={inputClassname}
           type="text" 
           value={deliveryAddress.numberAppartment}
           placeholder="Номер квартири" 
