@@ -282,7 +282,7 @@ const OrderPageComponent = () => {
           }
         }}
       />
-      <h1 className="text-[#1A1A1C] text-2xl font-bold md:text-2xl lg:text-3xl min-[2800px]:lg:text-5xl">
+      <h1 className="text-[#1A1A1C] text-2xl font-bold mb-10 md:text-2xl lg:text-3xl min-[2800px]:lg:text-5xl">
         Оформлення замовлення
       </h1>
       <form
