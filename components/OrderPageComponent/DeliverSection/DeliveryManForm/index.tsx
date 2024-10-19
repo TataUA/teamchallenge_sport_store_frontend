@@ -1,9 +1,16 @@
 'use client'
 
+import { useState } from "react"
+import { useSelector } from "react-redux"
+import { selectOrder } from "@/redux/order/orderSelector"
+
+// components
 import AnimatedLabelInputCustom from "@/components/Shared/AnimatedLabelInputCustom"
+import SearchInputDropdown from "../SearchInputDropdown"
+
 // utils
 import { cn } from "@/services/utils/cn"
-import { useState } from "react"
+import { getListOfStreetsInCityNovaPoshta } from "@/services/api"
 
 interface IProps {
   handleChangeDeliveryAddress: (propert:string, value: any)=>void
@@ -18,6 +25,8 @@ interface Errors {
 
 const DeliveryManForm = (props: IProps) => {
   const {handleChangeDeliveryAddress, deliveryAddress} = props
+
+  const orderData = useSelector(selectOrder);
 
   const [errors, setErrors] = useState<Errors>({});
 
@@ -60,15 +69,10 @@ const DeliveryManForm = (props: IProps) => {
   return (
     <div className="mt-2">
       <div className="mb-2">
-        <AnimatedLabelInputCustom
-          classname={inputClassname}
-          type="text" 
-          value={deliveryAddress.street}
-          placeholder="Вулиця" 
-          label="Вулиця" 
-          onChange={(event) => handleChange(event, 'street')}
+        <SearchInputDropdown 
+        onSelect={(value) => handleChangeDeliveryAddress('street', value)}
+        onSearch={(query) => getListOfStreetsInCityNovaPoshta(orderData.city?.ref || '', query)} 
         />
-        {errors.street && <p className={errorClassname}>{errors.street}</p>}
       </div>
       <div className="mb-2">
         <AnimatedLabelInputCustom

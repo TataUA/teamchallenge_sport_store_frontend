@@ -101,6 +101,16 @@ const DeliverSection = ({
             </span>
           </div>
         ) : null}
+        {city && deliveryType && (deliveryType === 'Courier') && !deliveryAddress.street && submitted ? (
+          <div className="flex gap-2 items-center">
+            <Image src={wrong} width={18} height={18} alt="Іконка помилки" />
+            <span
+                className='min-w-min whitespace-nowrap h-max-content text-red text-xs'
+            >
+              Оберіть вулицю доставки
+            </span>
+          </div>
+        ) : null}
       </div>
       <CustomCitiesDropdown handleChangeOrder={handleChangeOrder} setError={setError} error={error} />
       <div className={cn("mb-4",{'opacity-[50%]': !city})}>
