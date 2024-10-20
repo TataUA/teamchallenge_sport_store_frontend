@@ -3,7 +3,7 @@ import { cn } from "@/services/utils/cn";
 
 interface ButtonProps {
   type: "button" | "submit";
-  subtype: "primary" | "secondary" | "tertiary";
+  subtype: "primary" | "secondary" | "tertiary" | "ghost";
   title: string;
   onClick?: () => void;
   disabled?: boolean;
@@ -17,6 +17,7 @@ export const Button = (props: ButtonProps) => {
       "border border-blue bg-white text-blue hover:bg-active_lightblue",
     tertiary:
       "border border-border_button bg-white text-common hover:border-border hover:bg-border_button",
+    ghost: "h-8 bg-white text-common  hover:bg-border_button",
   };
 
   return (

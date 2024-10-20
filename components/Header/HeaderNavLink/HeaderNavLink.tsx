@@ -52,6 +52,7 @@ import addProductToCartInDbAction from "@/app/actions/addProductToCartInDbAction
 
 // types
 import { IProduct } from "@/services/types";
+import { ResetPasswordRequestForm } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 
 const HeaderNavLink = () => {
   const cart = useSelector(selectCart);
@@ -68,6 +69,7 @@ const HeaderNavLink = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [showRegistration, setShowRegistration] = useState(false);
+  const [showResetPassword, setShowResetPassword] = useState(false);
 
   useFetchCurrentUser();
 
@@ -201,6 +203,11 @@ const HeaderNavLink = () => {
     }
   };
 
+  const handleCloseModalClick = () => {
+    setShowModal(false);
+    setShowResetPassword(false);
+  };
+
   return (
     <>
       <ul className="flex items-center gap-1">
@@ -262,16 +269,17 @@ const HeaderNavLink = () => {
       </ul>
 
       {!isMobile && showModal && (
-        <ModalForm
-          onClose={() => setShowModal(false)}
-          stylesContentBlock="w-[610px]"
-        >
-          {showRegistration ? (
+        <ModalForm onClose={handleCloseModalClick}>
+          {showResetPassword ? (
+            <ResetPasswordRequestForm
+              setShowResetPassword={setShowResetPassword}
+            />
+          ) : showRegistration ? (
             <RegisterPageContent onClose={() => setShowModal(false)} />
           ) : (
             <LoginPageContent
-              onClose={() => setShowModal(false)}
               setShowRegistration={setShowRegistration}
+              setShowResetPassword={setShowResetPassword}
             />
           )}
         </ModalForm>
