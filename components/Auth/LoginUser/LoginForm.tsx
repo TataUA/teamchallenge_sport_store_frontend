@@ -15,11 +15,13 @@ import { currentUserThunk, loginUserThunk } from "@/redux/auth/authThunk";
 import { LoginFormValues } from "@/services/types/auth-form-types";
 
 import { InputLabelField } from "@/components/Auth/InputLabelField";
+import { ModalForm } from "@/components/Auth/ModalForm";
 import { ResetPasswordRequestForm } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
-import { ResetPasswordButton } from "@/components/Auth/ResetPassword/ResetPasswordButton";
 import { Button } from "@/components/Button/Button";
 
 import wrong from "@/public/icons/auth/wrong.svg";
+
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export const schema = yup.object().shape({
   email: yup
@@ -45,7 +47,7 @@ export interface ExtendedFormikErrors extends FormikErrors<LoginFormValues> {
 }
 
 interface LoginFormProps {
-  onClose?: () => void;
+  setShowResetPassword?: (show: boolean) => void;
 }
 
 const initialValues: LoginFormValues = {
@@ -54,14 +56,15 @@ const initialValues: LoginFormValues = {
 };
 
 export const LoginForm = (props: LoginFormProps) => {
-  const [showPasswordResetBlock, setShowPasswordResetBlock] =
-    useState<boolean>(false);
+  const [showModal, setShowModal] = useState(false);
 
   const error = useSelector(selectError);
 
   const dispatch: AppDispatch = useDispatch();
 
   const router = useRouter();
+
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     return () => {
@@ -83,7 +86,6 @@ export const LoginForm = (props: LoginFormProps) => {
       if (loginUserThunk.fulfilled.match(actionResult)) {
         await dispatch(currentUserThunk()).unwrap();
         router.push("/auth/profile");
-        props.onClose?.();
       } else if (loginUserThunk.rejected.match(actionResult)) {
         const errorMessage = actionResult.payload?.message;
 
@@ -101,6 +103,13 @@ export const LoginForm = (props: LoginFormProps) => {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleResetPasswordClick = () => {
+    if (isMobile) {
+      setShowModal(true);
+    }
+    props.setShowResetPassword?.(true);
   };
 
   return (
@@ -133,9 +142,13 @@ export const LoginForm = (props: LoginFormProps) => {
                 />
               </div>
 
-              <ResetPasswordButton
-                setShowPasswordResetBlock={setShowPasswordResetBlock}
-              />
+              <button
+                type="button"
+                className="block h-8 mt-2 mb-5 text-sm tracking-[0.32px] font-medium text-title underline"
+                onClick={handleResetPasswordClick}
+              >
+                Забули пароль?
+              </button>
 
               {error && (
                 <div className="flex items-center mb-6">
@@ -168,10 +181,14 @@ export const LoginForm = (props: LoginFormProps) => {
         )}
       </Formik>
 
-      <ResetPasswordRequestForm
-        setShowPasswordResetBlock={setShowPasswordResetBlock}
-        showPasswordResetBlock={showPasswordResetBlock}
-      />
+      {showModal && (
+        <ModalForm
+          onClose={() => setShowModal(false)}
+          stylesContentBlock="max-w-[562px]"
+        >
+          <ResetPasswordRequestForm />
+        </ModalForm>
+      )}
     </>
   );
 };

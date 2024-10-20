@@ -12,8 +12,8 @@ import { PrivacyPolicy } from "@/components/Auth/PrivacyPolicy";
 import { Button } from "@/components/Button/Button";
 
 interface LoginPageContentProps {
-  onClose?: () => void;
   setShowRegistration?: (show: boolean) => void;
+  setShowResetPassword?: (show: boolean) => void;
 }
 
 export const LoginPageContent = (props: LoginPageContentProps) => {
@@ -32,14 +32,14 @@ export const LoginPageContent = (props: LoginPageContentProps) => {
     <>
       <ClientComponent>
         <PrivateRouteComponent>
-          <div>
-            <h1 className="mb-2 text-2xl leading-140 font-pangram font-bold text-title">
+          <div className="1440:w-[610px]">
+            <h1 className="mb-2 1440:mb-4 text-2xl leading-140 font-pangram font-bold text-title">
               Авторизація
             </h1>
             <p className="mb-6 text-sm leading-129 font-pangram font-medium text-common">
               Увійдіть або зареєструйтесь щоб продовжити
             </p>
-            <LoginForm onClose={props.onClose} />
+            <LoginForm setShowResetPassword={props.setShowResetPassword} />
             <PrivacyPolicy />
             <div className="flex mt-[21px] mb-[21px] justify-center items-center">
               <div className="w-full flex items-center">

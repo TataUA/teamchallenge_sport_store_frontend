@@ -21,8 +21,11 @@ export const ModalForm = (props: ModalFormProps) => {
       }
     };
 
+    document.body.style.overflow = "hidden";
+
     window.addEventListener("keydown", handleKeyboardCloseForm);
     return () => {
+      document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyboardCloseForm);
     };
   }, [props]);
@@ -37,12 +40,14 @@ export const ModalForm = (props: ModalFormProps) => {
       >
         <div
           className={cn(
-            "relative w-full p-6 1440:p-10 bg-white rounded-lg shadow-lg",
+            "relative w-auto max-h-[96vh] p-6 1440:p-10 bg-white rounded-lg shadow-lg overflow-y-auto",
             props.stylesContentBlock,
           )}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+            e.stopPropagation()
+          }
         >
-          <div className="absolute top-10 right-10">
+          <div className="absolute top-6 1440:top-10 right-6 1440:right-10">
             <button
               type="button"
               onClick={() => {
@@ -57,7 +62,7 @@ export const ModalForm = (props: ModalFormProps) => {
               />
             </button>
           </div>
-          <div className="w-full">{props.children}</div>
+          <div>{props.children}</div>
         </div>
       </div>
     </>
