@@ -11,7 +11,7 @@ import { resetPasswordRequestThunk } from "@/redux/auth/authThunk";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { ClientComponent } from "@/components/ClientComponent";
 import { Button } from "@/components/Button/Button";
-import { ConfirmationButtons } from "@/components/Auth/ConfirmEmail/ConfirmationButtons";
+import { ResendLinkButton } from "@/components/Auth/ConfirmEmail/ResendLinkButton";
 
 import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
 
@@ -29,6 +29,7 @@ const schema = yup.object().shape({
 });
 
 interface ResetPasswordRequestProps {
+  onReturnClick?: (show: boolean) => void;
   setShowResetPassword?: (show: boolean) => void;
 }
 
@@ -48,12 +49,6 @@ export const ResetPasswordRequestForm = (props: ResetPasswordRequestProps) => {
 
   const isMobile = useIsMobile();
 
-  const fetchResetPasswordRequest = async (
-    values: ResetPasswordRequestValues,
-  ) => {
-    return await dispatch(resetPasswordRequestThunk(values));
-  };
-
   const handleSubmit = async (
     values: ResetPasswordRequestValues,
     { resetForm, setErrors }: FormikHelpers<ResetPasswordRequestValues>,
@@ -61,7 +56,7 @@ export const ResetPasswordRequestForm = (props: ResetPasswordRequestProps) => {
     try {
       setUserEmail(values.email);
 
-      const actionResult = await fetchResetPasswordRequest(values);
+      const actionResult = await dispatch(resetPasswordRequestThunk(values));
 
       if (resetPasswordRequestThunk.fulfilled.match(actionResult)) {
         resetForm();
@@ -71,6 +66,14 @@ export const ResetPasswordRequestForm = (props: ResetPasswordRequestProps) => {
       }
     } catch (error) {
       console.error("Reset password failed in catch block:", error);
+    }
+  };
+
+  const handleReturnButtonClick = () => {
+    if (isMobile && props.onReturnClick) {
+      props.onReturnClick(false);
+    } else {
+      props.setShowResetPassword?.(false);
     }
   };
 
@@ -132,13 +135,28 @@ export const ResetPasswordRequestForm = (props: ResetPasswordRequestProps) => {
             <span className="font-bold">{userEmail}</span>
           </p>
 
-          <ClientComponent>
-            <ConfirmationButtons
-              email={userEmail}
-              resendButtonTitle="Надіслати посилання ще раз"
-              actionThunk={fetchResetPasswordRequest}
+          <div className="w-full flex flex-col gap-4">
+            <ClientComponent>
+              <ResendLinkButton
+                email={userEmail}
+                resendButtonTitle="Надіслати посилання ще раз"
+              />
+            </ClientComponent>
+
+            <Button
+              type="button"
+              subtype="tertiary"
+              title="На сторіку входу"
+              onClick={handleReturnButtonClick}
             />
-          </ClientComponent>
+
+            <Button
+              type="button"
+              subtype="ghost"
+              title="Назад"
+              onClick={() => setSentForm(false)}
+            />
+          </div>
         </div>
       )}
     </>
