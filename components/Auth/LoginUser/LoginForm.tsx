@@ -186,7 +186,7 @@ export const LoginForm = (props: LoginFormProps) => {
           onClose={() => setShowModal(false)}
           stylesContentBlock="max-w-[562px]"
         >
-          <ResetPasswordRequestForm />
+          <ResetPasswordRequestForm onReturnClick={() => setShowModal(false)} />
         </ModalForm>
       )}
     </>

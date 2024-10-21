@@ -3,11 +3,13 @@
 import React from "react";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
+
 import { cn } from "@/services/utils/cn";
+
 import { ClientComponent } from "@/components/ClientComponent";
-import { ConfirmationButtons } from "@/components/Auth/ConfirmEmail/ConfirmationButtons";
+import { ResendLinkButton } from "@/components/Auth/ConfirmEmail/ResendLinkButton";
+
 import envelopBlue from "@/public/icons/auth/envelop_blue.svg";
-import { resendEmailThunk } from "@/redux/auth/authThunk";
 
 export default function Page() {
   const searchParams = useSearchParams();
@@ -43,11 +45,12 @@ export default function Page() {
       </p>
       <ClientComponent>
         <div className="w-full mb-16">
-          <ConfirmationButtons
+          <ResendLinkButton
             email={email}
             resendButtonTitle="Надіслати лист повторно"
-            actionThunk={resendEmailThunk}
           />
+
+          {/* //тут перевірити кнопку */}
         </div>
       </ClientComponent>
     </div>
