@@ -13,6 +13,13 @@ const config: Config = {
       inter: ["Inter", "sans-serif"],
     },
     extend: {
+      container: {
+        center: true,
+        screens: {
+          DEFAULT: "100%",
+          xl: "1440px",
+        },
+      },
       screens: {
         "1440": "1440px",
       },
