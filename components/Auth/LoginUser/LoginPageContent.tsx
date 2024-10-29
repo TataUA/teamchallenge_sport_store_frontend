@@ -12,6 +12,7 @@ import { PrivacyPolicy } from "@/components/Auth/PrivacyPolicy";
 import { Button } from "@/components/Button/Button";
 
 interface LoginPageContentProps {
+  setShowModal?: (show: boolean) => void;
   setShowRegistration?: (show: boolean) => void;
   setShowResetPassword?: (show: boolean) => void;
 }
@@ -39,7 +40,10 @@ export const LoginPageContent = (props: LoginPageContentProps) => {
             <p className="mb-6 text-sm leading-129 font-pangram font-medium text-common">
               Увійдіть або зареєструйтесь щоб продовжити
             </p>
-            <LoginForm setShowResetPassword={props.setShowResetPassword} />
+            <LoginForm
+              setShowModal={props.setShowModal}
+              setShowResetPassword={props.setShowResetPassword}
+            />
             <PrivacyPolicy />
             <div className="flex mt-[21px] mb-[21px] justify-center items-center">
               <div className="w-full flex items-center">

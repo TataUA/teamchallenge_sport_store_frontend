@@ -146,7 +146,7 @@ export const ResetPasswordRequestForm = (props: ResetPasswordRequestProps) => {
             <Button
               type="button"
               subtype="tertiary"
-              title="На сторіку входу"
+              title={isMobile? "На сторіку входу" : "Увійти до облікового запису"}
               onClick={handleReturnButtonClick}
             />
 
