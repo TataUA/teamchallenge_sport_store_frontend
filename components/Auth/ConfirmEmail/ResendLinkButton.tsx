@@ -5,13 +5,13 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 
 import { AppDispatch } from "@/redux/store";
-import { resetPasswordRequestThunk } from "@/redux/auth/authThunk";
 
 import { Button } from "@/components/Button/Button";
 
 interface ResendLinkButtonProps {
   email: string;
   resendButtonTitle: string;
+  resendThunk: (payload: { email: string }) => any;
 }
 
 export const ResendLinkButton = (props: ResendLinkButtonProps) => {
@@ -45,13 +45,11 @@ export const ResendLinkButton = (props: ResendLinkButtonProps) => {
 
   const handleResend = async () => {
     if (countdown === null) {
-      setCountdown(60);
+      setCountdown(180);
       startCountdown();
 
       try {
-        await dispatch(
-          resetPasswordRequestThunk({ email: props.email }),
-        ).unwrap();
+        await dispatch(props.resendThunk({ email: props.email })).unwrap();
       } catch (error) {
         console.error("Resend action failed in catch block:", error);
       }
