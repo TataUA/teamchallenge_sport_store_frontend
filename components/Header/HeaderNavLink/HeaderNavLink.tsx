@@ -280,6 +280,7 @@ const HeaderNavLink = () => {
             <LoginPageContent
               setShowRegistration={setShowRegistration}
               setShowResetPassword={setShowResetPassword}
+              setShowModal={setShowModal}
             />
           )}
         </ModalForm>

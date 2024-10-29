@@ -4,30 +4,43 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
+
 import { cn } from "@/services/utils/cn";
+
 import { AppDispatch } from "@/redux/store";
 import { confirmedEmailThunk } from "@/redux/auth/authThunk";
 import { selectError, selectIsLoading } from "@/redux/auth/authSelector";
+
 import { Loader } from "@/components/Loader";
 import { Button } from "@/components/Button/Button";
+
 import envelopSuccess from "@/public/icons/auth/envelop_blue_success.svg";
 import envelopReject from "@/public/icons/auth/envelop_blue_reject.svg";
+
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export const ConfirmedMessage = () => {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
+
   const router = useRouter();
+
   const dispatch: AppDispatch = useDispatch();
 
   const pathname = usePathname();
+
   const tokenValue = pathname.substring(22, pathname.length);
+
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     dispatch(confirmedEmailThunk({ confirmationToken: tokenValue }));
   }, [dispatch, tokenValue]);
 
   const handleRedirect = () => {
-    router.push("/auth/login");
+    if (isMobile) {
+      router.push("/auth/login");
+    } else router.push("/");
   };
 
   return (
@@ -76,7 +89,7 @@ export const ConfirmedMessage = () => {
           <Button
             type="button"
             subtype="primary"
-            title="На сторіку входу"
+            title={isMobile ? "На сторіку входу" : "На головну сторінку"}
             onClick={handleRedirect}
           />
         </div>

@@ -5,12 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { usePathname } from "next/navigation";
 import * as yup from "yup";
 import { Formik, Form, FormikHelpers } from "formik";
+
 import { AppDispatch } from "@/redux/store";
 import { selectIsSubmitingComplete } from "@/redux/auth/authSelector";
 import { resetPasswordThunk } from "@/redux/auth/authThunk";
+
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { Button } from "@/components/Button/Button";
 import { SuccessMessageModal } from "@/components/Auth/SuccessMessageModal";
+
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const schema = yup.object().shape({
   password: yup
@@ -41,11 +45,16 @@ const initialValues: ResetPasswordFormValues = {
 
 export const ResetPasswordForm = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+
   const isSubmitingComplete = useSelector(selectIsSubmitingComplete);
+
   const dispatch: AppDispatch = useDispatch();
 
   const pathname = usePathname();
+
   const tokenValue = pathname.substring(21, pathname.length);
+
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (isSubmitingComplete) {
@@ -116,8 +125,8 @@ export const ResetPasswordForm = () => {
       <SuccessMessageModal
         title="Пароль змінено"
         text="Ваш пароль успішно змінено. Використовуйте новий пароль щоб увійти"
-        titleButton="На сторінку входу"
-        redirectButton={"/auth/login"}
+        titleButton={isMobile ? "На сторінку входу" : "На головну сторінку"}
+        redirectButton={isMobile ? "/auth/login" : "/"}
         showSuccessModal={showSuccessModal}
       />
     </>
