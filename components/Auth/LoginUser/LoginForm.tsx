@@ -75,6 +75,10 @@ export const LoginForm = (props: LoginFormProps) => {
   }, [currentUser, props]);
 
   useEffect(() => {
+    if (error) dispatch(clearError());
+  }, []);
+
+  useEffect(() => {
     return () => {
       if (error) dispatch(clearError());
     };

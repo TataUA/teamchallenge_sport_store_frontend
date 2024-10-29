@@ -140,13 +140,16 @@ export const ResetPasswordRequestForm = (props: ResetPasswordRequestProps) => {
               <ResendLinkButton
                 email={userEmail}
                 resendButtonTitle="Надіслати посилання ще раз"
+                resendThunk={resetPasswordRequestThunk}
               />
             </ClientComponent>
 
             <Button
               type="button"
               subtype="tertiary"
-              title={isMobile? "На сторіку входу" : "Увійти до облікового запису"}
+              title={
+                isMobile ? "На сторіку входу" : "Увійти до облікового запису"
+              }
               onClick={handleReturnButtonClick}
             />
 

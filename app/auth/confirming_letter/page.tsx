@@ -1,19 +1,35 @@
 "use client";
 
 import React from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 
 import { cn } from "@/services/utils/cn";
 
 import { ClientComponent } from "@/components/ClientComponent";
 import { ResendLinkButton } from "@/components/Auth/ConfirmEmail/ResendLinkButton";
+import { Button } from "@/components/Button/Button";
 
 import envelopBlue from "@/public/icons/auth/envelop_blue.svg";
 
+import { resendEmailThunk } from "@/redux/auth/authThunk";
+
+import { useIsMobile } from "@/hooks/useIsMobile";
+
 export default function Page() {
   const searchParams = useSearchParams();
+
+  const router = useRouter();
+
   const email = searchParams.get("email") || "";
+
+  const isMobile = useIsMobile();
+
+  const handleRedirect = () => {
+    if (isMobile) {
+      router.push("/auth/login");
+    } else router.push("/");
+  };
 
   return (
     <div
@@ -36,7 +52,7 @@ export default function Page() {
         <span className="font-semibold">{email}</span>
       </p>
       <p className="mb-12 font-medium text-sm text-common">
-        Будь ласка, зверніть увагу, що посилання буде дійсним лише протягом 30
+        Будь ласка, зверніть увагу, що посилання буде дійсним лише протягом 3
         хвилин.
       </p>
       <p className="mb-12 font-medium text-xs text-secondary">
@@ -44,14 +60,19 @@ export default function Page() {
         &#34;Надіслати лист повторно&#34;
       </p>
       <ClientComponent>
-        <div className="w-full mb-16">
+        <div className="w-full mb-4">
           <ResendLinkButton
             email={email}
             resendButtonTitle="Надіслати лист повторно"
+            resendThunk={resendEmailThunk}
           />
-
-          {/* //тут перевірити кнопку */}
         </div>
+        <Button
+          type="button"
+          subtype="primary"
+          title={isMobile ? "На сторіку входу" : "На головну сторінку"}
+          onClick={handleRedirect}
+        />
       </ClientComponent>
     </div>
   );
