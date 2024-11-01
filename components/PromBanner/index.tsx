@@ -36,7 +36,7 @@ export default async function PromBanner() {
           </h2>
           <p
             className={cn(
-              "text-sm leading-[18px] tracking-[0.04em] mb-4",
+              "text-sm leading-[18px] tracking-[0.04em] mb-5",
               "md:text-base",
               "xl:mb-6",
               "min-[2800px]:text-3xl",
@@ -48,7 +48,7 @@ export default async function PromBanner() {
           <Link
             href="/product/83"
             className={cn(
-              "min-w-[140px] tracking-[2%] bg-transparent rounded-lg px-4 py-[6px] border text-sm xl:px-6 xl:py-3 xl:rounded-xl",
+              "min-w-[140px] tracking-[2%] bg-transparent rounded-lg px-[17px] py-[7px] border text-sm xl:px-6 xl:py-3 xl:rounded-xl",
             )}
           >
             Детальніше

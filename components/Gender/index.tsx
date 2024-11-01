@@ -12,11 +12,11 @@ export default function Gender() {
           {NAV_ITEMS.map((item) => (
             <li
               key={item.title.key}
-              className="relative bg-[#6f6f6f] rounded-lg w-[167px] h-[88px] flex items-center pl-4 overflow-hidden xl:w-[652px] xl:h-[240px] xl:rounded-2xl"
+              className="relative bg-[#6f6f6f] rounded-lg w-[167px] h-[88px] flex items-center pl-4 overflow-hidden sm:w-[280px] sm:h-[107px] sm:rounded-xl xl:w-[652px] xl:h-[240px] xl:rounded-2xl"
             >
               <Link href={item.title.href}>
-                <div className="absolute flex flex-col justify-center left-4 z-10  text-white  xl:left-[40px] xl:bottom-8">
-                  <h2 className="text-base font-semibold  xl:text-2xl xl:mb-6">
+                <div className="absolute flex flex-col justify-center left-4 top-8 z-10  text-white  xl:left-[40px] xl:bottom-8">
+                  <h2 className="text-base font-medium  xl:text-2xl xl:mb-6">
                     {item.title.label}
                   </h2>
                   <button className="hidden xl:inline-block w-[124px] tracking-[2%] bg-transparent rounded-lg px-4 py-[6px] border text-sm xl:px-6 xl:py-3 xl:rounded-xl">

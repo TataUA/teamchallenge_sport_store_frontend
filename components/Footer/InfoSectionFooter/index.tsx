@@ -10,7 +10,7 @@ import { getInstagramIconFooter } from "@/helpers/getInstagramIconFooterSVG";
 import { getViberIconFooter } from "@/helpers/getViberIconFooterSVG";
 
 const InfoSectionFooter = () => {
-  const infoSectionClassname = cn("shrink-0", "max-[767px]:grow");
+  const infoSectionClassname = cn("shrink-0", "max-[767px]:grow", "mt-1");
   const subtitleClassname = cn(
     "text-lg font-black mb-4",
     "max-[767px]:mb-3 max-[767px]:text-base",
@@ -31,7 +31,7 @@ const InfoSectionFooter = () => {
 
   return (
     <div>
-      <div className="text-center flex justify-center content-center mb-5 min-[2800px]:mb-[50px]">
+      <div className="text-center flex justify-center content-center mt-[-4px] mb-5 min-[2800px]:mb-[50px]">
         <Image
           alt="footer title"
           src={footerTitleImage}

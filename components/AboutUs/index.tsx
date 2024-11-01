@@ -16,7 +16,8 @@ export default function AboutUs() {
                 src={image}
                 width={44}
                 height={44}
-                className=" mb-4 ml-auto mr-auto xl:w-14 xl:h-14 xl:mr-4 xl:ml-0 "
+                quality={100}
+                className=" w-[76px] h-[76px] mb-4 ml-auto mr-auto xl:w-14 xl:h-14 xl:mr-4 xl:ml-0 "
               />
               <div>
                 <h3 className="text-base mb-1 font-bold md:mb-[10px]">
