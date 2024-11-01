@@ -52,7 +52,7 @@ const SubscribeBannerFooter = () => {
       <div className=" collor-substrate absolute left-0 top-0 w-full h-full z-[5]  bg-[#151515]  opacity-60"></div>
       <div
         className={cn(
-          "pt-[42px] px-6 pb-[42px] min-h-[400px] relative z-[10] text-white",
+          "pt-[42px] px-6 pb-[42px] min-h-[396px] relative z-[10] text-white",
         )}
       >
         <form onSubmit={handleSubscribeSubmit}>
@@ -77,7 +77,7 @@ const SubscribeBannerFooter = () => {
           </p>
           <input
             className={cn(
-              "bg-transparent border-b-[1px] text-inherit placeholder-gray-500 mb-[6px]  pb-1.5 focus-visible:border-[blue] outline-none text-base  placeholder-[#868687]",
+              "bg-transparent border-b-[1px] text-inherit placeholder-gray-500 mb-[6px]  pb-1.5 focus-visible:border-[blue] outline-none text-base  placeholder-[#868687] placeholder-[0.025em] ",
               "max-[767px]:w-[100%]",
               "min-[2800px]:mb-12 min-[2800px]:text-3xl",
             )}
@@ -88,8 +88,8 @@ const SubscribeBannerFooter = () => {
           />
           <p
             className={cn(
-              "leading-3 text-[#aaaaac] text-[12px]  tracking-[6 %] opacity-100",
-              "min-[767px]:text-base max-[767px]:mb-[0]",
+              "leading-4 text-[#aaaaac] text-[12px]  tracking-wide opacity-100",
+              "min-[767px]:text-base leading-4 max-[767px]:mb-[0]",
               "min-[2800px]:text-3xl",
             )}
           >
@@ -101,7 +101,7 @@ const SubscribeBannerFooter = () => {
           <button
             disabled={submitted}
             className={cn(
-              "mt-[-12px] text-[#1A1A1C] min-w-[140px] py-3 px-8 bg-white rounded-2xl hover:opacity-70 disabled:hover:opacity-100",
+              "mt-[-6px] text-[#1A1A1C] min-w-[148px] py-3 px-6 bg-white rounded-2xl tracking-wide font-semibold hover:opacity-70 disabled:hover:opacity-100",
               "max-[767px]:px-6 max-[767px]:rounded-xl",
               "min-[2800px]:text-3xl min-[2800px]:min-w-[235px]",
             )}

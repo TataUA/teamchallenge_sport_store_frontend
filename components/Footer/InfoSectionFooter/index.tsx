@@ -10,14 +10,14 @@ import { getInstagramIconFooter } from "@/helpers/getInstagramIconFooterSVG";
 import { getViberIconFooter } from "@/helpers/getViberIconFooterSVG";
 
 const InfoSectionFooter = () => {
-  const infoSectionClassname = cn("shrink-0", "max-[767px]:grow", "mt-1");
+  const infoSectionClassname = cn("shrink-0", "max-[767px]:grow");
   const subtitleClassname = cn(
-    "text-lg font-black mb-4",
+    "text-lg font-black mb-4 font-semibold",
     "max-[767px]:mb-3 max-[767px]:text-base",
     "min-[2800px]:text-4xl min-[2800px]:mb-[30px]",
   );
   const infoListItemClassname = cn(
-    "text-base last:mb-0",
+    "text-base last:mb-0 font-medium tracking-wide",
     "max-[767px]:text-sm max-[767px]:mb-2",
     "min-[2800px]:text-3xl min-[2800px]:mb-[10px]",
   );
@@ -31,14 +31,14 @@ const InfoSectionFooter = () => {
 
   return (
     <div>
-      <div className="text-center flex justify-center content-center mt-[-4px] mb-5 min-[2800px]:mb-[50px]">
+      <div className="text-center flex justify-center content-center mt-[-4px] mb-6 min-[2800px]:mb-[50px]">
         <Image
           alt="footer title"
           src={footerTitleImage}
           className="min-[2800px]:h-[200px] min-[2800px]:w-auto"
         />
       </div>
-      <div className="flex flex-wrap gap-20 mb-5 max-[767px]:gap-7 max-[767px]:mb-6 min-[2800px]:mb-12">
+      <div className="flex flex-wrap  mb-6 max-[767px]:gap-[22px] max-[767px]:mb-6 min-[2800px]:mb-12">
         <div className={infoSectionClassname}>
           <div className={subtitleClassname}>Інформація</div>
           <div className="list-none">
@@ -59,7 +59,9 @@ const InfoSectionFooter = () => {
             <li className={infoListItemClassname}>
               м.Харків, вул.Мироносицька 79{" "}
             </li>
-            <li className={infoListItemClassname}>+ 38 (050) 000 00 21</li>
+            <li className={infoListItemClassname}>
+              <span className="text-xs">+ 38 (050) 000 00 21</span>
+            </li>
           </div>
         </div>
         <div className={infoSectionClassname}>
@@ -70,7 +72,7 @@ const InfoSectionFooter = () => {
           </div>
         </div>
       </div>
-      <div className="flex gap-3 mb-5">
+      <div className="flex gap-2 mb-6">
         <span className={infoSocialItemClassname}>
           {getTelegramIconFooter()}
         </span>
@@ -79,8 +81,8 @@ const InfoSectionFooter = () => {
         </span>
         <span className={infoSocialItemClassname}>{getViberIconFooter()}</span>
       </div>
-      <hr className="mb-5 min-[2800px]:my-[50px]" />
-      <div className="font-nunito font-normal text-gray text-sm max-[767px]:text-xs min-[2800px]:text-3xl">
+      <hr className="mb-6 min-[2800px]:my-[50px]  text-[#CFCFCF]" />
+      <div className="mb-6 font-nunito font-normal text-[#6e6e70]  text-xs tracking-wider max-[767px]:text-xs min-[2800px]:text-3xl">
         <div>
           Project created for educational purposes <br />© 2024 Sport Hub.
         </div>
