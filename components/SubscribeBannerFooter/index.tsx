@@ -39,7 +39,7 @@ const SubscribeBannerFooter = () => {
   };
 
   return (
-    <section className="relative">
+    <section className="relative xl:h-[469px]">
       <div className="absolute z-[1] w-[100%] h-[100%]">
         <Image
           src={bannerMobile}
@@ -49,7 +49,7 @@ const SubscribeBannerFooter = () => {
           alt="image"
         />
       </div>
-      <div className=" collor-substrate absolute left-0 top-0 w-full h-full z-[5]  bg-[#151515]  opacity-60"></div>
+      <div className=" collor-substrate absolute left-0 top-0 w-full h-full z-[5]  bg-[#151515]  opacity-60 xl:hidden"></div>
       <div
         className={cn(
           "pt-[42px] px-6 pb-[42px] min-h-[396px] relative z-[10] text-white",
