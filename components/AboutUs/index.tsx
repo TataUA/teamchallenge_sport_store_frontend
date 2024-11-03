@@ -17,13 +17,15 @@ export default function AboutUs() {
                 width={44}
                 height={44}
                 quality={100}
-                className=" w-[76px] h-[76px] mb-4 ml-auto mr-auto xl:w-14 xl:h-14 xl:mr-4 xl:ml-0 "
+                className=" w-[76px] h-[76px] mb-4 ml-auto mr-auto xl:w-16 xl:h-16 xl:mr-2  xl:ml-0 "
               />
               <div>
                 <h3 className="text-base mb-1 font-bold md:mb-[10px]">
                   {title}
                 </h3>
-                <p className="xl:text-base xl:w-[352px]">{subtitle}</p>
+                <p className="xl:leading-5 xl:text-base xl:w-[352px]">
+                  {subtitle}
+                </p>
               </div>
             </li>
           ))}
@@ -74,7 +76,7 @@ export default function AboutUs() {
                 забезпечують свободу руху і комфорт. Долучайтеся до нашої
                 спільноти та відкрийте для себе світ активного життя разом із
                 SportHub! <br />
-                <span className="text-sm text-[#868687]">
+                <span className="xl:leading-4 text-sm text-[#868687]">
                   Зверніть увагу, що сайт створений в учбових цілях, тому
                   замовити товар неможливо
                 </span>
