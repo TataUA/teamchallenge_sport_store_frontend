@@ -145,7 +145,7 @@ const InfoSectionFooter = () => {
         <div className="xl:hidden">
           Project created for educational purposes <br />© 2024 Sport Hub.
         </div>
-        <div className="hidden xl:block xl:text-center xl:mt-0">
+        <div className="hidden xl:block xl:text-center xl:mt-0 xl:tracking-wider xl:mb-5">
           © 2024 Sport Hub. Всі права захищено
         </div>
       </div>
