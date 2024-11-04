@@ -35,7 +35,7 @@ export const SuccessMessageModal = (props: SuccessMessageModalProps) => {
             <p className="mb-6 text-sm font-medium text-common">{props.text}</p>
             <Button
               type="button"
-              subtype="secondary"
+              subtype="primary"
               title={props.titleButton}
               onClick={handleRedirect}
             />

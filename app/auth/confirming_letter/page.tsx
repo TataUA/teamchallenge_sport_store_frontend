@@ -7,7 +7,7 @@ import Image from "next/image";
 import { cn } from "@/services/utils/cn";
 
 import { ClientComponent } from "@/components/ClientComponent";
-import { ResendLinkButton } from "@/components/Auth/ConfirmEmail/ResendLinkButton";
+import { ResendLinkButton } from "@/components/Auth/ResendLinkButton";
 import { Button } from "@/components/Button/Button";
 
 import envelopBlue from "@/public/icons/auth/envelop_blue.svg";
@@ -69,7 +69,7 @@ export default function Page() {
         </div>
         <Button
           type="button"
-          subtype="primary"
+          subtype="tertiary"
           title={isMobile ? "На сторіку входу" : "На головну сторінку"}
           onClick={handleRedirect}
         />
