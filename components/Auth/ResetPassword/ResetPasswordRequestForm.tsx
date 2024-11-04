@@ -11,7 +11,7 @@ import { resetPasswordRequestThunk } from "@/redux/auth/authThunk";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { ClientComponent } from "@/components/ClientComponent";
 import { Button } from "@/components/Button/Button";
-import { ResendLinkButton } from "@/components/Auth/ConfirmEmail/ResendLinkButton";
+import { ResendLinkButton } from "@/components/Auth/ResendLinkButton";
 
 import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
 

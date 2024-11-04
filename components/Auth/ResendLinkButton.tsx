@@ -37,7 +37,7 @@ export const ResendLinkButton = (props: ResendLinkButtonProps) => {
   };
 
   useEffect(() => {
-    setCountdown(60);
+    setCountdown(180);
     const cleanup = startCountdown();
 
     return cleanup;
