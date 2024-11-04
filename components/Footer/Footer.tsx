@@ -3,13 +3,10 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-//services
 import { HIDE_PAGE_PATH } from "@/services/hide-page-path.data";
 
-//hooks
 import { useIsMobile } from "@/hooks/useIsMobile";
 
-// components
 import InfoSectionFooter from "./InfoSectionFooter";
 
 const Footer = () => {
@@ -19,15 +16,12 @@ const Footer = () => {
 
   useEffect(() => {
     const shouldHide = HIDE_PAGE_PATH.some((page) => {
-      if (typeof page.path === "function") {
-        const regex = new RegExp(
-          `^${page.path(".*").replace("[activation_key]", "[^/]+")}$`,
-        );
-        return regex.test(pathname);
-      } else {
-        const regex = new RegExp(`^${page.path.replace("[token]", "[^/]+")}$`);
-        return regex.test(pathname);
-      }
+      const pathWithTokenOrKey = page.path
+        .replace("[token]", "[^/]+")
+        .replace("[activation_key]", "[^/]+");
+
+      const regex = new RegExp(`^${pathWithTokenOrKey}$`);
+      return regex.test(pathname);
     });
     setShouldHideFooter(shouldHide);
   }, [pathname, isMobile]);

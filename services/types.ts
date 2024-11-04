@@ -12,7 +12,7 @@ export interface NavItem {
 }
 
 export interface HidePagePath {
-  path: string | ((...params: any[]) => string);
+  path: string;
 }
 
 export type headerNavItem = {
