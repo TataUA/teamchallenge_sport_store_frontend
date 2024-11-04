@@ -12,7 +12,6 @@ export interface NavItem {
 }
 
 export interface HidePagePath {
-  pathname: string;
   path: string | ((...params: any[]) => string);
 }
 

@@ -1,22 +1,38 @@
 "use client";
 
-import { HIDE_PAGE_PATH } from "@/services/hide-page-path.data";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+
+//services
+import { HIDE_PAGE_PATH } from "@/services/hide-page-path.data";
+
+//hooks
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 // components
 import InfoSectionFooter from "./InfoSectionFooter";
 
 const Footer = () => {
   const pathname = usePathname();
+  const isMobile = useIsMobile();
   const [shouldHideFooter, setShouldHideFooter] = useState(false);
 
   useEffect(() => {
-    const hidePath = HIDE_PAGE_PATH.map((page) => page.path);
-    setShouldHideFooter(hidePath.includes(pathname));
-  }, [pathname]);
+    const shouldHide = HIDE_PAGE_PATH.some((page) => {
+      if (typeof page.path === "function") {
+        const regex = new RegExp(
+          `^${page.path(".*").replace("[activation_key]", "[^/]+")}$`,
+        );
+        return regex.test(pathname);
+      } else {
+        const regex = new RegExp(`^${page.path.replace("[token]", "[^/]+")}$`);
+        return regex.test(pathname);
+      }
+    });
+    setShouldHideFooter(shouldHide);
+  }, [pathname, isMobile]);
 
-  if (shouldHideFooter) {
+  if (shouldHideFooter && isMobile) {
     return null;
   }
 
