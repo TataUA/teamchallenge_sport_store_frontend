@@ -12,6 +12,7 @@ const config: Config = {
       nunito: ["Nunito_Sans", "sans-serif"],
       inter: ["Inter", "sans-serif"],
     },
+
     extend: {
       container: {
         center: true,

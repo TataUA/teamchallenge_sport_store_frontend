@@ -7,8 +7,10 @@ import Image from "next/image";
 import { cn } from "@/services/utils/cn";
 
 // assets
-import banner from "../../public/images/footer/subscribe.jpg";
+import bannerMobile from "../../public/images/footer/special-proposition-mobile.jpg";
+import bannerDesk from "../../public/images/footer/special-proposition-desk.jpg";
 import getSuccessBlueIcon from "@/helpers/getSuccessBlueIconSVG";
+// css
 
 const SubscribeBannerFooter = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -37,35 +39,36 @@ const SubscribeBannerFooter = () => {
   };
 
   return (
-    <div className="relative">
+    <section className="relative xl:h-[469px]">
       <div className="absolute z-[1] w-[100%] h-[100%]">
         <Image
-          src={banner.src}
+          src={bannerMobile}
           layout="fill"
           objectFit="cover"
           quality={100}
           alt="image"
         />
       </div>
+      <div className=" collor-substrate absolute left-0 top-0 w-full h-full z-[5]  bg-[#151515]  opacity-60 xl:hidden"></div>
       <div
         className={cn(
-          "pt-8 px-6 pb-12 min-h-[400px] relative z-[2] text-white",
+          "pt-[42px] px-6 pb-[42px] min-h-[396px] relative z-[10] text-white",
         )}
       >
         <form onSubmit={handleSubscribeSubmit}>
           <div
             className={cn(
-              "text-5xl mb-3 font-extrabold min-h-[96px] align-middle",
-              "max-[767px]:text-3xl max-[767px]:mb-2",
+              "font-extrabold min-h-[72px] align-middle leading-9",
+              "max-[767px]:text-[28px] max-[767px]:mb-2",
               "min-[2800px]:text-7xl",
             )}
           >
-            Знижка -15% на першу покупку
+            Отримуйте спеціальні пропозиції першими
           </div>
           <p
             className={cn(
-              "text-lg mb-8 tracking-[4%]",
-              "min-[767px]:text-base max-[767px]:mb-6",
+              "mt-3 text-[14px] mb-2 tracking-wider",
+              "min-[767px]:text-[14px] max-[767px]:mb-9",
               "min-[2800px]:text-3xl",
             )}
           >
@@ -74,7 +77,7 @@ const SubscribeBannerFooter = () => {
           </p>
           <input
             className={cn(
-              "bg-transparent border-b-[1px] text-inherit mb-8 py-1.5 focus-visible:border-[blue] outline-none text-base placeholder:text-inherit",
+              "bg-transparent border-b-[1px] text-inherit placeholder-gray-500 mb-[6px]  pb-1.5 focus-visible:border-[blue] outline-none text-base  placeholder-[#868687] placeholder-[0.025em] ",
               "max-[767px]:w-[100%]",
               "min-[2800px]:mb-12 min-[2800px]:text-3xl",
             )}
@@ -83,11 +86,22 @@ const SubscribeBannerFooter = () => {
             placeholder="Електронна пошта"
             onChange={handleEmailChange}
           />
+          <p
+            className={cn(
+              "leading-4 text-[#aaaaac] text-[12px]  tracking-wide opacity-100",
+              "min-[767px]:text-base leading-4 max-[767px]:mb-[0]",
+              "min-[2800px]:text-3xl",
+            )}
+          >
+            Натискаючи кнопку “Підписатись”, ви даєте згоду на обробку
+            персональних даних згідно{" "}
+            <span className="underline">Політики конфіденційності </span>
+          </p>
           <br />
           <button
             disabled={submitted}
             className={cn(
-              "text-[#1A1A1C] min-w-[140px] py-3 px-8 bg-white rounded-2xl hover:opacity-70 disabled:hover:opacity-100",
+              "mt-[-6px] text-[#1A1A1C] min-w-[148px] py-3 px-6 bg-white rounded-2xl tracking-wide font-semibold hover:opacity-70 disabled:hover:opacity-100",
               "max-[767px]:px-6 max-[767px]:rounded-xl",
               "min-[2800px]:text-3xl min-[2800px]:min-w-[235px]",
             )}
@@ -102,7 +116,7 @@ const SubscribeBannerFooter = () => {
           </button>
         </form>
       </div>
-    </div>
+    </section>
   );
 };
 

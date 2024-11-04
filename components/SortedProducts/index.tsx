@@ -26,7 +26,7 @@ export default async function SortedProducts({
           href={`/sortedProducts${page}?limit=12`}
           className=" flex gap-1 items-center text-sm text-[#083DC5] xl:text-base"
         >
-          <p>Подивитись всі</p>
+          <p className="tracking-wider">Подивитись всі</p>
           <svg
             width="18px"
             height="18px"
