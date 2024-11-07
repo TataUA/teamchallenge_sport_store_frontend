@@ -23,7 +23,7 @@ export default function Gender() {
                     Дивитися
                   </button>
                 </div>
-                <div className="z-6 absolute left-0 top-0 w-full h-full bg-gradient-to-r  from-[#626363] to-[#D0D6e2]]"></div>
+
                 <Image
                   src={item.title.image ?? ""}
                   height={88}
