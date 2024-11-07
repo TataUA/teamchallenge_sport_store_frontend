@@ -36,13 +36,24 @@ const SubscribeBannerFooter = () => {
       <div className="hidden md:block  md:p-10 md:h-full md:w-full ">
         <div className="flex justify-center w-full h-full space-x-6">
           <div className="relative overflow-hidden rounded-2xl  w-[50%] h-full  ">
-            <Image
-              src={bannerMobile}
-              alt="image"
-              fill={true}
-              objectFit="cover"
-              loading="lazy"
-            />
+            <div className="xl:hidden">
+              <Image
+                src={bannerMobile}
+                alt="image"
+                fill={true}
+                objectFit="cover"
+                loading="lazy"
+              />
+            </div>
+            <div className="hidden xl:block">
+              <Image
+                src={bannerDesk}
+                alt="image"
+                fill={true}
+                objectFit="cover"
+                loading="lazy"
+              />
+            </div>
           </div>
           <div className="text-gray w-[50%]  h-full">
             <FormBanerFooter />

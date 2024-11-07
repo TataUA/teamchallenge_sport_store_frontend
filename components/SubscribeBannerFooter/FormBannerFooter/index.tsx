@@ -36,7 +36,7 @@ const FormBanerFooter = () => {
     <form onSubmit={handleSubscribeSubmit}>
       <div
         className={cn(
-          "font-extrabold min-h-[72px] align-middle leading-9 md:pt-8 md:text-[28px] md:text-[#1a1a1c]",
+          "font-extrabold  align-middle leading-9 md:pt-8 md:text-[28px] md:text-[#1a1a1c] xl:pt-[42px] xl:text-[32px]",
           "max-[767px]:text-[28px] max-[767px]:mb-2",
           "min-[2800px]:text-7xl",
         )}
@@ -45,7 +45,7 @@ const FormBanerFooter = () => {
       </div>
       <p
         className={cn(
-          "mt-3 text-[14px] mb-2 tracking-wider md:text-[#1a1a1c]",
+          "mt-3 text-[14px] mb-2 tracking-wider md:text-[#1a1a1c] xl:text-base xl:font-medium xl:pt-2 xl:tracking-wide",
           "min-[767px]:text-[14px] max-[767px]:mb-9",
           "min-[2800px]:text-3xl",
         )}
@@ -66,7 +66,7 @@ const FormBanerFooter = () => {
       />
       <p
         className={cn(
-          "leading-4 text-[#aaaaac] text-[12px]  tracking-wide opacity-100 md:text-[#575758]",
+          "leading-4 text-[#aaaaac] text-[12px]  tracking-wide opacity-100 md:text-[#575758] xl:font-medium",
           "max-[767px]:mb-[0]",
           "min-[2800px]:text-3xl",
         )}
@@ -82,6 +82,7 @@ const FormBanerFooter = () => {
           "mt-[-6px] text-[#1A1A1C] min-w-[148px] py-3 px-6 bg-white md:bg-[#0A4CF6] md:text-white rounded-2xl tracking-wide font-semibold hover:opacity-70 disabled:hover:opacity-100",
           "max-[767px]:px-6 max-[767px]:rounded-xl",
           "min-[2800px]:text-3xl min-[2800px]:min-w-[235px]",
+          { "md:bg-white md:border selection: md:border-[#0A4CF6]": submitted },
         )}
       >
         {submitted ? (
