@@ -55,8 +55,8 @@ const FormBanerFooter = () => {
       </p>
       <input
         className={cn(
-          "bg-transparent border-b-[1px] text-inherit placeholder-gray-500 mb-[6px]  pb-1.5 focus-visible:border-[blue] outline-none text-base  placeholder-[#868687] placeholder-[0.025em] md:pt-6 md:w-full ",
-          "max-[767px]:w-[100%] md:border-[#CFCFCF]",
+          "bg-transparent border-b-[1px] text-inherit placeholder-gray-500 mb-[6px]  pb-1.5 focus-visible:border-[blue] outline-none text-base  placeholder-label placeholder-[0.025em] md:pt-6 md:w-full ",
+          "max-[767px]:w-[100%] md:border-border",
           "min-[2800px]:mb-12 min-[2800px]:text-3xl",
         )}
         type="email"
@@ -66,7 +66,7 @@ const FormBanerFooter = () => {
       />
       <p
         className={cn(
-          "leading-4 text-[#aaaaac] text-[12px]  tracking-wide opacity-100 md:text-[#575758] xl:font-medium",
+          "leading-4 text-[#aaaaac] text-[12px]  tracking-wide opacity-100 md:text-secondary xl:font-medium",
           "max-[767px]:mb-[0]",
           "min-[2800px]:text-3xl",
         )}
@@ -79,7 +79,7 @@ const FormBanerFooter = () => {
       <button
         disabled={submitted}
         className={cn(
-          "mt-[-6px] text-[#1A1A1C] min-w-[148px] py-3 px-6 bg-white md:bg-[#0A4CF6] md:text-white rounded-2xl tracking-wide font-semibold hover:opacity-70 disabled:hover:opacity-100",
+          "mt-[-6px] text-title min-w-[148px] py-3 px-6 bg-white md:bg-blue md:text-white rounded-2xl tracking-wide font-semibold hover:opacity-70 disabled:hover:opacity-100 md:hover:opacity-100 md:hover:bg-active_blue ",
           "max-[767px]:px-6 max-[767px]:rounded-xl",
           "min-[2800px]:text-3xl min-[2800px]:min-w-[235px]",
           { "md:bg-white md:border selection: md:border-[#0A4CF6]": submitted },
