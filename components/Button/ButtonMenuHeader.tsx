@@ -2,17 +2,15 @@ import React from "react";
 import { cn } from "@/services/utils/cn";
 
 interface ButtonMenuProps {
-  subtype: "primary" | "secondary";
   title: string;
   onClick?: () => void;
-  styles?: string;
+  paddingLeftFirst?: string;
+  backGr?: string;
 }
 
 export const Button = (props: ButtonMenuProps) => {
   const buttonStyles = {
-    primary: "bg-blue text-white hover:bg-active_blue",
-    secondary:
-      "border border-blue bg-white text-blue hover:bg-active_lightblue",
+    primary: "h-8 bg-white text-common  hover:bg-border_button",
   };
 
   return (
@@ -20,9 +18,9 @@ export const Button = (props: ButtonMenuProps) => {
       type="button"
       onClick={props.onClick}
       className={cn(
-        "w-full h-[48px] self-center px-6 rounded-xl text-base tracking-custom_2 font-semibold font-pangram transition-all",
-        buttonStyles[props.subtype],
-        `${props.styles}`,
+        "w-full h-[48px] self-center  pr-5  text-[14px] text-secondary leading-6 bg-white tracking-custom_2 font-semibold font-pangram hover:text-title  visited:text-title transition-all",
+        `${props.paddingLeftFirst}`,
+        `${props.backGr}`,
       )}
     >
       {props.title}

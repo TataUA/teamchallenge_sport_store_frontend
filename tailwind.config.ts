@@ -71,6 +71,7 @@ const config: Config = {
       },
     },
   },
+
   plugins: [
     // implemantation price filter with slider-thumb
     function ({ addUtilities }: { addUtilities: any }) {

@@ -27,13 +27,13 @@ export const Header = () => {
 
       <header className="hidden xl:h-30 xl:flex xl:flex-col">
         <div className="h-18 xl:px-[60px] py-3 flex justify-between items-center">
-          <div className="h-12 w-32 flex items-center gap-[8px] bg-slate-400">
+          <div className="h-12 w-50 flex items-center gap-[8px]">
             <MenuGender />
           </div>
           <LogoXl />
           <Usernav />
         </div>
-        <div className="h-8 w-64 xl:px-[60px]">
+        <div className="h-12 w-full xl:px-[60px] bg-[#f7f7f7] flex justify-start items-center">
           <MenuGoods />
         </div>
       </header>
