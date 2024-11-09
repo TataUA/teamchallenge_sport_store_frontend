@@ -18,7 +18,7 @@ export const Button = (props: ButtonMenuProps) => {
       type="button"
       onClick={props.onClick}
       className={cn(
-        "w-full h-[48px] self-center  pr-5  text-[14px] text-secondary leading-6 bg-white tracking-custom_2 font-semibold font-pangram hover:text-title  visited:text-title transition-all",
+        "w-full h-[48px] self-center  pr-5  text-[14px] text-secondary leading-6 bg-white tracking-custom_2 font-semibold font-pangram hover:text-title transition-all duration-300",
         `${props.paddingLeftFirst}`,
         `${props.backGr}`,
       )}

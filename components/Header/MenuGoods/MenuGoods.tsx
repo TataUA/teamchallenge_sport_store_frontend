@@ -1,33 +1,30 @@
 "use client";
 import React from "react";
-
+import { NavItem } from "@/services/types";
 import { Button } from "@/components/Button/ButtonMenuHeader";
 
-const MenuGoods = () => {
-  const items: string[] = [
-    "Кросівки",
-    "Футболки",
-    "Шорти",
-    "Штани",
-    "Світшоти",
-  ];
+interface NavItemListProps {
+  navItems: NavItem[];
+  gender: number;
+}
 
-  const handleRedirect = (item: string) => {
-    console.log(`click gender - ${item}`);
+const MenuGoods = ({ navItems, gender }: NavItemListProps) => {
+  const handleRedirect = (href: string) => {
+    console.log(`href - ${href}`);
   };
 
-  const elements = items.map((item, itemName) => {
+  const elements = navItems[gender].links.map((item, key) => {
     let paddLeft = "";
-    if (item === "Кросівки") {
+    if (item.label === "Кросівки") {
       paddLeft = "pl-0";
     } else {
       paddLeft = "pl-5";
     }
     return (
       <Button
-        title={item}
-        onClick={() => handleRedirect(item)}
-        key={itemName}
+        title={item.label}
+        onClick={() => handleRedirect(item.href)}
+        key={key}
         paddingLeftFirst={paddLeft}
         backGr="bg-[#f7f7f7]"
       />
