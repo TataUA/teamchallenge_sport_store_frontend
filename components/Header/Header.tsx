@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 import { Logo } from "../Logo/Logo";
 import { LogoXl } from "../LogoXl/LogoXl";
 import { Navbar } from "./Navbar";
@@ -16,7 +17,7 @@ export const Header = () => {
   const handleLogoClick = () => {
     setIsModalOpen(false);
   };
-  let gender: number | undefined 
+  let gender: number | undefined;
 
   if (isChoseGenger === "men") {
     gender = 0;

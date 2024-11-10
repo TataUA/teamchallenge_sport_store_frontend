@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import { useRouter } from "next/navigation";
+
 import { NavItem } from "@/services/types";
 import { Button } from "@/components/Button/ButtonMenuHeader";
 
@@ -9,8 +11,10 @@ interface NavItemListProps {
 }
 
 const MenuGoods = ({ navItems, gender }: NavItemListProps) => {
+  const router = useRouter();
+
   const handleRedirect = (href: string) => {
-    console.log(`href - ${href}`);
+    router.push(href);
   };
 
   const elements = navItems[gender].links.map((item, key) => {

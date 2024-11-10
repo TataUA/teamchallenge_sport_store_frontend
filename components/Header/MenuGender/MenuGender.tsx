@@ -12,12 +12,12 @@ const MenuGenger = ({ navItems, setIsChoseGender }: NavItemListProps) => {
   return (
     <>
       <Button
-        title={navItems[0].title.label}
+        title={navItems[0].title.label.toUpperCase()}
         onClick={() => setIsChoseGender(navItems[0].title.key)}
       />
       <div className="bg-border w-[2px] h-[18px] inline-block z-10"></div>
       <Button
-        title={navItems[1].title.label}
+        title={navItems[1].title.label.toUpperCase()}
         onClick={() => setIsChoseGender(navItems[1].title.key)}
         paddingLeftFirst={"pl-5"}
       />
