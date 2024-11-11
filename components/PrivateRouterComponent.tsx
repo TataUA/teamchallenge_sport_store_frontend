@@ -8,9 +8,7 @@ import {
   selectIsAuthenticated,
   selectIsLoading,
 } from "@/redux/auth/authSelector";
-
 import { useIsMobile } from "@/hooks/useIsMobile";
-
 import { Loader } from "@/components/Loader";
 
 interface PrivateRouteComponentProps {
