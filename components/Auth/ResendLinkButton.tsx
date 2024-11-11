@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 
 import { AppDispatch } from "@/redux/store";
-
 import { Button } from "@/components/Button/Button";
 
 interface ResendLinkButtonProps {

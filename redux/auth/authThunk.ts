@@ -167,8 +167,14 @@ export const currentUserThunk = createAsyncThunk<
             email: retryResponse.email,
           };
         } catch (refreshError: any) {
+          Cookies.remove("refreshToken");
+          localStorage.removeItem("accessToken");
+          thunkApi.dispatch(logoutUser());
+
           return thunkApi.rejectWithValue({
-            message: refreshError.detail || "An error occurred",
+            message:
+              refreshError.detail ||
+              "Неможливо оновити рефреш токен, будь ласка, увійдіть на сайт знову",
           });
         }
       }

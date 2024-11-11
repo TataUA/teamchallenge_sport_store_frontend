@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 
 import close from "@/public/icons/close_icon.svg";
-
 import { cn } from "@/services/utils/cn";
 
 interface ModalFormProps {
@@ -33,7 +32,7 @@ export const ModalForm = (props: ModalFormProps) => {
   return (
     <>
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+        className="fixed inset-0 z-50 flex items-center justify-center p-6 bg-black bg-opacity-50"
         onClick={() => {
           props.onClose();
         }}

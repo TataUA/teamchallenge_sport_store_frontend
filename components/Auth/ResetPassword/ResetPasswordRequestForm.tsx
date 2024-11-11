@@ -7,15 +7,12 @@ import { Formik, Form, FormikHelpers } from "formik";
 
 import { AppDispatch } from "@/redux/store";
 import { resetPasswordRequestThunk } from "@/redux/auth/authThunk";
-
+import { useIsMobile } from "@/hooks/useIsMobile";
+import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { ClientComponent } from "@/components/ClientComponent";
 import { Button } from "@/components/Button/Button";
 import { ResendLinkButton } from "@/components/Auth/ResendLinkButton";
-
-import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
-
-import { useIsMobile } from "@/hooks/useIsMobile";
 
 const schema = yup.object().shape({
   email: yup
@@ -46,7 +43,6 @@ export const ResetPasswordRequestForm = (props: ResetPasswordRequestProps) => {
   const [userEmail, setUserEmail] = useState("");
 
   const dispatch: AppDispatch = useDispatch();
-
   const isMobile = useIsMobile();
 
   const handleSubmit = async (

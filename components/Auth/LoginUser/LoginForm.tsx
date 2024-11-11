@@ -11,17 +11,13 @@ import { AppDispatch } from "@/redux/store";
 import { clearError } from "@/redux/auth/authSlice";
 import { selectError, selectUserData } from "@/redux/auth/authSelector";
 import { currentUserThunk, loginUserThunk } from "@/redux/auth/authThunk";
-
 import { LoginFormValues } from "@/services/types/auth-form-types";
-
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { ModalForm } from "@/components/Auth/ModalForm";
 import { ResetPasswordRequestForm } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 import { Button } from "@/components/Button/Button";
-
 import wrong from "@/public/icons/auth/wrong.svg";
-
-import { useIsMobile } from "@/hooks/useIsMobile";
 
 export const schema = yup.object().shape({
   email: yup
@@ -48,7 +44,9 @@ export interface ExtendedFormikErrors extends FormikErrors<LoginFormValues> {
 
 interface LoginFormProps {
   setShowModal?: (show: boolean) => void;
+  setShowConfirmRegister?: (show: boolean) => void;
   setShowResetPassword?: (show: boolean) => void;
+  saveUserEmail?: (email: string) => void;
 }
 
 const initialValues: LoginFormValues = {
@@ -105,7 +103,12 @@ export const LoginForm = (props: LoginFormProps) => {
           errorMessage ===
           "User not activated, please activate your account by email"
         ) {
-          router.push(`/auth/confirming_letter?email=${values.email}`);
+          if (!isMobile) {
+            props.saveUserEmail?.(values.email);
+            props.setShowConfirmRegister?.(true);
+          } else {
+            router.push(`/auth/confirming_letter?email=${values.email}`);
+          }
         } else {
           console.error("Unexpected error message:", errorMessage);
         }
@@ -175,7 +178,7 @@ export const LoginForm = (props: LoginFormProps) => {
                     "No active account found with the given credentials"
                       ? "Неправильна адреса електронної пошти або пароль"
                       : error.message ===
-                          "The activation key to confirm the user's expired. Please request a new one."
+                          "User not activated, please activate your account by email"
                         ? "Ключ активації користувача закінчився. Будь ласка, запросіть новий."
                         : error.message || "Невідома помилка, спробуйте ще раз"}
                   </div>

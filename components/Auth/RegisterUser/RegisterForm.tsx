@@ -8,11 +8,10 @@ import { Formik, Form, FormikHelpers, FormikProps } from "formik";
 
 import { AppDispatch } from "@/redux/store";
 import { registerUserThunk } from "@/redux/auth/authThunk";
-
 import { RegisterFormValues } from "@/services/types/auth-form-types";
-
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { handleUserValidationErrors } from "@/helpers/handleUserValidationErrors";
-
+import { RegisterPageContentProps } from "@/components/Auth/RegisterUser/RegisterPageContent";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { Button } from "@/components/Button/Button";
 
@@ -73,10 +72,6 @@ export const schemaRegisterForm = yup.object().shape({
     .required("Це поле обов'язкове"),
 });
 
-interface RegisterFormProps {
-  onClose?: () => void;
-}
-
 export const initialValuesRegisterForm: RegisterFormValues = {
   name: "",
   surname: "",
@@ -87,10 +82,12 @@ export const initialValuesRegisterForm: RegisterFormValues = {
   repeatPassword: "",
 };
 
-export const RegisterForm = (props: RegisterFormProps) => {
+export const RegisterForm = (props: RegisterPageContentProps) => {
   const [phone, setPhone] = useState("");
+
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
+  const isMobile = useIsMobile();
 
   const handleSubmit = async (
     values: RegisterFormValues,
@@ -110,8 +107,14 @@ export const RegisterForm = (props: RegisterFormProps) => {
       if (registerUserThunk.fulfilled.match(actionResult)) {
         setPhone("");
         resetForm();
-        props.onClose?.();
-        router.push(`/auth/confirming_letter?email=${values.email}`);
+        props.setShowRegistration?.(false);
+        props.setShowConfirmRegister?.(true);
+
+        if (!isMobile) {
+          props.saveUserEmail?.(values.email);
+        } else {
+          router.push(`/auth/confirming_letter?email=${values.email}`);
+        }
       } else if (registerUserThunk.rejected.match(actionResult)) {
         handleUserValidationErrors(actionResult, setErrors);
       }

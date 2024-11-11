@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from "uuid";
 
 import { cn } from "@/services/utils/cn";
 import { RegisterFormErrors } from "@/services/types/auth-errors-types";
-
 import wrong from "@/public/icons/auth/wrong.svg";
 import eye_open from "@/public/icons/auth/eye_open.svg";
 import eye_close from "@/public/icons/auth/eye_close.svg";
