@@ -26,6 +26,9 @@ interface RootLayoutProps {
   children: React.ReactNode;
 }
 
+const buttonClassname =
+  "py-[11px] h-fit px-4 border-[1px] rounded-lg text-center border-blue w-full cursor-pointer";
+
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="uk" className="h-full text-[16px]">
@@ -47,7 +50,33 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <Footer />
         <div id="modal-root"></div>
         <ClientComponent>
-          <ProductIsOutOfStockModal />
+          <ProductIsOutOfStockModal>
+            <div className="mb-8">
+              <h3 className="mb-4 text-xl color-primary font-bold mr-6 md:mb-8">
+                О ні, цей товар закінчився на складі!
+              </h3>
+              <p className="text-sm md:text-base color-primary font-medium">
+                Ми працюємо над його поповненням – слідкуйте за оновленнями!
+              </p>
+            </div>
+            <div className="flex gap-4 flex-wrap md:flex-nowrap justify-between text-base md:gap-5">
+              <div
+                className={
+                  buttonClassname + " text-blue hover:text-white hover:bg-blue"
+                }
+              >
+                Перейти в кошик
+              </div>
+              <div
+                className={
+                  buttonClassname +
+                  " text-white bg-blue hover:text-blue hover:bg-white"
+                }
+              >
+                Продовжити покупки
+              </div>
+            </div>
+          </ProductIsOutOfStockModal>
         </ClientComponent>
       </body>
     </html>
