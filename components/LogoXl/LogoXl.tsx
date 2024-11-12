@@ -9,7 +9,7 @@ interface LogoProps {
 
 export const LogoXl = ({ newStyle }: LogoProps) => {
   return (
-    <Link href="/">
+    <Link href="/" className="xl:pr-12">
       <Image
         src={logoIcon}
         width={200}

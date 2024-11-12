@@ -37,7 +37,7 @@ export const Header = () => {
 
       <header className="hidden xl:h-30 xl:flex xl:flex-col">
         <div className="h-18 xl:px-[60px] py-3 flex justify-between items-center">
-          <div className="h-12 w-50 flex items-center gap-[8px]">
+          <div className="h-12 w-50 flex items-center gap-1">
             <MenuGender
               navItems={NAV_ITEMS}
               setIsChoseGender={setIsChoseGender}

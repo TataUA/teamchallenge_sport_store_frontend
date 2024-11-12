@@ -22,7 +22,7 @@ const MenuGoods = ({ navItems, gender }: NavItemListProps) => {
     if (item.label === "Кросівки") {
       paddLeft = "pl-0";
     } else {
-      paddLeft = "pl-5";
+      paddLeft = "pl-1";
     }
     return (
       <Button
