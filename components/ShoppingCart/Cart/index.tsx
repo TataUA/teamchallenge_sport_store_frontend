@@ -6,7 +6,6 @@ import {
 	handleIncreasProductQuantity, 
 	IProductWithMaxQuantity, 
 	removeProductById, 
-	setProduct
 } from '@/redux/cart/cartSlice'
 import { selectCart } from '@/redux/cart/cartSelector'
 
@@ -33,7 +32,12 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
 		}
 
 	const handleIncreaseOrDecreasProduct = (option: string, product: IProductWithMaxQuantity) => {
-		if(option ===  'inc' && (product.quantity[0].quantity < product.maxQuantity)) {
+		if(option ===  'inc') {
+			if(product.quantity[0].quantity >= product.maxQuantity) {
+				console.log("Maximum amount of product has been achieved");
+				
+				return;
+			}
 			const updatedProductWithIncreasedQuantity = {
 				...product,
 				quantity: [{...product.quantity[0], quantity: product.quantity[0].quantity + 1}],
