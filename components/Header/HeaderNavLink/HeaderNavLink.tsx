@@ -28,6 +28,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 
 // types
 import { ResetPasswordRequestForm } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
+import { ConfirmingLetterContent } from "@/components/Auth/ConfirmEmail/ConfirmingLetterContent";
 
 // hooks
 import useCartManagement from "@/hooks/useCartManagement";
@@ -39,12 +40,13 @@ const HeaderNavLink = () => {
   useCartManagement();
 
   const router = useRouter();
-
   const isMobile = useIsMobile();
 
   const [showModal, setShowModal] = useState(false);
   const [showRegistration, setShowRegistration] = useState(false);
+  const [showConfirmRegister, setShowConfirmRegister] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
 
   useFetchCurrentUser();
 
@@ -64,7 +66,10 @@ const HeaderNavLink = () => {
   const handleCloseModalClick = () => {
     setShowModal(false);
     setShowResetPassword(false);
+    setShowConfirmRegister(false);
   };
+
+  const handleUserEmail = (email: string) => setUserEmail(email);
 
   return (
     <>
@@ -128,17 +133,28 @@ const HeaderNavLink = () => {
 
       {!isMobile && showModal && (
         <ModalForm onClose={handleCloseModalClick}>
-          {showResetPassword ? (
+          {showConfirmRegister ? (
+            <ConfirmingLetterContent
+              setShowConfirmRegister={setShowConfirmRegister}
+              email={userEmail}
+            />
+          ) : showRegistration ? (
+            <RegisterPageContent
+              setShowRegistration={setShowRegistration}
+              setShowConfirmRegister={setShowConfirmRegister}
+              saveUserEmail={handleUserEmail}
+            />
+          ) : showResetPassword ? (
             <ResetPasswordRequestForm
               setShowResetPassword={setShowResetPassword}
             />
-          ) : showRegistration ? (
-            <RegisterPageContent onClose={() => setShowModal(false)} />
           ) : (
             <LoginPageContent
-              setShowRegistration={setShowRegistration}
-              setShowResetPassword={setShowResetPassword}
               setShowModal={setShowModal}
+              setShowRegistration={setShowRegistration}
+              setShowConfirmRegister={setShowConfirmRegister}
+              setShowResetPassword={setShowResetPassword}
+              saveUserEmail={handleUserEmail}
             />
           )}
         </ModalForm>

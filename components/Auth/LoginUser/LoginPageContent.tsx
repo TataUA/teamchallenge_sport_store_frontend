@@ -4,7 +4,6 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
-
 import { ClientComponent } from "@/components/ClientComponent";
 import { PrivateRouteComponent } from "@/components/PrivateRouterComponent";
 import { LoginForm } from "@/components/Auth/LoginUser/LoginForm";
@@ -14,12 +13,13 @@ import { Button } from "@/components/Button/Button";
 interface LoginPageContentProps {
   setShowModal?: (show: boolean) => void;
   setShowRegistration?: (show: boolean) => void;
+  setShowConfirmRegister?: (show: boolean) => void;
   setShowResetPassword?: (show: boolean) => void;
+  saveUserEmail?: (email: string) => void;
 }
 
 export const LoginPageContent = (props: LoginPageContentProps) => {
   const isMobile = useIsMobile();
-
   const router = useRouter();
 
   const handleRegistrationClick = () => {
@@ -42,7 +42,9 @@ export const LoginPageContent = (props: LoginPageContentProps) => {
             </p>
             <LoginForm
               setShowModal={props.setShowModal}
+              setShowConfirmRegister={props.setShowConfirmRegister}
               setShowResetPassword={props.setShowResetPassword}
+              saveUserEmail = {props.saveUserEmail}
             />
             <PrivacyPolicy />
             <div className="flex mt-[21px] mb-[21px] justify-center items-center">

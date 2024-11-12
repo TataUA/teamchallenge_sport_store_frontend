@@ -5,9 +5,10 @@ import { PrivateRouteComponent } from "@/components/PrivateRouterComponent";
 import { RegisterForm } from "@/components/Auth/RegisterUser/RegisterForm";
 import { PrivacyPolicy } from "@/components/Auth/PrivacyPolicy";
 
-interface RegisterPageContentProps {
-  onClose?: () => void;
+export interface RegisterPageContentProps {
   setShowRegistration?: (show: boolean) => void;
+  setShowConfirmRegister?: (show: boolean) => void;
+  saveUserEmail?: (email: string) => void;
 }
 
 export const RegisterPageContent = (props: RegisterPageContentProps) => {
@@ -18,7 +19,11 @@ export const RegisterPageContent = (props: RegisterPageContentProps) => {
           <h1 className="mb-6 text-2xl leading-140 font-pangram font-bold text-title">
             Реєстрація
           </h1>
-          <RegisterForm onClose={props.onClose} />
+          <RegisterForm
+            setShowRegistration={props.setShowRegistration}
+            setShowConfirmRegister={props.setShowConfirmRegister}
+            saveUserEmail={props.saveUserEmail}
+          />
           <PrivacyPolicy />
         </div>
       </PrivateRouteComponent>

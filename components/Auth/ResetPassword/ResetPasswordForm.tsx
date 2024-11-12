@@ -9,12 +9,10 @@ import { Formik, Form, FormikHelpers } from "formik";
 import { AppDispatch } from "@/redux/store";
 import { selectIsSubmitingComplete } from "@/redux/auth/authSelector";
 import { resetPasswordThunk } from "@/redux/auth/authThunk";
-
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { InputLabelField } from "@/components/Auth/InputLabelField";
 import { Button } from "@/components/Button/Button";
 import { SuccessMessageModal } from "@/components/Auth/SuccessMessageModal";
-
-import { useIsMobile } from "@/hooks/useIsMobile";
 
 const schema = yup.object().shape({
   password: yup
@@ -64,7 +62,7 @@ export const ResetPasswordForm = () => {
 
   const handleSubmit = async (
     values: ResetPasswordFormValues,
-    { resetForm, setErrors }: FormikHelpers<ResetPasswordFormValues>,
+    { resetForm }: FormikHelpers<ResetPasswordFormValues>,
   ) => {
     try {
       const valuesWithToken = { ...values, confirmationToken: tokenValue };
