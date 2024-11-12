@@ -66,9 +66,11 @@ const useCartManagement = (): void => {
       const colors = productData.colors.filter(
         (colorItem) => colorItem.color.id === item.color,
       );
+
       const size = productData.size.filter(
         (sizeItem) => sizeItem.id === item.size,
       );
+
       const filteredQuantities = [...productData.quantity].filter(
         (q) =>
           q.size === size[0]?.value &&
@@ -89,6 +91,22 @@ const useCartManagement = (): void => {
         maxQuantity: filteredQuantities[0].quantity,
         idInBasketInDb: item.id,
       };
+
+      const duplicatedProduct = cart.products.filter(
+        (product) =>
+          product.id === updatedProduct.id &&
+          product.quantity[0].size === updatedProduct.quantity[0].size &&
+          product.quantity[0].color === updatedProduct.quantity[0].color,
+      );
+
+      if (
+        duplicatedProduct.length
+      ) {
+        console.log(`Duplicated product id-${updatedProduct.id}, Title- ${updatedProduct.title}`);
+
+        return;
+      }
+
       dispatch(setProduct(updatedProduct));
     };
 
@@ -99,10 +117,12 @@ const useCartManagement = (): void => {
 
       items.forEach(async (item: any, index: number) => {
         fetchProductByIdAndSave(item);
+
         if (index === items.length - 1) {
           dispatch(setLoadingCartFromDB(false));
         }
       });
+
       dispatch(setLoadingCartFromDB(false));
     };
 
@@ -146,14 +166,12 @@ const useCartManagement = (): void => {
               product,
             );
 
-            if (!response?.id) {
+            if (!response) {
               dispatch(setModalProductIsOutOfStock(true));
               return;
             }
 
-              dispatch(
-                setProduct({ ...product, idInBasketInDb: response?.id }),
-              );
+            dispatch(setProduct({ ...product, idInBasketInDb: response?.id }));
 
             if (index === cart.products?.length - 1) {
               dispatch(setLoadingCartFromDB(false));

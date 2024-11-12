@@ -33,7 +33,7 @@ const addProductToCartInDbAction = async (
     return data;
   } catch (error: any) {
     console.log("🚀 ~ fetchProductsAction ~ error:", error.response);
-    return { id: null, detail: error.response.data.detail };
+    return null;
   }
 };
 
