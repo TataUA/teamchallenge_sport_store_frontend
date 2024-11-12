@@ -6,6 +6,8 @@ import { Nunito_Sans, Inter } from "next/font/google";
 // components
 import Footer from "@/components/Footer/Footer";
 import { Header } from "@/components/Header/Header";
+import ProductIsOutOfStockModal from "@/components/ProductIsOutOfStockModal";
+import { ClientComponent } from "@/components/ClientComponent";
 
 import "./globals.css";
 import Head from "next/head";
@@ -44,6 +46,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <main className="relative flex-1">{children}</main>
         <Footer />
         <div id="modal-root"></div>
+        <ClientComponent>
+          <ProductIsOutOfStockModal />
+        </ClientComponent>
       </body>
     </html>
   );
