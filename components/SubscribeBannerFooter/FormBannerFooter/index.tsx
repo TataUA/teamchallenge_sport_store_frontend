@@ -36,7 +36,7 @@ const FormBanerFooter = () => {
     <form onSubmit={handleSubscribeSubmit}>
       <div
         className={cn(
-          "font-extrabold  align-middle leading-9 md:pt-8 md:text-[28px] md:text-[#1a1a1c] xl:pt-[42px] xl:text-[32px]",
+          "font-extrabold  align-middle leading-9 md:pt-8  md:text-[28px] md:text-[#1a1a1c] xl:pt-[44px] xl:text-[32px] xl:leading-10",
           "max-[767px]:text-[28px] max-[767px]:mb-2",
           "min-[2800px]:text-7xl",
         )}
@@ -45,7 +45,7 @@ const FormBanerFooter = () => {
       </div>
       <p
         className={cn(
-          "mt-3 text-[14px] mb-2 tracking-wider md:text-[#1a1a1c] xl:text-base xl:font-medium xl:pt-2 xl:tracking-wide",
+          "mt-3 text-[14px] mb-2 tracking-wider md:text-[#1a1a1c] xl:text-base xl:font-medium xl:pt-1 xl:tracking-normal xl:mb-5",
           "min-[767px]:text-[14px] max-[767px]:mb-9",
           "min-[2800px]:text-3xl",
         )}

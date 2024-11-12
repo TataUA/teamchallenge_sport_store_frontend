@@ -33,7 +33,7 @@ const SubscribeBannerFooter = () => {
           <FormBanerFooter />
         </div>
       </div>
-      <div className="hidden md:block  md:p-10 md:h-full md:w-full ">
+      <div className="hidden md:block  xl:px-[60px] xl:py-[40px] xl:h-full md:w-full ">
         <div className="flex justify-center w-full h-full space-x-6">
           <div className="relative overflow-hidden rounded-2xl  w-[50%] h-full  ">
             <div className="xl:hidden">
