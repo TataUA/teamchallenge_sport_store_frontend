@@ -10,6 +10,7 @@ import {
   IProductWithMaxQuantity,
   saveCartIdFromDb,
   setLoadingCartFromDB,
+  setModalProductIsOutOfStock,
   setProduct,
 } from "@/redux/cart/cartSlice";
 
@@ -145,11 +146,14 @@ const useCartManagement = (): void => {
               product,
             );
 
-            if (response?.id) {
+            if (!response?.id) {
+              dispatch(setModalProductIsOutOfStock(true));
+              return;
+            }
+
               dispatch(
                 setProduct({ ...product, idInBasketInDb: response?.id }),
               );
-            }
 
             if (index === cart.products?.length - 1) {
               dispatch(setLoadingCartFromDB(false));
