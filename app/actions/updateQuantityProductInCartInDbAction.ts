@@ -12,14 +12,17 @@ const updateQuantityProductInCartInDbAction = async (basketId: string, product:I
       color: Number(product.colors[0].color.id),
     }
 
-    const result = await fetch(`${apiBaseUrl}baskets/${basketId}/items/${itemIdInBasket}/`, { 
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
+    const result = await fetch(
+      `${apiBaseUrl}baskets/${basketId}/items/${itemIdInBasket}/`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        next: { revalidate: 300 },
+        body: JSON.stringify(preparedBody),
       },
-      next: { revalidate: 3600 },
-      body: JSON.stringify(preparedBody)
-    });
+    );
 
     if(result.status === 201) {
       const data = await result?.json()

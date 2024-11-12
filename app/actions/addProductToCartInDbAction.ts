@@ -13,13 +13,13 @@ const addProductToCartInDbAction = async (basketId: string, product:IProduct) =>
       color: Number(product.colors[0].color.id),
     }
 
-    const result = await fetch(`${apiBaseUrl}baskets/${basketId}/items/`, { 
-      method: 'POST',
+    const result = await fetch(`${apiBaseUrl}baskets/${basketId}/items/`, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      next: { revalidate: 3600 },
-      body: JSON.stringify(preparedBody)
+      next: { revalidate: 300 },
+      body: JSON.stringify(preparedBody),
     });
 
     const data: ICartResponseItem = await result?.json()
