@@ -22,7 +22,7 @@ const initialState: ICartState = {
   id: "",
   error: false,
   loading: false,
-  isDisplayedModalProductIsOutOfStock: true,
+  isDisplayedModalProductIsOutOfStock: false,
 };
 
 const cartSlice = createSlice({
