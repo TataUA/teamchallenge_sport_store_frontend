@@ -5,7 +5,9 @@ import { revalidateTag } from "next/cache";
 
 const fetchProductByIdAction = async (id: number | string) => {
   try {
-    const result = await fetch(`${apiBaseUrl}products/${id}/`, { next: { revalidate: 3600, tags: ['productById'] }  });
+    const result = await fetch(`${apiBaseUrl}products/${id}/`, {
+      next: { revalidate: 300, tags: ["productById"] },
+    });
     
     if(result.status === 200) {
       const data = result?.json()

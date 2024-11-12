@@ -14,7 +14,7 @@ import getCheckedIconSVG from '@/helpers/getCheckedIconSVG'
 import { cn } from '@/services/utils/cn'
 
 // redux
-import { setProduct } from '@/redux/cart/cartSlice'
+import { setModalProductIsOutOfStock, setProduct } from '@/redux/cart/cartSlice'
 import { selectCurrentProduct } from '@/redux/currentProduct/currentProductSelector'
 import {
 	setCurrentProduct,
@@ -88,7 +88,12 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 		}
 		if(cart.id) {
 			const response = await addProductToCartInDbAction(cart.id, productWithSelectedSizeAndColor)
-			if(response?.id) dispatch(setProduct(
+			if (!response?.id) {
+					dispatch(setModalProductIsOutOfStock(true));
+					return;
+      }
+			
+			dispatch(setProduct(
 				{...productWithSelectedSizeAndColor, idInBasketInDb: response?.id}
 			))
 		} else {

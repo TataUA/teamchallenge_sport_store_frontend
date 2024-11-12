@@ -5,12 +5,12 @@ import { apiBaseUrl } from "@/services/api";
 const removeProductToCartInDbAction = async (basketId: string, itemIdInBasket: number) => {
   try {
 
-    await fetch(`${apiBaseUrl}baskets/${basketId}/items/${itemIdInBasket}/`, { 
-      method: 'DELETE',
+    await fetch(`${apiBaseUrl}baskets/${basketId}/items/${itemIdInBasket}/`, {
+      method: "DELETE",
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json",
       },
-      next: { revalidate: 3600 },
+      next: { revalidate: 300 },
     });
 
   } catch (error: any) {
