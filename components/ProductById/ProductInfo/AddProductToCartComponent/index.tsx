@@ -60,7 +60,8 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
     }
 
     const productInfo = await fetchProductByIdAction(product.id);
-
+    console.log("🚀 ~ handleClickCartButton ~ productInfo:", productInfo)
+    
     if (!productInfo) {
       console.log(
         "We didin't receive info about product and it's quantity from DB " +
@@ -76,6 +77,7 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
         item.color.toLowerCase() === currentProduct.color.toLowerCase() &&
         item.size.toLowerCase() == currentProduct.sizes.toLowerCase(),
     );
+    console.log("🚀 ~ handleClickCartButton ~ isProductExists:", isProductExists)
 
     if (!isProductExists.length) {
       dispatch(setModalProductIsOutOfStock(true));
@@ -127,7 +129,9 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
         cart.id,
         productWithSelectedSizeAndColor,
       );
-      if (!response?.id) {
+      console.log("🚀 ~ handleClickCartButton ~ response:", response)
+
+      if (!response) {
         dispatch(setModalProductIsOutOfStock(true));
         return;
       }

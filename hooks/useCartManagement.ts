@@ -99,6 +99,13 @@ const useCartManagement = (): void => {
           product.quantity[0].color === updatedProduct.quantity[0].color,
       );
 
+      console.log("fetchProductByIdAndSave -> ", {
+        duplicatedProduct,
+        updatedProduct,
+        products: cart.products,
+      });
+      
+
       if (
         duplicatedProduct.length
       ) {
@@ -164,8 +171,8 @@ const useCartManagement = (): void => {
             const response = await saveProductsFromStoreToCartDb(
               basketId,
               product,
-            );
-
+            );console.log("createCartInDb -> response ", response);
+            
             if (!response) {
               dispatch(setModalProductIsOutOfStock(true));
               return;
