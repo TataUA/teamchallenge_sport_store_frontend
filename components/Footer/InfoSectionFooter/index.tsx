@@ -27,7 +27,7 @@ const subtitleClassname = cn(
 const infoListItemClassname = cn(
   "text-base last:mb-0 font-medium tracking-wide",
   "max-[767px]:text-sm max-[767px]:mb-2",
-  "xl:text-xs xl:font-medium xl:tracking-wider xl:leading-7 xl:w-[260px]",
+  "xl:text-xs xl:font-medium xl:tracking-wider xl:leading-5 xl:w-[260px] xl:pt-[6px]",
   "min-[2800px]:text-3xl min-[2800px]:mb-[10px]",
 );
 
