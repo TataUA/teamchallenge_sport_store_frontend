@@ -56,7 +56,7 @@ const ListItem = (props: ListItemProps) => {
           bestSales
             ? "text-[#3E3E40] xl:text-sm xl:tracking-wider"
             : "text-[#575758]",
-          " truncate cursor-pointer hover:opacity-[50%] text-base max-[767px]:text-sm font-medium min-[2800px]:text-3xl",
+          "line-clamp-2 h-10 cursor-pointer hover:opacity-[50%] text-base max-[767px]:text-sm font-medium min-[2800px]:text-3xl",
         )}
       >
         {title}
@@ -76,7 +76,7 @@ const ListItem = (props: ListItemProps) => {
           ),
         )}
       </ul>
-      <div className="text-[#1A1A1C] truncate text-xl max-[767px]:text-base font-semibold min-[2800px]:text-4xl xl:text-base">
+      <div className="text-[#1A1A1C] truncate text-xl max-[767px]:text-base font-semibold min-[2800px]:text-4xl xl:text-base xl:mt-1.5 ">
         {price.slice(0, -3) + " грн"}
       </div>
     </div>

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default async function PromBanner() {
   return (
-    <section className=" mx-auto py-12 xl:px-[60px] xl:py-[52px]">
+    <section className=" mx-auto py-12 xl:px-[60px] xl:pt-[48px] xl:pb-[62px]">
       <div className=" mx-auto relative rounded-2xl w-[342px] h-[268px]  xl:w-[1320px]  xl:h-[432px] ">
         <div className="absolute  w-[100%] h-[100%] bg-slate-300 overflow-hidden z-[-1]  rounded-2xl  xl:hidden">
           <Image
