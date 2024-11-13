@@ -17,7 +17,7 @@ export default async function SortedProducts({
   const products = await fetchSortedProductsAction(sort, 6);
 
   return (
-    <section className=" px-6 xl:px-[60px] xl:py-[52px] ">
+    <section className=" px-6 xl:px-[60px] xl:pt-[46px] xl:pb-[52px]">
       <div className="flex justify-between  items-center mb-4 md:mb-8 xl:mb-8">
         <h2 className="text-xl leading-140 font-semibold  md:text-2xl md:leading-7 ">
           {title}
@@ -26,7 +26,9 @@ export default async function SortedProducts({
           href={`/sortedProducts${page}?limit=12`}
           className=" flex gap-1 items-center text-sm text-[#083DC5] xl:text-base"
         >
-          <p className="tracking-wider">Подивитись всі</p>
+          <p className="tracking-wider xl:tracking-normal xl:mr-1">
+            Подивитись всі
+          </p>
           <svg
             width="18px"
             height="18px"
