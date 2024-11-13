@@ -12,11 +12,12 @@ interface ButtonMenuProps {
 
 export const Button = (props: ButtonMenuProps) => {
   const buttonStyles = {
-    primary: "h-8 bg-white text-common  hover:bg-border_button",
+    menuButton:
+      "relative w-full h-[48px] self-center  pr-5  text-[14px] text-secondary leading-6 bg-white tracking-custom_2 font-semibold font-pangram hover:text-title transition-all duration-300n",
   };
 
   let buttonsMenu = cn(
-    "relative w-full h-[48px] self-center  pr-5  text-[14px] text-secondary leading-6 bg-white tracking-custom_2 font-semibold font-pangram hover:text-title transition-all duration-300",
+    buttonStyles.menuButton,
     `${props.paddingLeftFirst}`,
     `${props.backGr}`,
     `${props.goodsGroups}`,
@@ -24,7 +25,8 @@ export const Button = (props: ButtonMenuProps) => {
 
   if (props.selected) {
     buttonsMenu = cn(
-      "relative w-full h-[48px] self-center  pr-5  text-[14px] text-secondary leading-6 bg-white tracking-custom_2 font-semibold font-pangram hover:text-title transition-all duration-300 underline ",
+      buttonStyles.menuButton,
+      "underline underline-offset-[10px] decoration-blue",
       `${props.paddingLeftFirst}`,
     );
   }
