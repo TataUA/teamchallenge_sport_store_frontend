@@ -31,6 +31,7 @@ const MenuGoods = ({ navItems, gender }: NavItemListProps) => {
         key={key}
         paddingLeftFirst={paddLeft}
         backGr="bg-[#f7f7f7]"
+        goodsGroups="hover:underline hover:text-secondary"
       />
     );
   });

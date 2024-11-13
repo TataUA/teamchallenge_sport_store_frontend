@@ -12,7 +12,7 @@ import MenuGoods from "./MenuGoods/MenuGoods";
 
 export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isChoseGenger, setIsChoseGender] = useState("");
+  const [isChoseGenger, setIsChoseGender] = useState("men");
 
   const handleLogoClick = () => {
     setIsModalOpen(false);
@@ -41,6 +41,7 @@ export const Header = () => {
             <MenuGender
               navItems={NAV_ITEMS}
               setIsChoseGender={setIsChoseGender}
+              gender={gender}
             />
           </div>
           <LogoXl />
