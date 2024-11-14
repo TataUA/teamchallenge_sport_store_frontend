@@ -28,10 +28,6 @@ import { currentUserThunk } from "@/redux/auth/authThunk";
 //hooks
 import { useIsMobile } from "@/hooks/useIsMobile";
 
-// types
-import { ResetPasswordRequestForm } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
-import { ConfirmingLetterContent } from "@/components/Auth/ConfirmEmail/ConfirmingLetterContent";
-
 // hooks
 import useCartManagement from "@/hooks/useCartManagement";
 import { AppDispatch } from "@/redux/store";
