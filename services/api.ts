@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 // types
 import * as types from "@/services/types/auth-api-types";
@@ -10,9 +11,9 @@ import { IProduct } from "./types";
 
 // helpers
 import getCorrectQueryParamsSearchQuery from "@/helpers/getCorrectQueryParamsSearchQuery";
-import { DropdownItemCityNovaPoshta } from "@/components/OrderPageComponent/DeliverSection/CustomCitiesDropdown";
-import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 import cleanAllLocalStorageData from "@/helpers/cleanAllLocalStorageData";
+import { handleSetTokens } from "@/helpers/handleSetTokens";
+import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 
 export const apiBaseUrl =
   process.env.NODE_ENV === "development"
@@ -29,8 +30,6 @@ $instance.interceptors.request.use(
 
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`;
-    } else {
-      config.headers["Authorization"] = "";
     }
     return config;
   },
@@ -41,22 +40,25 @@ $instance.interceptors.request.use(
 
 $instance.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
+    if (error.response?.status === 401) {
+      const refreshToken = Cookies.get("refreshToken");
+
+      if (refreshToken) {
+        try {
+          const response = await updateAccessToken(refreshToken);
+          handleSetTokens(response);
+
+          return $instance(error.config);
+        } catch (refreshError) {
+          Cookies.remove("refreshToken");
+          localStorage.removeItem("accessToken");
+        }
+      }
+    }
     return Promise.reject(error);
   },
 );
-
-//handle token
-export const setToken = (token: string) => {
-  localStorage.setItem("accessToken", token);
-};
-
-export const clearToken = () => {
-  localStorage.removeItem("accessToken");
-};
-
-export const getTokenFromLocalStorage = () =>
-  localStorage.getItem("accessToken");
 
 //register user
 export const registerUser = async (
@@ -131,6 +133,7 @@ export const updateAccessToken = async (
 ): Promise<types.LoginResponseData> => {
   try {
     const { data } = await $instance.post("/auth/token/refresh/", { refresh });
+
     return data;
   } catch (error: any) {
     throw error.response.data;
@@ -142,22 +145,9 @@ export const currentUser = async (): Promise<types.RegisterResponseData> => {
   try {
     const response = await $instance.get("/user/view/");
 
-    if (response.data) return response.data;
-
-    return {
-      id: 0,
-      first_name: "",
-      surname: "",
-      last_name: "",
-      phone_number: "",
-      email: "",
-    };
+    return response.data;
   } catch (error: any) {
-    if (error.response.status === 401) {
-      localStorage.removeItem("accessToken");
-      console.log(error.message);
-    }
-    throw error.response;
+    throw error.response.data;
   }
 };
 
@@ -191,6 +181,7 @@ export const logoutUser = async () => {
   try {
     const { data } = await $instance.post("/user/logout/");
     cleanAllLocalStorageData();
+    Cookies.remove("refreshToken");
     return data;
   } catch (error: any) {
     throw error.response.data;

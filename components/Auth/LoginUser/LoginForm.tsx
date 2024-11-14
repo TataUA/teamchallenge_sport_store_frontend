@@ -76,11 +76,11 @@ export const LoginForm = (props: LoginFormProps) => {
     if (error) dispatch(clearError());
   }, []);
 
-  useEffect(() => {
-    return () => {
-      if (error) dispatch(clearError());
-    };
-  }, [dispatch, error]);
+  // useEffect(() => {
+  //   return () => {
+  //     if (error) dispatch(clearError());
+  //   };
+  // }, [dispatch, error]);
 
   const handleSubmit = async (
     values: LoginFormValues,

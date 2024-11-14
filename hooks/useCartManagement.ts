@@ -14,9 +14,6 @@ import {
   setProduct,
 } from "@/redux/cart/cartSlice";
 
-// services
-import { getTokenFromLocalStorage } from "@/services/api";
-
 // actions
 import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction";
 import fetchShoppingCartFromServerAction, {
@@ -43,7 +40,7 @@ const useCartManagement = (): void => {
   const pathname = usePathname();
 
   useEffect(() => {
-    const token = getTokenFromLocalStorage();
+    const token = localStorage.getItem("accessToken");
 
     if (!user?.id || mounted.current || cart.loading) {
       return;
@@ -104,12 +101,11 @@ const useCartManagement = (): void => {
         updatedProduct,
         products: cart.products,
       });
-      
 
-      if (
-        duplicatedProduct.length
-      ) {
-        console.log(`Duplicated product id-${updatedProduct.id}, Title- ${updatedProduct.title}`);
+      if (duplicatedProduct.length) {
+        console.log(
+          `Duplicated product id-${updatedProduct.id}, Title- ${updatedProduct.title}`,
+        );
 
         return;
       }
@@ -171,8 +167,9 @@ const useCartManagement = (): void => {
             const response = await saveProductsFromStoreToCartDb(
               basketId,
               product,
-            );console.log("createCartInDb -> response ", response);
-            
+            );
+            console.log("createCartInDb -> response ", response);
+
             if (!response) {
               dispatch(setModalProductIsOutOfStock(true));
               return;

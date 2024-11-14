@@ -1,13 +1,16 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { usePathname, useRouter } from "next/navigation";
 
 import {
   selectIsAuthenticated,
   selectIsLoading,
+  selectUserData,
 } from "@/redux/auth/authSelector";
+import { AppDispatch } from "@/redux/store";
+import { logoutUserThunk } from "@/redux/auth/authThunk";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { Loader } from "@/components/Loader";
 
@@ -20,6 +23,11 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
 }) => {
   const isLoading = useSelector(selectIsLoading);
   const isAuthenticated = useSelector(selectIsAuthenticated);
+  const userData = useSelector(selectUserData);
+
+  const accessToken = localStorage.getItem("accessToken");
+
+  const dispatch: AppDispatch = useDispatch();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -29,16 +37,32 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
   useEffect(() => {
     if (isLoading) return;
 
-    if (isAuthenticated) {
+    if (isAuthenticated && !accessToken) {
+      dispatch(logoutUserThunk());
+      router.replace("/auth/login");
+      return;
+    }
+
+    if (isAuthenticated && userData) {
       if (pathname === "/auth/login" || pathname === "/auth/signup") {
         router.replace("/auth/profile");
       }
     } else {
-      if (pathname === "/auth/login" || pathname === "/auth/signup") {
+      if (!isAuthenticated && !userData) {
+        router.replace("/auth/login");
+      } else if (pathname === "/auth/login" || pathname === "/auth/signup") {
         router.push(isMobile ? "" : "/");
       }
     }
-  }, [isAuthenticated, isLoading, isMobile, router, pathname]);
+  }, [
+    isAuthenticated,
+    isLoading,
+    userData,
+    isMobile,
+    router,
+    pathname,
+    accessToken,
+  ]);
 
   if (isLoading) {
     return <Loader />;
