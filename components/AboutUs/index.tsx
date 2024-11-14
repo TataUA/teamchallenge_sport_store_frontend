@@ -3,7 +3,7 @@ import { aboutUs } from "./about-us.data";
 
 export default function AboutUs() {
   return (
-    <section className="px-6 pt-[72px] pb-12 md:flex md:flex-col-reverse xl:px-[60px] xl:pt-[52px] xl:pb-[88px]">
+    <section className="px-6 pt-[72px] pb-12 md:flex md:flex-col-reverse xl:px-[60px] xl:pt-[44px] xl:pb-[88px]">
       <div>
         <ul className="mb-[72px] md:flex md:flex-row justify-between   md:mt-[88px] md:mb-0 xl:gap-6">
           {aboutUs.map(({ title, subtitle, image }) => (

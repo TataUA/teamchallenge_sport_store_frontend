@@ -79,7 +79,7 @@ const HeaderNavLink = () => {
 
   return (
     <>
-      <ul className="flex items-center gap-1">
+      <ul className="flex items-center gap-1 xl:gap-x-2.5">
         {headerNav.map(({ href, name }) => (
           <li className="py-2 px-2 h-10" key={name}>
             {name === "search" ? (
