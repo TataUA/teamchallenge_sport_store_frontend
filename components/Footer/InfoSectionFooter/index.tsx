@@ -1,39 +1,10 @@
 import Image from "next/image";
-import Link from "next/link";
-// utils
-import { cn } from "@/services/utils/cn";
 
 // assets
 import footerTitleImage from "@/public/icons/footer/footer-title.png";
 import footerTitleImageDesktop from "@/public/images/footer/Logo.jpg";
-import { getTelegramIconFooter } from "@/helpers/getTelegramIconFooterSVG";
-import { getInstagramIconFooter } from "@/helpers/getInstagramIconFooterSVG";
-import { getViberIconFooter } from "@/helpers/getViberIconFooterSVG";
-
-const infoSocialItemClassname = cn(
-  "mr-2 hover:cursor-pointer [&>svg]:hover:fill-blue",
-  "min-[2800px]:mr-[50px] min-[2800px]:[&>svg]:w-auto min-[2800px]:[&>svg]:h-[80px]",
-);
-
-const infoSectionClassname = cn("shrink-0", "max-[767px]:grow");
-
-const subtitleClassname = cn(
-  "text-lg font-black mb-4 font-semibold",
-  "max-[767px]:mb-3 max-[767px]:text-base",
-  "xl:text-base xl:font-bold xl:tracking-wide xl:pt-1 xl:mb-1",
-  "min-[2800px]:text-4xl min-[2800px]:mb-[30px]",
-);
-
-const infoListItemClassname = cn(
-  "text-base last:mb-0 font-medium tracking-wide",
-  "max-[767px]:text-sm max-[767px]:mb-2",
-  "xl:text-xs xl:font-medium xl:tracking-wider xl:leading-5 xl:w-[260px] xl:pt-[6px]",
-  "min-[2800px]:text-3xl min-[2800px]:mb-[10px]",
-);
-
-const informationBlockClassanme = cn(infoListItemClassname, {
-  " hover:cursor-pointer hover:underline": true,
-});
+import { BlockSocialIcons } from "./BlockSocialIcons";
+import { BlockInfo } from "./BlockInfo";
 
 const InfoSectionFooter = () => {
   return (
@@ -74,57 +45,6 @@ const InfoSectionFooter = () => {
         </div>
       </div>
     </div>
-  );
-};
-
-const BlockSocialIcons = () => {
-  return (
-    <>
-      <span className={infoSocialItemClassname}>{getTelegramIconFooter()}</span>
-      <span className={infoSocialItemClassname}>
-        {getInstagramIconFooter()}
-      </span>
-      <span className={infoSocialItemClassname}>{getViberIconFooter()}</span>
-    </>
-  );
-};
-
-const BlockInfo = () => {
-  return (
-    <>
-      <div className={infoSectionClassname}>
-        <div className={subtitleClassname}>Інформація</div>
-        <div className="list-none">
-          <li className={informationBlockClassanme}>
-            <Link href="/info/about">Про компанію </Link>{" "}
-          </li>
-          <li className={informationBlockClassanme}>
-            <Link href="/info/delivery">Доставка і оплата</Link>
-          </li>
-          <li className={informationBlockClassanme}>
-            <Link href="/info/return">Повернення</Link>
-          </li>
-        </div>
-      </div>
-      <div className={infoSectionClassname}>
-        <div className={subtitleClassname}>Контакти</div>
-        <div className="list-none">
-          <li className={infoListItemClassname}>
-            м.Харків, вул.Мироносицька 79{" "}
-          </li>
-          <li className={infoListItemClassname}>
-            <span className="text-xs">+ 38 (050) 000 00 21</span>
-          </li>
-        </div>
-      </div>
-      <div className={infoSectionClassname}>
-        <div className={subtitleClassname}>Час роботи</div>
-        <div className="list-none">
-          <li className={infoListItemClassname}>Пн - Сб 10:00-19:00</li>
-          <li className={infoListItemClassname}>Нд 11:00 - 18:00</li>
-        </div>
-      </div>
-    </>
   );
 };
 
