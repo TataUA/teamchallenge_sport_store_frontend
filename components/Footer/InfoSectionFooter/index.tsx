@@ -16,19 +16,16 @@ const InfoSectionFooter = () => {
           className="min-[2800px]:h-[200px] min-[2800px]:w-auto"
         />
       </div>
-      <div className="hidden xl:flex xl:flex-row pt-[52px] xl:space-x-[136px]">
-        <div className="hidden xl:flex xl:flex-col pt-1">
+      <div className="hidden xl:flex xl:flex-row pt-[52px] xl:justify-between">
+        <div className="hidden xl:flex xl:flex-col mr-2.5 pt-1 xl:min-w-[300px]">
           <Image alt="footer title desktop" src={footerTitleImageDesktop} />
           <div className="flex gap-2 mb-6 pt-7">
             <BlockSocialIcons />
           </div>
         </div>
-
-        <div className="hidden xl:flex xl:flex-wrap  xl:mb-6 xl:space-x-[75px] ">
-          <BlockInfo />
-        </div>
+        <BlockInfo />
       </div>
-      <div className="flex flex-wrap  mb-6 max-[767px]:gap-[22px] max-[767px]:mb-6 min-[2800px]:mb-12 xl:hidden">
+      <div className="flex flex-wrap justify-between mb-6 max-[767px]:gap-[22px] max-[767px]:mb-6 min-[2800px]:mb-12 xl:hidden">
         <BlockInfo />
       </div>
 

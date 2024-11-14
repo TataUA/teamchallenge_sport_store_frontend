@@ -2,7 +2,7 @@ import Link from "next/link";
 import { cn } from "@/services/utils/cn";
 
 export const BlockInfo = () => {
-  const infoSectionClassname = cn("shrink-0", "max-[767px]:grow");
+  const infoSectionClassname = cn(" xl:w-[314px]", "max-[767px]:grow");
 
   const subtitleClassname = cn(
     "text-lg font-black mb-4 font-semibold",
