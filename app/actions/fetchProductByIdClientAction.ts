@@ -4,7 +4,10 @@ import { apiBaseUrl } from "@/services/api";
 
 const fetchProductByIdClientAction = async (id: number | string, color: number, size: number) => {
   try {
-    const result = await fetch(`${apiBaseUrl}products/${id}/?color=${color}&size=${size}`, { next: { revalidate: 3600 } });
+    const result = await fetch(
+      `${apiBaseUrl}products/${id}/?color=${color}&size=${size}`,
+      { next: { revalidate: 300 } },
+    );
     
     if(result.status === 200) {
       const data = result?.json()

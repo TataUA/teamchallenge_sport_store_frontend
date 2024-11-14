@@ -27,7 +27,7 @@ import wrong from "@/public/icons/auth/wrong.svg";
 import { selectCart } from "@/redux/cart/cartSelector";
 
 // slice
-import { cleanCart } from "@/redux/cart/cartSlice";
+import { cleanCart, setModalProductIsOutOfStock } from "@/redux/cart/cartSlice";
 import AnimatedLabelInputCustom from "../Shared/AnimatedLabelInputCustom";
 import Script from "next/script";
 
@@ -181,6 +181,10 @@ const OrderPageComponent = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  const showModalProductOutOfStock = () => {
+    dispatch(setModalProductIsOutOfStock(true));
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitted(true);
@@ -194,11 +198,20 @@ const OrderPageComponent = () => {
 
     try {
       createOrderHelper(
-        { userData, orderState, deliveryAddress, cart },
+        {
+          userData,
+          orderState,
+          deliveryAddress,
+          cart,
+        },
         successfulyRedirect,
+        showModalProductOutOfStock,
       );
     } catch (error) {
-      console.log("🚀 ~ handleSubmit ~ error:", error);
+      if(error instanceof Error) {
+        console.log("🚀 ~ handleSubmit ~ error:", error);
+      }
+
       setIsLoading(false);
       setPaymentError(true)
     }

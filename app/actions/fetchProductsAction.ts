@@ -4,7 +4,10 @@ import { apiBaseUrl } from "@/services/api";
 
 const fetchProductsAction = async (subCategory: string) => {
   try {
-    const result = await fetch(`${apiBaseUrl}products/search/?category=${subCategory}`, { next: { revalidate: 1800, tags: ['products'] } });
+    const result = await fetch(
+      `${apiBaseUrl}products/search/?category=${subCategory}`,
+      { next: { revalidate: 300, tags: ["products"] } },
+    );
     if(result.status === 200) {
       const data = await result?.json()
       return data;
