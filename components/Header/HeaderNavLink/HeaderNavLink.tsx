@@ -14,6 +14,8 @@ import SearchComponent from "@/components/SearchComponent";
 import { ModalForm } from "@/components/Auth/ModalForm";
 import { LoginPageContent } from "@/components/Auth/LoginUser/LoginPageContent";
 import { RegisterPageContent } from "@/components/Auth/RegisterUser/RegisterPageContent";
+import { ResetPasswordRequestForm } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
+import { ConfirmingLetterContent } from "@/components/Auth/ConfirmEmail/ConfirmingLetterContent";
 
 // utils
 import { cn } from "@/services/utils/cn";
@@ -29,6 +31,7 @@ import {
   setProduct,
 } from "@/redux/cart/cartSlice";
 import { selectUserData } from "@/redux/auth/authSelector";
+import { currentUserThunk } from "@/redux/auth/authThunk";
 
 // helpers
 import getBasketIdFromLocalStorage, {
@@ -36,11 +39,7 @@ import getBasketIdFromLocalStorage, {
 } from "@/helpers/getBasketIdFromLocalStorage";
 
 //hooks
-import { useFetchCurrentUser } from "@/hooks/useFetchCurrentUser";
 import { useIsMobile } from "@/hooks/useIsMobile";
-
-// api
-import { getTokenFromLocalStorage } from "@/services/api";
 
 // actions
 import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction";
@@ -52,8 +51,6 @@ import addProductToCartInDbAction from "@/app/actions/addProductToCartInDbAction
 
 // types
 import { IProduct } from "@/services/types";
-import { ResetPasswordRequestForm } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
-import { ConfirmingLetterContent } from "@/components/Auth/ConfirmEmail/ConfirmingLetterContent";
 
 const HeaderNavLink = () => {
   const cart = useSelector(selectCart);
@@ -71,10 +68,16 @@ const HeaderNavLink = () => {
   const [showResetPassword, setShowResetPassword] = useState(false);
   const [userEmail, setUserEmail] = useState("");
 
-  useFetchCurrentUser();
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (!user && accessToken) {
+      dispatch(currentUserThunk()).unwrap();
+    }
+  }, []);
 
   useEffect(() => {
-    const token = getTokenFromLocalStorage();
+    const token = localStorage.getItem("accessToken");
 
     if (mounted.current || cart.loading) {
       return;
