@@ -1,16 +1,18 @@
 "use client";
 
-// components
+// core
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Script from "next/script";
 
 // components
 import ContactsSection from "./ContactsSection";
 import DeliverSection from "./DeliverSection";
 import ListProducts from "./ListProducts";
 import PaymentSection from "./PaymentSection";
+import AnimatedLabelInputCustom from "../Shared/AnimatedLabelInputCustom";
 
 // utils
 import { cn } from "@/services/utils/cn";
@@ -26,10 +28,8 @@ import wrong from "@/public/icons/auth/wrong.svg";
 // selector
 import { selectCart } from "@/redux/cart/cartSelector";
 
-// slice
-import { cleanCart, setModalProductIsOutOfStock } from "@/redux/cart/cartSlice";
-import AnimatedLabelInputCustom from "../Shared/AnimatedLabelInputCustom";
-import Script from "next/script";
+// actions
+import { cleanCart, handleDecreasProductQuantity, IProductWithMaxQuantity, removeProductById, setModalProductIsOutOfStock } from "@/redux/cart/cartSlice";
 
 export interface IntInitialStateOrder {
   deliveryType: "Branch" | "Courier" | "Parcel Locker" | null;
@@ -181,7 +181,17 @@ const OrderPageComponent = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const showModalProductOutOfStock = () => {
+  const showModalProductOutOfStock = (product: IProductWithMaxQuantity) => {
+    product.quantity[0].quantity > 1
+      ? dispatch(handleDecreasProductQuantity(product))
+      : dispatch(
+          removeProductById({
+            id: product.id,
+            color: product.quantity[0].color,
+            size: product.quantity[0].size,
+          }),
+        );
+
     dispatch(setModalProductIsOutOfStock(true));
   }
 

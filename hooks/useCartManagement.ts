@@ -1,5 +1,4 @@
 // core
-import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -7,7 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUserData } from "@/redux/auth/authSelector";
 import { AppDispatch } from "@/redux/store";
 import {
+  handleDecreasProductQuantity,
   IProductWithMaxQuantity,
+  removeProductById,
   saveCartIdFromDb,
   setLoadingCartFromDB,
   setModalProductIsOutOfStock,
@@ -36,8 +37,6 @@ const useCartManagement = (): void => {
 
   const user = useSelector(selectUserData);
   const cart = useSelector(selectCart);
-
-  const pathname = usePathname();
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -171,6 +170,16 @@ const useCartManagement = (): void => {
             console.log("createCartInDb -> response ", response);
 
             if (!response) {
+              product.quantity[0].quantity > 1
+                ? dispatch(handleDecreasProductQuantity(product))
+                : dispatch(
+                    removeProductById({
+                      id: product.id,
+                      color: product.quantity[0].color,
+                      size: product.quantity[0].size,
+                    }),
+                  );
+
               dispatch(setModalProductIsOutOfStock(true));
               return;
             }
@@ -192,7 +201,7 @@ const useCartManagement = (): void => {
     }
 
     mounted.current = true;
-  }, [user?.id, pathname, dispatch]);
+  }, [user?.id, dispatch]);
 
   return;
 };
