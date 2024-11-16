@@ -1,5 +1,4 @@
 // core
-import { usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -39,8 +38,6 @@ const useCartManagement = (): void => {
 
   const user = useSelector(selectUserData);
   const cart = useSelector(selectCart);
-
-  const pathname = usePathname();
 
   useEffect(() => {
     const token = getTokenFromLocalStorage();
@@ -195,7 +192,7 @@ const useCartManagement = (): void => {
     }
 
     mounted.current = true;
-  }, [user?.id, pathname, dispatch]);
+  }, [user?.id, dispatch]);
 
   return;
 };
