@@ -60,8 +60,8 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
     }
 
     const productInfo = await fetchProductByIdAction(product.id);
-    console.log("🚀 ~ handleClickCartButton ~ productInfo:", productInfo)
-    
+    console.log("🚀 ~ handleClickCartButton ~ productInfo:", productInfo);
+
     if (!productInfo) {
       console.log(
         "We didin't receive info about product and it's quantity from DB " +
@@ -77,14 +77,16 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
         item.color.toLowerCase() === currentProduct.color.toLowerCase() &&
         item.size.toLowerCase() == currentProduct.sizes.toLowerCase(),
     );
-    console.log("🚀 ~ handleClickCartButton ~ isProductExists:", isProductExists)
+    console.log(
+      "🚀 ~ handleClickCartButton ~ isProductExists:",
+      isProductExists,
+    );
 
     if (!isProductExists.length) {
       dispatch(setModalProductIsOutOfStock(true));
       return;
     }
 
-    setIsSuccessModalIsOpened(true);
     const selectedProductSize: ProductSize = {
       id: product.size.filter(
         (sizeItem) =>
@@ -129,7 +131,7 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
         cart.id,
         productWithSelectedSizeAndColor,
       );
-      console.log("🚀 ~ handleClickCartButton ~ response:", response)
+      console.log("🚀 ~ handleClickCartButton ~ response:", response);
 
       if (!response) {
         dispatch(setModalProductIsOutOfStock(true));
@@ -145,6 +147,8 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
     } else {
       dispatch(setProduct(productWithSelectedSizeAndColor));
     }
+
+    setIsSuccessModalIsOpened(true);
   };
 
   useEffect(() => {
