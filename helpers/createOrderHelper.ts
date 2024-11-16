@@ -1,17 +1,27 @@
-import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction";
+// helpers
 import getBasketIdFromLocalStorage, {
   setBasketIdToLocalStorage,
 } from "./getBasketIdFromLocalStorage";
+
+// service
 import { createOrder, IOrder } from "@/services/api";
+
+// actions
+import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction";
 import addProductToCartInDbAction from "@/app/actions/addProductToCartInDbAction";
-import { IProduct } from "@/services/types";
-import { setModalProductIsOutOfStock } from "@/redux/cart/cartSlice";
-import { useDispatch } from "react-redux";
+
+// types
+import { ICartState, IProductWithMaxQuantity } from "@/redux/cart/cartSlice";
 
 const createOrderHelper = async (
-  data: any,
+  data: {
+    userData: any;
+    orderState: any;
+    deliveryAddress: any;
+    cart: ICartState;
+  },
   successfulyRedirect: (data: any) => void,
-  showModalProductOutOfStock: () => void,
+  showModalProductOutOfStock: (product: IProductWithMaxQuantity) => void,
 ): Promise<any> => {
   const { userData, orderState, deliveryAddress, cart } = data;
 
@@ -46,7 +56,7 @@ const createOrderHelper = async (
 
   const addProductsToCart = async (
     basketId: string,
-    products: IProduct[],
+    products: IProductWithMaxQuantity[],
   ): Promise<void> => {
     await Promise.all(
       products.map(async (product) => {
@@ -56,7 +66,7 @@ const createOrderHelper = async (
           console.log(
             `Product with id ${product.title}, was not saved, as it is out of Stock`,
           );
-          showModalProductOutOfStock();
+          showModalProductOutOfStock(product);
         }
       }),
     );
