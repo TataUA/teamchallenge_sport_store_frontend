@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default async function PromBanner() {
   return (
-    <section className=" mx-auto py-12 xl:px-[60px] xl:py-[52px]">
+    <section className=" mx-auto py-12 xl:px-[60px] xl:pt-[48px] xl:pb-[62px]">
       <div className=" mx-auto relative rounded-2xl w-[342px] h-[268px]  xl:w-[1320px]  xl:h-[432px] ">
         <div className="absolute  w-[100%] h-[100%] bg-slate-300 overflow-hidden z-[-1]  rounded-2xl  xl:hidden">
           <Image
@@ -39,7 +39,7 @@ export default async function PromBanner() {
             className={cn(
               "text-sm leading-[18px] tracking-[0.04em] mb-5",
               "md:text-base",
-              "xl:mb-[34px] xl:w-[575px] xl:tracking-widest xl:font-medium",
+              "xl:mb-[35px] xl:w-[575px] xl:tracking-wider xl:font-light",
               "min-[2800px]:text-3xl",
             )}
           >
@@ -49,7 +49,7 @@ export default async function PromBanner() {
           <Link
             href="/product/83"
             className={cn(
-              "min-w-[140px] tracking-[2%] bg-transparent rounded-lg px-[17px] py-[7px] border text-sm xl:px-6 xl:py-[14px] xl:rounded-xl xl:text-base",
+              "min-w-[140px] tracking-[2%] bg-transparent rounded-lg px-[17px] py-[7px] border text-sm xl:px-[25px] xl:py-[14.5px] xl:rounded-xl xl:text-base",
             )}
           >
             Детальніше

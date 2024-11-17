@@ -140,7 +140,7 @@ export function Slider({
                             />
                           </div>
                           <div>
-                            <h3 className="text-sm font-medium w-24 xl:absolute md:bottom-6 md:left-6 md:w-full md:text-white md:text-xl tracking-[0.015]">
+                            <h3 className="text-sm font-medium w-24 xl:absolute md:bottom-6 md:left-6 md:w-full md:text-white md:text-xl tracking-[0.015] xl:tracking-wide xl:mb-2">
                               {title}
                             </h3>
                           </div>

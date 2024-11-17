@@ -1,19 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
-import { UserData, logoutUser } from "./authSlice";
+
 import {
   registerUser,
   loginUser,
   currentUser,
-  updateAccessToken,
   editUser,
   logoutUser as apiLogoutUser,
-  clearToken,
   resetPasswordRequest,
   resetPasswordConfirm,
   resendEmail,
   confirmedEmail,
 } from "@/services/api";
+import { UserData, logoutUser } from "./authSlice";
 import {
   RegisterResponseData,
   LoginResponseData,
@@ -23,7 +21,6 @@ import { LoginFormValues } from "@/services/types/auth-form-types";
 import { UserDataEditFormValues } from "@/components/Auth/EditUser/UserDataEdit";
 import { ResetPasswordFormValues } from "@/components/Auth/ResetPassword/ResetPasswordForm";
 import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
-import { handleTokenError } from "@/helpers/handleTokenError";
 import { handleThunkValidationErrors } from "@/helpers/handleThunkValidationErrors";
 import { handleSetTokens } from "@/helpers/handleSetTokens";
 import { cleanCart } from "../cart/cartSlice";
@@ -109,27 +106,6 @@ export const loginUserThunk = createAsyncThunk<
   }
 });
 
-//update token
-export const updateAccessTokenThunk = createAsyncThunk<
-  void,
-  { refreshToken: string },
-  { rejectValue: ErrorType }
->("auth/refresh", async (values, thunkApi) => {
-  try {
-    const response: LoginResponseData = await updateAccessToken(
-      values.refreshToken,
-    );
-    handleSetTokens(response);
-
-    return;
-  } catch (error: any) {
-    const errorObject: ErrorType = {
-      message: error.detail || "An error occurred",
-    };
-    return thunkApi.rejectWithValue(errorObject);
-  }
-});
-
 //current
 export const currentUserThunk = createAsyncThunk<
   UserData,
@@ -148,48 +124,10 @@ export const currentUserThunk = createAsyncThunk<
       email: response.email,
     };
   } catch (error: any) {
-    if (error.detail === "Given token not valid for any token type") {
-      const refreshToken = Cookies.get("refreshToken");
-
-      if (refreshToken) {
-        try {
-          await thunkApi
-            .dispatch(updateAccessTokenThunk({ refreshToken }))
-            .unwrap();
-
-          const retryResponse: RegisterResponseData = await currentUser();
-          return {
-            id: retryResponse.id,
-            name: retryResponse.first_name,
-            surname: retryResponse.surname,
-            patronymic: retryResponse.last_name,
-            phone: retryResponse.phone_number,
-            email: retryResponse.email,
-          };
-        } catch (refreshError: any) {
-          Cookies.remove("refreshToken");
-          localStorage.removeItem("accessToken");
-          thunkApi.dispatch(logoutUser());
-
-          return thunkApi.rejectWithValue({
-            message:
-              refreshError.detail ||
-              "Неможливо оновити рефреш токен, будь ласка, увійдіть на сайт знову",
-          });
-        }
-      }
-    }
-
-    const errorObject: ErrorType = {
-      messages: error.messages || [
-        {
-          token_class: "Unknown",
-          token_type: "Unknown",
-          message: "An error occurred",
-        },
-      ],
-    };
-    return thunkApi.rejectWithValue(errorObject);
+    return thunkApi.rejectWithValue({
+      message:
+        error.message || "Час дії токену авторизації вийшов. Увійдіть знову.",
+    });
   }
 });
 
@@ -210,11 +148,6 @@ export const editUserThunk = createAsyncThunk<
       email: response.email,
     };
   } catch (error: any) {
-    const tokenErrorHandled = await handleTokenError(error, thunkApi);
-    if (tokenErrorHandled) {
-      return thunkApi.rejectWithValue(tokenErrorHandled);
-    }
-
     const errorObject = handleThunkValidationErrors(error);
     return thunkApi.rejectWithValue(errorObject);
   }
@@ -228,14 +161,12 @@ export const logoutUserThunk = createAsyncThunk<
 >("auth/logout", async (_, thunkApi) => {
   try {
     await apiLogoutUser();
-    clearToken();
-    Cookies.remove("refreshToken");
     thunkApi.dispatch(logoutUser());
     thunkApi.dispatch(cleanCart());
     return;
   } catch (error: any) {
     const errorObject: ErrorType = {
-      message: error.detail || "An error occurred",
+      message: error.detail || "Невідома помилка",
     };
     return thunkApi.rejectWithValue(errorObject);
   }

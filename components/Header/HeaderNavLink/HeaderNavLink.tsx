@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -14,6 +14,8 @@ import SearchComponent from "@/components/SearchComponent";
 import { ModalForm } from "@/components/Auth/ModalForm";
 import { LoginPageContent } from "@/components/Auth/LoginUser/LoginPageContent";
 import { RegisterPageContent } from "@/components/Auth/RegisterUser/RegisterPageContent";
+import { ResetPasswordRequestForm } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
+import { ConfirmingLetterContent } from "@/components/Auth/ConfirmEmail/ConfirmingLetterContent";
 
 // utils
 import { cn } from "@/services/utils/cn";
@@ -21,17 +23,14 @@ import { cn } from "@/services/utils/cn";
 // store
 import { selectCart } from "@/redux/cart/cartSelector";
 import { selectUserData } from "@/redux/auth/authSelector";
+import { currentUserThunk } from "@/redux/auth/authThunk";
 
 //hooks
-import { useFetchCurrentUser } from "@/hooks/useFetchCurrentUser";
 import { useIsMobile } from "@/hooks/useIsMobile";
-
-// types
-import { ResetPasswordRequestForm } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
-import { ConfirmingLetterContent } from "@/components/Auth/ConfirmEmail/ConfirmingLetterContent";
 
 // hooks
 import useCartManagement from "@/hooks/useCartManagement";
+import { AppDispatch } from "@/redux/store";
 
 const HeaderNavLink = () => {
   const cart = useSelector(selectCart);
@@ -39,6 +38,7 @@ const HeaderNavLink = () => {
 
   useCartManagement();
 
+  const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
   const isMobile = useIsMobile();
 
@@ -48,7 +48,13 @@ const HeaderNavLink = () => {
   const [showResetPassword, setShowResetPassword] = useState(false);
   const [userEmail, setUserEmail] = useState("");
 
-  useFetchCurrentUser();
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (!user && accessToken) {
+      dispatch(currentUserThunk()).unwrap();
+    }
+  }, []);
 
   const handleUserClick = () => {
     if (user) {
@@ -73,7 +79,7 @@ const HeaderNavLink = () => {
 
   return (
     <>
-      <ul className="flex items-center gap-1">
+      <ul className="flex items-center gap-1 xl:gap-x-2.5">
         {headerNav.map(({ href, name }) => (
           <li className="py-2 px-2 h-10" key={name}>
             {name === "search" ? (
