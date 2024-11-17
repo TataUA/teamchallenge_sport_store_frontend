@@ -39,7 +39,7 @@ const ListItem = (props: ListItemProps) => {
             src={product.colors[0].image_url}
             width={167}
             height={252}
-            className="w-[196px] object-contain"
+            className="w-[200px] object-contain"
           />
         ) : (
           <Slider
@@ -53,8 +53,10 @@ const ListItem = (props: ListItemProps) => {
       <Link
         href={`/product/${product.id}`}
         className={cn(
-          bestSales ? "text-[#3E3E40]" : "text-[#575758]",
-          " truncate cursor-pointer hover:opacity-[50%] text-base max-[767px]:text-sm font-medium min-[2800px]:text-3xl",
+          bestSales
+            ? "text-[#3E3E40] xl:text-sm xl:tracking-wider"
+            : "text-[#575758]",
+          "line-clamp-2 h-10 cursor-pointer hover:opacity-[50%] text-base max-[767px]:text-sm font-medium min-[2800px]:text-3xl",
         )}
       >
         {title}
@@ -65,7 +67,7 @@ const ListItem = (props: ListItemProps) => {
             <li
               key={item.id}
               className={cn(
-                `bg-${item.title.toLowerCase()} relative min-w-3 min-h-3 rounded-[50%] min-[2800px]:size-8`,
+                `bg-${item.title.toLowerCase()} relative min-w-3 min-h-3 rounded-[50%] min-[2800px]:size-8 xl:min-w-2 xl:min-h-2`,
                 {
                   border: true,
                 },
@@ -74,8 +76,8 @@ const ListItem = (props: ListItemProps) => {
           ),
         )}
       </ul>
-      <div className="text-[#1A1A1C] truncate text-xl max-[767px]:text-base font-semibold min-[2800px]:text-4xl">
-        {price + " грн"}
+      <div className="text-[#1A1A1C] truncate text-xl max-[767px]:text-base font-semibold min-[2800px]:text-4xl xl:text-base xl:mt-1.5 ">
+        {price.slice(0, -3) + " грн"}
       </div>
     </div>
   );

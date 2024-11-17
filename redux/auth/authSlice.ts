@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 import {
   registerUserThunk,
   loginUserThunk,
   currentUserThunk,
   editUserThunk,
   ErrorType,
-  updateAccessTokenThunk,
+  //updateAccessTokenThunk,
   resetPasswordThunk,
   confirmedEmailThunk,
 } from "@/redux/auth/authThunk";
@@ -57,7 +58,7 @@ const authSlice = createSlice({
     builder
       //register
       .addCase(registerUserThunk.pending, (state) => {
-        state.isRefreshing = true; //Додати лоадер!
+        state.isRefreshing = true; 
         state.error = null;
       })
       .addCase(registerUserThunk.fulfilled, (state) => {
@@ -85,12 +86,15 @@ const authSlice = createSlice({
       .addCase(loginUserThunk.pending, (state) => {
         state.isAuthenticated = false;
         state.error = null;
+        state.isLoading = true;
       })
       .addCase(loginUserThunk.fulfilled, (state) => {
         state.isAuthenticated = true;
+        state.isLoading = false;
       })
       .addCase(loginUserThunk.rejected, (state, { payload }) => {
         state.error = payload ?? { message: ["An error occurred"] };
+        state.isLoading = false;
       })
 
       //current
@@ -130,17 +134,17 @@ const authSlice = createSlice({
       })
 
       //update access token
-      .addCase(updateAccessTokenThunk.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(updateAccessTokenThunk.fulfilled, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(updateAccessTokenThunk.rejected, (state, { payload }) => {
-        state.isLoading = false;
-        state.error = payload ?? { message: ["An error occurred"] };
-      })
+      // .addCase(updateAccessTokenThunk.pending, (state) => {
+      //   state.isLoading = true;
+      //   state.error = null;
+      // })
+      // .addCase(updateAccessTokenThunk.fulfilled, (state) => {
+      //   state.isLoading = false;
+      // })
+      // .addCase(updateAccessTokenThunk.rejected, (state, { payload }) => {
+      //   state.isLoading = false;
+      //   state.error = payload ?? { message: ["An error occurred"] };
+      // })
 
       //reset
       .addCase(resetPasswordThunk.pending, (state) => {
