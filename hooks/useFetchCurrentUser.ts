@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
@@ -11,22 +11,25 @@ export const useFetchCurrentUser = () => {
   const userData = useSelector(selectUserData);
   const router = useRouter();
 
+  const mounted = useRef<boolean>();
+
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
 
-    if (!accessToken) return;
+    if (!accessToken || mounted.current) return;
 
     const fetchUser = async () => {
       try {
         await dispatch(currentUserThunk()).unwrap();
       } catch (error) {
-        console.log(error)
+        console.log(error);
         //router.push("/auth/login");
       }
     };
 
     if (!userData) {
       fetchUser();
+      mounted.current = true;
     }
   }, [dispatch, userData]);
 };
