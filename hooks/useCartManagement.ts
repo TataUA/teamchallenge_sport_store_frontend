@@ -44,11 +44,14 @@ const useCartManagement = (): void => {
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
+    
+    console.log('start',user?.id, mounted, cart.loading);
 
     if (!user?.id || mounted.current || cart.loading) {
       return;
     }
-
+    console.log('-----------',user?.id, mounted, cart.loading);
+    
     const saveProductsFromStoreToCartDb = (
       id: string,
       product: IProductWithMaxQuantity,
@@ -116,7 +119,7 @@ const useCartManagement = (): void => {
       dispatch(setProduct(updatedProduct));
     };
 
-    const saveBasketItems = async (items: ICartResponseItem[]) => {
+    const saveBasketItems = (items: ICartResponseItem[]) => {
       if (!items?.length) {
         return;
       }
@@ -136,6 +139,7 @@ const useCartManagement = (): void => {
       dispatch(setLoadingCartFromDB(true));
 
       let { basketId } = await createShoppingCartAction();
+      console.log("🚀 ~ createCartInDb ~ createShoppingCartAction:")
 
       if (!basketId) {
         throw new Error(`createCartInDb -> Basket id is incorrect ${basketId}`);
@@ -145,6 +149,7 @@ const useCartManagement = (): void => {
 
       if (response?.reCreateBasket) {
         const data = await createShoppingCartAction();
+        console.log("🚀 ~ createCartInDb ~ createShoppingCartAction:")
 
         if (!basketId) {
           throw new Error(
@@ -201,11 +206,20 @@ const useCartManagement = (): void => {
     };
 
     if (token) {
+      console.log("createCartInDb");
+      
       createCartInDb();
     }
-
+    
     mounted.current = true;
-  }, [user?.id, dispatch]);
+    console.log("-------- mounted", mounted);
+    
+    return () => {
+      mounted.current = true
+      console.log("-------- mounted callbacl", mounted);
+    };
+
+  }, [user?.id, dispatch, cart.loading, cart.products]);
 
   return;
 };
