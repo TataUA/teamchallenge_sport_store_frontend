@@ -6,7 +6,7 @@ const fetchSortedProductsAction = async (sort: string, limit: number) => {
   try {
     const result = await fetch(
       `${apiBaseUrl}products/sort/?sort=${sort}&limit=${limit}`,
-      { next: { revalidate: 300, tags: ["productsSorted"] } },
+      { next: { tags: ["products"] } },
     );
     if (result.status === 200) {
       const data = await result?.json();

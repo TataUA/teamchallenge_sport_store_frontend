@@ -1,12 +1,11 @@
 "use server";
 
 import { apiBaseUrl } from "@/services/api";
-import { revalidateTag } from "next/cache";
 
 const fetchProductByIdAction = async (id: number | string) => {
   try {
     const result = await fetch(`${apiBaseUrl}products/${id}/`, {
-      next: { revalidate: 300, tags: ["productById"] },
+      cache: "no-store",
     });
 
     if (result.status !== 200) {
