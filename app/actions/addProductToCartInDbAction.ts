@@ -3,6 +3,7 @@
 import { apiBaseUrl } from "@/services/api";
 import { IProduct } from "@/services/types";
 import { ICartResponseItem } from "./fetchShoppingCartFromServerAction";
+import { revalidateTag } from "next/cache";
 
 const addProductToCartInDbAction = async (
   basketId: string,
@@ -29,6 +30,8 @@ const addProductToCartInDbAction = async (
     if (result.status !== 201) {
       throw new Error("Error during adding item to cart");
     }
+
+    revalidateTag("products");
 
     return data;
   } catch (error: any) {

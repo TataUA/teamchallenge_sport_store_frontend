@@ -1,16 +1,21 @@
-'use client';
+"use client";
 
 import { apiBaseUrl } from "@/services/api";
 import { IProduct } from "@/services/types";
+import { revalidateTag } from "next/cache";
 
-const updateQuantityProductInCartInDbAction = async (basketId: string, product:IProduct, itemIdInBasket: number) => {
+const updateQuantityProductInCartInDbAction = async (
+  basketId: string,
+  product: IProduct,
+  itemIdInBasket: number,
+) => {
   try {
     const preparedBody = {
       product: product.id,
       quantity: Number(product.quantity[0].quantity),
       size: Number(product.size[0].id),
       color: Number(product.colors[0].color.id),
-    }
+    };
 
     const result = await fetch(
       `${apiBaseUrl}baskets/${basketId}/items/${itemIdInBasket}/`,
@@ -24,15 +29,18 @@ const updateQuantityProductInCartInDbAction = async (basketId: string, product:I
       },
     );
 
-    if(result.status === 201) {
-      const data = await result?.json()
+    if (result.status === 201) {
+      const data = await result?.json();
+
+      revalidateTag("products");
+
       return data;
     }
 
     return {};
   } catch (error: any) {
-    console.log("🚀 ~ fetchProductsAction ~ error:", error.response)
+    console.log("🚀 ~ fetchProductsAction ~ error:", error.response);
   }
-}
+};
 
-export default updateQuantityProductInCartInDbAction
+export default updateQuantityProductInCartInDbAction;
