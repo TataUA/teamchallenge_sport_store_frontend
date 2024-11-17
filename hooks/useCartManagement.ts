@@ -2,11 +2,18 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-// redux
-import { selectUserData } from "@/redux/auth/authSelector";
+// custom dispatch
 import { AppDispatch } from "@/redux/store";
+
+// selectors
+import { selectUserData } from "@/redux/auth/authSelector";
+import { selectCart } from "@/redux/cart/cartSelector";
+
+// actions
 import {
+  handleDecreasProductQuantity,
   IProductWithMaxQuantity,
+  removeProductById,
   saveCartIdFromDb,
   setLoadingCartFromDB,
   setModalProductIsOutOfStock,
@@ -29,10 +36,9 @@ import { IProduct } from "@/services/types";
 
 // helpers
 import { setBasketIdToLocalStorage } from "@/helpers/getBasketIdFromLocalStorage";
-import { selectCart } from "@/redux/cart/cartSelector";
 
 const useCartManagement = (): void => {
-  const mounted = useRef(false);
+  const mounted = useRef<boolean>(false);
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -171,6 +177,16 @@ const useCartManagement = (): void => {
             );console.log("createCartInDb -> response ", response);
             
             if (!response) {
+              product.quantity[0].quantity > 1
+                ? dispatch(handleDecreasProductQuantity(product))
+                : dispatch(
+                    removeProductById({
+                      id: product.id,
+                      color: product.quantity[0].color,
+                      size: product.quantity[0].size,
+                    }),
+                  );
+
               dispatch(setModalProductIsOutOfStock(true));
               return;
             }
