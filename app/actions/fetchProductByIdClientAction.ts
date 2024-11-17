@@ -6,7 +6,7 @@ const fetchProductByIdClientAction = async (id: number | string, color: number, 
   try {
     const result = await fetch(
       `${apiBaseUrl}products/${id}/?color=${color}&size=${size}`,
-      { next: { revalidate: 300 } },
+      { cache: "no-store" },
     );
     
     if(result.status === 200) {
