@@ -32,7 +32,7 @@ const Footer = () => {
 
   return (
     <footer>
-      <div className="p-6 xl:py-0 xl:px-[60px] mt-auto max-[767px]:px-6 max-[767px]:py-5">
+      <div className="p-6 xl:py-0 xl:px-[82px] mt-auto max-[767px]:px-6 max-[767px]:py-5">
         <InfoSectionFooter />
       </div>
     </footer>
