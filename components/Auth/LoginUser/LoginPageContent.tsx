@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { ClientComponent } from "@/components/ClientComponent";
-import { PrivateRouteComponent } from "@/components/PrivateRouterComponent";
+import { PrivateRouteComponent } from "@/components/Auth/PrivateRouterComponent";
 import { LoginForm } from "@/components/Auth/LoginUser/LoginForm";
 import { PrivacyPolicy } from "@/components/Auth/PrivacyPolicy";
 import { Button } from "@/components/Button/Button";
@@ -44,7 +44,7 @@ export const LoginPageContent = (props: LoginPageContentProps) => {
               setShowModal={props.setShowModal}
               setShowConfirmRegister={props.setShowConfirmRegister}
               setShowResetPassword={props.setShowResetPassword}
-              saveUserEmail = {props.saveUserEmail}
+              saveUserEmail={props.saveUserEmail}
             />
             <PrivacyPolicy />
             <div className="flex mt-[21px] mb-[21px] justify-center items-center">

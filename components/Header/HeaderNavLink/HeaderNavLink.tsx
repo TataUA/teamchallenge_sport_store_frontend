@@ -142,6 +142,7 @@ const HeaderNavLink = () => {
           {showConfirmRegister ? (
             <ConfirmingLetterContent
               setShowConfirmRegister={setShowConfirmRegister}
+              setShowModal={setShowModal}
               email={userEmail}
             />
           ) : showRegistration ? (

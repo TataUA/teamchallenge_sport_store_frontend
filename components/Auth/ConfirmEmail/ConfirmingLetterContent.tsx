@@ -13,6 +13,7 @@ import envelopBlue from "@/public/icons/auth/envelop_blue.svg";
 
 interface ConfirmingLetterContentProps {
   setShowConfirmRegister?: (show: boolean) => void;
+  setShowModal?: (show: boolean) => void;
   email?: string;
 }
 
@@ -30,6 +31,7 @@ export const ConfirmingLetterContent = (
   const handleRedirect = () => {
     if (!isMobile) {
       props.setShowConfirmRegister?.(false);
+      props.setShowModal?.(false);
     }
     router.push("/auth/login");
   };
