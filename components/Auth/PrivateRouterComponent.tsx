@@ -39,19 +39,19 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
 
     if (isAuthenticated && !accessToken) {
       dispatch(logoutUserThunk());
-      router.replace("/auth/login");
+      router.replace(isMobile ? "/auth/login" : "/");
       return;
     }
 
-    if (isAuthenticated && userData) {
+    if (!isAuthenticated) {
+      if (pathname === "/auth/login") {
+        router.replace(isMobile ? "/auth/login" : "/");
+      } else if (pathname === "/auth/signup") {
+        router.replace(isMobile ? "/auth/signup" : "/");
+      }
+    } else if (isAuthenticated && userData) {
       if (pathname === "/auth/login" || pathname === "/auth/signup") {
         router.replace("/auth/profile");
-      }
-    } else {
-      if (!isAuthenticated && !userData) {
-        router.replace("/auth/login");
-      } else if (pathname === "/auth/login" || pathname === "/auth/signup") {
-        router.push(isMobile ? "" : "/");
       }
     }
   }, [
@@ -63,6 +63,13 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
     pathname,
     accessToken,
   ]);
+
+  if (
+    !isMobile &&
+    (pathname === "/auth/login" || pathname === "/auth/signup")
+  ) {
+    return null;
+  }
 
   if (isLoading) {
     return <Loader />;

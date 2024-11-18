@@ -1,7 +1,7 @@
 import React from "react";
 
 import { ClientComponent } from "@/components/ClientComponent";
-import { PrivateRouteComponent } from "@/components/PrivateRouterComponent";
+import { PrivateRouteComponent } from "@/components/Auth/PrivateRouterComponent";
 import { UserData } from "@/components/Auth/EditUser/UserData";
 
 export default function Profile() {

@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-
 // fonts
 import { Nunito_Sans, Inter } from "next/font/google";
 
