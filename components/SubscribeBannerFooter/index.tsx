@@ -8,11 +8,11 @@ import FormBanerFooter from "./FormBannerFooter";
 import Image from "next/image";
 // assets
 import bannerMobile from "../../public/images/footer/special-proposition-mobile.jpg";
-import bannerDesk from "../../public/images/footer/special-proposition-desk.jpg";
+import bannerDesk from "../../public/images/footer/footerBaner628-272.jpg";
 
 const SubscribeBannerFooter = () => {
   return (
-    <section className="relative h-[396px] md:h-[469px]">
+    <section className="relative h-[396px] md:h-[469px] xl:h-[336px]">
       <div className="absolute z-[1] w-[100%]  h-[100%] md:hidden">
         <Image
           src={bannerMobile}
@@ -33,10 +33,10 @@ const SubscribeBannerFooter = () => {
           <FormBanerFooter />
         </div>
       </div>
-      <div className="hidden md:block  xl:px-[60px] xl:py-[40px] xl:h-full md:w-full ">
-        <div className="flex justify-center w-full h-full space-x-6">
-          <div className="relative overflow-hidden rounded-2xl  w-[50%] h-full  ">
-            <div className="xl:hidden">
+      <div className="hidden md:block  md:px-[60px] md:py-[40px] md:h-full md:w-full xl:h-[336px]  xl:px-[82px] xl:py-8 xl:bg-[#f3f3f3]">
+        <div className="flex justify-center w-full h-full space-x-6 xl:space-x-5">
+          <div className="relative overflow-hidden rounded-2xl  w-[50%] h-full xl:py-8  ">
+            <div className="block xl:hidden">
               <Image
                 src={bannerMobile}
                 alt="image"
@@ -45,7 +45,7 @@ const SubscribeBannerFooter = () => {
                 loading="lazy"
               />
             </div>
-            <div className="hidden xl:block">
+            <div className="xl:block ">
               <Image
                 src={bannerDesk}
                 alt="image"
@@ -55,7 +55,7 @@ const SubscribeBannerFooter = () => {
               />
             </div>
           </div>
-          <div className="text-gray w-[50%]  h-full">
+          <div className="text-gray w-[50%] xl:pl-2 h-full font-pangram">
             <FormBanerFooter />
           </div>
         </div>
