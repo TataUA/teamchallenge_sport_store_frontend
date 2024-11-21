@@ -11,7 +11,7 @@ interface IButtonProps {
 
 export const FormBannerButton = ({ disabled }: IButtonProps) => {
   const submitted = disabled;
-  console.log(submitted);
+
   return (
     <>
       <button

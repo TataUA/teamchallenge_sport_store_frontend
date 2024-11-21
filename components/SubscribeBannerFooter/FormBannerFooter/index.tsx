@@ -57,7 +57,7 @@ const FormBanerFooter = () => {
       <div className="flex justify-between">
         <input
           className={cn(
-            "bg-transparent border-b-[1px] text-inherit placeholder-gray-500 mb-[6px]  pb-1.5 focus-visible:border-[blue] outline-none text-base  placeholder-label placeholder-[0.025em] md:placeholder-title md:pt-6 xl:pt-4 md:w-full xl:mr-6 ",
+            "bg-transparent border-b-[1px] text-inherit placeholder-gray-500 mb-[6px]  pb-1.5 focus-visible:border-[blue] outline-none text-base  md:placeholder-label placeholder-[0.025em]   md:pt-6 xl:pt-4 md:w-full xl:mr-6 xl:font-medium",
             "max-[767px]:w-[100%] md:border-border",
             "min-[2800px]:mb-12 min-[2800px]:text-3xl",
           )}

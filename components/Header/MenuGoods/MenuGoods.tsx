@@ -31,12 +31,13 @@ const MenuGoods = ({ navItems, gender }: NavItemListProps) => {
         key={key}
         paddingLeftFirst={paddLeft}
         backGr="bg-[#f7f7f7]"
-        goodsGroups="hover:underline hover:text-secondary"
+        goodsGroups="hover:underline"
+        fontWeight="font-medium"
       />
     );
   });
 
-  return <div className="flex justify-start gap-2">{elements}</div>;
+  return <div className=" flex justify-start gap-2">{elements}</div>;
 };
 
 export default MenuGoods;
