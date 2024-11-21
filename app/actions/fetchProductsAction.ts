@@ -6,7 +6,7 @@ const fetchProductsAction = async (subCategory: string) => {
   try {
     const result = await fetch(
       `${apiBaseUrl}products/search/?category=${subCategory}`,
-      { next: { tags: ["products"] } },
+      { cache: "no-store" },
     );
     if(result.status === 200) {
       const data = await result?.json()
