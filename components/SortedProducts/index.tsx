@@ -17,7 +17,7 @@ export default async function SortedProducts({
   const products = await fetchSortedProductsAction(sort, 6);
 
   return (
-    <section className=" px-6 xl:px-[60px] xl:pt-[46px] xl:pb-[52px]">
+    <section className=" font-pangram px-6 xl:container xl:mx-auto xl:px-[60px] xl:pt-[46px] xl:pb-[52px]">
       <div className="flex justify-between  items-center mb-4 md:mb-8 xl:mb-8">
         <h2 className="text-xl leading-140 font-semibold  md:text-2xl md:leading-7 ">
           {title}

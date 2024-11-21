@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 export default function Gender() {
   return (
     <>
-      <section className="mx-auto py-12 px-6 xl:px-[60px] xl:pt-[60px] xl:pb-[52px]">
+      <section className="font-pangram mx-auto py-12 px-6 xl:container xl:mx-auto xl:px-[60px] xl:pt-[60px] xl:pb-[52px]">
         <ul className={styles.list}>
           {NAV_ITEMS.map((item) => (
             <li

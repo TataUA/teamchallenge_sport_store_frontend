@@ -33,8 +33,8 @@ const SubscribeBannerFooter = () => {
           <FormBanerFooter />
         </div>
       </div>
-      <div className="hidden md:block  md:px-[60px] md:py-[40px] md:h-full md:w-full xl:h-[336px]  xl:px-[82px] xl:py-8 xl:bg-[#f3f3f3]">
-        <div className="flex justify-center w-full h-full space-x-6 xl:space-x-5">
+      <div className="hidden md:block  md:px-[60px] md:py-[40px] md:h-full md:w-full xl:h-[336px]  xl:px-[82px] xl:py-8 xl:bg-[#f3f3f3] ">
+        <div className="flex justify-center w-full h-full space-x-6  xl:space-x-5 xl:container xl:mx-auto xl:px-[82px]">
           <div className="relative overflow-hidden rounded-2xl  w-[50%] h-full xl:py-8  ">
             <div className="block xl:hidden">
               <Image

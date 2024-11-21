@@ -36,7 +36,7 @@ export const Header = () => {
       </header>
 
       <header className="hidden xl:h-30 xl:flex xl:flex-col">
-        <div className="h-18 xl:px-[60px] py-3 flex justify-between items-center">
+        <div className="h-18 xl:container xl:mx-auto xl:px-[82px] py-3 flex justify-between items-center">
           <div className="h-12 w-50 flex items-center gap-1">
             <MenuGender
               navItems={NAV_ITEMS}
@@ -47,8 +47,10 @@ export const Header = () => {
           <LogoXl />
           <Usernav />
         </div>
-        <div className="h-12 w-full xl:px-[60px] bg-[#f7f7f7] flex justify-start items-center">
-          <MenuGoods navItems={NAV_ITEMS} gender={gender} />
+        <div className="h-12 w-full  bg-[#f7f7f7] ">
+          <div className="flex justify-start items-center xl:container xl:mx-auto xl:px-[82px]">
+            <MenuGoods navItems={NAV_ITEMS} gender={gender} />
+          </div>
         </div>
       </header>
     </>
