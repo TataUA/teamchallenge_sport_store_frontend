@@ -58,7 +58,7 @@ const authSlice = createSlice({
     builder
       //register
       .addCase(registerUserThunk.pending, (state) => {
-        state.isRefreshing = true; 
+        state.isRefreshing = true;
         state.error = null;
       })
       .addCase(registerUserThunk.fulfilled, (state) => {
@@ -86,15 +86,12 @@ const authSlice = createSlice({
       .addCase(loginUserThunk.pending, (state) => {
         state.isAuthenticated = false;
         state.error = null;
-        state.isLoading = true;
       })
       .addCase(loginUserThunk.fulfilled, (state) => {
         state.isAuthenticated = true;
-        state.isLoading = false;
       })
       .addCase(loginUserThunk.rejected, (state, { payload }) => {
         state.error = payload ?? { message: ["An error occurred"] };
-        state.isLoading = false;
       })
 
       //current

@@ -90,7 +90,7 @@ export const ResetPasswordRequestForm = (props: ResetPasswordRequestProps) => {
             onSubmit={handleSubmit}
           >
             {(formik) => (
-              <Form autoComplete="off">
+              <Form autoComplete="on">
                 <div className="mb-8">
                   <InputLabelField
                     label="Електронна пошта"
@@ -126,7 +126,7 @@ export const ResetPasswordRequestForm = (props: ResetPasswordRequestProps) => {
         </>
       ) : (
         <div>
-          <p className="mb-8">
+          <p className="mb-8 font-pangram">
             Ми надіслали посилання для відновлення на адресу{" "}
             <span className="font-bold">{userEmail}</span>
           </p>

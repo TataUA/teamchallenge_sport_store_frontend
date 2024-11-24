@@ -60,6 +60,7 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
     userData,
     isMobile,
     router,
+    dispatch,
     pathname,
     accessToken,
   ]);

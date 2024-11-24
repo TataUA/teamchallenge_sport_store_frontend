@@ -39,25 +39,26 @@ export const ModalForm = (props: ModalFormProps) => {
       >
         <div
           className={cn(
-            "relative w-auto max-h-[96vh] p-6 1440:p-10 bg-white rounded-lg shadow-lg overflow-y-auto",
+            "relative w-auto max-h-[96vh] p-6 1440:p-10 bg-white rounded-3xl shadow-lg overflow-y-auto",
             props.stylesContentBlock,
           )}
           onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
             e.stopPropagation()
           }
         >
-          <div className="absolute top-6 1440:top-10 right-6 1440:right-10">
+          <div className="absolute top-6 1400:top-[33px] right-6 1440:right-[33px]">
             <button
               type="button"
               onClick={() => {
                 props.onClose();
               }}
+              className="h-[26px] 1440:h-8 w-[26px] 1440:w-8 flex items-center justify-center"
             >
               <Image
                 src={close}
                 alt="Хрестик закриття форми"
-                width={26}
-                height={26}
+                width={18}
+                height={18}
               />
             </button>
           </div>
