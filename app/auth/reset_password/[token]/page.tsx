@@ -11,7 +11,7 @@ export default function Page() {
           <h1 className="mt-4 1440:mt-0 mb-2 text-2xl leading-140 font-pangram font-bold text-title">
             Відновлення паролю
           </h1>
-          <p className="mb-6 text-common font-medium text-sm leading-129">
+          <p className="mb-6 text-common font-pangram font-medium text-sm leading-129">
             Вкажіть новий пароль
           </p>
           <ResetPasswordForm />

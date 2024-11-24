@@ -37,7 +37,7 @@ export const LoginPageContent = (props: LoginPageContentProps) => {
             <h1 className="mb-2 1440:mb-4 text-2xl leading-140 font-pangram font-bold text-title">
               Авторизація
             </h1>
-            <p className="mb-6 text-sm leading-129 font-pangram font-medium text-common">
+            <p className="mb-6 1440:mb-8 text-sm leading-129 font-pangram font-medium text-common">
               Увійдіть або зареєструйтесь щоб продовжити
             </p>
             <LoginForm
