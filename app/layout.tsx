@@ -35,9 +35,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
-      <body
-        className={`relative wrapper h-full font-pangram ${nunitoSans.className} ${interSans.className} antialiased`}
-      >
+      <body className={`relative wrapper h-full font-pangram antialiased`}>
         <header>
           <Header />
         </header>
