@@ -24,7 +24,6 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
   const isLoading = useSelector(selectIsLoading);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const userData = useSelector(selectUserData);
-
   const accessToken = localStorage.getItem("accessToken");
 
   const dispatch: AppDispatch = useDispatch();
@@ -49,7 +48,7 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
       } else if (pathname === "/auth/signup") {
         router.replace(isMobile ? "/auth/signup" : "/");
       }
-    } else if (isAuthenticated && userData) {
+    } else if (isAuthenticated && userData && accessToken) {
       if (pathname === "/auth/login" || pathname === "/auth/signup") {
         router.replace("/auth/profile");
       }

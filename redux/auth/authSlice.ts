@@ -6,7 +6,6 @@ import {
   currentUserThunk,
   editUserThunk,
   ErrorType,
-  //updateAccessTokenThunk,
   resetPasswordThunk,
   confirmedEmailThunk,
 } from "@/redux/auth/authThunk";
@@ -31,8 +30,8 @@ export interface AuthState {
 
 const initialState: AuthState = {
   user: null,
-  isSubmitingComplete: false, //чи потрібно ще? перевірити!
   isAuthenticated: false,
+  isSubmitingComplete: false,
   isLoading: false,
   isRefreshing: false,
   error: null,
