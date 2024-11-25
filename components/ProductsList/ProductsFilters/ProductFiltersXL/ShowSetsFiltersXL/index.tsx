@@ -1,3 +1,5 @@
+import { cn } from "@/services/utils/cn";
+
 // helpers
 import getSortingIconSVG18 from "@/helpers/getSortingIconSVG18";
 import getCloseIconSVG18 from "@/helpers/getCloseIconSVG18";
@@ -5,32 +7,47 @@ import getCloseIconSVG18 from "@/helpers/getCloseIconSVG18";
 // typess
 
 import { IFilters } from "@/app/products/[...sub_category]/page";
-import {
-  sortingProductsFilers,
-  generalProductsFilers,
-} from "../../filtersData";
 
 export interface IProductsFiltersProps {
   searchParams: IFilters;
 }
 
-const ShowSetsFiltersXL = (props: IProductsFiltersProps) => {
-  const { searchParams } = props;
+interface ICurrentProps {
+  searchParams: IFilters;
+  setOpenedChangesFilters: (isOpen: boolean) => void;
+}
 
+const ShowSetsFiltersXL = ({
+  searchParams,
+  setOpenedChangesFilters,
+}: ICurrentProps) => {
   const classItemFilter =
     "h-9 rounded-lg bg-border_button flex items-center pl-4";
   const classItemFilterText = "inline-block text-[14px] leading-5 font-medium";
   const classItemFilterIconClose = "ml-2 mr-3  p-1 hover:bg-white";
 
   let colorString = "Всі кольори";
+  let styleLable = {
+    lable: "rounded-full h-[18px] w-[18px]  border border-[#b7b7b8] mr-3",
+  };
+
+  let colorLable = "";
+
   if (searchParams.color === "white") {
     colorString = "Білий";
+    colorLable = cn(styleLable.lable, "bg-white");
   } else if (searchParams.color === "black") {
     colorString = "Чорний";
+    colorLable = cn(styleLable.lable, "bg-black");
   } else if (searchParams.color === "blue") {
     colorString = "Синій";
+    colorLable = cn(styleLable.lable, "bg-blue");
   } else {
-    colorString = "Кольорові";
+    colorString = "Кольоровий";
+    colorLable = cn(
+      styleLable.lable,
+      "bg-gradient-to-r from-[#00ffff] to-[#0080ff] to-[#ff0080]",
+    );
   }
 
   let sortedString = "Рекомендовані";
@@ -39,6 +56,8 @@ const ShowSetsFiltersXL = (props: IProductsFiltersProps) => {
   } else if (searchParams.sortedBy === "descent") {
     sortedString = "Від більшої до меншої ціни";
   }
+
+  const lowerPrice = searchParams.price_from ? searchParams.price_from : 499;
 
   return (
     <div className="font-pangram hidden xl:flex items-center mb-5 w-[100%] h-[64px] bg-[#f7f7f7] rounded-xl px-6">
@@ -56,8 +75,8 @@ const ShowSetsFiltersXL = (props: IProductsFiltersProps) => {
               </li>
               <li className={classItemFilter}>
                 <div className={classItemFilterText}>
-                  {searchParams.price_from
-                    ? `${searchParams.price_from} грн  - ${searchParams.price_to} грн`
+                  {searchParams.price_to
+                    ? `${lowerPrice}  грн  - ${searchParams.price_to} грн`
                     : "весь діапазон цін"}
                 </div>
                 <div className={classItemFilterIconClose}>
@@ -68,7 +87,7 @@ const ShowSetsFiltersXL = (props: IProductsFiltersProps) => {
                 {searchParams.color ? (
                   <>
                     {" "}
-                    <div className="rounded-full h-[18px] w-[18px] bg-white bor border border-[#b7b7b8] mr-3"></div>
+                    <div className={colorLable}></div>
                     <div className={classItemFilterText}>{colorString}</div>
                   </>
                 ) : (
@@ -94,7 +113,10 @@ const ShowSetsFiltersXL = (props: IProductsFiltersProps) => {
             </ul>
           </div>
         </div>
-        <div className="flex  items-center text-sm font-semibold text-[#3E3E40] hover:underline ">
+        <div
+          className="flex  items-center text-sm font-semibold text-[#3E3E40] hover:underline "
+          onClick={() => setOpenedChangesFilters(true)}
+        >
           Змінити
         </div>
       </div>

@@ -12,6 +12,7 @@ export interface IFilters {
   sub_category?: string;
   sortedBy?: string;
   sizes?: string;
+  price?: string;
   price_to?: string;
   price_from?: string;
   color?: string;

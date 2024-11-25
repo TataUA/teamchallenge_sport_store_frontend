@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { cn } from "@/services/utils/cn";
+
 // components
 import List from "../List";
 import ProductsFilters from "../ProductsFilters";
@@ -7,8 +7,6 @@ import ProductsFiltersXL from "../ProductsFilters/ProductFiltersXL";
 
 // helpers
 import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine";
-import getSortingIconSVG18 from "@/helpers/getSortingIconSVG18";
-import getCloseIconSVG18 from "@/helpers/getCloseIconSVG18";
 
 // types
 import { IProduct } from "@/services/types";
