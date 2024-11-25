@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import { cn } from "@/services/utils/cn";
 
 // helpers
@@ -21,10 +22,15 @@ const ShowSetsFiltersXL = ({
   searchParams,
   setOpenedChangesFilters,
 }: ICurrentProps) => {
+  const [isShowSortiing, setIsShowSorting] = useState(true);
+  const [isShowPrice, setIsShowPrice] = useState(true);
+  const [isShowSize, setIsShowSize] = useState(true);
+  const [isShowColor, setIsShowColor] = useState(true);
+
   const classItemFilter =
     "h-9 rounded-lg bg-border_button flex items-center pl-4";
   const classItemFilterText = "inline-block text-[14px] leading-5 font-medium";
-  const classItemFilterIconClose = "ml-2 mr-3  p-1 hover:bg-white";
+  const classItemFilterIconClose = "ml-2 mr-3  p-1 cursor-pointer";
 
   let colorString = "Всі кольори";
   let styleLable = {
@@ -66,55 +72,75 @@ const ShowSetsFiltersXL = ({
           <p className="font-semibold text-xl text-title pr-8">Фільтр</p>
           <div className="flex justify-start">
             <ul className="flex justify-start space-x-2">
-              <li className={classItemFilter}>
-                <div className="pr-3">{getSortingIconSVG18()}</div>
-                <div className={classItemFilterText}>{sortedString}</div>
-                <div className={classItemFilterIconClose}>
-                  {getCloseIconSVG18()}
-                </div>
-              </li>
-              <li className={classItemFilter}>
-                <div className={classItemFilterText}>
-                  {searchParams.price_to
-                    ? `${lowerPrice}  грн  - ${searchParams.price_to} грн`
-                    : "весь діапазон цін"}
-                </div>
-                <div className={classItemFilterIconClose}>
-                  {getCloseIconSVG18()}
-                </div>
-              </li>
-              <li className={classItemFilter}>
-                {searchParams.color ? (
-                  <>
-                    {" "}
-                    <div className={colorLable}></div>
-                    <div className={classItemFilterText}>{colorString}</div>
-                  </>
-                ) : (
-                  <div className={classItemFilterText}>Всі кольори</div>
-                )}
-
-                <div className={classItemFilterIconClose}>
-                  {getCloseIconSVG18()}
-                </div>
-              </li>
-              <li className={classItemFilter}>
-                <div className={classItemFilterText}>
-                  {searchParams.sizes ? (
-                    searchParams.sizes
+              {isShowSortiing ? (
+                <li className={classItemFilter}>
+                  <div className="pr-3">{getSortingIconSVG18()}</div>
+                  <div className={classItemFilterText}>{sortedString}</div>
+                  <div
+                    className={classItemFilterIconClose}
+                    onClick={() => setIsShowSorting(false)}
+                  >
+                    {getCloseIconSVG18()}
+                  </div>
+                </li>
+              ) : null}
+              {isShowPrice ? (
+                <li className={classItemFilter}>
+                  <div className={classItemFilterText}>
+                    {searchParams.price_to
+                      ? `${lowerPrice}  грн  - ${searchParams.price_to} грн`
+                      : "Весь діапазон цін"}
+                  </div>
+                  <div
+                    className={classItemFilterIconClose}
+                    onClick={() => setIsShowPrice(false)}
+                  >
+                    {getCloseIconSVG18()}
+                  </div>
+                </li>
+              ) : null}
+              {isShowColor ? (
+                <li className={classItemFilter}>
+                  {searchParams.color ? (
+                    <>
+                      {" "}
+                      <div className={colorLable}></div>
+                      <div className={classItemFilterText}>{colorString}</div>
+                    </>
                   ) : (
-                    <div className={classItemFilterText}>Всі розміри</div>
+                    <div className={classItemFilterText}>Всі кольори</div>
                   )}
-                </div>
-                <div className={classItemFilterIconClose}>
-                  {getCloseIconSVG18()}
-                </div>
-              </li>
+
+                  <div
+                    className={classItemFilterIconClose}
+                    onClick={() => setIsShowColor(false)}
+                  >
+                    {getCloseIconSVG18()}
+                  </div>
+                </li>
+              ) : null}
+              {isShowSize ? (
+                <li className={classItemFilter}>
+                  <div className={classItemFilterText}>
+                    {searchParams.sizes ? (
+                      searchParams.sizes
+                    ) : (
+                      <div className={classItemFilterText}>Всі розміри</div>
+                    )}
+                  </div>
+                  <div
+                    className={classItemFilterIconClose}
+                    onClick={() => setIsShowSize(false)}
+                  >
+                    {getCloseIconSVG18()}
+                  </div>
+                </li>
+              ) : null}
             </ul>
           </div>
         </div>
         <div
-          className="flex  items-center text-sm font-semibold text-[#3E3E40] hover:underline "
+          className="flex  items-center text-sm font-semibold text-[#3E3E40] hover:underline cursor-pointer"
           onClick={() => setOpenedChangesFilters(true)}
         >
           Змінити
