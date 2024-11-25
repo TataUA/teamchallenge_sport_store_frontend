@@ -10,7 +10,6 @@ import {
   selectUserData,
 } from "@/redux/auth/authSelector";
 import { AppDispatch } from "@/redux/store";
-import { logoutUserThunk } from "@/redux/auth/authThunk";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { Loader } from "@/components/Loader";
 
@@ -24,11 +23,13 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
   const isLoading = useSelector(selectIsLoading);
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const userData = useSelector(selectUserData);
+
   const accessToken = localStorage.getItem("accessToken");
 
   const dispatch: AppDispatch = useDispatch();
 
   const router = useRouter();
+
   const pathname = usePathname();
 
   const isMobile = useIsMobile();
@@ -36,22 +37,23 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
   useEffect(() => {
     if (isLoading) return;
 
-    if (isAuthenticated && !accessToken) {
-      dispatch(logoutUserThunk());
+    if (!isAuthenticated) {
       router.replace(isMobile ? "/auth/login" : "/");
       return;
     }
 
-    if (!isAuthenticated) {
-      if (pathname === "/auth/login") {
-        router.replace(isMobile ? "/auth/login" : "/");
-      } else if (pathname === "/auth/signup") {
-        router.replace(isMobile ? "/auth/signup" : "/");
-      }
-    } else if (isAuthenticated && userData && accessToken) {
-      if (pathname === "/auth/login" || pathname === "/auth/signup") {
-        router.replace("/auth/profile");
-      }
+    if (isAuthenticated && !userData) {
+      router.replace(isMobile ? "/auth/login" : "/");
+      return;
+    }
+
+    if (
+      isAuthenticated &&
+      userData &&
+      accessToken &&
+      (pathname === "/auth/login" || pathname === "/auth/signup")
+    ) {
+      router.replace("/auth/profile");
     }
   }, [
     isAuthenticated,
