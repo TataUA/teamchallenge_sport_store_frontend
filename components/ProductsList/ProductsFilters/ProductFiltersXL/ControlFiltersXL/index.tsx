@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { ClientComponent } from "@/components/ClientComponent";
+// components
+import SortingFilterXL from "./SortingFilterXL";
 
 // helpers
-import getSortingIconSVG18 from "@/helpers/getSortingIconSVG18";
 import getArrowDownSVG from "@/helpers/getArrowDownSVG";
 
 // typess
@@ -27,7 +29,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
     "h-14 md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 ";
   const classItemFilterText = "inline-block text-[14px] leading-5 font-medium";
 
-  const classItemFilterIcon = "ml-2 mr-3  p-1 cursor-pointer";
+  const classItemFilterIcon = "ml-2 mr-3  p-1 cursor-pointer ";
 
   return (
     <div className="font-pangram hidden xl:block mb-5 w-[100%] h-[148px] py-6 bg-[#f7f7f7] rounded-xl px-6">
@@ -44,26 +46,22 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
         <div className="flex justify-start space-x-2">
           <div className="flex justify-start ">
             <ul className="flex  justify-start items-center space-x-3">
-              <li className={classItemFilter}>
-                <div className="flex justify-between">
-                  <div className="pr-3">{getSortingIconSVG18()}</div>
-                  <div className={classItemFilterText}>Рекомендовані</div>
-                </div>
+              <ClientComponent>
+                <SortingFilterXL searchParams={searchParams} />
 
-                <div className={classItemFilterIcon}>{getArrowDownSVG()}</div>
-              </li>
-              <li className={classItemFilter}>
-                <div className={classItemFilterText}>500 грн - 3000 грн</div>
-                <div className={classItemFilterIcon}>{getArrowDownSVG()}</div>
-              </li>
-              <li className={classItemFilter}>
-                <div className={classItemFilterText}>Білий</div>
-                <div className={classItemFilterIcon}>{getArrowDownSVG()}</div>
-              </li>
-              <li className={classItemFilter}>
-                <div className={classItemFilterText}>42 UA</div>
-                <div className={classItemFilterIcon}>{getArrowDownSVG()}</div>
-              </li>
+                <li className={classItemFilter}>
+                  <div className={classItemFilterText}>500 грн - 3000 грн</div>
+                  <div className={classItemFilterIcon}>{getArrowDownSVG()}</div>
+                </li>
+                <li className={classItemFilter}>
+                  <div className={classItemFilterText}>Білий</div>
+                  <div className={classItemFilterIcon}>{getArrowDownSVG()}</div>
+                </li>
+                <li className={classItemFilter}>
+                  <div className={classItemFilterText}>42 UA</div>
+                  <div className={classItemFilterIcon}>{getArrowDownSVG()}</div>
+                </li>
+              </ClientComponent>
             </ul>
           </div>
         </div>
