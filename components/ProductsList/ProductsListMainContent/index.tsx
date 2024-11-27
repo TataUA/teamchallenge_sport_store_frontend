@@ -3,7 +3,7 @@ import { Suspense } from "react";
 // components
 import List from "../List";
 import ProductsFilters from "../ProductsFilters";
-import ProductsFiltersXL from "../ProductsFilters/ProductFiltersXL";
+import ProductsFiltersXL from "../ProductFiltersXL";
 
 // helpers
 import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine";

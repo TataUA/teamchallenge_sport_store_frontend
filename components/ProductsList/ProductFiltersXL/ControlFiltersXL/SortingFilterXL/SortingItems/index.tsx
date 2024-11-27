@@ -9,7 +9,7 @@ import getCheckedIconSVG from "@/helpers/getCheckedIconSVG";
 import { cn } from "@/services/utils/cn";
 
 // data
-import { sortingProductsFilers } from "../../../../filtersData";
+import { sortingProductsFilers } from "../../../../ProductsFilters/filtersData";
 
 const SortingItems = () => {
   const [isSortingFilterOpen, setIsSortingFilterOpen] = useState(false);
@@ -30,7 +30,7 @@ const SortingItems = () => {
 
   return (
     <div className="relative">
-      <div className="absolute z-10 bg-white border border-border rounded-xl w-[320px] top-8 left-[-250px]">
+      <div className="absolute z-10 bg-white border border-border rounded-xl w-[250px] top-8 left-[-240px]">
         <h2 className="text-2xl font-bold mb-4 text-center min-[2800px]:text-4xl min-[2800px]:mb-8">
           Сортування
         </h2>
