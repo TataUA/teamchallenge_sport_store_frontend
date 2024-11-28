@@ -1,5 +1,11 @@
-import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
 import { ClientComponent } from "@/components/ClientComponent";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+// redux
+import { setDefaultsFilters } from "@/redux/generalFilters/generalFiltersSlice";
+import { selectGeneralFilters } from "@/redux/generalFilters/generalFiltersSelector";
+
 // components
 import SortingFilterXL from "./SortingFilterXL";
 
@@ -12,27 +18,110 @@ import SizeFilter from "../../ProductsFilters/GeneralFilters/SizeFilter";
 import { IProduct } from "@/services/types";
 import { IFilters } from "@/app/products/[...sub_category]/page";
 
+// helpers
+import { getFilteredProductsClientSide } from "@/helpers/getFilteredProducts";
+
 import { generalProductsFilers } from "../../ProductsFilters/filtersData";
 
 export interface IProductsFiltersProps {
-  searchParams: IFilters;
+  searchParamsFilter: IFilters;
   params: { sub_category: string[] };
   products: IProduct[];
   setOpenedChangesFilters: (isOpen: boolean) => void;
 }
 
 const ControlFiltersXL = (props: IProductsFiltersProps) => {
-  const { searchParams, params, products, setOpenedChangesFilters } = props;
+  const dispatch = useDispatch();
+  const filters = useSelector(selectGeneralFilters);
+
+  const [
+    filteredProductsByGeneralFilters,
+    setFilteredProductsByGeneralFilters,
+  ] = useState([...props.products]);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  const { searchParamsFilter, params, products, setOpenedChangesFilters } =
+    props;
+
+  const removeParamsGeneralFiltersFromUrl = () => {
+    const params = new URLSearchParams(searchParams);
+
+    params.delete("sizes");
+    params.delete("price_to");
+    params.delete("price_from");
+    params.delete("color");
+
+    return `${pathname}?${params.toString()}`;
+  };
+
+  const handleRemoveFilters = () => {
+    dispatch(setDefaultsFilters());
+    router.push(removeParamsGeneralFiltersFromUrl());
+  };
+
+  const applyGeneralFilters = () => {
+    const params = new URLSearchParams(searchParams);
+
+    if (filters.sizes.length) params.set("sizes", filters.sizes.join(","));
+    if (filters.price.priceTo !== 10999)
+      params.set("price_to", filters.price.priceTo.toString());
+    if (filters.price.priceFrom !== 499)
+      params.set("price_from", filters.price.priceFrom.toString());
+    if (filters.color) params.set("color", filters.color);
+
+    return `${pathname}?${params.toString()}`;
+  };
+
+  const isButtonDisabled = () => {
+    if (
+      !filters.sizes.length &&
+      filters.price.priceTo === 10999 &&
+      filters.price.priceFrom === 499 &&
+      !filters.color
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const handleApplyFilters = () => {
+    if (!isButtonDisabled()) {
+      router.push(applyGeneralFilters());
+      setOpenedChangesFilters(false);
+    }
+  };
+
+  useEffect(() => {
+    const arraOfFiltersFromFiltersObject = Object.entries({
+      ...filters,
+      price_to: filters.price.priceTo,
+      price_from: filters.price.priceFrom,
+      sub_category: props.params.sub_category[0],
+    }).map(([key, value]) => ({ [key]: value }));
+
+    const filteredProductsByGeneralFilters = getFilteredProductsClientSide({
+      products: props.products,
+      filters: arraOfFiltersFromFiltersObject,
+    });
+
+    setFilteredProductsByGeneralFilters([...filteredProductsByGeneralFilters]);
+  }, [filters, props]);
 
   return (
     <div className="font-pangram hidden xl:block mb-5 w-[100%] h-[148px] py-6 bg-[#f7f7f7] rounded-xl px-6">
       <div className="flex justify-between w-[100%]">
         <div className="flex items-center pb-4">
           <p className="font-semibold text-xl text-title pr-4">Фільтр</p>
-          <div className="classItemFilterText text-sm hover:underline">
+          <button
+            className="classItemFilterText text-sm hover:underline"
+            onClick={() => handleRemoveFilters()}
+          >
             {" "}
             Очиcтити фільтр{" "}
-          </div>
+          </button>
         </div>
       </div>
       <div className="flex justify-between ">
@@ -40,7 +129,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
           <div className="flex justify-start ">
             <ul className="flex  justify-start items-center space-x-3">
               <ClientComponent>
-                <SortingFilterXL searchParams={searchParams} />
+                <SortingFilterXL searchParams={searchParamsFilter} />
 
                 <ControlFilterItem title="Розмір" width="w-auto" hight="h-auto">
                   {generalProductsFilers.map((generalFilter, index) => (
@@ -72,7 +161,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
                 </ControlFilterItem>
                 <ControlFilterItem
                   title="Колір"
-                  width="w-[254px]"
+                  width="w-[252px]"
                   hight="h-auto"
                 >
                   {generalProductsFilers.map((generalFilter, index) => (
@@ -99,7 +188,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
         </div>
         <div
           className="flex  items-center text-base font-semibold text-common hover:bg-white px-6 py-3 my-1 rounded-xl border border-[#323234] cursor-pointer"
-          onClick={() => setOpenedChangesFilters(false)}
+          onClick={() => handleApplyFilters()}
         >
           Застосувати
         </div>

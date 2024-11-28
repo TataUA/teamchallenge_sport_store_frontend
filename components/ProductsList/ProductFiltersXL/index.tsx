@@ -22,19 +22,21 @@ const ProductFiltersXL = (props: IProductsFiltersProps) => {
 
   return (
     <>
-      {isOpenedChangesFilters ? (
-        <ControlFiltersXL
-          searchParams={searchParams}
-          setOpenedChangesFilters={setOpenedChangesFilters}
-          params={params}
-          products={products}
-        />
-      ) : (
-        <ShowSetsFiltersXL
-          searchParams={searchParams}
-          setOpenedChangesFilters={setOpenedChangesFilters}
-        />
-      )}
+      <ClientComponent>
+        {isOpenedChangesFilters ? (
+          <ControlFiltersXL
+            searchParamsFilter={searchParams}
+            setOpenedChangesFilters={setOpenedChangesFilters}
+            params={params}
+            products={products}
+          />
+        ) : (
+          <ShowSetsFiltersXL
+            searchParams={searchParams}
+            setOpenedChangesFilters={setOpenedChangesFilters}
+          />
+        )}
+      </ClientComponent>
     </>
   );
 };
