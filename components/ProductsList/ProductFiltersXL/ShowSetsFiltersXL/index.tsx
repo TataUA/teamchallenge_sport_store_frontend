@@ -58,9 +58,9 @@ const ShowSetsFiltersXL = ({
 
   let sortedString = "Рекомендовані";
   if (searchParams.sortedBy === "ascent") {
-    sortedString = "Від меншої до більшої ціни";
+    sortedString = "Від найдешевшої";
   } else if (searchParams.sortedBy === "descent") {
-    sortedString = "Від більшої до меншої ціни";
+    sortedString = "Від найдорожчої";
   }
 
   const lowerPrice = searchParams.price_from ? searchParams.price_from : 499;

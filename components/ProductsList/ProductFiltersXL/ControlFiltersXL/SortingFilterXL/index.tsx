@@ -21,20 +21,24 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
   const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
   const classItemFilter =
     "h-14 md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 pr-3";
-  const classItemFilterText = "inline-block text-[14px] leading-5 font-medium ";
+  const classItemFilterText = "inline-block text-base leading-5 font-medium ";
 
   const classItemFilterIcon = " p-1 cursor-pointer ";
 
   let sortedString = "Рекомендовані";
   if (searchParams.sortedBy === "ascent") {
-    sortedString = "Від меншої до більшої ціни";
+    sortedString = "Від найдешевшої";
   } else if (searchParams.sortedBy === "descent") {
-    sortedString = "Від більшої до меншої ціни";
+    sortedString = "Від найдорожчої";
   }
 
   return (
     <>
-      <li className={cn(classItemFilter)}>
+      <li
+        className={cn(classItemFilter, {
+          "border-blue": isSortingArrowUp,
+        })}
+      >
         <div className="flex justify-between">
           <div className="pr-3 flex justify-center items-center">
             {getSortingIconSVG18()}

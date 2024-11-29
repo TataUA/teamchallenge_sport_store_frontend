@@ -30,12 +30,9 @@ const SortingItems = () => {
 
   return (
     <div className="relative">
-      <div className="absolute z-10 bg-white border border-border rounded-xl w-[250px] top-8 left-[-240px]">
-        <h2 className="text-2xl font-bold mb-4 text-center min-[2800px]:text-4xl min-[2800px]:mb-8">
-          Сортування
-        </h2>
+      <div className="absolute z-10 bg-white border border-border rounded-xl w-[254px] top-9  left-[-245px] pt-4">
         {sortingProductsFilers.map((item, index) => (
-          <div key={item.id} className="mb-4 min-[2800px]:mb-8">
+          <div key={item.id} className="mt-2 mb-2 min-[2800px]:mb-8">
             <div
               className={cn(
                 "flex justify-between items-center px-4 [&>svg]:fill-blue [&>svg]:hidden [&>svg]:mb-2",
@@ -47,9 +44,9 @@ const SortingItems = () => {
             >
               <Link
                 className={cn(
-                  "text-base text-[#272728] mb-2 font-medium cursor-pointer hover:text-blue min-[2800px]:text-3xl",
+                  "text-base text-[#272728] mb-4 mt-2 font-medium cursor-pointer hover:text-blue min-[2800px]:text-3xl",
                   {
-                    "text-blue":
+                    "text-[#272728]":
                       currentFilterValue === item.id.toLocaleLowerCase(),
                   },
                 )}
@@ -60,7 +57,9 @@ const SortingItems = () => {
               </Link>
               {getCheckedIconSVG()}
             </div>
-            <hr />
+            {index < 2 ? (
+              <div className=" m-auto  h-[1px] bg-border w-[220px] "></div>
+            ) : null}
           </div>
         ))}
       </div>
