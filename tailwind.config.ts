@@ -84,6 +84,10 @@ const config: Config = {
           backgroundColor: "#0A4CF6",
           cursor: "pointer",
           pointerEvents: "auto",
+          "@screen xl": {
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #DBDBDB",
+          },
         },
 
         ".appearance-none::-moz-range-thumb": {
@@ -93,6 +97,10 @@ const config: Config = {
           backgroundColor: "#0A4CF6",
           cursor: "pointer",
           pointerEvents: "auto",
+          "@screen xl": {
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #DBDBDB",
+          },
         },
       };
       addUtilities(newUtilities, ["responsive", "hover"]);
