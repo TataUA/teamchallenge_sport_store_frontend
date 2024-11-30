@@ -10,9 +10,9 @@ import { selectGeneralFilters } from "@/redux/generalFilters/generalFiltersSelec
 import SortingFilterXL from "./SortingFilterXL";
 
 import ControlFilterItem from "./ControlFilterItem";
-import PriceFilter from "../../ProductsFilters/GeneralFilters/PriceFilter";
-import ColorsFilter from "../../ProductsFilters/GeneralFilters/ColorsFilter";
-import SizeFilter from "../../ProductsFilters/GeneralFilters/SizeFilter";
+import PriceFilterXL from "./PriceFilterXL";
+import ColorsFilterXL from "./ColorFilterXL";
+import SizeFilterXL from "./SizeFilterXL";
 
 // typess
 import { IProduct } from "@/services/types";
@@ -139,7 +139,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
                         props.params.sub_category[0],
                       ) ? (
                         <div className="px-4 pt-0">
-                          <SizeFilter
+                          <SizeFilterXL
                             products={props.products}
                             shoesSizes={generalFilter.sizesShoes}
                           />
@@ -150,7 +150,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
                         props.params.sub_category[0],
                       ) ? (
                         <div className="w-auto px-4">
-                          <SizeFilter
+                          <SizeFilterXL
                             products={props.products}
                             clothesSizes={generalFilter.sizesClothes}
                           />
@@ -169,7 +169,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
                       {generalFilter.id === "color" &&
                       generalFilter.colorValues ? (
                         <div className="px-4 ">
-                          <ColorsFilter colors={generalFilter.colorValues} />
+                          <ColorsFilterXL colors={generalFilter.colorValues} />
                         </div>
                       ) : null}
                     </div>
@@ -177,17 +177,17 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
                 </ControlFilterItem>
                 <ControlFilterItem
                   title="Ціна"
-                  width="w-[320px]"
+                  width="w-[436px]"
                   hight="h-[140px]"
                 >
-                  <PriceFilter />
+                  <PriceFilterXL />
                 </ControlFilterItem>
               </ClientComponent>
             </ul>
           </div>
         </div>
         <div
-          className="flex  items-center text-base font-semibold text-common hover:bg-white px-6 py-3 my-1 rounded-xl border border-[#323234] cursor-pointer"
+          className="flex  items-center text-base font-semibold text-common hover:bg-white px-6 py-[11px] my-1 rounded-xl border border-[#323234] cursor-pointer"
           onClick={() => handleApplyFilters()}
         >
           Застосувати

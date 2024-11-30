@@ -1,5 +1,5 @@
 "use client";
-
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -30,7 +30,7 @@ const SortingItems = () => {
 
   return (
     <div className="relative">
-      <div className="absolute z-10 bg-white border border-border rounded-xl w-[254px] top-9  left-[-245px] pt-4">
+      <div className="absolute z-10 bg-white border border-border rounded-xl w-[254px] top-9  left-[-254px] pt-4">
         {sortingProductsFilers.map((item, index) => (
           <div key={item.id} className="mt-2 mb-2 min-[2800px]:mb-8">
             <div

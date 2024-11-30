@@ -21,9 +21,10 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
   const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
   const classItemFilter =
     "h-14 md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 pr-3";
-  const classItemFilterText = "inline-block text-base leading-5 font-medium ";
+  const classItemFilterText =
+    "inline-block text-base leading-5 font-medium w-[160px]";
 
-  const classItemFilterIcon = " p-1 cursor-pointer ";
+  const classItemFilterIcon = " p-1 cursor-pointer  ";
 
   let sortedString = "Рекомендовані";
   if (searchParams.sortedBy === "ascent") {
@@ -39,20 +40,21 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
           "border-blue": isSortingArrowUp,
         })}
       >
-        <div className="flex justify-between">
-          <div className="pr-3 flex justify-center items-center">
-            {getSortingIconSVG18()}
+        <div className="flex justify-between pr-3">
+          <div className="flex justify-center items-center ">
+            <div className="pr-3">{getSortingIconSVG18()}</div>
+            <div className={classItemFilterText}>{sortedString}</div>
           </div>
-          <div className={classItemFilterText}>{sortedString}</div>
+          <div
+            className={cn(classItemFilterIcon, {
+              "rotate-180 ": isSortingArrowUp,
+            })}
+            onClick={() => setIsSortingArrowUp(!isSortingArrowUp)}
+          >
+            {getArrowDownSVG()}
+          </div>
         </div>
-        <div
-          className={cn(classItemFilterIcon, {
-            "rotate-180 ml-14": isSortingArrowUp,
-          })}
-          onClick={() => setIsSortingArrowUp(!isSortingArrowUp)}
-        >
-          {getArrowDownSVG()}
-        </div>
+
         {isSortingArrowUp ? <SortingItems /> : null}
       </li>
     </>

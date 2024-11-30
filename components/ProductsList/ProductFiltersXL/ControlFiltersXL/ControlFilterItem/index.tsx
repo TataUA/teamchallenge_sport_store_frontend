@@ -15,12 +15,12 @@ const ControlPrice = (props: ControlFiltrItem) => {
 
   const classItemFilter =
     "h-14 md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 ";
-  const classItemFilterText = "inline-block text-[14px] leading-5 font-medium";
+  const classItemFilterText = "inline-block text-base leading-5 font-medium";
   const classItemFilterIcon = "ml-2 mr-3  p-1 cursor-pointer ";
 
   const classBlockChosen = {
     type1:
-      "absolute z-10 bg-white border border-border rounded-xl  top-[60px] left-0",
+      "absolute z-10 bg-white border border-border rounded-xl  top-[64px] left-0",
   };
 
   const classWithProps = cn(classBlockChosen.type1, props.width, props.hight);
