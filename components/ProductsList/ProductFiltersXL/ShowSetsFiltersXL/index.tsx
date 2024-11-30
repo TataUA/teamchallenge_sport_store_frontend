@@ -64,6 +64,7 @@ const ShowSetsFiltersXL = ({
   }
 
   const lowerPrice = searchParams.price_from ? searchParams.price_from : 499;
+  const upperPrice = searchParams.price_to ? searchParams.price_to : 10999;
 
   return (
     <div className="font-pangram hidden xl:flex items-center mb-5 w-[100%] h-[64px] bg-[#f7f7f7] rounded-xl px-6">
@@ -84,11 +85,12 @@ const ShowSetsFiltersXL = ({
                   </div>
                 </li>
               ) : null}
-              {isShowPrice ? (
+              {isShowPrice &&
+              (searchParams.price_from || searchParams.price_to) ? (
                 <li className={classItemFilter}>
                   <div className={classItemFilterText}>
                     {searchParams.price_to
-                      ? `${lowerPrice}  грн  - ${searchParams.price_to} грн`
+                      ? `${lowerPrice}  грн  - ${upperPrice} грн`
                       : "Весь діапазон цін"}
                   </div>
                   <div
@@ -99,7 +101,7 @@ const ShowSetsFiltersXL = ({
                   </div>
                 </li>
               ) : null}
-              {isShowColor ? (
+              {isShowColor && searchParams.color ? (
                 <li className={classItemFilter}>
                   {searchParams.color ? (
                     <>
@@ -119,7 +121,7 @@ const ShowSetsFiltersXL = ({
                   </div>
                 </li>
               ) : null}
-              {isShowSize ? (
+              {isShowSize && searchParams.sizes ? (
                 <li className={classItemFilter}>
                   <div className={classItemFilterText}>
                     {searchParams.sizes ? (

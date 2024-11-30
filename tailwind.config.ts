@@ -85,6 +85,7 @@ const config: Config = {
           cursor: "pointer",
           pointerEvents: "auto",
         },
+
         ".appearance-none::-moz-range-thumb": {
           width: "20px",
           height: "20px",
