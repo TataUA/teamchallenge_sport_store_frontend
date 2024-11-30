@@ -47,7 +47,8 @@ const config: Config = {
         "55": "165px",
       },
       letterSpacing: {
-        custom_2: "2%",
+        custom_2: "0.02em", //2% - використовуємо клас tracking-custom_2
+        custom_4: "0.04em",
       },
       colors: {
         primary: "#272728",

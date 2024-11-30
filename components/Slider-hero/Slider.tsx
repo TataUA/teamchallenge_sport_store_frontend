@@ -1,19 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+
 import { IProduct } from "@/services/types";
-
-import { SliderButtons } from "./SliderButtons";
-
 import { cn } from "@/services/utils/cn";
-import Link from "next/link";
-import ListItem from "../ProductsList/ListItem";
+import ListItem from "@/components/ProductsList/ListItem";
 
 interface Slide {
   id?: number;
@@ -118,7 +116,7 @@ export function Slider({
               : data?.map(({ id, image, images, title, href }) => (
                   <SwiperSlide key={id}>
                     {cardImage ? (
-                      <div className="rounded-xl overflow-hidden container">
+                      <div className="rounded-xl overflow-hidden flex items-center justify-center h-full">
                         <Image
                           alt=""
                           style={{ objectFit: "contain" }}
