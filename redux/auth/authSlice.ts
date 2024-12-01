@@ -57,14 +57,14 @@ const authSlice = createSlice({
     builder
       //register
       .addCase(registerUserThunk.pending, (state) => {
-        state.isRefreshing = true;
         state.error = null;
+        state.isLoading = true;
       })
       .addCase(registerUserThunk.fulfilled, (state) => {
-        state.isRefreshing = false;
+        state.isLoading = false;
       })
       .addCase(registerUserThunk.rejected, (state, { payload }) => {
-        state.isRefreshing = false;
+        state.isLoading = false;
         state.error = payload ?? { message: ["An error occurred"] };
       })
 
@@ -128,19 +128,6 @@ const authSlice = createSlice({
         state.isRefreshing = false;
         state.error = payload ?? { message: ["An error occurred"] };
       })
-
-      //update access token
-      // .addCase(updateAccessTokenThunk.pending, (state) => {
-      //   state.isLoading = true;
-      //   state.error = null;
-      // })
-      // .addCase(updateAccessTokenThunk.fulfilled, (state) => {
-      //   state.isLoading = false;
-      // })
-      // .addCase(updateAccessTokenThunk.rejected, (state, { payload }) => {
-      //   state.isLoading = false;
-      //   state.error = payload ?? { message: ["An error occurred"] };
-      // })
 
       //reset
       .addCase(resetPasswordThunk.pending, (state) => {

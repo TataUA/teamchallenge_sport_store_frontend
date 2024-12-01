@@ -41,7 +41,7 @@ export const ConfirmingLetterContent = (
       <Image
         src={envelopBlue}
         alt="Синій конверт"
-        className="h-[152px] w-[152px] mt-[94px] 1440:mt-0 mb-8"
+        className="h-[152px] w-[152px] mt-[66px] 1440:mt-0 mb-8"
       />
       <h1 className="mb-4 font-bold text-2xl leading-140 text-title">
         Підтвердіть свою електронну пошту
