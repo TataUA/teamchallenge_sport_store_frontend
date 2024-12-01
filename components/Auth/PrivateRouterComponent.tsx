@@ -37,6 +37,13 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
   useEffect(() => {
     if (isLoading) return;
 
+    if (
+      !isAuthenticated &&
+      (pathname === "/auth/login" || pathname === "/auth/signup")
+    ) {
+      return;
+    }
+
     if (!isAuthenticated) {
       router.replace(isMobile ? "/auth/login" : "/");
       return;
