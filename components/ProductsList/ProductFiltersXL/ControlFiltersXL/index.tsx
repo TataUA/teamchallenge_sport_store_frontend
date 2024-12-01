@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { ClientComponent } from "@/components/ClientComponent";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
 // redux
 import { setDefaultsFilters } from "@/redux/generalFilters/generalFiltersSlice";
 import { selectGeneralFilters } from "@/redux/generalFilters/generalFiltersSelector";
@@ -42,17 +43,18 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const [chosenSorting, setChosenSorting] = useState("");
 
   const { searchParamsFilter, params, products, setOpenedChangesFilters } =
     props;
 
   const removeParamsGeneralFiltersFromUrl = () => {
     const params = new URLSearchParams(searchParams);
-
     params.delete("sizes");
     params.delete("price_to");
     params.delete("price_from");
     params.delete("color");
+    params.set("sortedBy", "popularity");
 
     return `${pathname}?${params.toString()}`;
   };
@@ -65,33 +67,53 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
   const applyGeneralFilters = () => {
     const params = new URLSearchParams(searchParams);
 
-    if (filters.sizes.length) params.set("sizes", filters.sizes.join(","));
-    if (filters.price.priceTo !== 10999)
+    if (filters.sizes.length) {
+      params.set("sizes", filters.sizes.join(","));
+    } else {
+      params.delete("sizes");
+    }
+    if (filters.price.priceTo !== 10999) {
       params.set("price_to", filters.price.priceTo.toString());
-    if (filters.price.priceFrom !== 499)
+    } else {
+      params.delete("price_to");
+    }
+    if (filters.price.priceFrom !== 499) {
       params.set("price_from", filters.price.priceFrom.toString());
-    if (filters.color) params.set("color", filters.color);
+    } else {
+      params.delete("price_from");
+    }
+    if (filters.color) {
+      params.set("color", filters.color);
+    } else {
+      params.delete("color");
+    }
 
     return `${pathname}?${params.toString()}`;
   };
 
-  const isButtonDisabled = () => {
-    if (
-      !filters.sizes.length &&
-      filters.price.priceTo === 10999 &&
-      filters.price.priceFrom === 499 &&
-      !filters.color
-    ) {
-      return true;
-    }
-    return false;
-  };
+  // const isButtonDisabled = () => {
+  //   if (
+  //     !filters.sizes.length &&
+  //     filters.price.priceTo === 10999 &&
+  //     filters.price.priceFrom === 499 &&
+  //     !filters.color
+  //   ) {
+  //     return true;
+  //   }
+  //   return false;
+  // };
 
   const handleApplyFilters = () => {
-    if (!isButtonDisabled()) {
-      router.push(applyGeneralFilters());
-      setOpenedChangesFilters(false);
-    }
+    // if (!isButtonDisabled()) {
+    router.push(applyGeneralFilters());
+    setOpenedChangesFilters(false);
+    //}
+  };
+
+  const createPageURLWithPageParams = (filterValue: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("sortedBy", filterValue.toString());
+    return `${pathname}?${params.toString()}`;
   };
 
   useEffect(() => {
@@ -101,27 +123,26 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
       price_from: filters.price.priceFrom,
       sub_category: props.params.sub_category[0],
     }).map(([key, value]) => ({ [key]: value }));
-
     const filteredProductsByGeneralFilters = getFilteredProductsClientSide({
       products: props.products,
       filters: arraOfFiltersFromFiltersObject,
     });
-
     setFilteredProductsByGeneralFilters([...filteredProductsByGeneralFilters]);
-  }, [filters, props]);
+    router.push(createPageURLWithPageParams(chosenSorting));
+  }, [chosenSorting]);
 
   return (
     <div className="font-pangram hidden xl:block mb-5 w-[100%] h-[148px] py-6 bg-[#f7f7f7] rounded-xl px-6">
       <div className="flex justify-between w-[100%]">
         <div className="flex items-center pb-4">
           <p className="font-semibold text-xl text-title pr-4">Фільтр</p>
-          <button
+          <div
             className="classItemFilterText text-sm hover:underline"
             onClick={() => handleRemoveFilters()}
           >
             {" "}
             Очиcтити фільтр{" "}
-          </button>
+          </div>
         </div>
       </div>
       <div className="flex justify-between ">
@@ -129,7 +150,11 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
           <div className="flex justify-start ">
             <ul className="flex  justify-start items-center space-x-3">
               <ClientComponent>
-                <SortingFilterXL searchParams={searchParamsFilter} />
+                <SortingFilterXL
+                  searchParams={searchParamsFilter}
+                  chosenSorting={chosenSorting}
+                  setChosenSorting={setChosenSorting}
+                />
 
                 <ControlFilterItem title="Розмір" width="w-auto" hight="h-auto">
                   {generalProductsFilers.map((generalFilter, index) => (

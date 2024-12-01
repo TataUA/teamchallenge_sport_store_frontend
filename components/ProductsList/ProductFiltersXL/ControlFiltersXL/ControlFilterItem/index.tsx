@@ -13,8 +13,11 @@ interface ControlFiltrItem {
 const ControlPrice = (props: ControlFiltrItem) => {
   const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
 
-  const classItemFilter =
-    "h-14 md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 ";
+  const classItemFilter = {
+    classFilter:
+      "h-14 md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 ",
+  };
+
   const classItemFilterText = "inline-block text-base leading-5 font-medium";
   const classItemFilterIcon = "ml-2 mr-3  p-1 cursor-pointer ";
 
@@ -27,7 +30,11 @@ const ControlPrice = (props: ControlFiltrItem) => {
 
   return (
     <div className=" relative">
-      <li className={classItemFilter}>
+      <li
+        className={cn(classItemFilter.classFilter, {
+          "border-blue": isSortingArrowUp,
+        })}
+      >
         <div className={classItemFilterText}>{props.title}</div>
         <div
           className={cn(classItemFilterIcon, {

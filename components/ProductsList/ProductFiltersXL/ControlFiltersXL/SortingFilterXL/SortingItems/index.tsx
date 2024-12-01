@@ -1,8 +1,7 @@
 "use client";
-import { useDispatch, useSelector } from "react-redux";
+
 import { useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import Link from "next/link";
 
 // helpers
 import getCheckedIconSVG from "@/helpers/getCheckedIconSVG";
@@ -11,12 +10,19 @@ import { cn } from "@/services/utils/cn";
 // data
 import { sortingProductsFilers } from "../../../../ProductsFilters/filtersData";
 
-const SortingItems = () => {
+interface ISortingItemsProps {
+  setChosenSorting: (id: string) => void;
+  chosenSorting: string;
+}
+
+const SortingItems = (props: ISortingItemsProps) => {
+  const { setChosenSorting, chosenSorting } = props;
   const [isSortingFilterOpen, setIsSortingFilterOpen] = useState(false);
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentFilterValue = searchParams.get("sortedBy") || "popularity";
+  //const currentFilterValue = searchParams.get("sortedBy") || "popularity";
+  const currentFilterValue = chosenSorting;
 
   const createPageURLWithPageParams = (filterValue: string) => {
     const params = new URLSearchParams(searchParams);
@@ -25,6 +31,7 @@ const SortingItems = () => {
   };
 
   const handleClick = (id: string) => {
+    setChosenSorting(id);
     setIsSortingFilterOpen(false);
   };
 
@@ -42,7 +49,7 @@ const SortingItems = () => {
                 },
               )}
             >
-              <Link
+              <div
                 className={cn(
                   "text-base text-[#272728] mb-4 mt-2 font-medium cursor-pointer hover:text-blue min-[2800px]:text-3xl",
                   {
@@ -51,10 +58,9 @@ const SortingItems = () => {
                   },
                 )}
                 onClick={() => handleClick(item.id)}
-                href={createPageURLWithPageParams(item.id)}
               >
                 {item.title}
-              </Link>
+              </div>
               {getCheckedIconSVG()}
             </div>
             {index < 2 ? (

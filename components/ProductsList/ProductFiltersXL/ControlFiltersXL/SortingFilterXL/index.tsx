@@ -13,10 +13,12 @@ import { IFilters } from "@/app/products/[...sub_category]/page";
 
 export interface ISortingFilterXLProps {
   searchParams: IFilters;
+  setChosenSorting: (id: string) => void;
+  chosenSorting: string
 }
 
 const SortingFilterXL = (props: ISortingFilterXLProps) => {
-  const { searchParams } = props;
+  const { searchParams, setChosenSorting, chosenSorting } = props;
 
   const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
   const classItemFilter =
@@ -55,7 +57,9 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
           </div>
         </div>
 
-        {isSortingArrowUp ? <SortingItems /> : null}
+        {isSortingArrowUp ? (
+          <SortingItems setChosenSorting={setChosenSorting} chosenSorting={chosenSorting} />
+        ) : null}
       </li>
     </>
   );
