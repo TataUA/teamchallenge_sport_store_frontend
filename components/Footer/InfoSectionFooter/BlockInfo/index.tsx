@@ -7,14 +7,14 @@ export const BlockInfo = () => {
   const subtitleClassname = cn(
     "text-lg font-black mb-4 font-semibold",
     "max-[767px]:mb-3 max-[767px]:text-base",
-    "xl:text-base  xl:tracking-wide xl:pt-1 xl:mb-1",
+    "xl:text-base  xl:tracking-wide xl:pt-1 xl:mb-1 xl:text-title",
     "min-[2800px]:text-4xl min-[2800px]:mb-[30px]",
   );
 
   const infoListItemClassname = cn(
     "text-base last:mb-0 font-medium tracking-wide",
     "max-[767px]:text-sm max-[767px]:mb-2",
-    "xl:text-sm  xl:font-medium xl:tracking-wide xl:leading-5 xl:w-[260px] xl:pt-2",
+    "xl:text-sm  xl:font-medium xl:tracking-wide xl:leading-5 xl:w-[260px] xl:pt-2 xl:text-common",
     "min-[2800px]:text-3xl min-[2800px]:mb-[10px]",
   );
 

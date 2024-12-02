@@ -27,7 +27,7 @@ const MenuGenger = ({
       <Button
         title={navItems[1].title.label.toUpperCase()}
         onClick={() => setIsChoseGender(navItems[1].title.key)}
-        paddingLeftFirst={"pl-5"}
+        paddingLeftFirst={"pl-3"}
         selected={gender === 1 ? true : false}
         textCollor="text-[#868687]"
       />

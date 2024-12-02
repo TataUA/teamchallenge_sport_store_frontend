@@ -21,6 +21,8 @@ export interface IFilters {
   sortedBy?: string;
   sizes?: string;
   price?: string;
+  price_from?: string;
+  price_to?: string;
   color?: string;
 }
 

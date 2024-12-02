@@ -13,6 +13,8 @@ export interface IFilters {
   sortedBy?: string;
   sizes?: string;
   price?: string;
+  price_to?: string;
+  price_from?: string;
   color?: string;
 }
 
@@ -23,7 +25,7 @@ export interface IProductsPageInitialProps {
 
 export default async function ProductsPage(props: IProductsPageInitialProps) {
   return (
-    <section className="px-6 pt-4 pb-12">
+    <section className="px-6 pt-4 pb-12 xl:container xl:mx-auto xl:px-[82px]">
       <ProductsList {...props} />
     </section>
   );

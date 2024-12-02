@@ -15,7 +15,7 @@ interface ButtonMenuProps {
 export const Button = (props: ButtonMenuProps) => {
   const buttonStyles = {
     menuButton:
-      "relative w-full h-[48px] self-center  pr-5  text-[14px] text-title leading-6 bg-white tracking-custom_2 font-semibold font-pangram hover:text-title transition-all duration-300n",
+      "relative w-full h-[48px] self-center  pr-3  text-[14px] text-title leading-6 bg-white tracking-custom_2 font-semibold font-pangram hover:text-title transition-all duration-300n",
   };
 
   let buttonsMenu = cn(
