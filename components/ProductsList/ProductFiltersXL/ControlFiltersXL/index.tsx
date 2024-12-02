@@ -87,7 +87,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
     } else {
       params.delete("color");
     }
-
+    params.set("sortedBy", chosenSorting);
     return `${pathname}?${params.toString()}`;
   };
 
@@ -115,7 +115,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
     });
     setFilteredProductsByGeneralFilters([...filteredProductsByGeneralFilters]);
     router.push(createPageURLWithPageParams(chosenSorting));
-  }, [chosenSorting]);
+  }, []);
 
   return (
     <div className="font-pangram hidden xl:block mb-5 w-[100%] h-[148px] py-6 bg-[#f7f7f7] rounded-xl px-6">
