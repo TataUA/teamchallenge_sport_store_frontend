@@ -22,7 +22,6 @@ const ShowSetsFiltersXL = ({
   searchParams,
   setOpenedChangesFilters,
 }: ICurrentProps) => {
-  const [isShowSortiing, setIsShowSorting] = useState(true);
   const [isShowPrice, setIsShowPrice] = useState(true);
   const [isShowSize, setIsShowSize] = useState(true);
   const [isShowColor, setIsShowColor] = useState(true);
@@ -50,10 +49,7 @@ const ShowSetsFiltersXL = ({
     colorLable = cn(styleLable.lable, "bg-blue");
   } else {
     colorString = "Кольоровий";
-    colorLable = cn(
-      styleLable.lable,
-      "bg-gradient-to-r from-[#00ffff] to-[#0080ff] to-[#ff0080]",
-    );
+    colorLable = cn(styleLable.lable, "bg-colorful-circle");
   }
 
   let sortedString = "Рекомендовані";
@@ -73,18 +69,12 @@ const ShowSetsFiltersXL = ({
           <p className="font-semibold text-xl text-title pr-8">Фільтр</p>
           <div className="flex justify-start">
             <ul className="flex justify-start space-x-2">
-              {isShowSortiing ? (
-                <li className={classItemFilter}>
-                  <div className="pr-3">{getSortingIconSVG18()}</div>
-                  <div className={classItemFilterText}>{sortedString}</div>
-                  <div
-                    className={classItemFilterIconClose}
-                    onClick={() => setIsShowSorting(false)}
-                  >
-                    {getCloseIconSVG18()}
-                  </div>
-                </li>
-              ) : null}
+              <li className={classItemFilter}>
+                <div className="pr-3">{getSortingIconSVG18()}</div>
+                <div className={classItemFilterText}>{sortedString}</div>
+                <div className={classItemFilterIconClose}></div>
+              </li>
+
               {isShowPrice &&
               (searchParams.price_from || searchParams.price_to) ? (
                 <li className={classItemFilter}>
