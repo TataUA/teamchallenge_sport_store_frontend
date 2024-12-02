@@ -20,10 +20,10 @@ export default function AboutUs() {
                 className=" w-[76px] h-[76px] mb-4 ml-auto mr-auto xl:w-16 xl:h-16 xl:mr-2  xl:ml-0 "
               />
               <div>
-                <h3 className="text-base mb-1 font-bold md:mb-[10px]">
+                <h3 className="text-base mb-1 font-bold md:mb-[10px] xl:text-title">
                   {title}
                 </h3>
-                <p className="xl:leading-5 xl:text-base xl:w-[352px]">
+                <p className="xl:leading-6 xl:text-base xl:w-[352px] xl:text-title">
                   {subtitle}
                 </p>
               </div>

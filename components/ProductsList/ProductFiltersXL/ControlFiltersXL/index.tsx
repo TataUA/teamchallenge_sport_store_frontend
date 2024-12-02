@@ -91,23 +91,9 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
     return `${pathname}?${params.toString()}`;
   };
 
-  // const isButtonDisabled = () => {
-  //   if (
-  //     !filters.sizes.length &&
-  //     filters.price.priceTo === 10999 &&
-  //     filters.price.priceFrom === 499 &&
-  //     !filters.color
-  //   ) {
-  //     return true;
-  //   }
-  //   return false;
-  // };
-
   const handleApplyFilters = () => {
-    // if (!isButtonDisabled()) {
     router.push(applyGeneralFilters());
     setOpenedChangesFilters(false);
-    //}
   };
 
   const createPageURLWithPageParams = (filterValue: string) => {
