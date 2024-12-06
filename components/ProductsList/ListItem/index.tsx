@@ -85,9 +85,9 @@ const ListItem = (props: ListItemProps) => {
             <li
               key={item.id}
               className={cn(
-                `bg-${item.title.toLowerCase()} relative min-w-3 min-h-3 rounded-[50%] min-[2800px]:size-8 xl:min-w-2 xl:min-h-2`,
+                `bg-${item.title.toLowerCase()} relative min-w-2 min-h-2 rounded-[50%] min-[2800px]:size-8 `,
                 {
-                  border: true,
+                  border: item.title.toLowerCase() == "white",
                 },
               )}
             />
