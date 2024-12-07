@@ -79,9 +79,15 @@ const ShowSetsFiltersXL = ({
               (searchParams.price_from || searchParams.price_to) ? (
                 <li className={classItemFilter}>
                   <div className={classItemFilterText}>
-                    {searchParams.price_to
+                    {searchParams.price_to && searchParams.price_from
                       ? `${lowerPrice}  грн  - ${upperPrice} грн`
-                      : "Весь діапазон цін"}
+                      : null}
+                    {!searchParams.price_to && searchParams.price_from
+                      ? `${lowerPrice}  грн  - 10999 грн`
+                      : null}
+                    {searchParams.price_to && !searchParams.price_from
+                      ? `499 грн  - ${upperPrice} грн`
+                      : null}
                   </div>
                   <div
                     className={classItemFilterIconClose}

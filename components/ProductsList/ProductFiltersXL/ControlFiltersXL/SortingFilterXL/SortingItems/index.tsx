@@ -19,16 +19,16 @@ const SortingItems = (props: ISortingItemsProps) => {
   const { setChosenSorting, chosenSorting } = props;
   const [isSortingFilterOpen, setIsSortingFilterOpen] = useState(false);
 
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
+  // const pathname = usePathname();
+  // const searchParams = useSearchParams();
   //const currentFilterValue = searchParams.get("sortedBy") || "popularity";
   const currentFilterValue = chosenSorting;
 
-  const createPageURLWithPageParams = (filterValue: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("sortedBy", filterValue.toString());
-    return `${pathname}?${params.toString()}`;
-  };
+  // const createPageURLWithPageParams = (filterValue: string) => {
+  //   const params = new URLSearchParams(searchParams);
+  //   params.set("sortedBy", filterValue.toString());
+  //   return `${pathname}?${params.toString()}`;
+  // };
 
   const handleClick = (id: string) => {
     setChosenSorting(id);
@@ -37,9 +37,9 @@ const SortingItems = (props: ISortingItemsProps) => {
 
   return (
     <div className="relative">
-      <div className="absolute z-10 bg-white border border-border rounded-xl w-[254px] top-9  left-[-254px] pt-4">
+      <div className="absolute z-10 bg-white border border-border rounded-xl w-[254px] top-9  left-[-258px] pt-4">
         {sortingProductsFilers.map((item, index) => (
-          <div key={item.id} className="mt-2 mb-2 min-[2800px]:mb-8">
+          <div key={item.id} className=" mb-2 min-[2800px]:mb-8">
             <div
               className={cn(
                 "flex justify-between items-center px-4 [&>svg]:fill-blue [&>svg]:hidden [&>svg]:mb-2",

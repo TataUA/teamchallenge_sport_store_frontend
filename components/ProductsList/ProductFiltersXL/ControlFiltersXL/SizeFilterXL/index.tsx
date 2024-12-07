@@ -52,7 +52,7 @@ const SizeFilter = (props: IProps) => {
 
   return (
     <>
-      <div className="flex gap-2 flex-wrap min-[2800px]:gap-5 xl:flex-col xl:flex-nowrap">
+      <div className="flex gap-2  pt-1 mb-[-8px] flex-wrap min-[2800px]:gap-5 xl:flex-col xl:flex-nowrap ">
         {props.clothesSizes?.map((size, sizeIndex) => (
           <li
             onClick={() => handleClick(size)}
@@ -75,7 +75,9 @@ const SizeFilter = (props: IProps) => {
                 <div className=" items-end w-[18px] h-[18px] mr-2 bg-white  border-border border-2 rounded-md"></div>
               )}
             </div>
-            <div className=" mt-3 h-[1px] bg-border"></div>
+            {sizeIndex + 1 == props.clothesSizes?.length ? null : (
+              <div className=" mt-3 h-[1px] bg-border "></div>
+            )}
           </li>
         ))}
 
@@ -101,7 +103,10 @@ const SizeFilter = (props: IProps) => {
                 <div className=" items-end w-[18px] h-[18px] mr-2 bg-white  border-border border-2 rounded-md"></div>
               )}
             </div>
-            <div className=" mt-3 h-[1px] bg-border"></div>
+
+            {sizeIndex + 1 == props.shoesSizes?.length ? null : (
+              <div className=" mt-3 h-[1px] bg-border "></div>
+            )}
           </li>
         ))}
       </div>

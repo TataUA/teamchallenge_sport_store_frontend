@@ -123,7 +123,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
         <div className="flex items-center pb-4">
           <p className="font-semibold text-xl text-title pr-4">Фільтр</p>
           <div
-            className="classItemFilterText text-sm hover:underline"
+            className="classItemFilterText text-sm hover:underline hover:cursor-pointer"
             onClick={() => handleRemoveFilters()}
           >
             {" "}
