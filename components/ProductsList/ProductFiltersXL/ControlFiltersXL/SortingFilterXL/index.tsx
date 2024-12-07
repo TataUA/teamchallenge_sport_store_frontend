@@ -22,7 +22,7 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
 
   const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
   const classItemFilter =
-    "h-14 md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 pr-3";
+    "h-14  md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 pr-3";
   const classItemFilterText =
     "inline-block text-base leading-5 font-medium w-[160px]";
 
