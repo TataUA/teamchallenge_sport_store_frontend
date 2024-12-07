@@ -23,7 +23,7 @@ const ControlPrice = (props: ControlFiltrItem) => {
 
   const classBlockChosen = {
     type1:
-      "absolute z-10 bg-white border border-border rounded-xl  top-[64px] left-0",
+      "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 top-[64px] left-0",
   };
 
   const classWithProps = cn(classBlockChosen.type1, props.width, props.hight);
@@ -46,12 +46,7 @@ const ControlPrice = (props: ControlFiltrItem) => {
         </div>
       </li>
       {isSortingArrowUp ? (
-        <div className={classWithProps}>
-          <h3 className="text-base font-semibold text-[#272728] py-2 px-2 mb-2 min-[2800px]:text-4xl min-[2800px]:mb-10">
-            {/* Ціна */}
-          </h3>
-          {props.children}
-        </div>
+        <div className={classWithProps}>{props.children}</div>
       ) : null}
     </div>
   );

@@ -39,7 +39,7 @@ const SortingItems = (props: ISortingItemsProps) => {
     <div className="relative">
       <div className="absolute z-10 bg-white border border-border rounded-xl w-[254px] top-9  left-[-254px] pt-4">
         {sortingProductsFilers.map((item, index) => (
-          <div key={item.id} className="mt-2 mb-2 min-[2800px]:mb-8">
+          <div key={item.id} className=" mb-2 min-[2800px]:mb-8">
             <div
               className={cn(
                 "flex justify-between items-center px-4 [&>svg]:fill-blue [&>svg]:hidden [&>svg]:mb-2",

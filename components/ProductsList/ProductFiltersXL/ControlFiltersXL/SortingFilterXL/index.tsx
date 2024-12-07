@@ -5,7 +5,7 @@ import { cn } from "@/services/utils/cn";
 import SortingItems from "./SortingItems";
 
 // helpers
-import getSortingIconSVG18 from "@/helpers/getSortingIconSVG18";
+import getSortingIconSVG24 from "@/helpers/getSortingIcon24";
 import getArrowDownSVG from "@/helpers/getArrowDownSVG";
 
 // typess
@@ -14,7 +14,7 @@ import { IFilters } from "@/app/products/[...sub_category]/page";
 export interface ISortingFilterXLProps {
   searchParams: IFilters;
   setChosenSorting: (id: string) => void;
-  chosenSorting: string
+  chosenSorting: string;
 }
 
 const SortingFilterXL = (props: ISortingFilterXLProps) => {
@@ -44,7 +44,7 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
       >
         <div className="flex justify-between pr-3">
           <div className="flex justify-center items-center ">
-            <div className="pr-3">{getSortingIconSVG18()}</div>
+            <div className="pr-3">{getSortingIconSVG24()}</div>
             <div className={classItemFilterText}>{sortedString}</div>
           </div>
           <div
@@ -58,7 +58,10 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
         </div>
 
         {isSortingArrowUp ? (
-          <SortingItems setChosenSorting={setChosenSorting} chosenSorting={chosenSorting} />
+          <SortingItems
+            setChosenSorting={setChosenSorting}
+            chosenSorting={chosenSorting}
+          />
         ) : null}
       </li>
     </>

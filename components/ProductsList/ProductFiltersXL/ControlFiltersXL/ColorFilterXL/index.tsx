@@ -51,7 +51,7 @@ const ColorsFilterXL = (props: IProps) => {
                     `bg-${colorItem.value.toLocaleLowerCase()}`,
                     "min-[2800px]:size-16",
                     {
-                      "border-[1px]":
+                      "border-[1px] xl:border-timer":
                         colorItem.value.toLocaleLowerCase() === "white",
                       "bg-colorful-circle bg-center bg-cover":
                         colorItem.value.toLocaleLowerCase() === "colorful",

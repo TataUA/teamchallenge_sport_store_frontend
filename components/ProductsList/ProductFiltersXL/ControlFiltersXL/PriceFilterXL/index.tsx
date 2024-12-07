@@ -64,7 +64,7 @@ const PriceFilterXL = () => {
   }, [price]);
 
   return (
-    <div className="w-full xl:px-4 xl:py-2">
+    <div className="w-full xl:px-4 xl:pt-4 ">
       <div className="relative h-4 mb-4 min-[2800px]:h-12">
         <input
           type="range"
