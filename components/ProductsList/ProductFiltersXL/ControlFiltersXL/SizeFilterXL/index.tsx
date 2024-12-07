@@ -14,8 +14,8 @@ import { selectGeneralFilters } from "@/redux/generalFilters/generalFiltersSelec
 // types
 import { IProduct } from "@/services/types";
 
-//icon
-import checkedIcon from "@/public/icons/products/filters/Checkbox.png";
+//helpers
+import getSelectedFilterIconSVG20 from "@/helpers/getSelectedFilterIconSVG20";
 
 interface IProps {
   clothesSizes?: string[];
@@ -68,11 +68,11 @@ const SizeFilter = (props: IProps) => {
             <div className="flex justify-between">
               <div className="">{size}</div>
               {sizes.includes(size) ? (
-                <div className="flex justify-center items-center mt-[-8px] mr-1">
-                  <Image alt="checked" src={checkedIcon} className="w-7" />
+                <div className="flex justify-center items-center mt-[-8px] mr-2">
+                  {getSelectedFilterIconSVG20()}
                 </div>
               ) : (
-                <div className=" items-end w-[18px] h-[18px] mr-2 bg-white  border-border border-2 rounded-md"></div>
+                <div className=" items-end w-[20px] h-[20px] mr-2 bg-white  border-border border-2 rounded-md"></div>
               )}
             </div>
             {sizeIndex + 1 == props.clothesSizes?.length ? null : (
@@ -96,11 +96,11 @@ const SizeFilter = (props: IProps) => {
             <div className="flex justify-between">
               <div className="">{size}</div>
               {sizes.includes(size) ? (
-                <div className="flex justify-center items-center mt-[-8px] mr-1">
-                  <Image alt="checked" src={checkedIcon} className="w-7" />
+                <div className="flex justify-center items-center mt-[-8px] mr-2">
+                  {getSelectedFilterIconSVG20()}
                 </div>
               ) : (
-                <div className=" items-end w-[18px] h-[18px] mr-2 bg-white  border-border border-2 rounded-md"></div>
+                <div className=" items-end w-[20px] h-[20px] mr-2 bg-white  border-border border-2 rounded-md"></div>
               )}
             </div>
 
