@@ -46,7 +46,12 @@ const ControlPrice = (props: ControlFiltrItem) => {
         </div>
       </li>
       {isSortingArrowUp ? (
-        <div className={classWithProps}>{props.children}</div>
+        <div
+          className={classWithProps}
+          style={{ boxShadow: "0px 10px 10px rgba(14, 14, 16, 0.2)" }}
+        >
+          {props.children}
+        </div>
       ) : null}
     </div>
   );
