@@ -10,6 +10,8 @@ import { cn } from "@/services/utils/cn";
 import { selectGeneralFilters } from "@/redux/generalFilters/generalFiltersSelector";
 import { setColor } from "@/redux/generalFilters/generalFiltersSlice";
 
+//helpers
+import getChosenColorIconSVG from "@/helpers/getChosenColorIconSVG";
 //icon
 import checkedIcon from "@/public/icons/products/filters/Checkbox.png";
 
@@ -70,11 +72,12 @@ const ColorsFilterXL = (props: IProps) => {
             </div>
 
             {colorStored === colorItem.value ? (
-              <div className="items-end  mt-[2px] mr-[2px]  ">
-                <Image alt="checked" src={checkedIcon} className="w-7" />
+              <div className="items-end  mt-[2px] mr-[8px]  ">
+                {/* <Image alt="checked" src={checkedIcon} className="w-7" /> */}
+                {getChosenColorIconSVG()}
               </div>
             ) : (
-              <div className=" items-end w-[18px] h-[18px] mr-2 bg-white  border-border border-2 rounded-md"></div>
+              <div className=" items-end w-[20px] h-[20px] mr-2 bg-white  border-border border-2 rounded-md"></div>
             )}
           </div>
           {index < 3 ? <div className=" mt-1 h-[1px] bg-border  "></div> : null}

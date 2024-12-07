@@ -37,7 +37,10 @@ const SortingItems = (props: ISortingItemsProps) => {
 
   return (
     <div className="relative">
-      <div className="absolute z-10 bg-white border border-border rounded-xl w-[254px] top-9  left-[-254px] pt-4">
+      <div
+        className="absolute z-10 bg-white border border-border rounded-xl w-[254px] top-9  left-[-254px] pt-4 "
+        style={{ boxShadow: "0px 10px 10px rgba(14, 14, 16, 0.2)" }}
+      >
         {sortingProductsFilers.map((item, index) => (
           <div key={item.id} className="mt-2 mb-2 min-[2800px]:mb-8">
             <div
