@@ -103,7 +103,7 @@ const PriceFilterXL = () => {
           value={minPrice}
           name="min"
           onChange={handleChange}
-          className="focus:outline-none  mt-4 "
+          className="focus:outline-none text-[#272728] mt-4 "
         />
         <input
           min="499"
@@ -111,7 +111,7 @@ const PriceFilterXL = () => {
           value={maxPrice}
           name="max"
           onChange={handleChange}
-          className="focus:outline-none  mt-4"
+          className="focus:outline-none text-[#272728] mt-4"
         />
       </div>
     </div>
