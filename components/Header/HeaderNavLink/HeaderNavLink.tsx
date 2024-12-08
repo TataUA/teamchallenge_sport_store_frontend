@@ -32,6 +32,9 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import useCartManagement from "@/hooks/useCartManagement";
 import { AppDispatch } from "@/redux/store";
 
+// helpers
+import getUserlogged from "@/helpers/getUserlogged";
+
 const HeaderNavLink = () => {
   const cart = useSelector(selectCart);
   const user = useSelector(selectUserData);
@@ -85,15 +88,21 @@ const HeaderNavLink = () => {
             {name === "search" ? (
               <SearchComponent />
             ) : name === "user" ? (
-              <span onClick={handleUserClick} className="cursor-pointer">
+              <span onClick={handleUserClick} className="cursor-pointer ">
                 {iconsData.map((icon) => {
                   return (
                     icon.name === name && (
-                      <SvgComponent
-                        key={icon.name}
-                        viewBox={icon.viewBox}
-                        path={icon.path}
-                      />
+                      <>
+                        {user ? (
+                          <span>{getUserlogged()}</span>
+                        ) : (
+                          <SvgComponent
+                            key={icon.name}
+                            viewBox={icon.viewBox}
+                            path={icon.path}
+                          />
+                        )}
+                      </>
                     )
                   );
                 })}
@@ -105,7 +114,7 @@ const HeaderNavLink = () => {
                     icon.name === name && (
                       <span
                         key={icon.name}
-                        className="[&>svg]:hover:opacity-[50%] cursor-pointer"
+                        className="hover:opacity-[50%] xl:hover:opacity-100  cursor-pointer "
                       >
                         {name === "cart" && cart.products?.length ? (
                           <div
