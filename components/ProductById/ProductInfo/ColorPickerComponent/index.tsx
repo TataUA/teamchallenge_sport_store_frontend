@@ -1,18 +1,13 @@
 "use client";
 
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-// redux
 import { selectCurrentProduct } from "@/redux/currentProduct/currentProductSelector";
 import { setCurrentProductColor } from "@/redux/currentProduct/currentProductSlice";
-
-// types
-import { IColor, IColors } from "@/services/types";
-
-// utils
-import { cn } from "@/services/utils/cn";
 import getArrayRemovedColorsDuplicates from "@/helpers/getArrayRemovedDuplicates";
+import { IColor, IColors } from "@/services/types";
+import { cn } from "@/services/utils/cn";
 
 const ColorPickerComponent = ({ colors }: { colors: IColors[] }) => {
   const dispatch = useDispatch();
@@ -53,16 +48,20 @@ const ColorPickerComponent = ({ colors }: { colors: IColors[] }) => {
             className={cn(
               `min-w-[50px] min-h-[50px] rounded-[50%] relative z-20 cursor-pointer`,
               "flex items-center justify-center",
-              `${currentColorLoweCase === color.title.toLowerCase() ? `border-${currentColorLoweCase} border-[3px] border-opacity-900` : ""}`,
-              `${"white" === color.title.toLowerCase() ? `border-gray border-[3px] border-opacity-100` : ""}`,
-              {},
+              `${currentColorLoweCase === color.title.toLowerCase() ? `border-${currentColorLoweCase} border-[2px]` : ""}`,
+              `${"white" === color.title.toLowerCase() ? "border-timer border-[2px]" : ""}`,
+              {
+                border:
+                  currentColorLoweCase === color.title.toLowerCase() &&
+                  "white" === color.title.toLowerCase(),
+              },
             )}
           >
             <div
               className={cn(
                 `bg-${color.title.toLowerCase()} min-w-10 min-h-10 rounded-[50%] overflow-hidden`,
                 {
-                  "border-gray border-[3px] border-opacity-100":
+                  "border-timer border-[2px]":
                     currentColorLoweCase === color.title.toLowerCase() &&
                     "white" === color.title.toLowerCase(),
                 },

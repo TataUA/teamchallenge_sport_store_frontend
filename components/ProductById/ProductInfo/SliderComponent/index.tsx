@@ -2,14 +2,9 @@
 
 import { useSelector } from "react-redux";
 
-// components
-import { Slider } from "@/components/Slider-hero/Slider";
-
-// helpers
-import { getArrayWithExtractedImgUrlWithCurrentColor } from "@/helpers/getArrayWithExtractedImgUrl";
-
-// redux
 import { selectCurrentProduct } from "@/redux/currentProduct/currentProductSelector";
+import { getArrayWithExtractedImgUrlWithCurrentColor } from "@/helpers/getArrayWithExtractedImgUrl";
+import { Slider } from "@/components/Slider/Slider";
 
 const SliderComponent = () => {
   const { product, color } = useSelector(selectCurrentProduct);
@@ -22,8 +17,14 @@ const SliderComponent = () => {
   };
 
   return (
-    <div className="rounded-[12px] overflow-hidden mb-4 1440:max-w-[528px]">
-      <Slider productsList autoPlay={false} cardImage data={getImagesData()} />
+    <div className="rounded-[12px] overflow-hidden mb-4">
+      <Slider
+        productsList
+        loop={false}
+        autoPlay={false}
+        cardImage
+        data={getImagesData()}
+      />
     </div>
   );
 };

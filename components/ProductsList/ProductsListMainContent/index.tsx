@@ -1,14 +1,11 @@
 import { Suspense } from "react";
 
-// components
-import List from "../List";
-import ProductsFilters from "../ProductsFilters";
-import ProductsFiltersXL from "../ProductFiltersXL";
+import List from "@/components/ProductsList/List";
+import ProductsFilters from "@/components/ProductsList/ProductsFilters";
+import ProductsFiltersXL from "@/components/ProductsList/ProductFiltersXL";
 
-// helpers
 import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine";
 
-// types
 import { IProduct } from "@/services/types";
 import { IProductsPageInitialProps } from "@/app/products/[...sub_category]/page";
 

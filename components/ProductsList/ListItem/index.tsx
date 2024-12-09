@@ -1,13 +1,11 @@
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-// utils
+
 import { cn } from "@/services/utils/cn";
-import getArrayWithExtractedImgUrl from "@/helpers/getArrayWithExtractedImgUrl";
 import getArrayRemovedColorsDuplicates from "@/helpers/getArrayRemovedDuplicates";
 
-// types
-import { IColors, IProduct } from "@/services/types";
+import { IProduct } from "@/services/types";
 
 interface ListItemProps {
   product: IProduct;
