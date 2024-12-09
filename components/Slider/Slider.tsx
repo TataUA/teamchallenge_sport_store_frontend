@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -33,6 +33,7 @@ interface Slide {
 interface SliderProps {
   data?: Slide[];
   products?: IProduct[];
+  colorCurrent: string;
   autoPlay?: boolean;
   loop?: boolean;
   homePageMainSlider?: boolean;
@@ -46,9 +47,10 @@ interface SliderProps {
   className?: string;
 }
 
-export function Slider({
+export const Slider = ({
   data = [],
   products = [],
+  colorCurrent,
   autoPlay = true,
   loop = true,
   cardImage,
@@ -58,11 +60,18 @@ export function Slider({
   slidesPerView = 1,
   slidesPerViewDesktop,
   className = "",
-}: SliderProps) {
+}: SliderProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
+
   const swiperRef = useRef<SwiperType | null>(null);
   const pathname = usePathname();
   const isProductPage = pathname?.startsWith("/product/");
+
+  useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(0);
+    }
+  }, [colorCurrent]);
 
   const handleThumbnailClick = (index: number) => {
     if (!swiperRef.current) return;
@@ -237,4 +246,4 @@ export function Slider({
       </ul>
     </div>
   );
-}
+};
