@@ -36,7 +36,7 @@ const SearchComponent = () => {
               .map((icon) => (
                 <span
                   key={icon.name}
-                  className="relative hover:opacity-[50%] xl:hover:opacity-100 cursor-pointer"
+                  className="relative hover:opacity-100 cursor-pointer"
                 >
                   <SvgComponent
                     key={icon.name}

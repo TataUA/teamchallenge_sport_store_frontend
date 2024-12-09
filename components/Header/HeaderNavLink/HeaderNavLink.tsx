@@ -45,6 +45,7 @@ const HeaderNavLink = () => {
   const router = useRouter();
   const isMobile = useIsMobile();
 
+  const [isUser, setIsUser] = useState(user);
   const [showModal, setShowModal] = useState(false);
   const [showRegistration, setShowRegistration] = useState(false);
   const [showConfirmRegister, setShowConfirmRegister] = useState(false);
@@ -114,7 +115,7 @@ const HeaderNavLink = () => {
                     icon.name === name && (
                       <span
                         key={icon.name}
-                        className="hover:opacity-[50%] xl:hover:opacity-100  cursor-pointer "
+                        className="hover:opacity-100  cursor-pointer "
                       >
                         {name === "cart" && cart.products?.length ? (
                           <div
