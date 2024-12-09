@@ -54,6 +54,7 @@ const HeaderNavLink = () => {
     if (!user && accessToken) {
       dispatch(currentUserThunk()).unwrap();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleUserClick = () => {

@@ -70,6 +70,7 @@ export const LoginForm = (props: LoginFormProps) => {
     if (error) {
       dispatch(clearError());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
