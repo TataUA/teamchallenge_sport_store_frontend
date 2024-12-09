@@ -5,7 +5,7 @@ import getArrowDownSVG from "@/helpers/getArrowDownSVG";
 
 interface ControlFiltrItem {
   children: React.ReactNode;
-  title?: string;
+  title?: string | React.ReactNode;
   width: string;
   hight: string;
 }
