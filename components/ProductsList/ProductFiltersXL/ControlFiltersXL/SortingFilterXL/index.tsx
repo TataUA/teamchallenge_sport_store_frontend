@@ -21,19 +21,14 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
   const { searchParams, setChosenSorting, chosenSorting } = props;
 
   const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
+  const [isSortingSrting, setIsSortingString] = useState("Рекомендовані");
+
   const classItemFilter =
     "h-14  md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 pr-3";
   const classItemFilterText =
     "inline-block text-base leading-5 font-medium w-[160px]";
 
   const classItemFilterIcon = " p-1 cursor-pointer  ";
-
-  let sortedString = "Рекомендовані";
-  if (searchParams.sortedBy === "ascent") {
-    sortedString = "Від найдешевшої";
-  } else if (searchParams.sortedBy === "descent") {
-    sortedString = "Від найдорожчої";
-  }
 
   return (
     <>
@@ -45,7 +40,7 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
         <div className="flex justify-between pr-3">
           <div className="flex justify-center items-center ">
             <div className="pr-3">{getSortingIconSVG24()}</div>
-            <div className={classItemFilterText}>{sortedString}</div>
+            <div className={classItemFilterText}>{isSortingSrting}</div>
           </div>
           <div
             className={cn(classItemFilterIcon, {
@@ -61,6 +56,8 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
           <SortingItems
             setChosenSorting={setChosenSorting}
             chosenSorting={chosenSorting}
+            setIsSortingString={setIsSortingString}
+            setIsSortingArrowUp={setIsSortingArrowUp}
           />
         ) : null}
       </li>

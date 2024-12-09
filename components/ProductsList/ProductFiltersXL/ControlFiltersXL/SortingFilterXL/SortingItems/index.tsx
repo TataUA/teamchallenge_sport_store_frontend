@@ -1,11 +1,7 @@
 "use client";
-
-import { useState } from "react";
-import { usePathname, useSearchParams } from "next/navigation";
-
+import { cn } from "@/services/utils/cn";
 // helpers
 import getCheckedIconSVG from "@/helpers/getCheckedIconSVG";
-import { cn } from "@/services/utils/cn";
 
 // data
 import { sortingProductsFilers } from "../../../../ProductsFilters/filtersData";
@@ -13,26 +9,33 @@ import { sortingProductsFilers } from "../../../../ProductsFilters/filtersData";
 interface ISortingItemsProps {
   setChosenSorting: (id: string) => void;
   chosenSorting: string;
+  setIsSortingString: (id: string) => void;
+  setIsSortingArrowUp: (id: boolean) => void;
 }
 
 const SortingItems = (props: ISortingItemsProps) => {
-  const { setChosenSorting, chosenSorting } = props;
-  const [isSortingFilterOpen, setIsSortingFilterOpen] = useState(false);
+  const {
+    setChosenSorting,
+    chosenSorting,
+    setIsSortingString,
+    setIsSortingArrowUp,
+  } = props;
 
-  // const pathname = usePathname();
-  // const searchParams = useSearchParams();
-  //const currentFilterValue = searchParams.get("sortedBy") || "popularity";
   const currentFilterValue = chosenSorting;
-
-  // const createPageURLWithPageParams = (filterValue: string) => {
-  //   const params = new URLSearchParams(searchParams);
-  //   params.set("sortedBy", filterValue.toString());
-  //   return `${pathname}?${params.toString()}`;
-  // };
 
   const handleClick = (id: string) => {
     setChosenSorting(id);
-    setIsSortingFilterOpen(false);
+
+    let sortedString: string;
+    if (id === "ascent") {
+      sortedString = "Від найдешевшої";
+    } else if (id === "descent") {
+      sortedString = "Від найдорожчої";
+    } else {
+      sortedString = "Рекомендовані";
+    }
+    setIsSortingString(sortedString);
+    setIsSortingArrowUp(false);
   };
 
   return (
