@@ -33,7 +33,7 @@ interface Slide {
 interface SliderProps {
   data?: Slide[];
   products?: IProduct[];
-  colorCurrent: string;
+  colorCurrent?: string;
   autoPlay?: boolean;
   loop?: boolean;
   homePageMainSlider?: boolean;
