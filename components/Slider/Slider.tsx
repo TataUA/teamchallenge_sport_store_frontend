@@ -13,10 +13,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperType } from "swiper";
 import { v4 as uuidv4 } from "uuid";
 
-import { IProduct } from "@/services/types";
 import { cn } from "@/services/utils/cn";
+import { IProduct } from "@/services/types";
 import ListItem from "@/components/ProductsList/ListItem";
-import { SliderButtons } from "./SliderArrowButtons";
+import { SliderButtons } from "@/components/Slider/SliderArrowButtons";
 
 interface Slide {
   id?: number;
@@ -185,9 +185,9 @@ export function Slider({
                       {isProductPage && <SliderButtons />}
                     </div>
                   ) : popularCat ? (
-                    <li className="mr-2 xl:mr-6">
+                    <li className="relative mr-2 xl:mr-6">
                       <Link href={href ?? "/"}>
-                        <div className="w-[108px] h-[108px] overflow-hidden rounded-xl mb-2 flex justify-center xl:w-[312px] xl:h-[180px] xl:relative xl:rounded-2xl">
+                        <div className="relative w-[108px] h-[108px] overflow-hidden rounded-xl mb-2 flex  justify-center xl:w-[312px] xl:h-[180px]  xl:rounded-2xl">
                           <Image
                             width={108}
                             height={108}
@@ -196,12 +196,12 @@ export function Slider({
                             className="object-center object-cover xl:w-full xl:h-full "
                           />
                         </div>
-                        <div>
-                          <h3 className="text-sm font-medium w-24 xl:absolute md:bottom-6 md:left-6 md:w-full md:text-white md:text-xl tracking-[0.015] xl:tracking-wide xl:mb-2">
-                            {title}
-                          </h3>
-                        </div>
+                        /{" "}
                       </Link>
+                      <div className="absolute top-0 left-0 w-[108px] h-    [108px] overflow-hidden rounded-xl xl:w-[312px] xl:h-[180px] z-30 xl:bg-gradient-to-t from-black/20 to-black/0 xl:rounded-2xl"></div>
+                      <h3 className="z-40 text-sm font-medium w-24 xl:absolute md:bottom-6 md:left-6 md:w-full xl:text-white xl:text-xl tracking-[0.015] xl:tracking-wide xl:mb-2">
+                        {title}
+                      </h3>{" "}
                     </li>
                   ) : (
                     <div className="xl:h-[624px]">
