@@ -1,29 +1,39 @@
 import Image from "next/image";
 import { aboutUs } from "./about-us.data";
 
+import getAboutUs1 from "@/helpers/getAboutUs1";
+import getAboutUs156 from "@/helpers/getAboutUs156";
+import getAboutUs256 from "@/helpers/getAboutUs256";
+import getAboutUs264 from "@/helpers/getAboutUs264";
+import getAboutUs356 from "@/helpers/getAboutUs356";
+import getAboutUs364 from "@/helpers/getAboutUs364";
+
 export default function AboutUs() {
   return (
     <section className="font-pangram px-6 pt-[72px] pb-8 md:flex md:flex-col-reverse xl:container xl:mx-auto xl:px-[60px] xl:pt-[44px] xl:pb-[88px]">
       <div>
         <ul className="mb-[72px] md:flex md:flex-row justify-between   md:mt-[88px] md:mb-0 xl:gap-6">
-          {aboutUs.map(({ title, subtitle, image }) => (
+          {aboutUs.map(({ title, subtitle, image }, index) => (
             <li
               key={title}
-              className="text-[#333] text-sm leading-140 text-center mb-[40px] md:mb-0 w-[335px] mx-auto md:mx-0 md:text-sm md:text-left  xl:flex xl:w-[424px] min-[2800px]:min-w-3xl min-[2800px]:text-3xl"
+              className=" flex flex-col xl:flex-row text-[#333] text-sm leading-140 text-center mb-[40px] md:mb-0 w-[335px] mx-auto md:mx-0 md:text-sm md:text-left  xl:flex xl:w-[424px] min-[2800px]:min-w-3xl min-[2800px]:text-3xl"
             >
-              <Image
-                alt="sport icon"
-                src={image}
-                width={44}
-                height={44}
-                quality={100}
-                className=" w-[76px] h-[76px] mb-4 ml-auto mr-auto xl:w-16 xl:h-16 xl:mr-2  xl:ml-0 "
-              />
+              <div className="xl:hidden w-[76px] h-[76px] mb-4 ml-auto mr-auto xl:w-16 xl:h-16 xl:mr-2  xl:ml-0 ">
+                {index == 0 ? getAboutUs1() : null}
+                {index == 1 ? getAboutUs264() : null}
+                {index == 2 ? getAboutUs364() : null}
+              </div>
+              <div className="hidden xl:block w-[76px] h-[76px] mb-4 ml-auto mr-auto xl:w-16 xl:h-16 xl:mr-2  xl:ml-0 ">
+                {index == 0 ? getAboutUs156() : null}
+                {index == 1 ? getAboutUs256() : null}
+                {index == 2 ? getAboutUs356() : null}
+              </div>
+
               <div>
-                <h3 className="text-base mb-1 font-bold md:mb-[10px]">
+                <h3 className="text-base mb-1 font-bold md:mb-[10px] xl:text-title">
                   {title}
                 </h3>
-                <p className="xl:leading-5 xl:text-base xl:w-[352px]">
+                <p className="text-common xl:leading-6 xl:text-base xl:w-[352px] xl:text-[#323234]">
                   {subtitle}
                 </p>
               </div>
@@ -34,7 +44,7 @@ export default function AboutUs() {
       <div>
         <div className="flex justify-between items-center md:pb-[52px] ">
           <div>
-            <h2 className="text-xl font-extrabold  mb-4 md:text-2xl md:mb-6 min-[2800px]:text-5xl min-[2800px]:mb-7">
+            <h2 className="text-xl text-title font-semibold  mb-4 md:text-2xl md:mb-6 min-[2800px]:text-5xl min-[2800px]:mb-7 xl:">
               Про нас
             </h2>
             <div className="max-w-[741px] xl:hidden">

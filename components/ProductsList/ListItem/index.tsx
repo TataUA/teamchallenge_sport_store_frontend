@@ -1,14 +1,10 @@
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-// utils
+
 import { cn } from "@/services/utils/cn";
-import { getArrayWithExtractedImgUrl } from "@/helpers/getArrayWithExtractedImgUrl";
 import getArrayRemovedColorsDuplicates from "@/helpers/getArrayRemovedDuplicates";
 
-// components
-import { Slider } from "@/components/Slider/Slider";
-
-// types
 import { IProduct } from "@/services/types";
 
 interface ListItemProps {
@@ -19,6 +15,25 @@ interface ListItemProps {
 const ListItem = (props: ListItemProps) => {
   const { product, bestSales = false } = props;
   const { title, colors, price } = product;
+
+  const searchParams = useSearchParams();
+
+  const params = new URLSearchParams(searchParams);
+  const filterByColor = params.getAll("color");
+
+  let srcUrlImageString = product.colors[0].image_url;
+
+  const srcUrlImage = product.colors.filter((item) => {
+    if (filterByColor) {
+      if (item.color.title.toLocaleLowerCase() == filterByColor[0]) {
+        return item.image_url;
+      }
+    }
+  });
+
+  if (srcUrlImage[0]?.image_url) {
+    srcUrlImageString = srcUrlImage[0].image_url;
+  }
 
   return (
     <div
@@ -39,14 +54,15 @@ const ListItem = (props: ListItemProps) => {
             src={product.colors[0].image_url}
             width={167}
             height={252}
-            className="w-[200px] object-contain"
+            className="w-[200px] object-contain "
           />
         ) : (
-          <Slider
-            productsList
-            autoPlay={false}
-            cardImage
-            data={getArrayWithExtractedImgUrl(product) || []}
+          <Image
+            alt=""
+            src={srcUrlImageString}
+            width={167}
+            height={252}
+            className="w-[200px] object-contain xl:w-[306px]"
           />
         )}
       </Link>
@@ -67,9 +83,9 @@ const ListItem = (props: ListItemProps) => {
             <li
               key={item.id}
               className={cn(
-                `bg-${item.title.toLowerCase()} relative min-w-3 min-h-3 rounded-[50%] min-[2800px]:size-8 xl:min-w-2 xl:min-h-2`,
+                `bg-${item.title.toLowerCase()} relative min-w-2 min-h-2 rounded-[50%] min-[2800px]:size-8 `,
                 {
-                  border: true,
+                  border: item.title.toLowerCase() == "white",
                 },
               )}
             />

@@ -1,13 +1,11 @@
 import { Suspense } from "react";
 
-// components
-import List from "../List";
-import ProductsFilters from "../ProductsFilters";
+import List from "@/components/ProductsList/List";
+import ProductsFilters from "@/components/ProductsList/ProductsFilters";
+import ProductsFiltersXL from "@/components/ProductsList/ProductFiltersXL";
 
-// helpers
 import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine";
 
-// types
 import { IProduct } from "@/services/types";
 import { IProductsPageInitialProps } from "@/app/products/[...sub_category]/page";
 
@@ -22,12 +20,16 @@ const ProductsListMainContent = (props: IProductsPageProps) => {
   );
   return (
     <section>
-      <div className="flex justify-between items-center mb-4 min-[2800px]:mb-10">
-        <div className="text-3xl text-[##1A1A1C] font-bold min-[2800px]:text-5xl">
+      <div className="flex justify-between items-center mb-4 xl:mb-8 min-[2800px]:mb-10">
+        <div className="text-3xl  xl:text-[32px] text-[##1A1A1C] font-bold min-[2800px]:text-5xl">
           {translatedProductType}
         </div>
-        <ProductsFilters {...props} />
+        <div className="xl:hidden">
+          <ProductsFilters {...props} />
+        </div>
       </div>
+      <ProductsFiltersXL {...props} />
+
       {Array.isArray(products) && products.length ? (
         <Suspense
           key={searchParams.sub_category + "" + searchParams.page}
