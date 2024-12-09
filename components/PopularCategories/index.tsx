@@ -1,5 +1,5 @@
 import { popularCategories } from "./popular-categories.data";
-import { Slider } from "../Slider-hero/Slider";
+import { Slider } from "../Slider/Slider";
 
 export default function PopularCategories() {
   return (

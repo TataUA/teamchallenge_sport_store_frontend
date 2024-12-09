@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Slider } from "../Slider-hero/Slider";
+import { Slider } from "../Slider/Slider";
 
 import fetchSortedProductsAction from "@/app/actions/fetchSortedProductsAction";
 

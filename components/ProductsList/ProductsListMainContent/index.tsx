@@ -1,23 +1,25 @@
-import { Suspense } from "react"
+import { Suspense } from "react";
 
 // components
-import List from "../List"
-import ProductsFilters from "../ProductsFilters"
+import List from "../List";
+import ProductsFilters from "../ProductsFilters";
 
 // helpers
-import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine"
+import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine";
 
 // types
-import { IProduct } from "@/services/types"
-import { IProductsPageInitialProps } from "@/app/products/[...sub_category]/page"
+import { IProduct } from "@/services/types";
+import { IProductsPageInitialProps } from "@/app/products/[...sub_category]/page";
 
 interface IProductsPageProps extends IProductsPageInitialProps {
-	products: IProduct[] | []
+  products: IProduct[] | [];
 }
 
 const ProductsListMainContent = (props: IProductsPageProps) => {
-  const {products, searchParams, params} = props
-  const translatedProductType = getTranslatedSubcategoryFromEnglishToUkraine(params.sub_category[0])
+  const { products, searchParams, params } = props;
+  const translatedProductType = getTranslatedSubcategoryFromEnglishToUkraine(
+    params.sub_category[0],
+  );
   return (
     <section>
       <div className="flex justify-between items-center mb-4 min-[2800px]:mb-10">
@@ -27,8 +29,8 @@ const ProductsListMainContent = (props: IProductsPageProps) => {
         <ProductsFilters {...props} />
       </div>
       {Array.isArray(products) && products.length ? (
-        <Suspense 
-          key={(searchParams.sub_category) + '' + searchParams.page} 
+        <Suspense
+          key={searchParams.sub_category + "" + searchParams.page}
           fallback={<List products={[]} searchParams={searchParams} />}
         >
           <List products={products} searchParams={searchParams} />
@@ -41,7 +43,7 @@ const ProductsListMainContent = (props: IProductsPageProps) => {
         </div>
       ) : null}
     </section>
-  )
-}
+  );
+};
 
-export default ProductsListMainContent
+export default ProductsListMainContent;

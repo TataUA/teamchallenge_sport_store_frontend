@@ -2,11 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 // utils
 import { cn } from "@/services/utils/cn";
-import getArrayWithExtractedImgUrl from "@/helpers/getArrayWithExtractedImgUrl";
+import { getArrayWithExtractedImgUrl } from "@/helpers/getArrayWithExtractedImgUrl";
 import getArrayRemovedColorsDuplicates from "@/helpers/getArrayRemovedDuplicates";
 
 // components
-import { Slider } from "@/components/Slider-hero/Slider";
+import { Slider } from "@/components/Slider/Slider";
 
 // types
 import { IProduct } from "@/services/types";
