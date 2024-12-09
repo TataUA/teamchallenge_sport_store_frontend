@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { ClientComponent } from "@/components/ClientComponent";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-
+import { cn } from "@/services/utils/cn";
 // redux
 import { setDefaultsFilters } from "@/redux/generalFilters/generalFiltersSlice";
 import { selectGeneralFilters } from "@/redux/generalFilters/generalFiltersSelector";
@@ -102,6 +102,42 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
     return `${pathname}?${params.toString()}`;
   };
 
+  let showSelectedSize;
+  if (!filters.sizes || filters?.sizes.length == 0) {
+    showSelectedSize = "Розмір";
+  } else {
+    showSelectedSize = filters.sizes.join(", ");
+  }
+
+  let showSelectedColor;
+  if (!filters.color || filters?.color.length == 0) {
+    showSelectedColor = "Колір";
+  } else {
+    showSelectedColor = (
+      <div
+        className={cn(
+          "size-8 rounded-[50%]",
+          `bg-${filters.color}`,
+          "min-[2800px]:size-16",
+          {
+            "border-[1px] xl:border-timer": filters.color === "white",
+            "bg-colorful-circle bg-center bg-cover":
+              filters.color === "colorful",
+          },
+        )}
+      ></div>
+    );
+  }
+
+  const el = <div className="h-4 w-4 bg-blue pounded-[50%]"></div>;
+
+  let showSelectedPrice;
+  if (filters.price.priceFrom == 499 && filters.price.priceTo == 10999) {
+    showSelectedPrice = "Ціна";
+  } else {
+    showSelectedPrice = `${filters.price.priceFrom} - ${filters.price.priceTo}`;
+  }
+
   useEffect(() => {
     const arraOfFiltersFromFiltersObject = Object.entries({
       ...filters,
@@ -142,7 +178,11 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
                   setChosenSorting={setChosenSorting}
                 />
 
-                <ControlFilterItem title="Розмір" width="w-auto" hight="h-auto">
+                <ControlFilterItem
+                  title={showSelectedSize}
+                  width="w-auto"
+                  hight="h-auto"
+                >
                   {generalProductsFilers.map((generalFilter, index) => (
                     <div className="mb-2 min-[2800px]:mb-20" key={index}>
                       {generalFilter.id === "sizes" &&
@@ -171,7 +211,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
                   ))}
                 </ControlFilterItem>
                 <ControlFilterItem
-                  title="Колір"
+                  title={showSelectedColor}
                   width="w-[252px]"
                   hight="h-auto"
                 >
@@ -187,7 +227,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
                   ))}
                 </ControlFilterItem>
                 <ControlFilterItem
-                  title="Ціна"
+                  title={showSelectedPrice}
                   width="w-[436px]"
                   hight="h-[140px]"
                 >
