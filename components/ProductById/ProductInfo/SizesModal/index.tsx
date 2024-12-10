@@ -19,6 +19,7 @@ import SizeGridTables from "../SizeGridTables";
 import getArrowDownSVG from "@/helpers/getArrowDownSVG";
 import { cn } from "@/services/utils/cn";
 import getMessageIconSVG from "@/helpers/getMessageIconSVG";
+
 interface IProps {
   existedSizesFromDb: { color: string; quantity: number; size: string }[];
   translatedSubCategory: string;
@@ -26,6 +27,7 @@ interface IProps {
 
 const SizesModal = ({ existedSizesFromDb, translatedSubCategory }: IProps) => {
   const dispatch = useDispatch();
+
   const {
     sizes: sizesStored,
     color: currentColor,
@@ -71,6 +73,7 @@ const SizesModal = ({ existedSizesFromDb, translatedSubCategory }: IProps) => {
     if (sizesStored) {
       dispatch(setCurrentProductSize(""));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -110,28 +113,30 @@ const SizesModal = ({ existedSizesFromDb, translatedSubCategory }: IProps) => {
             Розмірна сітка
           </span>
         </div>
+
         <ResponsiveModal
           isOpen={isSizeGridTablesOpened}
           onClose={() => setIsSizGridTableOpened(false)}
         >
-          <h3 className="mb-6 font-semibold text-xl text-center">
+          <h3 className="mb-6 font-semibold text-xl text-center text-primary">
             Таблиці розмірів
           </h3>
           <SizeGridTables />
         </ResponsiveModal>
+
         <ResponsiveModal
           isOpen={isSizeModalOpened}
           onClose={() => dispatch(setIsSizeModalOpened(false))}
         >
           <div className="flex gap-6 flex-col">
-            <h3 className="pt-5 text-center font-semibold text-xl text-primary">
+            <h3 className="text-center font-semibold text-xl text-primary">
               Розмір
             </h3>
             <ul className="list-none flex flex-col">
               {arrayOfSizes?.map((size, index) => (
                 <li
                   className={cn(
-                    "p-4 border-b border-border_button font-bold text-base",
+                    "p-4 border-b border-border_button font-bold text-base text-primary",
                     "flex justify-between",
                     {
                       "text-blue": sizesStored === size,

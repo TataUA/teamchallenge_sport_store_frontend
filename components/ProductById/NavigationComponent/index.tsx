@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 const NavigationComponent = ({ subCategory }: { subCategory: string }) => {
   const router = useRouter();
   return (
-    <div className="flex items-center gap-1 mb-5 1440:mb-8 cursor-pointer hover:opacity-[50%] text-base font-medium text-title lg:text-sm min-[2800px]:text-4xl min-[2800px]:mb-10">
+    <div className="flex items-center gap-1 mb-4 1440:mb-8 text-sm font-medium text-primary cursor-pointer hover:opacity-[50%]">
       <span onClick={() => router.back()}>
         <svg
           onClick={() => router.back()}
