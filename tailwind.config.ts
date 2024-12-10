@@ -22,6 +22,7 @@ const config: Config = {
         },
       },
       screens: {
+        "608": "608px",
         "1440": "1440px",
       },
       lineHeight: {

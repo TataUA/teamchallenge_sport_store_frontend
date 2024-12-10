@@ -1,5 +1,10 @@
 import { cn } from "@/services/utils/cn";
-import { footwearSizes, menClothingSizes, womenClothingSizes } from "./dataSizeGridTables";
+
+import {
+  footwearSizes,
+  menClothingSizes,
+  womenClothingSizes,
+} from "./dataSizeGridTables";
 
 const SizeGridTables = () => {
   return (
@@ -8,38 +13,47 @@ const SizeGridTables = () => {
       <MenClothingSizesTable />
       <FootwearSizesTable />
     </div>
-  )
-}
+  );
+};
 
-export default SizeGridTables
+export default SizeGridTables;
 
 const WomenClothingSizesTable = () => {
   return (
     <div>
-      <div className="text-lg font-semibold pb-4">
+      <div className="pb-4 font-semibold text-base text-primary tracking-custom_4">
         Жіночий одяг
       </div>
-      <div className="border border-gray-300 rounded-lg overflow-hidden">
+      <div className="block 608:inline-block md:block border border-border rounded-[20px] overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-[560px] md:w-full">
             <thead>
-              <tr className="bg-gray-50">
+              <tr>
                 {womenClothingSizes.headers.map((header, index) => (
-                  <th 
-                    key={header} 
-                    className={cn("text-left py-2 px-4 font-semibold bg-gray-50 z-10 min-w-[120px]",{
-                      'sticky left-0 border-r': index === 0
-                    })}
+                  <th
+                    key={header}
+                    className={cn(
+                      "z-10 min-w-[120px] text-center py-2 px-4 font-medium text-sm text-primary tracking-custom_4",
+                      {
+                        "sticky left-0 px-5 bg-white border-r border-border":
+                          index === 0,
+                      },
+                    )}
                   >
-                  {header}
-                    </th>
+                    {header}
+                  </th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {womenClothingSizes.data.map((item, index) => (
-                <tr key={index} className="border-t border-gray-200">
-                  <td className="py-2 px-4 border-r border-gray-200 sticky left-0 bg-white z-10">{item.size}</td>
+                <tr
+                  key={index}
+                  className="border-t border-border font-medium text-sm text-primary tracking-custom_4 text-center"
+                >
+                  <td className="sticky left-0 z-10 py-2 px-4 bg-white border-r border-border font-semibold">
+                    {item.size}
+                  </td>
                   <td className="py-2 px-4">{item.height}</td>
                   <td className="py-2 px-4">{item.chest}</td>
                   <td className="py-2 px-4">{item.waist}</td>
@@ -51,36 +65,45 @@ const WomenClothingSizesTable = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const MenClothingSizesTable = () => {
   return (
     <div>
-      <div className="text-lg font-semibold py-4">
+      <div className="pb-4 font-semibold text-base text-primary tracking-custom_4">
         Чоловічий одяг
       </div>
-      <div className="border border-gray-300 rounded-lg overflow-hidden">
+      <div className="border border-border rounded-[20px] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="bg-gray-50">
+              <tr>
                 {menClothingSizes.headers.map((header, index) => (
-                  <th 
-                    key={header} 
-                    className={cn("text-left py-2 px-4 font-semibold bg-gray-50 z-10 min-w-[120px]",{
-                      'sticky left-0 border-r': index === 0
-                    })}
+                  <th
+                    key={header}
+                    className={cn(
+                      "z-10 min-w-[120px] text-center py-2 px-4 font-medium text-sm text-primary tracking-custom_4",
+                      {
+                        "sticky left-0 px-5 bg-white border-r border-border":
+                          index === 0,
+                      },
+                    )}
                   >
-                  {header}
-                    </th>
+                    {header}
+                  </th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {menClothingSizes.data.map((item, index) => (
-                <tr key={index} className="border-t border-gray-200">
-                  <td className="py-2 px-4 border-r border-gray-200 sticky left-0 bg-white z-10">{item.size}</td>
+                <tr
+                  key={index}
+                  className="border-t border-border font-medium text-sm text-primary tracking-custom_4 text-center"
+                >
+                  <td className="sticky left-0 z-10 py-2 px-4 bg-white border-r border-border font-semibold">
+                    {item.size}
+                  </td>
                   <td className="py-2 px-4">{item.height}</td>
                   <td className="py-2 px-4">{item.chest}</td>
                   <td className="py-2 px-4">{item.shoulderWidth}</td>
@@ -92,45 +115,50 @@ const MenClothingSizesTable = () => {
           </table>
         </div>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
 const FootwearSizesTable = () => {
   return (
     <div>
-      <div className="text-lg font-semibold py-4">
+      <div className="pb-4 font-semibold text-base text-primary tracking-custom_4">
         Взуття
       </div>
-      <div className="border border-gray-300 rounded-lg overflow-hidden">
+      <div className="border border-border rounded-[20px] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="bg-gray-50">
+              <tr>
                 {footwearSizes.headers.map((header, index) => (
-                  <th 
-                  key={header} 
-                  className={cn("text-center py-2 px-4 font-semibold bg-gray-50 z-10 min-w-[120px]",{
-                  })}
+                  <th
+                    key={header}
+                    className={cn(
+                      "z-10 min-w-[120px] h-14 py-2 px-4 font-medium text-sm text-primary tracking-custom_4 text-center",
+                      { "border-r border-border": index === 0 },
+                    )}
                   >
-                  {header}
-                    </th>
+                    {header}
+                  </th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {footwearSizes.data.map((size, index) => (
-                <tr key={index} className="border-t border-gray-200">
-                  <td className="py-2 px-4 sticky left-0 bg-whit border-r text-center border-gray-300 z-10">{size.size}</td>
-                  <td className="py-2 px-4 text-center">{size.length}</td>
+                <tr
+                  key={index}
+                  className="border-t border-border font-medium text-sm text-primary tracking-custom_4 text-center"
+                >
+                  <td className="py-2 px-4 border-r border-border font-semibold">
+                    {size.size}
+                  </td>
+                  <td className="py-2 px-4">{size.length}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       </div>
-
     </div>
-  )
-}
+  );
+};

@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 
 import { cn } from "@/services/utils/cn";
+import close from "@/public/icons/close_icon.svg";
 
-interface IProps {
+interface ResponsiveModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
@@ -14,7 +16,7 @@ const ResponsiveModal = ({
   onClose,
   children,
   wrapperClassname,
-}: IProps) => {
+}: ResponsiveModalProps) => {
   const [isMobile, setIsMobile] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
@@ -102,26 +104,33 @@ const ResponsiveModal = ({
         )}
         <div
           className={cn(
-            "bg-white p-6 pt-0 w-full max-w-lg max-h-[85vh] overflow-y-auto",
+            "bg-white w-full max-w-lg overflow-hidden",
             `${isMobile ? "max-w-full" : "max-w-lg"}`,
             `${
               isMobile
                 ? "rounded-t-3xl h-auto transition-transform duration-300 ease-out"
-                : "rounded-lg"
+                : "rounded-[32px]"
             }`,
             "md: pt-6",
             `${wrapperClassname?.length ? wrapperClassname : ""}`,
           )}
         >
-          {!isMobile ? (
-            <button
-              className="float-right text-2xl bg-transparent border-none cursor-pointer"
-              onClick={onClose}
-            >
-              &times;
-            </button>
-          ) : null}
-          {children}
+          <div className="max-h-[85vh] p-6 pt-0 overflow-y-auto">
+            {!isMobile ? (
+              <button
+                className="float-right text-2xl bg-transparent border-none cursor-pointer"
+                onClick={onClose}
+              >
+                <Image
+                  src={close}
+                  alt="Хрестик закриття форми"
+                  width={18}
+                  height={18}
+                />
+              </button>
+            ) : null}
+            {children}
+          </div>
         </div>
       </div>
     </div>

@@ -118,7 +118,7 @@ const SizesModal = ({ existedSizesFromDb, translatedSubCategory }: IProps) => {
           isOpen={isSizeGridTablesOpened}
           onClose={() => setIsSizGridTableOpened(false)}
         >
-          <h3 className="mb-6 font-semibold text-xl text-center">
+          <h3 className="mb-6 font-semibold text-xl text-center text-primary">
             Таблиці розмірів
           </h3>
           <SizeGridTables />

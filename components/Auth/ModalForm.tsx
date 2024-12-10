@@ -3,8 +3,8 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
 
-import close from "@/public/icons/close_icon.svg";
 import { cn } from "@/services/utils/cn";
+import close from "@/public/icons/close_icon.svg";
 
 interface ModalFormProps {
   children: React.ReactNode;
