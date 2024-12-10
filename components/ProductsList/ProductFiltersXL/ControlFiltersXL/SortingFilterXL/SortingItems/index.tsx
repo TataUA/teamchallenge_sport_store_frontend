@@ -28,9 +28,9 @@ const SortingItems = (props: ISortingItemsProps) => {
 
     let sortedString: string;
     if (id === "ascent") {
-      sortedString = "Від найдешевшої";
+      sortedString = "Від найдешевшого";
     } else if (id === "descent") {
-      sortedString = "Від найдорожчої";
+      sortedString = "Від найдорожчого";
     } else {
       sortedString = "Рекомендовані";
     }

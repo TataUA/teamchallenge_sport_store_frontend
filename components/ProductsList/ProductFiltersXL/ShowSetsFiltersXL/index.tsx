@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { cn } from "@/services/utils/cn";
 
 // helpers
@@ -25,6 +26,38 @@ const ShowSetsFiltersXL = ({
   const [isShowPrice, setIsShowPrice] = useState(true);
   const [isShowSize, setIsShowSize] = useState(true);
   const [isShowColor, setIsShowColor] = useState(true);
+
+  const searchParamsURL = useSearchParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const removeParamsGeneralFiltersFromUrl = (id: string) => {
+    const params = new URLSearchParams(searchParamsURL);
+
+    if (id == "size") {
+      params.delete("sizes");
+    } else if (id == "price") {
+      params.delete("price_to");
+      params.delete("price_from");
+    } else if (id == "color") {
+      params.delete("color");
+    }
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handleShowPrice = () => {
+    setIsShowPrice(false);
+    removeParamsGeneralFiltersFromUrl("price");
+  };
+  const handleShowColor = () => {
+    setIsShowColor(false);
+    removeParamsGeneralFiltersFromUrl("color");
+  };
+  const handleShowSize = () => {
+    setIsShowSize(false);
+    removeParamsGeneralFiltersFromUrl("size");
+  };
 
   const classItemFilter =
     "h-9 rounded-lg bg-border_button flex items-center pl-4";
@@ -54,9 +87,9 @@ const ShowSetsFiltersXL = ({
 
   let sortedString = "Рекомендовані";
   if (searchParams.sortedBy === "ascent") {
-    sortedString = "Від найдешевшої";
+    sortedString = "Від найдешевшого";
   } else if (searchParams.sortedBy === "descent") {
-    sortedString = "Від найдорожчої";
+    sortedString = "Від найдорожчого";
   }
 
   const lowerPrice = searchParams.price_from ? searchParams.price_from : 499;
@@ -91,7 +124,7 @@ const ShowSetsFiltersXL = ({
                   </div>
                   <div
                     className={classItemFilterIconClose}
-                    onClick={() => setIsShowPrice(false)}
+                    onClick={() => handleShowPrice()}
                   >
                     {getCloseIconSVG18()}
                   </div>
@@ -111,7 +144,7 @@ const ShowSetsFiltersXL = ({
 
                   <div
                     className={classItemFilterIconClose}
-                    onClick={() => setIsShowColor(false)}
+                    onClick={() => handleShowColor()}
                   >
                     {getCloseIconSVG18()}
                   </div>
@@ -128,7 +161,7 @@ const ShowSetsFiltersXL = ({
                   </div>
                   <div
                     className={classItemFilterIconClose}
-                    onClick={() => setIsShowSize(false)}
+                    onClick={() => handleShowSize()}
                   >
                     {getCloseIconSVG18()}
                   </div>

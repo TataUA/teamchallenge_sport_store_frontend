@@ -4,11 +4,11 @@ export const sortingProductsFilers = [
     id: "popularity",
   },
   {
-    title: "Від найдешевшої",
+    title: "Від найдешевшого",
     id: "ascent",
   },
   {
-    title: "Від найдорожчої",
+    title: "Від найдорожчого",
     id: "descent",
   },
 ];
