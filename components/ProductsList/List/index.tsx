@@ -47,7 +47,7 @@ const List = (props: IProps) => {
 
   return (
     <div>
-      <ul className="flex flex-wrap gap-2 justify-between xl:justify-start xl:gap-5 mb-5">
+      <ul className="flex flex-wrap gap-2 justify-around xl:gap-4 mb-5">
         {paginatedProducts.map((product, index) => (
           <ListItem key={product.id} product={product} />
         ))}

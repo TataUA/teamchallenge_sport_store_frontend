@@ -205,10 +205,9 @@ export const Slider = ({
                             className="object-center object-cover xl:w-full xl:h-full "
                           />
                         </div>
-                        /{" "}
                       </Link>
                       <div className="absolute top-0 left-0 w-[108px] h-    [108px] overflow-hidden rounded-xl xl:w-[312px] xl:h-[180px] z-30 xl:bg-gradient-to-t from-black/20 to-black/0 xl:rounded-2xl"></div>
-                      <h3 className="z-40 text-sm font-medium w-24 xl:absolute md:bottom-6 md:left-6 md:w-full xl:text-white xl:text-xl tracking-[0.015] xl:tracking-wide xl:mb-2">
+                      <h3 className="z-40 text-sm font-medium w-24 xl:absolute md:bottom-6 md:left-[22px] md:w-full xl:text-white xl:text-xl tracking-[0.015] xl:tracking-wide ">
                         {title}
                       </h3>{" "}
                     </li>
