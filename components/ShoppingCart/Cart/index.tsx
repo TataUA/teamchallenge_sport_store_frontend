@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   handleDecreasProductQuantity,
   handleIncreasProductQuantity,
-  IProductWithMaxQuantity,
   removeProductById,
 } from "@/redux/cart/cartSlice";
 import { selectCart } from "@/redux/cart/cartSelector";
+
+// types
+import { IProductWithMaxQuantity } from "@/services/types";
 
 // components
 import ProductItem from "./ProductItem";
@@ -22,6 +24,7 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
 
   const cartDataStored = useSelector(selectCart);
 
+  const basketId = cartDataStored.id || localStorage.getItem("basketId");
   const token = localStorage.getItem("accessToken");
 
   const handleRemoveProduct = ({
@@ -35,22 +38,28 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
     size: string;
     itemIdInBasket?: number;
   }) => {
+
     // видаляємо продукт с корзини в БД
-    if (itemIdInBasket && cartDataStored.id)
-      removeProductToCartInDbAction(cartDataStored.id, itemIdInBasket);
-    dispatch(removeProductById({ id, color, size }));
+    if (itemIdInBasket && basketId) {
+      removeProductToCartInDbAction(basketId, itemIdInBasket);
+      dispatch(removeProductById({ id, color, size }));
+    } else {
+      dispatch(removeProductById({ id, color, size }));
+    }
   };
 
   const handleIncreaseOrDecreasProduct = (
     option: string,
     product: IProductWithMaxQuantity,
   ) => {
+    
     if (option === "inc") {
       if (product.quantity[0].quantity >= product.maxQuantity) {
         console.log("Maximum amount of product has been achieved");
 
         return;
       }
+      
       const updatedProductWithIncreasedQuantity = {
         ...product,
         quantity: [
@@ -60,20 +69,22 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
           },
         ],
       };
+      
       if (
         token &&
-        cartDataStored.id &&
+        basketId &&
         updatedProductWithIncreasedQuantity.idInBasketInDb
       ) {
         updateQuantityProductInCartInDbAction(
-          cartDataStored.id,
+          basketId,
           updatedProductWithIncreasedQuantity,
           updatedProductWithIncreasedQuantity.idInBasketInDb,
         );
       }
+      
       dispatch(handleIncreasProductQuantity(product));
     }
-
+    
     if (option === "dec") {
       if (product.quantity[0].quantity <= 1) {
         handleRemoveProduct({
@@ -92,13 +103,14 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
             },
           ],
         };
+
         if (
           token &&
-          cartDataStored.id &&
+          basketId &&
           updatedProductWithDecreasedQuantity.idInBasketInDb
         ) {
           updateQuantityProductInCartInDbAction(
-            cartDataStored.id,
+            basketId,
             updatedProductWithDecreasedQuantity,
             updatedProductWithDecreasedQuantity.idInBasketInDb,
           );

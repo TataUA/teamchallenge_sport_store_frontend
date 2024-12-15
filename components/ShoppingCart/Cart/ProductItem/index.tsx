@@ -1,7 +1,6 @@
 import Image from "next/image"
 
-import { IProduct } from "@/services/types"
-import { IProductWithMaxQuantity } from "@/redux/cart/cartSlice"
+import { IProductWithMaxQuantity } from "@/services/types";
 
 import ButtonSvg from "@/components/Button/ButtonSvg"
 
