@@ -29,7 +29,8 @@ import wrong from "@/public/icons/auth/wrong.svg";
 import { selectCart } from "@/redux/cart/cartSelector";
 
 // actions
-import { cleanCart, handleDecreasProductQuantity, IProductWithMaxQuantity, removeProductById, setModalProductIsOutOfStock } from "@/redux/cart/cartSlice";
+import { cleanCart, handleDecreasProductQuantity,removeProductById, setModalProductIsOutOfStock } from "@/redux/cart/cartSlice";
+import { IProductWithMaxQuantity } from "@/services/types";
 
 export interface IntInitialStateOrder {
   deliveryType: "Branch" | "Courier" | "Parcel Locker" | null;
@@ -181,8 +182,8 @@ const OrderPageComponent = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const showModalProductOutOfStock = (product: IProductWithMaxQuantity) => {
-    product.quantity[0].quantity > 1
+  const showModalProductOutOfStock = (products: IProductWithMaxQuantity[]) => {
+    products.forEach((product)=> product.quantity[0].quantity > 1
       ? dispatch(handleDecreasProductQuantity(product))
       : dispatch(
           removeProductById({
@@ -190,9 +191,10 @@ const OrderPageComponent = () => {
             color: product.quantity[0].color,
             size: product.quantity[0].size,
           }),
-        );
-
-    dispatch(setModalProductIsOutOfStock(true));
+        ))
+    dispatch(
+      setModalProductIsOutOfStock({ isOpened: true, outOfStockProducts : []}),
+    );
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
