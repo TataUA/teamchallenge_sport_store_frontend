@@ -28,7 +28,11 @@ const ProductIsOutOfStockModal = (props:{children: ReactNode}) => {
   }, []);
 
   const onClose = () =>
-    dispatch(setModalProductIsOutOfStock(!isDisplayedModalProductIsOutOfStock));
+    dispatch(
+      setModalProductIsOutOfStock({
+        isOpened: false,
+      }),
+    );
 
   if (!isDisplayedModalProductIsOutOfStock) {
     return null;

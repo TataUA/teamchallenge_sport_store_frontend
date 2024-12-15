@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
 import Image from "next/image";
-import Link from "next/link"
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 
@@ -9,7 +9,9 @@ import { useDispatch } from "react-redux";
 import cartImg from "@/public/icons/cart/cart-img.png";
 
 // helpers
-import getBasketIdFromLocalStorage, { setBasketIdToLocalStorage } from "@/helpers/getBasketIdFromLocalStorage";
+import getBasketIdFromLocalStorage, {
+  setBasketIdToLocalStorage,
+} from "@/helpers/getBasketIdFromLocalStorage";
 
 // actions
 import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction";
@@ -18,33 +20,35 @@ import fetchShoppingCartFromServerAction from "@/app/actions/fetchShoppingCartFr
 // redux
 import { saveCartIdFromDb } from "@/redux/cart/cartSlice";
 
-
 const OrderSuccessPage = () => {
-  const mounted = useRef(false)
+  const mounted = useRef(false);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if(mounted.current) {
-      return
+    if (mounted.current) {
+      return;
     }
 
-    if(getBasketIdFromLocalStorage()) {
-      localStorage.removeItem('basketId')
+    if (getBasketIdFromLocalStorage()) {
+      localStorage.removeItem("basketId");
     }
-    
+
     createShoppingCartAction()
-    .then((data)=>{
-      setBasketIdToLocalStorage(data.basketId)
-      dispatch(saveCartIdFromDb(data.basketId))
-      fetchShoppingCartFromServerAction(data.basketId)
+    .then((basketId) => {
+      if (!basketId) {
+        return;
+      }
+
+      dispatch(saveCartIdFromDb(basketId));
+      fetchShoppingCartFromServerAction(basketId);
     })
     .catch((error) => {
-      console.log("🚀 ~ createShoppingCartAction ~ error:", error)
-    })
+      console.log("🚀 ~ createShoppingCartAction ~ error:", error);
+    });
 
-    mounted.current = true
-  },[])
+    mounted.current = true;
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-12 p-6">
@@ -60,7 +64,8 @@ const OrderSuccessPage = () => {
           Дякуємо за замовлення!
         </h1>
         <p className="text-sm font-medium text-common">
-          Ваше замовлення вже в дорозі! Деталі відправлені на вашу електронну адресу.
+          Ваше замовлення вже в дорозі! Деталі відправлені на вашу електронну
+          адресу.
         </p>
       </div>
       <Link
@@ -71,7 +76,7 @@ const OrderSuccessPage = () => {
         На головну
       </Link>
     </div>
-  )
-}
+  );
+};
 
 export default OrderSuccessPage;

@@ -23,7 +23,6 @@ import { ResetPasswordFormValues } from "@/components/Auth/ResetPassword/ResetPa
 import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
 import { handleThunkValidationErrors } from "@/helpers/handleThunkValidationErrors";
 import { handleSetTokens } from "@/helpers/handleSetTokens";
-import { cleanCart } from "../cart/cartSlice";
 
 export interface ErrorType {
   message?: string[] | string;
@@ -162,7 +161,6 @@ export const logoutUserThunk = createAsyncThunk<
   try {
     await apiLogoutUser();
     thunkApi.dispatch(logoutUser());
-    thunkApi.dispatch(cleanCart());
     return;
   } catch (error: any) {
     const errorObject: ErrorType = {

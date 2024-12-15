@@ -11,7 +11,8 @@ import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction
 import addProductToCartInDbAction from "@/app/actions/addProductToCartInDbAction";
 
 // types
-import { ICartState, IProductWithMaxQuantity } from "@/redux/cart/cartSlice";
+import { ICartState } from "@/redux/cart/cartSlice";
+import { IProductWithMaxQuantity } from "@/services/types";
 
 const createOrderHelper = async (
   data: {
@@ -21,17 +22,23 @@ const createOrderHelper = async (
     cart: ICartState;
   },
   successfulyRedirect: (data: any) => void,
-  showModalProductOutOfStock: (product: IProductWithMaxQuantity) => void,
+  showModalProductOutOfStock: (products: IProductWithMaxQuantity[]) => void,
 ): Promise<any> => {
   const { userData, orderState, deliveryAddress, cart } = data;
 
   const getOrCreateBasketId = async (): Promise<string> => {
     let basketId = getBasketIdFromLocalStorage();
+
     if (!basketId) {
-      const newBasket = await createShoppingCartAction();
-      basketId = newBasket.basketId;
+      basketId = await createShoppingCartAction();
+
+      if (!basketId) {
+        return '';
+      }
+
       setBasketIdToLocalStorage(basketId);
     }
+
     return basketId;
   };
 
@@ -58,18 +65,24 @@ const createOrderHelper = async (
     basketId: string,
     products: IProductWithMaxQuantity[],
   ): Promise<void> => {
+    const productsOutOfStock: IProductWithMaxQuantity[] = [];
+
     await Promise.all(
       products.map(async (product) => {
-        const response = await addProductToCartInDbAction(basketId, product);
+        const intemIdInBasket = await addProductToCartInDbAction(basketId, product);
 
-        if (!response?.id) {
+        if (!intemIdInBasket) {
           console.log(
             `Product with id ${product.title}, was not saved, as it is out of Stock`,
           );
-          showModalProductOutOfStock(product);
+          productsOutOfStock.push(product);
         }
       }),
     );
+    
+    if(productsOutOfStock.length) {
+      showModalProductOutOfStock(productsOutOfStock);
+    }
   };
 
   try {
@@ -82,8 +95,12 @@ const createOrderHelper = async (
       response?.data.msg?.includes("You cannot place an order from someone")
     ) {
       localStorage.removeItem("basketId");
-      const newBasket = await createShoppingCartAction();
-      basketId = newBasket.basketId;
+      const newBasketId = await createShoppingCartAction();
+      if (!newBasketId) {
+        return;
+      }
+      
+      basketId = newBasketId;
       setBasketIdToLocalStorage(basketId);
       newOrder.basket_id = basketId;
 
