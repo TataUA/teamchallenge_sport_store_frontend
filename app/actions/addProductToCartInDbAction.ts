@@ -3,7 +3,6 @@
 import { apiBaseUrl } from "@/services/api";
 import { IProduct } from "@/services/types";
 import { ICartResponseItem } from "./fetchShoppingCartFromServerAction";
-import { revalidateTag } from "next/cache";
 
 const addProductToCartInDbAction = async (
   basketId: string,
@@ -27,15 +26,15 @@ const addProductToCartInDbAction = async (
     });
 
     const data: ICartResponseItem = await result?.json();
+
     if (result.status !== 201) {
       throw new Error("Error during adding item to cart");
     }
 
-    revalidateTag("products");
-
-    return data;
+    return data.id;
   } catch (error: any) {
-    console.log("🚀 ~ fetchProductsAction ~ error:", error.response);
+    console.log("🚀 ~ fetchProductsAction ~ error:", error);
+
     return null;
   }
 };
