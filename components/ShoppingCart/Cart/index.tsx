@@ -38,28 +38,24 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
     size: string;
     itemIdInBasket?: number;
   }) => {
-
     // видаляємо продукт с корзини в БД
     if (itemIdInBasket && basketId) {
       removeProductToCartInDbAction(basketId, itemIdInBasket);
-      dispatch(removeProductById({ id, color, size }));
-    } else {
-      dispatch(removeProductById({ id, color, size }));
     }
+    dispatch(removeProductById({ id, color, size }));
   };
 
   const handleIncreaseOrDecreasProduct = (
     option: string,
     product: IProductWithMaxQuantity,
   ) => {
-    
     if (option === "inc") {
       if (product.quantity[0].quantity >= product.maxQuantity) {
         console.log("Maximum amount of product has been achieved");
 
         return;
       }
-      
+
       const updatedProductWithIncreasedQuantity = {
         ...product,
         quantity: [
@@ -69,7 +65,7 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
           },
         ],
       };
-      
+
       if (
         token &&
         basketId &&
@@ -81,10 +77,10 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
           updatedProductWithIncreasedQuantity.idInBasketInDb,
         );
       }
-      
+
       dispatch(handleIncreasProductQuantity(product));
     }
-    
+
     if (option === "dec") {
       if (product.quantity[0].quantity <= 1) {
         handleRemoveProduct({
