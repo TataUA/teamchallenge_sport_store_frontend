@@ -30,6 +30,9 @@ import { AppDispatch } from "@/redux/store";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useCartSync } from "@/hooks/useCartSync";
 
+// helpers
+import getUserlogged from "@/helpers/getUserlogged";
+
 const HeaderNavLink = () => {
   const cart = useSelector(selectCart);
   const user = useSelector(selectUserData);
@@ -40,6 +43,7 @@ const HeaderNavLink = () => {
   const router = useRouter();
   const isMobile = useIsMobile();
 
+  const [isUser, setIsUser] = useState(user);
   const [showModal, setShowModal] = useState(false);
   const [showRegistration, setShowRegistration] = useState(false);
   const [showConfirmRegister, setShowConfirmRegister] = useState(false);
@@ -52,6 +56,7 @@ const HeaderNavLink = () => {
     if (!user && accessToken) {
       dispatch(currentUserThunk()).unwrap();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleUserClick = () => {
@@ -83,15 +88,21 @@ const HeaderNavLink = () => {
             {name === "search" ? (
               <SearchComponent />
             ) : name === "user" ? (
-              <span onClick={handleUserClick} className="cursor-pointer">
+              <span onClick={handleUserClick} className="cursor-pointer ">
                 {iconsData.map((icon) => {
                   return (
                     icon.name === name && (
-                      <SvgComponent
-                        key={icon.name}
-                        viewBox={icon.viewBox}
-                        path={icon.path}
-                      />
+                      <>
+                        {user ? (
+                          <span>{getUserlogged()}</span>
+                        ) : (
+                          <SvgComponent
+                            key={icon.name}
+                            viewBox={icon.viewBox}
+                            path={icon.path}
+                          />
+                        )}
+                      </>
                     )
                   );
                 })}
@@ -103,7 +114,7 @@ const HeaderNavLink = () => {
                     icon.name === name && (
                       <span
                         key={icon.name}
-                        className="[&>svg]:hover:opacity-[50%] cursor-pointer"
+                        className="hover:opacity-100  cursor-pointer "
                       >
                         {name === "cart" && cart.products?.length ? (
                           <div

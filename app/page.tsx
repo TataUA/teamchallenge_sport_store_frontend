@@ -1,4 +1,4 @@
-import { Slider } from "@/components/Slider-hero/Slider";
+import { Slider } from "@/components/Slider/Slider";
 import dataSlider from "../public/data/slider_data.json";
 
 import PopularCategories from "@/components/PopularCategories";

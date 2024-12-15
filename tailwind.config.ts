@@ -22,6 +22,7 @@ const config: Config = {
         },
       },
       screens: {
+        "608": "608px",
         "1440": "1440px",
       },
       lineHeight: {
@@ -47,7 +48,8 @@ const config: Config = {
         "55": "165px",
       },
       letterSpacing: {
-        custom_2: "2%",
+        custom_2: "0.02em", //2% - використовуємо клас tracking-custom_2
+        custom_4: "0.04em",
       },
       colors: {
         primary: "#272728",
@@ -84,7 +86,12 @@ const config: Config = {
           backgroundColor: "#0A4CF6",
           cursor: "pointer",
           pointerEvents: "auto",
+          "@screen xl": {
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #DBDBDB",
+          },
         },
+
         ".appearance-none::-moz-range-thumb": {
           width: "20px",
           height: "20px",
@@ -92,6 +99,10 @@ const config: Config = {
           backgroundColor: "#0A4CF6",
           cursor: "pointer",
           pointerEvents: "auto",
+          "@screen xl": {
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #DBDBDB",
+          },
         },
       };
       addUtilities(newUtilities, ["responsive", "hover"]);

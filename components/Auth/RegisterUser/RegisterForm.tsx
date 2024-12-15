@@ -123,6 +123,10 @@ export const RegisterForm = (props: RegisterPageContentProps) => {
     }
   };
 
+  const handleBackButtonClick = () => {
+    props.setShowRegistration?.(false);
+  };
+
   return (
     <>
       <Formik
@@ -201,8 +205,17 @@ export const RegisterForm = (props: RegisterPageContentProps) => {
               subtype="primary"
               title="Зареєструватись"
               disabled={formik.isSubmitting}
-              styles="mb-2"
+              styles="mb-2 1440:mb-4"
             />
+            {!isMobile && (
+              <Button
+                type="button"
+                subtype="ghost"
+                title="Назад"
+                onClick={handleBackButtonClick}
+                styles="mb-2"
+              />
+            )}
           </Form>
         )}
       </Formik>

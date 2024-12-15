@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Slider } from "../Slider-hero/Slider";
+import { Slider } from "../Slider/Slider";
 
 import fetchSortedProductsAction from "@/app/actions/fetchSortedProductsAction";
 
@@ -18,7 +18,7 @@ export default async function SortedProducts({
 
   return (
     <section className=" font-pangram px-6 xl:container xl:mx-auto xl:px-[60px] xl:pt-[46px] xl:pb-[52px]">
-      <div className="flex justify-between  items-center mb-4 md:mb-8 xl:mb-8">
+      <div className="flex justify-between text-title items-center mb-4 md:mb-8 xl:mb-8">
         <h2 className="text-xl leading-140 font-semibold  md:text-2xl md:leading-7 ">
           {title}
         </h2>

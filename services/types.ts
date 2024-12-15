@@ -55,6 +55,7 @@ interface ProductImage {
 export interface IColors {
   image_url: string;
   color: IColor;
+  title?: string;
 }
 
 export interface IQuantity {

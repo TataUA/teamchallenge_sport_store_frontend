@@ -192,10 +192,9 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
     <div>
       <div
         className={cn(
-          "bg-blue mb-8 w-full text-white py-4 px-10 fill-white cursor-pointer flex justify-center items-center gap-2 rounded-xl",
+          "w-full mb-8 1440:mb-10 px-10 py-4 flex justify-center items-center gap-2 rounded-xl bg-blue text-white fill-white transition-all cursor-pointer",
           "[&>svg]:text-white",
-          "hover:opacity-[75%]",
-          "lg:max-w-[500px] 2xl:3xl",
+          "hover:bg-active_blue",
         )}
         onClick={() => handleClickCartButton()}
       >
@@ -206,16 +205,16 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
         isOpen={isSuccessModalIsOpened}
         onClose={() => setIsSuccessModalIsOpened(false)}
       >
-        <div className="flex gap-3 pt-5 justify-center items-center mb-10">
+        <div className="mb-10 pt-5 flex gap-3 justify-center items-center ">
           <span className="bg-blue rounded-[50%] [&>svg]:fill-white [&>svg]:text-white">
             {getCheckedIconSVG()}
           </span>
-          <h3 className="text-xl text-[#272728]">Товар додано в кошик!</h3>
+          <h3 className="text-xl text-primary">Товар додано в кошик!</h3>
         </div>
-        <div className="flex gap-3 mb-8">
+        <div className="mb-8 flex gap-3">
           <div
             className={cn(
-              "w-[108px] h-[108px] bg-blue rounded-xl overflow-hidden",
+              "w-[108px] h-[108px] rounded-xl bg-blue overflow-hidden",
             )}
           >
             <Image
@@ -228,10 +227,10 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
           <div className="flex flex-col justify-evenly flex-1">
             <p>{product.title}</p>
             <div className="flex justify-between">
-              <span className="text-[#868687] text-sm">
+              <span className="text-label text-sm">
                 Розмір: {isShoesSizes() ? `${sizesStored} UA` : sizesStored}
               </span>
-              <span className="text-[#1A1A1C] font-semibold text-base">
+              <span className="font-semibold text-base text-title">
                 {product.price} грн
               </span>
             </div>
@@ -241,7 +240,7 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
           <div
             onClick={() => setIsSuccessModalIsOpened(false)}
             className={cn(
-              "text-blue rounded-xl border-[1px] border-blue py-4 px-20 mb-3",
+              "mb-3 py-4 px-20 border rounded-xl border-blue text-blue",
               "hover:text-white hover:bg-blue cursor-pointer",
             )}
           >
@@ -250,8 +249,8 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
           <Link
             href={"/cart"}
             className={cn(
-              "text-white bg-blue rounded-xl py-4 px-20 mb-3 inline-block w-full",
-              "hover:text-blue hover:bg-white hover:border-blue border-[1px] cursor-pointer",
+              "inline-block w-full mb-3 py-4 px-20 rounded-xl bg-blue text-white",
+              "hover:text-blue hover:bg-white hover:border-blue border cursor-pointer",
             )}
           >
             Перейти в кошик

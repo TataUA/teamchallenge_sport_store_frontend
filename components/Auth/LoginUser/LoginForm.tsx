@@ -67,20 +67,17 @@ export const LoginForm = (props: LoginFormProps) => {
   const isMobile = useIsMobile();
 
   useEffect(() => {
+    if (error) {
+      dispatch(clearError());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (currentUser) {
       props.setShowModal?.(false);
     }
   }, [currentUser, props]);
-
-  useEffect(() => {
-    if (error) dispatch(clearError());
-  }, []);
-
-  // useEffect(() => {
-  //   return () => {
-  //     if (error) dispatch(clearError());
-  //   };
-  // }, [dispatch, error]);
 
   const handleSubmit = async (
     values: LoginFormValues,
@@ -91,13 +88,15 @@ export const LoginForm = (props: LoginFormProps) => {
     },
   ) => {
     try {
+      dispatch(clearError());
+
       const actionResult = await dispatch(loginUserThunk(values));
 
       if (loginUserThunk.fulfilled.match(actionResult)) {
         await dispatch(currentUserThunk()).unwrap();
         router.push("/auth/profile");
       } else if (loginUserThunk.rejected.match(actionResult)) {
-        const errorMessage = actionResult.payload?.message;
+        const errorMessage = actionResult.payload?.message || "";
 
         if (
           errorMessage ===
@@ -109,8 +108,6 @@ export const LoginForm = (props: LoginFormProps) => {
           } else {
             router.push(`/auth/confirming_letter?email=${values.email}`);
           }
-        } else {
-          console.error("Unexpected error message:", errorMessage);
         }
       }
     } catch (error) {
@@ -159,7 +156,7 @@ export const LoginForm = (props: LoginFormProps) => {
 
               <button
                 type="button"
-                className="block h-8 mt-2 mb-5 text-sm tracking-[0.32px] font-medium text-title underline"
+                className="block h-8 mt-2 mb-4 text-sm tracking-[0.32px] font-pangram font-medium text-title underline"
                 onClick={handleResetPasswordClick}
               >
                 Забули пароль?

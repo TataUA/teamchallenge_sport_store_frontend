@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,28 +13,26 @@ import { selectGeneralFilters } from "@/redux/generalFilters/generalFiltersSelec
 import { cn } from "@/services/utils/cn";
 
 const PriceFilter = () => {
-
-  const dispatch = useDispatch()
-  const {price} = useSelector(selectGeneralFilters)
+  const dispatch = useDispatch();
+  const { price } = useSelector(selectGeneralFilters);
 
   const [minPrice, setMinPrice] = useState(price.priceFrom);
   const [maxPrice, setMaxPrice] = useState(price.priceTo);
   const rangeRef = useRef<HTMLInputElement>(null);
-  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    if (name === 'min') {
+    if (name === "min") {
       setMinPrice(Math.min(Number(value), maxPrice - 1));
     } else {
       setMaxPrice(Math.max(Number(value), minPrice + 1));
     }
-    
   };
 
   useEffect(() => {
-    let timer 
-    if(!timer) {
-      timer = setTimeout(()=>{
+    let timer;
+    if (!timer) {
+      timer = setTimeout(() => {
         const updateSlider = () => {
           if (rangeRef.current) {
             const range = maxPrice - 499;
@@ -43,75 +41,81 @@ const PriceFilter = () => {
             rangeRef.current.style.left = `${minPosition}%`;
             rangeRef.current.style.width = `${maxPosition - minPosition}%`;
 
-            dispatch(setPrice({priceTo: maxPrice, priceFrom: minPrice}))
+            dispatch(setPrice({ priceTo: maxPrice, priceFrom: minPrice }));
           }
         };
         updateSlider();
-      },500)
+      }, 500);
     }
 
     return () => {
-      if(timer) clearTimeout(timer)
-    }
+      if (timer) clearTimeout(timer);
+    };
   }, [minPrice, maxPrice, dispatch]);
 
   // make price defaults after clicked button 'Скинути Фільтри'
-  useEffect(()=>{
-    if(price.priceFrom === 499) {
+  useEffect(() => {
+    if (price.priceFrom === 499) {
       setMinPrice(price.priceFrom);
     }
-    if(price.priceTo === 10999) {
+    if (price.priceTo === 10999) {
       setMaxPrice(price.priceTo);
     }
-  },[price])
+  }, [price]);
 
   return (
-    <div className="w-full">
+    <div className="w-full xl:px-4 ">
       <div className="relative h-5 mb-5 min-[2800px]:h-12">
-          <input
-            type="range"
-            min="499"
-            max="10999"
-            value={minPrice}
-            name="min"
-            onChange={handleChange}
-            className="absolute z-[2] translate-y-[-50%] top-[50%] left-0 w-full appearance-none bg-transparent pointer-events-none"
-          />
-          <input
-            type="range"
-            min="499"
-            max="10999"
-            value={maxPrice}
-            name="max"
-            onChange={handleChange}
-            className="absolute z-[2] top-[50%] translate-y-[-50%] left-0 w-full appearance-none bg-transparent pointer-events-none"
-          />
-          <div className="absolute top-1/2 -translate-y-1/2 w-full h-1 bg-[#E7E7E8]"></div>
-          <div className="absolute top-1/2 -translate-y-1/2 h-1 bg-blue-500" ref={rangeRef}></div>
-        </div>
-        <div className={cn("flex w-full gap-2 [&>input]:w-[50%] [&>input]:border-b-[1px] [&>input]:border-[#868687]",
-          '[&>input]:w-[50%] [&>input]:border-b-[1px] [&>input]:border-[#868687] [&>input]:pb-2',
-          'min-[2800px]:[&>input]:text-3xl'
-        )}>
-          <input
-            min="499"
-            max="10999"
-            value={minPrice}
-            name="min"
-            onChange={handleChange}
-            className="focus:outline-none focus:border-blue focus:text-blue"
-          />
-          <input
-            min="499"
-            max="10999"
-            value={maxPrice}
-            name="max"
-            onChange={handleChange}
-            className="focus:outline-none focus:border-blue focus:text-blue"
-          />
-        </div>
+        <input
+          type="range"
+          min="499"
+          max="10999"
+          value={minPrice}
+          name="min"
+          onChange={handleChange}
+          className="absolute z-[2] translate-y-[-50%] top-[50%] left-0 w-full appearance-none bg-transparent pointer-events-none"
+        />
+        <input
+          type="range"
+          min="499"
+          max="10999"
+          value={maxPrice}
+          name="max"
+          onChange={handleChange}
+          className="absolute z-[2] top-[50%] translate-y-[-50%] left-0 w-full appearance-none bg-transparent pointer-events-none"
+        />
+        <div className="absolute top-1/2 -translate-y-1/2 w-full h-1 bg-[#E7E7E8]"></div>
+        <div
+          className="absolute top-1/2 -translate-y-1/2 h-1 bg-blue-500"
+          ref={rangeRef}
+        ></div>
+      </div>
+      <div
+        className={cn(
+          "flex w-full gap-2 [&>input]:w-[50%] [&>input]:border-b-[1px] [&>input]:border-[#868687]",
+          "[&>input]:w-[50%] [&>input]:border-b-[1px] [&>input]:border-[#868687] [&>input]:pb-2",
+          "min-[2800px]:[&>input]:text-3xl",
+        )}
+      >
+        <input
+          min="499"
+          max="10999"
+          value={minPrice}
+          name="min"
+          onChange={handleChange}
+          className="focus:outline-none focus:border-blue focus:text-blue"
+        />
+        <input
+          min="499"
+          max="10999"
+          value={maxPrice}
+          name="max"
+          onChange={handleChange}
+          className="focus:outline-none focus:border-blue focus:text-blue"
+        />
+      </div>
     </div>
-    )
-}
+  );
+};
 
-export default PriceFilter
+export default PriceFilter;
