@@ -57,6 +57,12 @@ export interface IColors {
   color: IColor;
 }
 
+export interface IQuantity {
+  size: string;
+  color: string;
+  quantity: number;
+}
+
 export interface IProduct {
   id: number;
   title: string;
@@ -66,9 +72,10 @@ export interface IProduct {
   colors: IColors[];
   size: ProductSize[];
   images: ProductImage[];
-  quantity: {
-    size: string;
-    color: string;
-    quantity: number;
-  }[];
+  quantity: IQuantity[];
+}
+
+export interface IProductWithMaxQuantity extends IProduct {
+  maxQuantity: number;
+  idInBasketInDb?: number;
 }

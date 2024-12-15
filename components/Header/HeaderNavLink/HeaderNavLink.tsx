@@ -24,19 +24,17 @@ import { cn } from "@/services/utils/cn";
 import { selectCart } from "@/redux/cart/cartSelector";
 import { selectUserData } from "@/redux/auth/authSelector";
 import { currentUserThunk } from "@/redux/auth/authThunk";
+import { AppDispatch } from "@/redux/store";
 
 //hooks
 import { useIsMobile } from "@/hooks/useIsMobile";
-
-// hooks
-import useCartManagement from "@/hooks/useCartManagement";
-import { AppDispatch } from "@/redux/store";
+import { useCartSync } from "@/hooks/useCartSync";
 
 const HeaderNavLink = () => {
   const cart = useSelector(selectCart);
   const user = useSelector(selectUserData);
 
-  useCartManagement();
+  useCartSync();
 
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();

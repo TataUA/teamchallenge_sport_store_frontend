@@ -1,12 +1,12 @@
-import { IProduct } from "@/services/types";
+import {
+  IProduct,
+  IProductWithMaxQuantity,
+} from "@/services/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface IProductWithMaxQuantity extends IProduct {
-  maxQuantity: number;
-  idInBasketInDb?: number;
-}
 export interface ICartState {
   products: IProductWithMaxQuantity[];
+  outOfStockProducts: IProduct[];
   id: string;
   error: boolean;
   loading: boolean;
@@ -19,6 +19,7 @@ export interface ICartCreatedResponse {
 
 const initialState: ICartState = {
   products: [],
+  outOfStockProducts: [],
   id: "",
   error: false,
   loading: false,
@@ -33,16 +34,19 @@ const cartSlice = createSlice({
       state,
       { payload }: PayloadAction<IProductWithMaxQuantity>,
     ) => {
-      const existingProductIndex = state.products.findIndex(
-        (product) =>
-          product.id === payload.id &&
-          product.size[0].value.toLowerCase() ===
-            payload.size[0].value.toLowerCase() &&
-          product.colors[0].color.title.toLowerCase() ===
-            product.colors[0].color.title.toLowerCase(),
-      );
+      const existingProductIndex = state.products.findIndex((product) => {
+        const productData = JSON.parse(JSON.stringify(product));
 
-      if (existingProductIndex === -1) {
+        return (
+          productData.id === payload.id &&
+          productData.quantity[0].size.toLowerCase() ===
+            payload.quantity[0].size.toLowerCase() &&
+          productData.quantity[0].color.toLowerCase() ===
+            payload.quantity[0].color.toLowerCase()
+        );
+      });
+
+      if (existingProductIndex < 0) {
         state.products = [...state.products, payload];
       } else {
         state.products[existingProductIndex] = {
@@ -50,7 +54,10 @@ const cartSlice = createSlice({
           quantity: [
             {
               ...payload.quantity[0],
-              quantity: payload.quantity[0].quantity + 1,
+              quantity:
+                payload.quantity[0].quantity + 1 > payload.maxQuantity
+                  ? payload.maxQuantity
+                  : payload.quantity[0].quantity + 1,
             },
           ],
         };
@@ -119,17 +126,29 @@ const cartSlice = createSlice({
     saveCartIdFromDb: (state, { payload }: PayloadAction<string>) => {
       state.id = payload;
     },
+
     cleanCart: (state) => {
       state.products = [];
     },
+
+    setCart: (state, { payload }: PayloadAction<IProductWithMaxQuantity[]>) => {
+      state.products = payload;
+    },
+
     setLoadingCartFromDB: (state, { payload }: PayloadAction<boolean>) => {
       state.loading = payload;
     },
     setModalProductIsOutOfStock: (
       state,
-      { payload }: PayloadAction<boolean>,
+      {
+        payload,
+      }: PayloadAction<{
+        isOpened: boolean;
+        outOfStockProducts?: IProduct[];
+      }>,
     ) => {
-      state.isDisplayedModalProductIsOutOfStock = payload;
+      state.isDisplayedModalProductIsOutOfStock = payload.isOpened;
+      state.outOfStockProducts = payload.outOfStockProducts || [];
     },
   },
 });
@@ -140,6 +159,7 @@ export const {
   removeProductById,
   saveCartIdFromDb,
   cleanCart,
+  setCart,
   handleDecreasProductQuantity,
   handleIncreasProductQuantity,
   setLoadingCartFromDB,
