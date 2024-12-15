@@ -41,7 +41,7 @@ const ListItem = (props: ListItemProps) => {
         "flex flex-col gap-2 pb-5",
         bestSales
           ? "w-[167px] xl:w-[200px] "
-          : "w-[32.33333%] max-[767px]:w-[48.5%] max-[767px]:pb-4 max-[370px]:w-[100%] min-[1250px]:w-[24%] min-[2800px]:gap-6",
+          : " min-[190px]:w-[80%] min-[370px]:w-[48.5%] max-[767px]:pb-4 max-[370px]:w-[100%] min-[600px]:w-[32.33%] min-[800px]:w-[23.95833%] min-[2800px]:gap-6",
       )}
     >
       <Link
@@ -62,7 +62,7 @@ const ListItem = (props: ListItemProps) => {
             src={srcUrlImageString}
             width={167}
             height={252}
-            className="w-[200px] object-contain xl:w-[306px]"
+            className="w-[320px] object-contain "
           />
         )}
       </Link>
