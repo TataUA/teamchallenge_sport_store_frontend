@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, AppState } from "@/redux/store";
 
 import {
@@ -15,6 +15,7 @@ import {
   IProductWithMaxQuantity,
   IQuantity,
 } from "@/services/types";
+import { selectUserData } from "@/redux/auth/authSelector";
 
 
 function mergeProducts(
@@ -177,24 +178,23 @@ const syncCartOnLogin =
 
 export const useCartSync = () => {
   const dispatch: AppDispatch = useDispatch();
+  const user = useSelector(selectUserData);
 
   const mounted = useRef<boolean>(false);
-
-  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     if (mounted.current) {
       return;
     }
-    
-    
+
+    const token = localStorage.getItem("accessToken");
+
     if (token) {
       // Пользователь вошел: синхронизация с БД
       dispatch(syncCartOnLogin());
-      
+
       mounted.current = true;
       return;
     }
-    
-  }, [token, dispatch]);
+  }, [user, dispatch]);
 };
