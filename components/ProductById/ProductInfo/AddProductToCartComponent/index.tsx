@@ -41,7 +41,9 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
   const dispatch = useDispatch();
 
   const currentProduct = useSelector(selectCurrentProduct);
+
   const cart = useSelector(selectCart);
+
   const { sizes: sizesStored } = currentProduct;
 
   const isShoesSizes = () => {
@@ -77,13 +79,14 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
         item.color.toLowerCase() === currentProduct.color.toLowerCase() &&
         item.size.toLowerCase() == currentProduct.sizes.toLowerCase(),
     );
-    console.log(
-      "🚀 ~ handleClickCartButton ~ isProductExists:",
-      isProductExists,
-    );
 
     if (!isProductExists.length) {
-      dispatch(setModalProductIsOutOfStock(true));
+      dispatch(
+        setModalProductIsOutOfStock({
+          isOpened: true,
+          outOfStockProducts: [product],
+        }),
+      );
       return;
     }
 
@@ -126,22 +129,52 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
         },
       ],
     };
-    if (cart.id) {
-      const response = await addProductToCartInDbAction(
-        cart.id,
+
+    const basketId = localStorage.getItem("basketId");
+
+    const existingProduct = cart.products.find(
+      (product) =>
+        product.id === productWithSelectedSizeAndColor.id &&
+        product.quantity[0].size ===
+          productWithSelectedSizeAndColor.quantity[0].size &&
+        product.quantity[0].color ===
+          productWithSelectedSizeAndColor.quantity[0].color,
+    );
+
+    if (
+      existingProduct &&
+      existingProduct.quantity[0].quantity >= existingProduct.maxQuantity
+    ) {
+      dispatch(
+        setModalProductIsOutOfStock({
+          isOpened: true,
+          outOfStockProducts: [productWithSelectedSizeAndColor],
+        }),
+      );
+
+      return;
+    }
+
+    if (basketId) {
+      const itemIdInBasket = await addProductToCartInDbAction(
+        basketId,
         productWithSelectedSizeAndColor,
       );
-      console.log("🚀 ~ handleClickCartButton ~ response:", response);
 
-      if (!response) {
-        dispatch(setModalProductIsOutOfStock(true));
+      if (!itemIdInBasket) {
+        dispatch(
+          setModalProductIsOutOfStock({
+            isOpened: true,
+            outOfStockProducts: [productWithSelectedSizeAndColor],
+          }),
+        );
         return;
       }
 
       dispatch(
         setProduct({
           ...productWithSelectedSizeAndColor,
-          idInBasketInDb: response?.id,
+          idInBasketInDb: itemIdInBasket,
         }),
       );
     } else {
