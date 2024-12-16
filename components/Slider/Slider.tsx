@@ -42,8 +42,9 @@ interface SliderProps {
   bestSales?: boolean;
   bestSalesItem?: boolean;
   productsList?: boolean;
-  slidesPerView?: number;
-  slidesPerViewDesktop?: number;
+  slidesPerView: number;
+  spaceBetween?: number;
+  cssMode?: boolean;
   className?: string;
 }
 
@@ -58,7 +59,8 @@ export const Slider = ({
   bestSales,
   bestSalesItem,
   slidesPerView = 1,
-  slidesPerViewDesktop,
+  spaceBetween = 0,
+  cssMode = false,
   className = "",
 }: SliderProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -86,7 +88,7 @@ export const Slider = ({
     <div className={cn("w-full flex", className)}>
       <div>
         {isProductPage && (
-          <div className="w-[88px] mr-3  hidden 1440:flex flex-col rounded-xl">
+          <div className="w-[88px] mr-3 hidden 1440:flex flex-col rounded-xl">
             {data?.map((item, index) => (
               <div
                 key={uuidv4()}
@@ -111,9 +113,18 @@ export const Slider = ({
         )}
       </div>
 
-      <ul className={cn("h-full w-full", { "1440:w-[528px]": isProductPage })}>
+      <div className={cn("h-full w-full", { "1440:w-[528px]": isProductPage })}>
         <Swiper
           className="h-full"
+          cssMode={cssMode}
+          slidesPerView={slidesPerView}
+          spaceBetween={spaceBetween}
+          autoplay={autoPlay}
+          effect="slide"
+          speed={500}
+          loop={loop}
+          loopAdditionalSlides={1}
+          modules={[Autoplay, Navigation, Pagination]}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
           onSlideChange={(swiper) => {
             setActiveIndex(swiper.realIndex);
@@ -155,94 +166,81 @@ export const Slider = ({
                   },
                 }
           }
-          slidesPerView={slidesPerView}
-          autoplay={autoPlay}
-          effect="slide"
-          speed={500}
-          loop={loop}
-          loopAdditionalSlides={1}
-          modules={[Autoplay, Navigation, Pagination]}
-          breakpoints={{
-            0: {
-              slidesPerView: slidesPerView,
-            },
-            1440: {
-              slidesPerView: slidesPerViewDesktop || slidesPerView,
-            },
-          }}
         >
-          {bestSales
-            ? products.map((product) => (
-                <SwiperSlide key={uuidv4()}>
-                  <ListItem bestSales={true} product={product} />
-                </SwiperSlide>
-              ))
-            : data?.map(({ image, images, title, href }) => (
-                <SwiperSlide key={uuidv4()}>
-                  {cardImage ? (
-                    <div className="max-w-[850px] mx-auto relative flex items-center justify-center rounded-2xl 1440:rounded-[20px] overflow-hidden group">
-                      <Image
-                        alt={title || "image"}
-                        src={image || ""}
-                        width={850}
-                        height={1300}
-                        priority
-                        style={{
-                          objectFit: "contain",
-                        }}
-                      />
-                      {isProductPage && <SliderButtons />}
-                    </div>
-                  ) : popularCat ? (
-                    <li className="relative mr-2 xl:mr-6">
-                      <Link href={href ?? "/"}>
-                        <div className="relative w-[108px] h-[108px] overflow-hidden rounded-xl mb-2 flex  justify-center xl:w-[312px] xl:h-[180px]  xl:rounded-2xl">
-                          <Image
-                            width={108}
-                            height={108}
-                            src={image || ""}
-                            alt=""
-                            className="object-center object-cover xl:w-full xl:h-full "
-                          />
-                        </div>
-                      </Link>
-                      <div className="absolute top-0 left-0 w-[108px] h-    [108px] overflow-hidden rounded-xl xl:w-[312px] xl:h-[180px] z-30 xl:bg-gradient-to-t from-black/20 to-black/0 xl:rounded-2xl"></div>
-                      <h3 className="z-40 text-sm font-medium w-24 xl:absolute md:bottom-6 md:left-[22px] md:w-full xl:text-white xl:text-xl tracking-[0.015] xl:tracking-wide ">
-                        {title}
-                      </h3>{" "}
-                    </li>
-                  ) : (
-                    <div className="xl:h-[624px]">
-                      <Link
-                        href={href ?? "/"}
-                        className={cn(
-                          "h-full w-full absolute left-0 top-0",
-                          "xl:hidden",
-                        )}
-                        style={{
-                          background: images
-                            ? `center center / cover scroll no-repeat url(${images.mobile})`
-                            : undefined,
-                        }}
-                      ></Link>
-                      <Link
-                        href={href ?? "/"}
-                        className={cn(
-                          "hidden h-full w-full absolute left-0 top-0",
-                          "xl:block",
-                        )}
-                        style={{
-                          background: images
-                            ? `center center / cover scroll no-repeat url(${images.desktop})`
-                            : undefined,
-                        }}
-                      ></Link>
-                    </div>
-                  )}
-                </SwiperSlide>
-              ))}
+          <ul>
+            {bestSales
+              ? products.map((product) => (
+                  <SwiperSlide key={uuidv4()} className="!w-auto">
+                    <ListItem bestSales={true} product={product} />
+                  </SwiperSlide>
+                ))
+              : data?.map(({ image, images, title, href }) => (
+                  <SwiperSlide key={uuidv4()}>
+                    {cardImage ? (
+                      <div className="max-w-[850px] mx-auto relative flex items-center justify-center rounded-2xl 1440:rounded-[20px] overflow-hidden group">
+                        <Image
+                          alt={title || "image"}
+                          src={image || ""}
+                          width={850}
+                          height={1300}
+                          priority
+                          style={{
+                            objectFit: "contain",
+                          }}
+                        />
+                        {isProductPage && <SliderButtons />}
+                      </div>
+                    ) : popularCat ? (
+                      <div className="relative mr-2 xl:mr-6">
+                        <Link href={href ?? "/"}>
+                          <div className="relative w-[108px] h-[108px] overflow-hidden rounded-xl mb-2 flex  justify-center xl:w-[312px] xl:h-[180px]  xl:rounded-2xl">
+                            <Image
+                              width={108}
+                              height={108}
+                              src={image || ""}
+                              alt=""
+                              className="object-center object-cover xl:w-full xl:h-full "
+                            />
+                          </div>
+                        </Link>
+                        <div className="absolute top-0 left-0 w-[108px] h-    [108px] overflow-hidden rounded-xl xl:w-[312px] xl:h-[180px] z-30 xl:bg-gradient-to-t from-black/20 to-black/0 xl:rounded-2xl"></div>
+                        <h3 className="z-40 text-sm font-medium w-24 xl:absolute md:bottom-6 md:left-[22px] md:w-full xl:text-white xl:text-xl tracking-[0.015] xl:tracking-wide ">
+                          {title}
+                        </h3>{" "}
+                      </div>
+                    ) : (
+                      <div className="xl:h-[624px]">
+                        <Link
+                          href={href ?? "/"}
+                          className={cn(
+                            "h-full w-full absolute left-0 top-0",
+                            "xl:hidden",
+                          )}
+                          style={{
+                            background: images
+                              ? `center center / cover scroll no-repeat url(${images.mobile})`
+                              : undefined,
+                          }}
+                        ></Link>
+                        <Link
+                          href={href ?? "/"}
+                          className={cn(
+                            "hidden h-full w-full absolute left-0 top-0",
+                            "xl:block",
+                          )}
+                          style={{
+                            background: images
+                              ? `center center / cover scroll no-repeat url(${images.desktop})`
+                              : undefined,
+                          }}
+                        ></Link>
+                      </div>
+                    )}
+                  </SwiperSlide>
+                ))}
+          </ul>
         </Swiper>
-      </ul>
+      </div>
     </div>
   );
 };
