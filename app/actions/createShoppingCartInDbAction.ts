@@ -1,9 +1,22 @@
 'use client';
 
 import { $instance} from "@/services/api";
+import fetchShoppingCartFromServerAction from "./fetchShoppingCartFromServerAction";
 
 const createShoppingCartAction = async () => {
   try {
+    const basketId = localStorage.getItem('basketId');
+
+    if (basketId) {
+      const data = await fetchShoppingCartFromServerAction(basketId);
+
+      !data && localStorage.removeItem("basketId");
+
+      if(data) {
+        return basketId;
+      };
+    }
+
     const result = await $instance.post('baskets/', {}, {
       headers: {
         'Content-Type': 'application/json'
@@ -12,18 +25,18 @@ const createShoppingCartAction = async () => {
 
     if(result.status === 201) {
       const { data }: {data: {basket_id:string, user_id: number[]}} = result;
-      return {
-        basketId: data.basket_id,
-        userId: data.user_id
-      };
+
+      localStorage.setItem("basketId", data.basket_id);
+
+      return data.basket_id;
     }
 
-    return {basketId: '', userId: 0};
+    return null;
     
   } catch (error: any) {
     console.log("🚀 ~ fetchProductsAction ~ error:", error.response)
 
-    return {basketId: '', userId: 0}
+    return null
   }
 }
 

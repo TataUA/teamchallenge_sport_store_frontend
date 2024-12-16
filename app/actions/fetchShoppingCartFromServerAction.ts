@@ -1,42 +1,64 @@
-'use client';
+"use client";
 
 import { apiBaseUrl } from "@/services/api";
+import createShoppingCartAction from "./createShoppingCartInDbAction";
 
 export interface ICartResponseItem {
-  id: number
-  quantity: number
-  product: number
-  color: number
-  size: number
-  created_at: string
-  updated_at: number
-  basket: number
-  detail?: string
+  id: number;
+  quantity: number;
+  product: number;
+  color: number;
+  size: number;
+  created_at: string;
+  updated_at: number;
+  basket: number;
+  detail?: string;
 }
 
 const fetchShoppingCartFromServerAction = async (id: string) => {
   try {
     const result = await fetch(`${apiBaseUrl}baskets/${id}/`, {
-      next: { revalidate: 300, tags: ["cart"] },
+      cache: "no-store",
     });
-    
-    if(result.status === 200) {
-      const data: {id:string, items: ICartResponseItem[]} = await result?.json()
-      return {...data, reCreateBasket: false,};
+
+    if (result.status === 200) {
+      const data: { id: string; items: ICartResponseItem[] } =
+        await result?.json();
+
+      return data;
     }
-    
-    if(result.status === 404) {
-      const data: {detail: string} = await result?.json()
-      
-      if(data.detail.toLowerCase().includes("no basket matches the given query")) {
-        return {reCreateBasket: true, id:'', items: []}
+
+    if (result.status === 404) {
+      const data: { detail: string } = await result?.json();
+
+      if (
+        data.detail.toLowerCase().includes("no basket matches the given query")
+      ) {
+        const basketId = await createShoppingCartAction();
+
+        if (basketId) {
+          const result = await fetch(`${apiBaseUrl}baskets/${basketId}/`, {
+            cache: "no-store",
+          });
+
+          if (result.status === 200) {
+            const data: { id: string; items: ICartResponseItem[] } =
+              await result?.json();
+
+            return data;
+          }
+        }
+
+        return null;
       }
     }
-    
-    return {reCreateBasket: false, id:'', items: []};
-  } catch (error: any) {
-    console.log("🚀 ~ fetchProductsAction ~ error:", error.response)
-  }
-}
 
-export default fetchShoppingCartFromServerAction
+    return null;
+  } catch (error: any) {
+    console.log("🚀 ~ fetchProductsAction ~ error:", error.response);
+
+    return null;
+  }
+};
+
+export default fetchShoppingCartFromServerAction;

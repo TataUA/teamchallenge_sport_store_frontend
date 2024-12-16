@@ -1,16 +1,19 @@
 "use client";
 
 // core
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 // slices
 import { setModalProductIsOutOfStock } from "@/redux/cart/cartSlice";
+import { selectCart } from "@/redux/cart/cartSelector";
 
 // components
 import ProductIsOutOfStockModal from "./ProductIsOutOfStockModal";
 
 const ProductOutOfStock = () => {
   const dispatch = useDispatch();
+
+  const cart = useSelector(selectCart);
 
   const buttonClassname =
     "py-[11px] h-fit px-4 border-[1px] rounded-lg text-center border-blue w-full cursor-pointer";
@@ -24,6 +27,19 @@ const ProductOutOfStock = () => {
         <p className="text-sm md:text-base color-primary font-medium">
           Ми працюємо над його поповненням – слідкуйте за оновленнями!
         </p>
+        {cart.outOfStockProducts.length ? (
+          <ul>
+            <br />
+            Список товарів:
+            {cart.outOfStockProducts.map((product, index) => (
+              <li key={index}>
+                <span>{product.title},</span>{" "}
+                <span>колір:{product.quantity[0].color}</span>,{" "}
+                <span>розмір:{product.quantity[0].size}</span>
+              </li>
+            ))}
+          </ul>
+          ) : null}
       </div>
       <div className="flex gap-4 flex-wrap md:flex-nowrap justify-between text-base md:gap-5">
         <a
@@ -39,7 +55,13 @@ const ProductOutOfStock = () => {
             buttonClassname +
             " text-white bg-blue hover:text-blue hover:bg-white"
           }
-          onClick={() => dispatch(setModalProductIsOutOfStock(false))}
+          onClick={() =>
+            dispatch(
+              setModalProductIsOutOfStock({
+                isOpened: false,
+              }),
+            )
+          }
         >
           Продовжити покупки
         </div>

@@ -8,10 +8,12 @@ const fetchProductsAction = async (subCategory: string) => {
       `${apiBaseUrl}products/search/?category=${subCategory}`,
       { cache: "no-store" },
     );
+    
     if(result.status === 200) {
       const data = await result?.json()
       return data;
     }
+    
     return [];
   } catch (error: any) {
     console.log("🚀 ~ fetchProductsAction ~ error:", error.response)

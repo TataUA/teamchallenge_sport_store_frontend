@@ -1,7 +1,6 @@
 'use client';
 
 import { apiBaseUrl } from "@/services/api";
-import { revalidateTag } from "next/cache";
 
 const removeProductToCartInDbAction = async (basketId: string, itemIdInBasket: number) => {
   try {
@@ -12,8 +11,6 @@ const removeProductToCartInDbAction = async (basketId: string, itemIdInBasket: n
         "Content-Type": "application/json",
       },
     });
-
-    revalidateTag("products");
 
   } catch (error: any) {
     console.log("🚀 ~ fetchProductsAction ~ error:", error.response)

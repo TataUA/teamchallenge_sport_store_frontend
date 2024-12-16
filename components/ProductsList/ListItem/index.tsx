@@ -38,8 +38,8 @@ const ListItem = (props: ListItemProps) => {
     <div
       className={cn(
         bestSales
-          ? "w-[167px] xl:w-[200px]"
-          : "w-[32.33333%] max-[767px]:w-[48.5%] max-[767px]:pb-4 max-[370px]:w-[100%] min-[1250px]:w-[24%] min-[2800px]:gap-6",
+          ? "w-[167px] xl:w-[200px] "
+          : " min-[190px]:w-[80%] min-[370px]:w-[48.5%] max-[767px]:pb-4 max-[370px]:w-[100%] min-[600px]:w-[32.33%] min-[800px]:w-[23.95833%] min-[2800px]:gap-6",
       )}
     >
       <Link
@@ -56,11 +56,11 @@ const ListItem = (props: ListItemProps) => {
           />
         ) : (
           <Image
-            alt=""
+            alt={product.title}
             src={srcUrlImageString}
             width={167}
             height={252}
-            className="w-[200px] object-contain xl:w-[306px] rounded-xl"
+            className="w-[320px] object-contain rounded-xl"
           />
         )}
         <p

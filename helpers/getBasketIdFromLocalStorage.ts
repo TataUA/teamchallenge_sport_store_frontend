@@ -1,16 +1,23 @@
 export const getBasketIdFromLocalStorage = () => {
-  const idLocalStorage = localStorage.getItem("basketId");
+  try {
+    const basketId = localStorage.getItem("basketId");
 
-  if (idLocalStorage) {
-    const id = JSON.parse(idLocalStorage);
+    if (basketId) {
+      const id = JSON.parse(basketId);
 
-    return  id || "";
+      return id;
+    }
+
+    return null;
+  } catch (error) {
+    console.log("🚀 ~ getBasketIdFromLocalStorage ~ error:", error);
+
+    return null;
   }
-  return "";
 };
 
 export const setBasketIdToLocalStorage = (basketId: string) => {
   return localStorage.setItem("basketId", JSON.stringify(basketId));
 };
 
-export default getBasketIdFromLocalStorage
+export default getBasketIdFromLocalStorage;
