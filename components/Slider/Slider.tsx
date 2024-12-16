@@ -42,7 +42,7 @@ interface SliderProps {
   bestSales?: boolean;
   bestSalesItem?: boolean;
   productsList?: boolean;
-  slidesPerView: number;
+  slidesPerView?: number;
   spaceBetween?: number;
   cssMode?: boolean;
   className?: string;
