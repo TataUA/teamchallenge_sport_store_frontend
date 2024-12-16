@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { Slider } from "../Slider/Slider";
 
 import fetchSortedProductsAction from "@/app/actions/fetchSortedProductsAction";
+import { SliderWrapper } from "./SliderWrapper/SliderWrapper";
 
 interface SortedProductsProps {
   title: string;
@@ -9,24 +9,22 @@ interface SortedProductsProps {
   sort: string;
 }
 
-export default async function SortedProducts({
+export const SortedProducts = async ({
   title,
   page,
   sort,
-}: SortedProductsProps) {
+}: SortedProductsProps) => {
   const products = await fetchSortedProductsAction(sort, 6);
 
   return (
-    <section className=" font-pangram px-6 xl:container xl:mx-auto xl:px-[60px] xl:pt-[46px] xl:pb-[52px]">
-      <div className="flex justify-between text-title items-center mb-4 md:mb-8 xl:mb-8">
-        <h2 className="text-xl leading-140 font-semibold  md:text-2xl md:leading-7 ">
-          {title}
-        </h2>
+    <section className="container px-6 1440:px-[60px] pb-4 1440:pb-[52px] 1440:pt-[52px]">
+      <div className="flex items-center justify-between text-title mb-4 1440:mb-8">
+        <h2 className="font-semibold text-xl 1440:text-2xl">{title}</h2>
         <Link
           href={`/sortedProducts${page}?limit=12`}
-          className=" flex gap-1 items-center text-sm text-[#083DC5] xl:text-base"
+          className="flex gap-1 items-center text-sm 1440:text-base text-[#083DC5]"
         >
-          <p className="tracking-wider xl:tracking-normal xl:mr-1">
+          <p className="tracking-custom_4 1440:tracking-normal">
             Подивитись всі
           </p>
           <svg
@@ -47,15 +45,7 @@ export default async function SortedProducts({
           </svg>
         </Link>
       </div>
-      <ul className="w-[calc(100%+24px)]  ">
-        <Slider
-          products={products}
-          autoPlay={false}
-          bestSales
-          slidesPerView={2.1}
-          slidesPerViewDesktop={6}
-        />
-      </ul>
+      <SliderWrapper products={products} />
     </section>
   );
-}
+};

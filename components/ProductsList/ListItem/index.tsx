@@ -3,9 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { cn } from "@/services/utils/cn";
-import getArrayRemovedColorsDuplicates from "@/helpers/getArrayRemovedDuplicates";
-
 import { IProduct } from "@/services/types";
+import getArrayRemovedColorsDuplicates from "@/helpers/getArrayRemovedDuplicates";
 
 interface ListItemProps {
   product: IProduct;
@@ -38,7 +37,6 @@ const ListItem = (props: ListItemProps) => {
   return (
     <div
       className={cn(
-        "flex flex-col gap-2 pb-5",
         bestSales
           ? "w-[167px] xl:w-[200px] "
           : " min-[190px]:w-[80%] min-[370px]:w-[48.5%] max-[767px]:pb-4 max-[370px]:w-[100%] min-[600px]:w-[32.33%] min-[800px]:w-[23.95833%] min-[2800px]:gap-6",
@@ -46,55 +44,52 @@ const ListItem = (props: ListItemProps) => {
     >
       <Link
         href={`/product/${product.id}`}
-        className="rounded-[12px] overflow-hidden cursor-pointer"
+        className="flex flex-col gap-2 rounded-xl overflow-hidden cursor-pointer"
       >
         {bestSales ? (
           <Image
-            alt=""
+            alt={product.title}
             src={product.colors[0].image_url}
-            width={167}
-            height={252}
-            className="w-[200px] object-contain "
+            width={200}
+            height={302}
+            className="mb-2 rounded-xl object-contain"
           />
         ) : (
           <Image
-            alt=""
+            alt={product.title}
             src={srcUrlImageString}
             width={167}
             height={252}
-            className="w-[320px] object-contain "
+            className="w-[320px] object-contain rounded-xl"
           />
         )}
+        <p
+          className={cn(
+            "line-clamp-2 h-10 hover:opacity-[50%] font-medium text-sm tracking-custom_4",
+            bestSales ? "text-common" : "text-secondary",
+          )}
+        >
+          {title}
+        </p>
+        <ul className="flex gap-2">
+          {getArrayRemovedColorsDuplicates(colors)?.map(
+            (item: { title: string; id: number }) => (
+              <li
+                key={item.id}
+                className={cn(
+                  `bg-${item.title.toLowerCase()} relative min-w-2 min-h-2 rounded-[50%]`,
+                  {
+                    border: item.title.toLowerCase() == "white",
+                  },
+                )}
+              />
+            ),
+          )}
+        </ul>
+        <p className="font-semibold text-base text-title tracking-custom_2">
+          {price.slice(0, -3) + " грн"}
+        </p>
       </Link>
-      <Link
-        href={`/product/${product.id}`}
-        className={cn(
-          bestSales
-            ? "text-[#3E3E40] xl:text-sm xl:tracking-wider"
-            : "text-[#575758]",
-          "line-clamp-2 h-10 cursor-pointer hover:opacity-[50%] text-base max-[767px]:text-sm font-medium min-[2800px]:text-3xl",
-        )}
-      >
-        {title}
-      </Link>
-      <ul className="flex gap-2 min-[2800px]:gap-5">
-        {getArrayRemovedColorsDuplicates(colors)?.map(
-          (item: { title: string; id: number }) => (
-            <li
-              key={item.id}
-              className={cn(
-                `bg-${item.title.toLowerCase()} relative min-w-2 min-h-2 rounded-[50%] min-[2800px]:size-8 `,
-                {
-                  border: item.title.toLowerCase() == "white",
-                },
-              )}
-            />
-          ),
-        )}
-      </ul>
-      <div className="text-[#1A1A1C] truncate text-xl max-[767px]:text-base font-semibold min-[2800px]:text-4xl xl:text-base xl:mt-1.5 ">
-        {price.slice(0, -3) + " грн"}
-      </div>
     </div>
   );
 };

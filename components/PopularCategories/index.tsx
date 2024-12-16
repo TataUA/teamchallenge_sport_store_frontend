@@ -1,5 +1,5 @@
-import { popularCategories } from "./popular-categories.data";
-import { Slider } from "../Slider/Slider";
+import { popularCategories } from "@/public/data/popular-categories.data";
+import { Slider } from "@/components/Slider/Slider";
 
 export default function PopularCategories() {
   return (
@@ -13,7 +13,7 @@ export default function PopularCategories() {
           autoPlay={false}
           popularCat
           slidesPerView={3.2}
-          slidesPerViewDesktop={4}
+          //slidesPerViewDesktop={4}
           loop={false}
         />
       </ul>

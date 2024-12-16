@@ -18,11 +18,11 @@ const config: Config = {
         center: true,
         screens: {
           DEFAULT: "100%",
-          xl: "1440px",
         },
       },
       screens: {
         "608": "608px",
+        xl: "1440px",
         "1440": "1440px",
       },
       lineHeight: {
