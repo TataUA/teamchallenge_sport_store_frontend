@@ -54,7 +54,7 @@ body {
   }
 
   .container {
-    @apply mx-auto px-6;
+    @apply max-w-full xl:max-w-[1440px] px-6 xl:px-[60px];
   }
 
   .loader {
