@@ -2,13 +2,10 @@
 
 import { useCallback } from "react";
 
-// types
-import { IProduct } from "@/services/types";
-
-// components
-import ListItem from "../ListItem";
-import Pagination from "../Pagination";
 import { IFilters } from "@/app/products/[...sub_category]/page";
+import { IProduct } from "@/services/types";
+import ListItem from "@/components/ProductsList/ListItem";
+import Pagination from "@/components/ProductsList/Pagination";
 
 interface IProps {
   products: IProduct[];
@@ -47,7 +44,7 @@ const List = (props: IProps) => {
 
   return (
     <div>
-      <ul className="flex flex-wrap min-[800px]:gap-[1.3889%] gap-2 justify-center min-[370px]:justify-start  mb-5">
+      <ul className="flex flex-wrap gap-2 xl:gap-5 justify-start mb-5">
         {paginatedProducts.map((product, index) => (
           <ListItem key={product.id} product={product} />
         ))}
