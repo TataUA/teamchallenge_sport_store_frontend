@@ -17,16 +17,14 @@ export const SortedProducts = async ({
   const products = await fetchSortedProductsAction(sort, 6);
 
   return (
-    <section className="container px-6 1440:px-[60px] pb-4 1440:pb-[52px] 1440:pt-[52px]">
-      <div className="flex items-center justify-between text-title mb-4 1440:mb-8">
-        <h2 className="font-semibold text-xl 1440:text-2xl">{title}</h2>
+    <section className="container xl:py-[52px]">
+      <div className="flex items-center justify-between text-title mb-4 xl:mb-8">
+        <h2 className="font-semibold text-xl xl:text-2xl">{title}</h2>
         <Link
           href={`/sortedProducts${page}?limit=12`}
-          className="flex gap-1 items-center text-sm 1440:text-base text-[#083DC5]"
+          className="flex gap-1 items-center text-sm xl:text-base text-[#083DC5]"
         >
-          <p className="tracking-custom_4 1440:tracking-normal">
-            Подивитись всі
-          </p>
+          <p className="tracking-custom_4 xl:tracking-normal">Подивитись всі</p>
           <svg
             width="18px"
             height="18px"

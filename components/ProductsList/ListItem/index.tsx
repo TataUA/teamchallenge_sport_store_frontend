@@ -37,9 +37,10 @@ const ListItem = (props: ListItemProps) => {
   return (
     <div
       className={cn(
+        "pb-4",
         bestSales
           ? "w-[167px] xl:w-[200px] "
-          : " min-[190px]:w-[80%] min-[370px]:w-[48.5%] max-[767px]:pb-4 max-[370px]:w-[100%] min-[600px]:w-[32.33%] min-[800px]:w-[23.95833%] min-[2800px]:gap-6",
+          : "min-[320px]:[width:calc((100%-8px)/2)] min-[480px]:[width:calc((100%-16px)/3)] min-[1024px]:[width:calc((100%-24px)/4)] min-[1440px]:[width:calc((100%-60px)/4)]",
       )}
     >
       <Link
