@@ -12,12 +12,12 @@ const config: Config = {
       nunito: ["Nunito_Sans", "sans-serif"],
       inter: ["Inter", "sans-serif"],
     },
-
     extend: {
       container: {
         center: true,
         screens: {
           DEFAULT: "100%",
+          xl: "1440",
         },
       },
       screens: {
