@@ -15,11 +15,11 @@ import getCorrectQueryParamsSearchQuery from "@/helpers/getCorrectQueryParamsSea
 interface IProps {
   onClose?: () => void;
   stringSearch: boolean;
-  isListCategoriesMob: number;
+  isListCategories: number;
 }
 
-const SearchResultComponent = (props: IProps) => {
-  const { onClose, stringSearch, isListCategoriesMob } = props;
+const SearchResultComponentXL = (props: IProps) => {
+  const { onClose, stringSearch, isListCategories } = props;
   const {
     products: searchResult,
     loading,
@@ -43,7 +43,7 @@ const SearchResultComponent = (props: IProps) => {
   return (
     <div className="pt-5 xl:pt-0 xl:pb-2 xl:px-4 xl:rounded-2xl">
       {loading ? <Loader /> : null}
-      {!loading && searchResult?.length && isListCategoriesMob == 1 ? (
+      {!loading && searchResult?.length && isListCategories == 1 ? (
         <div className="xl:pb-5">
           <h3 className="mb-4 text-[#868687]">Товари</h3>
           {searchResult.slice(0, 4).map((product, index) => (
@@ -62,7 +62,7 @@ const SearchResultComponent = (props: IProps) => {
           </div>
         </div>
       ) : null}
-      {!loading && stringSearch && !isListCategoriesMob ? (
+      {!loading && stringSearch && !isListCategories ? (
         <>
           <h3 className="mt-4 text-center text-sm text-[#868687]">
             За вашим запитом нічого не знайдено
@@ -80,4 +80,4 @@ const SearchResultComponent = (props: IProps) => {
   );
 };
 
-export default SearchResultComponent;
+export default SearchResultComponentXL;
