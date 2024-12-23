@@ -27,7 +27,6 @@ import {
 
 // utils
 import { cn } from "@/services/utils/cn";
-import getCloseIconSVG from "@/helpers/getCloseIconSVG";
 import getTranslatedSubcategoryFromUkraineToEnglish from "@/helpers/getTranslatedSubcategoryFromUkraineToEnglish";
 import getOldQueryIconSVG from "@/helpers/getOldQueryIconSVG";
 import getArrowRightIconSVG from "@/helpers/getArrowRightIconSVG";
@@ -36,11 +35,11 @@ interface IProps {
   name: string;
   onClose?: () => void;
   setStringSearch: (id: boolean) => void;
-  setIsListCategoriesMob: (id: number) => void;
+  setIsListCategories: (id: number) => void;
 }
 
-const SearchForm = (props: IProps) => {
-  const { name, onClose, setStringSearch, setIsListCategoriesMob } = props;
+const SearchFormXL = (props: IProps) => {
+  const { name, onClose, setStringSearch, setIsListCategories } = props;
 
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
@@ -53,11 +52,10 @@ const SearchForm = (props: IProps) => {
     (category) => searchText && category.includes(searchText),
   );
 
-  console.log(`in SearchForm ${recomendedCategories.length}`);
   if (recomendedCategories.length > 0) {
-    setIsListCategoriesMob(recomendedCategories.length);
+    setIsListCategories(recomendedCategories.length);
   } else {
-    setIsListCategoriesMob(0);
+    setIsListCategories(0);
   }
 
   const handleChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,22 +97,6 @@ const SearchForm = (props: IProps) => {
     }
   };
 
-  const handleClickResetButton = () => {
-    setSearchText("");
-    dispatch(setSearchResultProducts(null));
-    setSearchQuery("");
-  };
-
-  const handleClickCloseIcon = () => {
-    setSearchText("");
-    dispatch(setSearchResultProducts(null));
-    setSearchQuery("");
-
-    setTimeout(() => {
-      onClose?.();
-    }, 100);
-  };
-
   const handleClickCategory = (subCategory: string) => {
     router.push(
       `/products/${getTranslatedSubcategoryFromUkraineToEnglish(subCategory)}/`,
@@ -154,11 +136,11 @@ const SearchForm = (props: IProps) => {
   }, [dispatch, searchText]);
 
   return (
-    <div className="">
+    <div>
       <div className="flex gap-2 items-center justify-between">
         <form
           className={cn(
-            "flex w-full rounded-xl gap-2 items-center bg-bgSearch px-4 py-2",
+            "flex w-full rounded-lg gap-2 items-center bg-bgSearch px-4 py-2",
           )}
           onSubmit={handleSubmit}
         >
@@ -188,23 +170,11 @@ const SearchForm = (props: IProps) => {
             onChange={(e) => handleChangeInput(e)}
             onKeyDown={(e) => handleKeyboardEvent(e)}
           />
-          <div
-            className="[&>svg]:size-5 [&>svg]:fill-[#868687]"
-            onClick={handleClickResetButton}
-          >
-            {getCloseIconSVG()}
-          </div>
         </form>
-        <span
-          className="text-sm text-[#868687] cursor-pointer hover:underline xl:hidden"
-          onClick={() => handleClickCloseIcon()}
-        >
-          Скасувати
-        </span>
       </div>
       {products && recomendedCategories?.length ? (
         <>
-          <div className="mt-5">
+          <div className="mt-5 py-2 px-4">
             <h4 className="text-[#868687] text-base mb-1">Категорії</h4>
             {recomendedCategories.map((item, index) => (
               <div
@@ -221,13 +191,13 @@ const SearchForm = (props: IProps) => {
       ) : null}
       {!searchText && previousQueries?.length ? (
         <>
-          <div className="mt-5">
+          <div className="mt-2 py-[10px] px-[18px]">
             {[...previousQueries]?.reverse()?.map((item, index) => (
               <div
                 className={cn(
-                  "text-sm min-h-[48px] text-[#272728] capitalize flex items-center gap-3 py-2 cursor-pointer",
+                  "text-sm min-h-[48px] text-[#272828] xl:text-title capitalize flex items-center gap-3 py-2 cursor-pointer",
                   "hover:text-blue hover:underline",
-                  "border-b-[1px]",
+                  "border-b-[1px] xl:border-b-[#E7E7E8]",
                 )}
                 key={index}
                 onClick={() => handleClickOldQuery(item)}
@@ -241,7 +211,7 @@ const SearchForm = (props: IProps) => {
       ) : null}
       {searchText && !products && recomendedCategories?.length ? (
         <>
-          <div className="mt-5">
+          <div className="mt-5 py-2 px-4">
             <h3 className="mb-5">Можливо ви мали на увазі</h3>
             {recomendedCategories.map((item, index) => (
               <div
@@ -263,4 +233,4 @@ const SearchForm = (props: IProps) => {
   );
 };
 
-export default SearchForm;
+export default SearchFormXL;
