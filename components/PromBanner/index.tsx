@@ -1,46 +1,45 @@
-import { cn } from "@/services/utils/cn";
 import Image from "next/image";
 import Link from "next/link";
 
+import { cn } from "@/services/utils/cn";
+
 export default async function PromBanner() {
   return (
-    <section className="font-pangram mx-auto py-12 xl:px-[60px] xl:pt-[48px] xl:pb-[62px]">
-      <div className=" mx-auto relative rounded-2xl w-[342px] h-[268px]  xl:w-[1320px]  xl:h-[432px] ">
-        <div className="absolute  w-[100%] h-[100%] bg-slate-300 overflow-hidden z-[-1]  rounded-2xl  xl:hidden">
+    <section className="container py-12 xl:pt-[48px] xl:pb-[62px]">
+      <div className="relative w-[342px] h-[268px] xl:w-[1320px] xl:h-[432px] mx-auto rounded-2xl">
+        <div className="z-[-1] absolute xl:relative xl:hidden w-full h-full bg-slate-300 overflow-hidden rounded-2xl">
           <Image
             src="/images/prom-banner/prom-banner-mobile.jpg"
-            layout="fill"
-            objectFit="cover"
-            quality={100}
             alt="image"
+            quality={100}
+            fill
+            style={{ objectFit: "cover" }}
+            priority
           />
         </div>
-        <div className="hidden xl:w-[100%] xl:h-[100%] overflow-hidden rounded-2xl z-[-1] xl:absolute xl:block ">
+        <div className="relative z-[-1] hidden xl:absolute xl:block w-full h-full overflow-hidden rounded-2xl">
           <Image
             src="/images/prom-banner/prom-banner-desktop.jpg"
-            layout="fill"
-            objectFit="cover"
-            quality={100}
             alt="image"
+            quality={100}
+            fill
+            style={{ objectFit: "cover" }}
+            priority
           />
         </div>
-        <div className="px-4 pt-[110px] pb-6 text-white z-10 xl:pt-[234px] xl:w-[575px] xl:px-[40px]">
+        <div className="z-10 xl:w-[575px] px-4 xl:px-[40px] pt-[110px] xl:pt-[234px] pb-6 text-white">
           <h2
             className={cn(
-              "text-base mb-2 font-bold",
-              "md:text-xl ",
+              "mb-2 text-base font-bold",
               "xl:text-2xl font-semibold",
-              "min-[2800px]:text-5xl",
             )}
           >
             Palermo Vintage Sneakers Collection
           </h2>
           <p
             className={cn(
-              "text-sm leading-[18px] tracking-[0.04em] mb-5",
-              "md:text-base",
-              "xl:mb-[35px] xl:w-[575px] xl:tracking-wider xl:font-light",
-              "min-[2800px]:text-3xl",
+              "mb-5 text-sm leading-[18px] tracking-[0.04em]",
+              "xl:mb-[35px] w-[575px] tracking-wider font-light",
             )}
           >
             Максимальний комфорт для активного життя. Обирайте найкраще для

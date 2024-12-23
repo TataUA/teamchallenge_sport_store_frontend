@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { aboutUs } from "./about-us.data";
 
 import getAboutUs1 from "@/helpers/getAboutUs1";
 import getAboutUs156 from "@/helpers/getAboutUs156";
@@ -7,6 +6,7 @@ import getAboutUs256 from "@/helpers/getAboutUs256";
 import getAboutUs264 from "@/helpers/getAboutUs264";
 import getAboutUs356 from "@/helpers/getAboutUs356";
 import getAboutUs364 from "@/helpers/getAboutUs364";
+import { aboutUs } from "@/public/data/about-us.data";
 
 export default function AboutUs() {
   return (
