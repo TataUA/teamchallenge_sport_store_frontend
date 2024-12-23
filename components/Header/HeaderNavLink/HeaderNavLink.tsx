@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -19,6 +19,7 @@ import { ConfirmingLetterContent } from "@/components/Auth/ConfirmEmail/Confirmi
 
 // utils
 import { cn } from "@/services/utils/cn";
+import { v4 as uuidv4 } from "uuid";
 
 // store
 import { selectCart } from "@/redux/cart/cartSelector";
@@ -43,7 +44,6 @@ const HeaderNavLink = () => {
   const router = useRouter();
   const isMobile = useIsMobile();
 
-  const [isUser, setIsUser] = useState(user);
   const [showModal, setShowModal] = useState(false);
   const [showRegistration, setShowRegistration] = useState(false);
   const [showConfirmRegister, setShowConfirmRegister] = useState(false);
@@ -84,7 +84,7 @@ const HeaderNavLink = () => {
     <>
       <ul className="flex items-center gap-1 xl:gap-x-2.5">
         {headerNav.map(({ href, name }) => (
-          <li className="py-2 px-2 h-10" key={name}>
+          <li className="py-2 px-2 h-10" key={uuidv4()}>
             {name === "search" ? (
               <SearchComponent />
             ) : name === "user" ? (
@@ -92,17 +92,17 @@ const HeaderNavLink = () => {
                 {iconsData.map((icon) => {
                   return (
                     icon.name === name && (
-                      <>
+                      <React.Fragment key={uuidv4()}>
                         {user ? (
                           <span>{getUserlogged()}</span>
                         ) : (
                           <SvgComponent
-                            key={icon.name}
+                            key={uuidv4()}
                             viewBox={icon.viewBox}
                             path={icon.path}
                           />
                         )}
-                      </>
+                      </React.Fragment>
                     )
                   );
                 })}
@@ -113,7 +113,7 @@ const HeaderNavLink = () => {
                   return (
                     icon.name === name && (
                       <span
-                        key={icon.name}
+                        key={uuidv4()}
                         className="hover:opacity-100  cursor-pointer "
                       >
                         {name === "cart" && cart.products?.length ? (
@@ -128,7 +128,7 @@ const HeaderNavLink = () => {
                           </div>
                         ) : null}
                         <SvgComponent
-                          key={icon.name}
+                          key={uuidv4()}
                           viewBox={icon.viewBox}
                           path={icon.path}
                           classname={cn("", {
