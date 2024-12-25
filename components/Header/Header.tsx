@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Logo } from "../Logo/Logo";
 import { LogoXl } from "../LogoXl/LogoXl";
@@ -12,7 +12,8 @@ import MenuGoods from "./MenuGoods/MenuGoods";
 
 export const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isChoseGenger, setIsChoseGender] = useState("men");
+  const [isChoseGenger, setIsChoseGender] = useState("");
+  const [isShowMenuGoogs, setIsShowMenuGoods] = useState(false);
 
   const handleLogoClick = () => {
     setIsModalOpen(false);
@@ -25,6 +26,21 @@ export const Header = () => {
     gender = 1;
   }
 
+  const showGoods = isShowMenuGoogs ? "block" : "none";
+
+  useEffect(() => {
+    window.addEventListener("wheel", () => {
+      setIsChoseGender("");
+      setIsShowMenuGoods(false);
+    });
+    return () => {
+      window.addEventListener("wheel", () => {
+        setIsChoseGender("");
+        setIsShowMenuGoods(false);
+      });
+    };
+  }, [isChoseGenger]);
+
   return (
     <>
       <header className="h-16 py-3 px-4 flex justify-between xl:hidden">
@@ -35,20 +51,24 @@ export const Header = () => {
         <Usernav />
       </header>
 
-      <header className="hidden xl:h-30 xl:flex xl:flex-col">
-        <div className="h-18 xl:container xl:mx-auto xl:px-[82px] py-3 flex justify-between items-center">
+      <header className="hidden xl:h-30 xl:flex xl:flex-col fixed top-0 left-0 right-0 bg-white z-50 ">
+        <div className="h-18 xl:container xl:mx-auto xl:px-[82px] py-2 flex justify-between items-center">
           <div className="h-12 w-50 flex items-center gap-1">
             <MenuGender
               navItems={NAV_ITEMS}
               setIsChoseGender={setIsChoseGender}
-              gender={gender}
+              gender={isChoseGenger}
+              setIsShowMenuGoods={(e) => setIsShowMenuGoods(e)}
             />
           </div>
           <LogoXl />
           <Usernav />
         </div>
-        <div className="h-12 w-full  bg-[#f7f7f7] ">
-          <div className="flex justify-start items-center xl:container xl:mx-auto xl:px-[82px]">
+        <div
+          className="h-12 w-full  bg-[#f7f7f7] transition duration-300"
+          style={{ display: showGoods }}
+        >
+          <div className="flex justify-start items-center xl:container xl:mx-auto xl:px-[82px]  transition duration-300">
             <MenuGoods navItems={NAV_ITEMS} gender={gender} />
           </div>
         </div>
