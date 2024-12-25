@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+
 import { useRouter } from "next/navigation";
 
 import { NavItem } from "@/services/types";
@@ -24,6 +25,7 @@ const MenuGoods = ({ navItems, gender }: NavItemListProps) => {
     } else {
       paddLeft = "pl-3";
     }
+
     return (
       <Button
         title={item.label}
@@ -37,7 +39,7 @@ const MenuGoods = ({ navItems, gender }: NavItemListProps) => {
     );
   });
 
-  return <div className=" flex justify-start gap-2">{elements}</div>;
+  return <div className="flex justify-start gap-2">{elements}</div>;
 };
 
 export default MenuGoods;

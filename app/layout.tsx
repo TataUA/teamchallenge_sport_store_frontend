@@ -39,7 +39,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <header>
           <Header />
         </header>
-        <main className="relative flex-1">{children}</main>
+        <main className="relative flex-1 xl:mt-16">{children}</main>
         <Footer />
         <div id="modal-root"></div>
         <ClientComponent>
