@@ -44,7 +44,7 @@ const MenuGenger = ({
         onClick={() => handleClick(navItems[0].title.key)}
         selected={gender === "men" ? true : false}
       />
-      <div className="h-4 w-[1px] mt-4 bg-[#E7E7E8]"></div>
+      <div className="h-4 w-[3px] px-[1px] mt-4 bg-[#E7E7E8]"></div>
       <Button
         title={navItems[1].title.label.toUpperCase()}
         onClick={() => handleClick(navItems[1].title.key)}
