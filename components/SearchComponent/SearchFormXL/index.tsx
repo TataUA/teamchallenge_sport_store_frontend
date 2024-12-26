@@ -191,13 +191,16 @@ const SearchFormXL = (props: IProps) => {
       ) : null}
       {!searchText && previousQueries?.length ? (
         <>
-          <div className="mt-2 py-[10px] px-[18px]">
+          <div className="mt-2 pt-[10px] px-[18px]">
             {[...previousQueries]?.reverse()?.map((item, index) => (
               <div
                 className={cn(
                   "text-sm min-h-[48px] text-[#272828] xl:text-title capitalize flex items-center gap-3 py-2 cursor-pointer",
                   "hover:text-blue hover:underline",
-                  "border-b-[1px] xl:border-b-[#E7E7E8]",
+                  {
+                    "border-b-[1px] xl:border-b-[#E7E7E8]":
+                      index < [...previousQueries].length - 1,
+                  },
                 )}
                 key={index}
                 onClick={() => handleClickOldQuery(item)}
