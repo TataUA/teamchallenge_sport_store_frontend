@@ -37,7 +37,10 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
           "border-blue": isSortingArrowUp,
         })}
       >
-        <div className="flex justify-between pr-3">
+        <div
+          className="flex justify-between pr-3"
+          onClick={() => setIsSortingArrowUp(!isSortingArrowUp)}
+        >
           <div className="flex justify-center items-center ">
             <div className="pr-3">{getSortingIconSVG24()}</div>
             <div className={classItemFilterText}>{isSortingSrting}</div>
@@ -46,7 +49,6 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
             className={cn(classItemFilterIcon, {
               "rotate-180 ": isSortingArrowUp,
             })}
-            onClick={() => setIsSortingArrowUp(!isSortingArrowUp)}
           >
             {getArrowDownSVG()}
           </div>

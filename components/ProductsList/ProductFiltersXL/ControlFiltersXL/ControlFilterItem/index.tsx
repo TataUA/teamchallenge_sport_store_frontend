@@ -34,13 +34,13 @@ const ControlPrice = (props: ControlFiltrItem) => {
         className={cn(classItemFilter.classFilter, {
           "border-blue": isSortingArrowUp,
         })}
+        onClick={() => setIsSortingArrowUp(!isSortingArrowUp)}
       >
         <div className={classItemFilterText}>{props.title}</div>
         <div
           className={cn(classItemFilterIcon, {
             "rotate-180 ": isSortingArrowUp,
           })}
-          onClick={() => setIsSortingArrowUp(!isSortingArrowUp)}
         >
           {getArrowDownSVG()}
         </div>
