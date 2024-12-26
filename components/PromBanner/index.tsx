@@ -6,7 +6,7 @@ import { cn } from "@/services/utils/cn";
 export default async function PromBanner() {
   return (
     <section className="container py-12 xl:pt-[48px] xl:pb-[62px]">
-      <div className="relative w-[342px] h-[268px] xl:w-[1320px] xl:h-[432px] mx-auto rounded-2xl">
+      <div className="relative w-full h-full xl:w-[1320px] xl:h-[432px] mx-auto rounded-2xl">
         <div className="z-[-1] absolute xl:relative xl:hidden w-full h-full bg-slate-300 overflow-hidden rounded-2xl">
           <Image
             src="/images/prom-banner/prom-banner-mobile.jpg"
@@ -28,20 +28,10 @@ export default async function PromBanner() {
           />
         </div>
         <div className="z-10 xl:w-[575px] px-4 xl:px-[40px] pt-[110px] xl:pt-[234px] pb-6 text-white">
-          <h2
-            className={cn(
-              "mb-2 text-base font-bold",
-              "xl:text-2xl font-semibold",
-            )}
-          >
+          <h2 className="mb-2 text-base xl:text-2xl font-bold xl:font-semibold">
             Palermo Vintage Sneakers Collection
           </h2>
-          <p
-            className={cn(
-              "mb-5 text-sm leading-[18px] tracking-[0.04em]",
-              "xl:mb-[35px] w-[575px] tracking-wider font-light",
-            )}
-          >
+          <p className="mb-5 xl:mb-[35px] text-sm xl:font-light leading-[18px] tracking-[0.04em] xl:tracking-wider">
             Максимальний комфорт для активного життя. Обирайте найкраще для
             ваших досягнень!
           </p>
