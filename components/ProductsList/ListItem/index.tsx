@@ -39,31 +39,29 @@ const ListItem = (props: ListItemProps) => {
       className={cn(
         "pb-4",
         bestSales
-          ? "w-[167px] xl:w-[200px] "
+          ? "w-full h-full flex justify-center items-center"
           : "min-[320px]:[width:calc((100%-8px)/2)] min-[480px]:[width:calc((100%-16px)/3)] min-[1024px]:[width:calc((100%-24px)/4)] min-[1440px]:[width:calc((100%-60px)/4)]",
       )}
     >
       <Link
         href={`/product/${product.id}`}
-        className="flex flex-col gap-2 rounded-xl overflow-hidden cursor-pointer"
-      >
-        {bestSales ? (
-          <Image
-            alt={product.title}
-            src={product.colors[0].image_url}
-            width={200}
-            height={302}
-            className="mb-2 rounded-xl object-contain"
-          />
-        ) : (
-          <Image
-            alt={product.title}
-            src={srcUrlImageString}
-            width={167}
-            height={252}
-            className="w-[320px] object-contain rounded-xl"
-          />
+        className={cn(
+          "flex flex-col gap-2 rounded-xl overflow-hidden cursor-pointer",
+          bestSales ? "w-full h-full" : "",
         )}
+      >
+        <Image
+          alt={product.title}
+          src={bestSales ? product.colors[0].image_url : srcUrlImageString}
+          width={200}
+          height={302}
+          priority
+          style={{
+            width: "auto",
+            height: "auto",
+          }}
+          className={cn("object-contain rounded-xl", bestSales && "mb-2")}
+        />
         <p
           className={cn(
             "line-clamp-2 h-10 hover:opacity-[50%] font-medium text-sm tracking-custom_4",

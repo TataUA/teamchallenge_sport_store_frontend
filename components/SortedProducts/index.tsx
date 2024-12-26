@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import fetchSortedProductsAction from "@/app/actions/fetchSortedProductsAction";
-import { SliderWrapper } from "./SliderWrapper/SliderWrapper";
+import { SliderWrapper } from "@/components/SortedProducts/SliderWrapper/SliderWrapper";
 
 interface SortedProductsProps {
   title: string;
@@ -18,11 +18,11 @@ export const SortedProducts = async ({
 
   return (
     <section className="container xl:py-[52px]">
-      <div className="flex items-center justify-between text-title mb-4 xl:mb-8">
+      <div className="flex items-center justify-between mb-4 xl:mb-8 text-title">
         <h2 className="font-semibold text-xl xl:text-2xl">{title}</h2>
         <Link
           href={`/sortedProducts${page}?limit=12`}
-          className="flex gap-1 items-center text-sm xl:text-base text-[#083DC5]"
+          className="flex items-center gap-1 text-sm xl:text-base text-[#083DC5]"
         >
           <p className="tracking-custom_4 xl:tracking-normal">Подивитись всі</p>
           <svg

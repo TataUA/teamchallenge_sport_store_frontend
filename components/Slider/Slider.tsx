@@ -170,7 +170,7 @@ export const Slider = ({
           <ul>
             {bestSales
               ? products.map((product) => (
-                  <SwiperSlide key={uuidv4()} className="!w-auto">
+                  <SwiperSlide key={uuidv4()}>
                     <ListItem bestSales={true} product={product} />
                   </SwiperSlide>
                 ))
