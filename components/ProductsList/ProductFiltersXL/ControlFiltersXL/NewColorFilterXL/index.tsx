@@ -6,11 +6,9 @@ import { generalProductsFilers } from "../../../ProductsFilters/filtersData";
 
 // helpers
 import getArrowDownSVG from "@/helpers/getArrowDownSVG";
-// types
-import { IProduct } from "@/services/types";
+
 //components
 import ColorsFilterXL from "../ColorFilterXL";
-import { headerNav } from "@/constants";
 
 interface ControlFiltrItem {
   title?: string | React.ReactNode;
