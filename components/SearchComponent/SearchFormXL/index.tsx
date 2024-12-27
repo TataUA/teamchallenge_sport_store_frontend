@@ -31,6 +31,9 @@ import getTranslatedSubcategoryFromUkraineToEnglish from "@/helpers/getTranslate
 import getOldQueryIconSVG from "@/helpers/getOldQueryIconSVG";
 import getArrowRightIconSVG from "@/helpers/getArrowRightIconSVG";
 
+//helpers
+import getCloseIconSVG from "@/helpers/getCloseIconSVG";
+
 interface IProps {
   name: string;
   onClose?: () => void;
@@ -110,6 +113,13 @@ const SearchFormXL = (props: IProps) => {
     dispatch(saveSearchQueryToArray(query));
   };
 
+  const handleClickResetButton = () => {
+    setSearchText("");
+    setStringSearch(false);
+    dispatch(setSearchResultProducts(null));
+    setSearchQuery("");
+  };
+
   useEffect(() => {
     dispatch(setSearchQuery(searchText));
     return () => {
@@ -135,9 +145,16 @@ const SearchFormXL = (props: IProps) => {
     return () => clearTimeout(debouncedSearch);
   }, [dispatch, searchText]);
 
+  //const style
+
   return (
     <div>
-      <div className="flex gap-2 items-center justify-between">
+      <div
+        className={cn("flex gap-2 items-center justify-between", {
+          "border-solid border rounded-lg border-[#868687]":
+            searchText.length > 0,
+        })}
+      >
         <form
           className={cn(
             "flex w-full rounded-lg gap-2 items-center bg-bgSearch px-4 py-2",
@@ -170,6 +187,15 @@ const SearchFormXL = (props: IProps) => {
             onChange={(e) => handleChangeInput(e)}
             onKeyDown={(e) => handleKeyboardEvent(e)}
           />
+          <div
+            className="[&>svg]:size-5 [&>svg]:fill-[#868687]"
+            onClick={handleClickResetButton}
+            style={
+              searchText.length > 0 ? { display: "block" } : { display: "none" }
+            }
+          >
+            {getCloseIconSVG()}
+          </div>
         </form>
       </div>
       {products && recomendedCategories?.length ? (

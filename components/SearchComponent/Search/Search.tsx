@@ -70,7 +70,7 @@ const Search = (props: SearchFormProps) => {
         </div>
       </div>
       <div
-        className="hidden xl:block xl:fixed z-30 left-0 top-0 w-[100%] h-[100%] overflow-auto"
+        className="hidden xl:block xl:fixed z-30 left-0 top-0 w-[100%] h-[100%] overflow-auto shadow-inner"
         id="wrapper-mod"
         onClick={(e) => handleClick(e)}
       >

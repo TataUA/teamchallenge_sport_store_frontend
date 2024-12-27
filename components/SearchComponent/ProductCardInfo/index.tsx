@@ -26,7 +26,7 @@ const ProductCardInfo = (props: IProps) => {
   return (
     <Link
       className={cn(
-        "flex min-h-6 gap-3 mb-4 pb-4 hover:bg-gray-100 border-b-[1px]",
+        "flex min-h-6 gap-3 mb-4 pb-4 hover:bg-gray-100 border-b-[1px] xl:border-[#E7E7E8]",
         `${classname ? classname : ""}`,
       )}
       onClick={() => handleClickItem()}
