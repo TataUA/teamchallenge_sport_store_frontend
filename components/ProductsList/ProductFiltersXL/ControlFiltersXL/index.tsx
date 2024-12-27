@@ -45,6 +45,9 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
   const pathname = usePathname();
   const [chosenSorting, setChosenSorting] = useState("");
 
+  // select / size / color / price  /  "" - не выбран
+  const [isChosenFilter, setIsChosenFilter] = useState("");
+
   const { searchParamsFilter, params, products, setOpenedChangesFilters } =
     props;
 
@@ -176,6 +179,8 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
                   searchParams={searchParamsFilter}
                   chosenSorting={chosenSorting}
                   setChosenSorting={setChosenSorting}
+                  isChosenFilter={isChosenFilter}
+                  setIsChosenFilter={setIsChosenFilter}
                 />
 
                 <ControlFilterItem
