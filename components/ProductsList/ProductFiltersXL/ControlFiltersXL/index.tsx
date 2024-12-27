@@ -13,7 +13,7 @@ import SortingFilterXL from "./SortingFilterXL";
 import ControlFilterItem from "./ControlFilterItem";
 import PriceFilterXL from "./PriceFilterXL";
 import ColorsFilterXL from "./ColorFilterXL";
-import SizeFilterXL from "./SizeFilterXL";
+import NewSizeFilterXL from "./NewSizeFilterXL";
 
 // typess
 import { IProduct } from "@/services/types";
@@ -182,39 +182,12 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
                   isChosenFilter={isChosenFilter}
                   setIsChosenFilter={setIsChosenFilter}
                 />
-
-                <ControlFilterItem
+                <NewSizeFilterXL
                   title={showSelectedSize}
-                  width="w-auto"
-                  hight="h-auto"
-                >
-                  {generalProductsFilers.map((generalFilter, index) => (
-                    <div className="mb-2 min-[2800px]:mb-20" key={index}>
-                      {generalFilter.id === "sizes" &&
-                      generalFilter.shoesPosibleProductTypes?.includes(
-                        props.params.sub_category[0],
-                      ) ? (
-                        <div className="px-4 pt-0">
-                          <SizeFilterXL
-                            products={props.products}
-                            shoesSizes={generalFilter.sizesShoes}
-                          />
-                        </div>
-                      ) : null}
-                      {generalFilter.id === "sizes" &&
-                      !generalFilter.shoesPosibleProductTypes?.includes(
-                        props.params.sub_category[0],
-                      ) ? (
-                        <div className="w-auto px-4">
-                          <SizeFilterXL
-                            products={props.products}
-                            clothesSizes={generalFilter.sizesClothes}
-                          />
-                        </div>
-                      ) : null}
-                    </div>
-                  ))}
-                </ControlFilterItem>
+                  params={params}
+                  products={products}
+                />
+   
                 <ControlFilterItem
                   title={showSelectedColor}
                   width="w-[252px]"
