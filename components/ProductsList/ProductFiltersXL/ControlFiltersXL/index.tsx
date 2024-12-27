@@ -12,8 +12,9 @@ import SortingFilterXL from "./SortingFilterXL";
 
 import ControlFilterItem from "./ControlFilterItem";
 import PriceFilterXL from "./PriceFilterXL";
-import ColorsFilterXL from "./ColorFilterXL";
+
 import NewSizeFilterXL from "./NewSizeFilterXL";
+import NewColorFilterXL from "./NewColorFilterXL";
 
 // typess
 import { IProduct } from "@/services/types";
@@ -189,23 +190,12 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
                   isChosenFilter={isChosenFilter}
                   setIsChosenFilter={setIsChosenFilter}
                 />
-
-                <ControlFilterItem
+                <NewColorFilterXL
                   title={showSelectedColor}
-                  width="w-[252px]"
-                  hight="h-auto"
-                >
-                  {generalProductsFilers.map((generalFilter, index) => (
-                    <div className="mb-2 min-[2800px]:mb-20" key={index}>
-                      {generalFilter.id === "color" &&
-                      generalFilter.colorValues ? (
-                        <div className="px-4 ">
-                          <ColorsFilterXL colors={generalFilter.colorValues} />
-                        </div>
-                      ) : null}
-                    </div>
-                  ))}
-                </ControlFilterItem>
+                  isChosenFilter={isChosenFilter}
+                  setIsChosenFilter={setIsChosenFilter}
+                />
+
                 <ControlFilterItem
                   title={showSelectedPrice}
                   width="w-[436px]"

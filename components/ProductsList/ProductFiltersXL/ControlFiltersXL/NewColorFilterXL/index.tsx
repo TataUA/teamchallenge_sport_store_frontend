@@ -1,26 +1,25 @@
 import React, { useState } from "react";
 import { cn } from "@/services/utils/cn";
-// helpers
-import getArrowDownSVG from "@/helpers/getArrowDownSVG";
 
-// hooks
+//hooks
 import { generalProductsFilers } from "../../../ProductsFilters/filtersData";
 
-//components
-import SizeFilterXL from "../SizeFilterXL";
+// helpers
+import getArrowDownSVG from "@/helpers/getArrowDownSVG";
 // types
 import { IProduct } from "@/services/types";
+//components
+import ColorsFilterXL from "../ColorFilterXL";
+import { headerNav } from "@/constants";
 
 interface ControlFiltrItem {
   title?: string | React.ReactNode;
-  params: { sub_category: string[] };
-  products: IProduct[];
   isChosenFilter: string;
   setIsChosenFilter: (id: string) => void;
 }
 
-const NewSizeFilterXL = (props: ControlFiltrItem) => {
-  const { title, params, products, isChosenFilter, setIsChosenFilter } = props;
+const NewColorFilterXL = (props: ControlFiltrItem) => {
+  const { title, isChosenFilter, setIsChosenFilter } = props;
 
   const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
 
@@ -33,12 +32,12 @@ const NewSizeFilterXL = (props: ControlFiltrItem) => {
   const classItemFilterIcon = "ml-2 mr-3  p-1 cursor-pointer ";
 
   const classWithProps =
-    "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 top-[64px] left-0 w-auto h-auto";
+    "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 top-[64px] left-0 w-[252px] h-auto";
 
   const handleClick = () => {
     setIsSortingArrowUp(!isSortingArrowUp);
     if (isSortingArrowUp == true) {
-      setIsChosenFilter("size");
+      setIsChosenFilter("color");
     } else {
       setIsChosenFilter("");
     }
@@ -48,46 +47,29 @@ const NewSizeFilterXL = (props: ControlFiltrItem) => {
     <div className=" relative">
       <li
         className={cn(classItemFilter.classFilter, {
-          "border-blue": isChosenFilter == "size",
+          "border-blue": isChosenFilter == "color",
         })}
         onClick={handleClick}
       >
         <div className={classItemFilterText}>{title}</div>
         <div
           className={cn(classItemFilterIcon, {
-            "rotate-180 ": isChosenFilter == "size",
+            "rotate-180 ": isChosenFilter == "color",
           })}
         >
           {getArrowDownSVG()}
         </div>
       </li>
-      {isChosenFilter == "size" ? (
+      {isChosenFilter == "color" ? (
         <div
           className={classWithProps}
           style={{ boxShadow: "0px 10px 10px rgba(14, 14, 16, 0.2)" }}
         >
           {generalProductsFilers.map((generalFilter, index) => (
             <div className="mb-2 min-[2800px]:mb-20" key={index}>
-              {generalFilter.id === "sizes" &&
-              generalFilter.shoesPosibleProductTypes?.includes(
-                params.sub_category[0],
-              ) ? (
-                <div className="px-4 pt-0">
-                  <SizeFilterXL
-                    products={products}
-                    shoesSizes={generalFilter.sizesShoes}
-                  />
-                </div>
-              ) : null}
-              {generalFilter.id === "sizes" &&
-              !generalFilter.shoesPosibleProductTypes?.includes(
-                params.sub_category[0],
-              ) ? (
-                <div className="w-auto px-4">
-                  <SizeFilterXL
-                    products={products}
-                    clothesSizes={generalFilter.sizesClothes}
-                  />
+              {generalFilter.id === "color" && generalFilter.colorValues ? (
+                <div className="px-4 ">
+                  <ColorsFilterXL colors={generalFilter.colorValues} />
                 </div>
               ) : null}
             </div>
@@ -98,4 +80,4 @@ const NewSizeFilterXL = (props: ControlFiltrItem) => {
   );
 };
 
-export default NewSizeFilterXL;
+export default NewColorFilterXL;
