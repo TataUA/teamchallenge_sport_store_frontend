@@ -186,8 +186,10 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
                   title={showSelectedSize}
                   params={params}
                   products={products}
+                  isChosenFilter={isChosenFilter}
+                  setIsChosenFilter={setIsChosenFilter}
                 />
-   
+
                 <ControlFilterItem
                   title={showSelectedColor}
                   width="w-[252px]"

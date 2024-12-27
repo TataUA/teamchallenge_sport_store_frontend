@@ -13,9 +13,13 @@ interface ControlFiltrItem {
   title?: string | React.ReactNode;
   params: { sub_category: string[] };
   products: IProduct[];
+  isChosenFilter: string;
+  setIsChosenFilter: (id: string) => void;
 }
 
 const NewSizeFilterXL = (props: ControlFiltrItem) => {
+  const { title, params, products, isChosenFilter, setIsChosenFilter } = props;
+
   const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
 
   const classItemFilter = {
@@ -29,24 +33,33 @@ const NewSizeFilterXL = (props: ControlFiltrItem) => {
   const classWithProps =
     "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 top-[64px] left-0 w-auto h-auto";
 
+  const handleClick = () => {
+    setIsSortingArrowUp(!isSortingArrowUp);
+    if (isSortingArrowUp == true) {
+      setIsChosenFilter("size");
+    } else {
+      setIsChosenFilter("");
+    }
+  };
+
   return (
     <div className=" relative">
       <li
         className={cn(classItemFilter.classFilter, {
-          "border-blue": isSortingArrowUp,
+          "border-blue": isChosenFilter == "size",
         })}
-        onClick={() => setIsSortingArrowUp(!isSortingArrowUp)}
+        onClick={handleClick}
       >
-        <div className={classItemFilterText}>{props.title}</div>
+        <div className={classItemFilterText}>{title}</div>
         <div
           className={cn(classItemFilterIcon, {
-            "rotate-180 ": isSortingArrowUp,
+            "rotate-180 ": isChosenFilter == "size",
           })}
         >
           {getArrowDownSVG()}
         </div>
       </li>
-      {isSortingArrowUp ? (
+      {isChosenFilter == "size" ? (
         <div
           className={classWithProps}
           style={{ boxShadow: "0px 10px 10px rgba(14, 14, 16, 0.2)" }}
@@ -55,22 +68,22 @@ const NewSizeFilterXL = (props: ControlFiltrItem) => {
             <div className="mb-2 min-[2800px]:mb-20" key={index}>
               {generalFilter.id === "sizes" &&
               generalFilter.shoesPosibleProductTypes?.includes(
-                props.params.sub_category[0],
+                params.sub_category[0],
               ) ? (
                 <div className="px-4 pt-0">
                   <SizeFilterXL
-                    products={props.products}
+                    products={products}
                     shoesSizes={generalFilter.sizesShoes}
                   />
                 </div>
               ) : null}
               {generalFilter.id === "sizes" &&
               !generalFilter.shoesPosibleProductTypes?.includes(
-                props.params.sub_category[0],
+                params.sub_category[0],
               ) ? (
                 <div className="w-auto px-4">
                   <SizeFilterXL
-                    products={props.products}
+                    products={products}
                     clothesSizes={generalFilter.sizesClothes}
                   />
                 </div>
