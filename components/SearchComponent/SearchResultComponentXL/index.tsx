@@ -41,7 +41,7 @@ const SearchResultComponentXL = (props: IProps) => {
   };
 
   return (
-    <div className="pt-5 xl:pt-0 xl:pb-2 xl:px-4 xl:rounded-2xl">
+    <div className="pt-5 xl:pt-0 xl:pb-2 xl:px-4 xl:rounded-2xl  ">
       {loading ? <Loader /> : null}
       {!loading && searchResult?.length && isListCategories == 1 ? (
         <div className="xl:pb-5">
@@ -64,7 +64,7 @@ const SearchResultComponentXL = (props: IProps) => {
       ) : null}
       {!loading && stringSearch && !isListCategories ? (
         <>
-          <h3 className="mt-4 text-center text-sm text-[#868687]">
+          <h3 className="mt-2 text-center text-sm text-[#868687] py-3">
             За вашим запитом нічого не знайдено
           </h3>
         </>
