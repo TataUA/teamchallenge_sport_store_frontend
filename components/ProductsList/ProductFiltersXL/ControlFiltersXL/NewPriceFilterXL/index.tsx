@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { cn } from "@/services/utils/cn";
+
 // helpers
 import getArrowDownSVG from "@/helpers/getArrowDownSVG";
 
+import PriceFilterXL from "../PriceFilterXL";
+
 interface ControlFiltrItem {
-  children: React.ReactNode;
   title?: string | React.ReactNode;
-  width: string;
-  hight: string;
+  isChosenFilter: string;
+  setIsChosenFilter: (id: string) => void;
 }
 
-const ControlPrice = (props: ControlFiltrItem) => {
+const NewPriceFilterXL = (props: ControlFiltrItem) => {
+  const { title, isChosenFilter, setIsChosenFilter } = props;
+
   const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
 
   const classItemFilter = {
@@ -21,40 +25,45 @@ const ControlPrice = (props: ControlFiltrItem) => {
   const classItemFilterText = "inline-block text-base leading-5 font-medium";
   const classItemFilterIcon = "ml-2 mr-3  p-1 cursor-pointer ";
 
-  const classBlockChosen = {
-    type1:
-      "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 top-[64px] left-0",
-  };
+  const classWithProps =
+    "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 top-[64px] left-0 w-[436px] h-[140px]";
 
-  const classWithProps = cn(classBlockChosen.type1, props.width, props.hight);
+  const handleClick = () => {
+    setIsSortingArrowUp(!isSortingArrowUp);
+    if (isSortingArrowUp == true) {
+      setIsChosenFilter("price");
+    } else {
+      setIsChosenFilter("");
+    }
+  };
 
   return (
     <div className=" relative">
       <li
         className={cn(classItemFilter.classFilter, {
-          "border-blue": isSortingArrowUp,
+          "border-blue": isChosenFilter == "price",
         })}
+        onClick={handleClick}
       >
-        <div className={classItemFilterText}>{props.title}</div>
+        <div className={classItemFilterText}>{title}</div>
         <div
           className={cn(classItemFilterIcon, {
-            "rotate-180 ": isSortingArrowUp,
+            "rotate-180 ": isChosenFilter == "price",
           })}
-          onClick={() => setIsSortingArrowUp(!isSortingArrowUp)}
         >
           {getArrowDownSVG()}
         </div>
       </li>
-      {isSortingArrowUp ? (
+      {isChosenFilter == "price" ? (
         <div
           className={classWithProps}
           style={{ boxShadow: "0px 10px 10px rgba(14, 14, 16, 0.2)" }}
         >
-          {props.children}
+          <PriceFilterXL />
         </div>
       ) : null}
     </div>
   );
 };
 
-export default ControlPrice;
+export default NewPriceFilterXL;

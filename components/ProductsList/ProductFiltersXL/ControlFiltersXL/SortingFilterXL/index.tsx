@@ -15,13 +15,21 @@ export interface ISortingFilterXLProps {
   searchParams: IFilters;
   setChosenSorting: (id: string) => void;
   chosenSorting: string;
+  isChosenFilter: string;
+  setIsChosenFilter: (id: string) => void;
 }
 
 const SortingFilterXL = (props: ISortingFilterXLProps) => {
-  const { searchParams, setChosenSorting, chosenSorting } = props;
+  const {
+    searchParams,
+    setChosenSorting,
+    chosenSorting,
+    isChosenFilter,
+    setIsChosenFilter,
+  } = props;
 
-  const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
   const [isSortingSrting, setIsSortingString] = useState("Рекомендовані");
+  const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
 
   const classItemFilter =
     "h-14  md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 pr-3";
@@ -30,29 +38,37 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
 
   const classItemFilterIcon = " p-1 cursor-pointer  ";
 
+  const handleClick = () => {
+    setIsSortingArrowUp(!isSortingArrowUp);
+    if (isSortingArrowUp == true) {
+      setIsChosenFilter("select");
+    } else {
+      setIsChosenFilter("");
+    }
+  };
+
   return (
     <>
       <li
         className={cn(classItemFilter, {
-          "border-blue": isSortingArrowUp,
+          "border-blue": isChosenFilter == "select",
         })}
       >
-        <div className="flex justify-between pr-3">
+        <div className="flex justify-between pr-3" onClick={handleClick}>
           <div className="flex justify-center items-center ">
             <div className="pr-3">{getSortingIconSVG24()}</div>
             <div className={classItemFilterText}>{isSortingSrting}</div>
           </div>
           <div
             className={cn(classItemFilterIcon, {
-              "rotate-180 ": isSortingArrowUp,
+              "rotate-180 ": isChosenFilter == "select",
             })}
-            onClick={() => setIsSortingArrowUp(!isSortingArrowUp)}
           >
             {getArrowDownSVG()}
           </div>
         </div>
 
-        {isSortingArrowUp ? (
+        {isChosenFilter == "select" ? (
           <SortingItems
             setChosenSorting={setChosenSorting}
             chosenSorting={chosenSorting}

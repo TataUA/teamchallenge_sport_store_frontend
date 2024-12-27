@@ -9,11 +9,9 @@ import { selectGeneralFilters } from "@/redux/generalFilters/generalFiltersSelec
 
 // components
 import SortingFilterXL from "./SortingFilterXL";
-
-import ControlFilterItem from "./ControlFilterItem";
-import PriceFilterXL from "./PriceFilterXL";
-import ColorsFilterXL from "./ColorFilterXL";
-import SizeFilterXL from "./SizeFilterXL";
+import NewSizeFilterXL from "./NewSizeFilterXL";
+import NewColorFilterXL from "./NewColorFilterXL";
+import NewPriceFilterXL from "./NewPriceFilterXL";
 
 // typess
 import { IProduct } from "@/services/types";
@@ -21,8 +19,6 @@ import { IFilters } from "@/app/products/[...sub_category]/page";
 
 // helpers
 import { getFilteredProductsClientSide } from "@/helpers/getFilteredProducts";
-
-import { generalProductsFilers } from "../../ProductsFilters/filtersData";
 
 export interface IProductsFiltersProps {
   searchParamsFilter: IFilters;
@@ -44,6 +40,9 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const [chosenSorting, setChosenSorting] = useState("");
+
+  // select / size / color / price  /  "" - не выбран
+  const [isChosenFilter, setIsChosenFilter] = useState("");
 
   const { searchParamsFilter, params, products, setOpenedChangesFilters } =
     props;
@@ -129,8 +128,6 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
     );
   }
 
-  const el = <div className="h-4 w-4 bg-blue pounded-[50%]"></div>;
-
   let showSelectedPrice;
   if (filters.price.priceFrom == 499 && filters.price.priceTo == 10999) {
     showSelectedPrice = "Ціна";
@@ -176,63 +173,26 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
                   searchParams={searchParamsFilter}
                   chosenSorting={chosenSorting}
                   setChosenSorting={setChosenSorting}
+                  isChosenFilter={isChosenFilter}
+                  setIsChosenFilter={setIsChosenFilter}
                 />
-
-                <ControlFilterItem
+                <NewSizeFilterXL
                   title={showSelectedSize}
-                  width="w-auto"
-                  hight="h-auto"
-                >
-                  {generalProductsFilers.map((generalFilter, index) => (
-                    <div className="mb-2 min-[2800px]:mb-20" key={index}>
-                      {generalFilter.id === "sizes" &&
-                      generalFilter.shoesPosibleProductTypes?.includes(
-                        props.params.sub_category[0],
-                      ) ? (
-                        <div className="px-4 pt-0">
-                          <SizeFilterXL
-                            products={props.products}
-                            shoesSizes={generalFilter.sizesShoes}
-                          />
-                        </div>
-                      ) : null}
-                      {generalFilter.id === "sizes" &&
-                      !generalFilter.shoesPosibleProductTypes?.includes(
-                        props.params.sub_category[0],
-                      ) ? (
-                        <div className="w-auto px-4">
-                          <SizeFilterXL
-                            products={props.products}
-                            clothesSizes={generalFilter.sizesClothes}
-                          />
-                        </div>
-                      ) : null}
-                    </div>
-                  ))}
-                </ControlFilterItem>
-                <ControlFilterItem
+                  params={params}
+                  products={products}
+                  isChosenFilter={isChosenFilter}
+                  setIsChosenFilter={setIsChosenFilter}
+                />
+                <NewColorFilterXL
                   title={showSelectedColor}
-                  width="w-[252px]"
-                  hight="h-auto"
-                >
-                  {generalProductsFilers.map((generalFilter, index) => (
-                    <div className="mb-2 min-[2800px]:mb-20" key={index}>
-                      {generalFilter.id === "color" &&
-                      generalFilter.colorValues ? (
-                        <div className="px-4 ">
-                          <ColorsFilterXL colors={generalFilter.colorValues} />
-                        </div>
-                      ) : null}
-                    </div>
-                  ))}
-                </ControlFilterItem>
-                <ControlFilterItem
+                  isChosenFilter={isChosenFilter}
+                  setIsChosenFilter={setIsChosenFilter}
+                />
+                <NewPriceFilterXL
                   title={showSelectedPrice}
-                  width="w-[436px]"
-                  hight="h-[140px]"
-                >
-                  <PriceFilterXL />
-                </ControlFilterItem>
+                  isChosenFilter={isChosenFilter}
+                  setIsChosenFilter={setIsChosenFilter}
+                />
               </ClientComponent>
             </ul>
           </div>
