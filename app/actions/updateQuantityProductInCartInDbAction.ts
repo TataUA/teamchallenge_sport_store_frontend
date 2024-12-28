@@ -3,7 +3,6 @@
 import { apiBaseUrl } from "@/services/api";
 import { IProduct } from "@/services/types";
 import { revalidateTag } from "next/cache";
-import createShoppingCartAction from "./createShoppingCartInDbAction";
 
 const updateQuantityProductInCartInDbAction = async (
   basketId: string,
@@ -40,44 +39,18 @@ const updateQuantityProductInCartInDbAction = async (
 
     const data = await result?.json();
 
-    if (result.status === 201) {
+    if (result.status !== 200) {
+      throw new Error(JSON.stringify(data))
+    }
+
       revalidateTag("products");
 
       return data;
-    }
-
-    if (
-      data.detail
-        .toLowerCase()
-        .includes("no basketitem matches the given query")
-    ) {
-      const basketId = await createShoppingCartAction();
-      if (!basketId) {
-        return null;
-      }
-
-      const result = await fetch(
-        `${apiBaseUrl}baskets/${basketId}/items/${itemIdInBasket}/`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          next: { revalidate: 300 },
-          body: JSON.stringify(preparedBody),
-        },
-      );
-
-      const data = await result?.json();
-
-      if (result.status === 201) {
-        return data;
-      }
-    }
-
-    return null;
   } catch (error: any) {
-    console.log("🚀 ~ fetchProductsAction ~ error:", error.response);
+    console.log(
+      "🚀 ~ updateQuantityProductInCartInDbAction ~ error:",
+      error.response,
+    );
 
     return null;
   }

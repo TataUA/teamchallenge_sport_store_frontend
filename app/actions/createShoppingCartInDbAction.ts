@@ -1,43 +1,34 @@
-'use client';
+"use client";
 
-import { $instance} from "@/services/api";
-import fetchShoppingCartFromServerAction from "./fetchShoppingCartFromServerAction";
+import { $instance } from "@/services/api";
+import { setBasketIdToLocalStorage } from "@/helpers/getBasketIdFromLocalStorage";
 
 const createShoppingCartAction = async () => {
   try {
-    const basketId = localStorage.getItem('basketId');
+    const result = await $instance.post(
+      "baskets/",
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
 
-    if (basketId) {
-      const data = await fetchShoppingCartFromServerAction(basketId);
-
-      !data && localStorage.removeItem("basketId");
-
-      if(data) {
-        return basketId;
-      };
+    if (result.status !== 201) {
+      throw new Error(JSON.stringify(result.data));
     }
 
-    const result = await $instance.post('baskets/', {}, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    const { data }: { data: { basket_id: string; user_id: number[] } } = result;
 
-    if(result.status === 201) {
-      const { data }: {data: {basket_id:string, user_id: number[]}} = result;
+    setBasketIdToLocalStorage(data.basket_id);
 
-      localStorage.setItem("basketId", data.basket_id);
-
-      return data.basket_id;
-    }
+    return data.basket_id;
+  } catch (error: any) {
+    console.log("🚀 ~ fetchProductsAction ~ error:", error.response);
 
     return null;
-    
-  } catch (error: any) {
-    console.log("🚀 ~ fetchProductsAction ~ error:", error.response)
-
-    return null
   }
-}
+};
 
-export default createShoppingCartAction
+export default createShoppingCartAction;
