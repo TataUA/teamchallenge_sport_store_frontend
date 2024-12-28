@@ -1,37 +1,38 @@
 import Image from "next/image";
 import Link from "next/link";
-import { NAV_ITEMS } from "../Header/nav-items.data";
+import { v4 as uuidv4 } from "uuid";
 
-import styles from "./styles.module.css";
+import { NAV_ITEMS } from "@/public/data/nav-items.data";
 
 export default function Gender() {
   return (
     <>
-      <section className="font-pangram mx-auto py-12 px-6 xl:container xl:mx-auto xl:px-[60px] xl:pt-[60px] xl:pb-[52px]">
-        <ul className={styles.list}>
+      <section className="container py-12 xl:pt-[60px] xl:pb-[52px]">
+        <ul className="flex justify-between gap-2 xl:gap-6">
           {NAV_ITEMS.map((item) => (
             <li
-              key={item.title.key}
-              className="relative   rounded-lg w-[167px] h-[88px] flex items-center pl-4 overflow-hidden sm:w-[280px] sm:h-[107px] sm:rounded-xl xl:w-[648px] xl:pl-0 xl:h-[240px] xl:rounded-2xl "
+              key={uuidv4()}
+              className="relative w-[calc((100%-8px)/2)] xl:w-[648px] min-h-[88px] xl:min-h-[240px] max-h-[240px] aspect-ratio-[1365/720] xl:aspect-auto rounded-xl xl:rounded-2xl overflow-hidden"
             >
-              <div className="hidden xl:block absolut z-10 left-0 top-0 w-full h-full bg-gradient-to-r from-black/25 to-black/0"></div>
-              <Link href={item.title.href}>
-                <div className="absolute flex flex-col justify-center left-4 top-8  z-20  text-white  xl:left-[40px] xl:bottom-[-40px]  hover:text-#0e0e10">
-                  <h2 className="text-base font-medium  xl:text-2xl xl:mb-6">
+              <Link
+                href={item.title.href}
+                className="flex items-center justify-center h-full"
+              >
+                <Image
+                  src={item.title.image ?? ""}
+                  alt={item.title.key}
+                  width={648}
+                  height={240}
+                  className="object-fill w-full h-full xl:object-cover"
+                />
+                <div className="absolute z-10 left-4 xl:left-10 top-[50%] xl:top-[104px] transform-translate-y-1/2 text-white">
+                  <h2 className="xl:mb-6 font-medium text-base xl:text-2xl">
                     {item.title.label}
                   </h2>
-                  <button className="hidden xl:inline-block w-[124px] text-sm xl:font-semibold tracking-[2%] bg-transparent rounded-lg px-4 py-[6px] border hover:bg-[#0e0e10]/20 xl:text-base xl:transparent-wide xl:px-6 xl:py-3 xl:rounded-xl transition">
+                  <button className="hidden xl:block w-[124px] h-12 p-3 border rounded-xl font-semibold text-base tracking-custom_2 bg-transparent hover:bg-[#0e0e10]/20 transition">
                     Дивитися
                   </button>
                 </div>
-
-                <Image
-                  src={item.title.image ?? ""}
-                  height={88}
-                  width={167}
-                  alt={item.title.key}
-                  className="absolute left-0 top-0 object-cover w-full h-full xl:w-[648px] xl:h-[240px]"
-                />
               </Link>
             </li>
           ))}
