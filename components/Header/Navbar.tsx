@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Modal } from "@/components/Modal/Modal";
 import { NavItemListMobile } from "@/components/Header/NavItemListMobile/NavItemListMobile";
 import { UsernavMobile } from "@/components/Header/UsernavMobile";
-import { NAV_ITEMS } from "@/components/Header/nav-items.data";
+import { NAV_ITEMS } from "@/public/data/nav-items.data";
 import menuIcon from "@/public/icons/header/mob-menu.svg";
 
 interface NavbarProps {

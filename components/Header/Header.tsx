@@ -6,7 +6,7 @@ import { Logo } from "../Logo/Logo";
 import { LogoXl } from "../LogoXl/LogoXl";
 import { Navbar } from "./Navbar";
 import { Usernav } from "./Usernav";
-import { NAV_ITEMS } from "@/components/Header/nav-items.data";
+import { NAV_ITEMS } from "@/public/data/nav-items.data";
 import MenuGender from "./MenuGender/MenuGender";
 import MenuGoods from "./MenuGoods/MenuGoods";
 
