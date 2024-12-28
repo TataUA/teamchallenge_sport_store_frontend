@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -13,6 +12,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Swiper as SwiperType } from "swiper";
 import { v4 as uuidv4 } from "uuid";
 
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { cn } from "@/services/utils/cn";
 import { IProduct } from "@/services/types";
 import ListItem from "@/components/ProductsList/ListItem";
@@ -64,7 +64,7 @@ export const Slider = ({
   className = "",
 }: SliderProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
-
+  const isMobile = useIsMobile();
   const swiperRef = useRef<SwiperType | null>(null);
   const pathname = usePathname();
   const isProductPage = pathname?.startsWith("/product/");
@@ -123,7 +123,7 @@ export const Slider = ({
           effect="slide"
           speed={500}
           loop={loop}
-          loopAdditionalSlides={1}
+          loopAdditionalSlides={2}
           modules={[Autoplay, Navigation, Pagination]}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
           onSlideChange={(swiper) => {
@@ -209,29 +209,27 @@ export const Slider = ({
                         </h3>{" "}
                       </div>
                     ) : (
-                      <div className="xl:h-[624px]">
+                      <div
+                        className="relative w-full"
+                        style={{
+                          minHeight: isMobile ? "400px" : "624px",
+                          maxHeight: "624px",
+                          aspectRatio: isMobile ? "390 / 400" : "",
+                        }}
+                      >
                         <Link
                           href={href ?? "/"}
-                          className={cn(
-                            "h-full w-full absolute left-0 top-0",
-                            "xl:hidden",
-                          )}
+                          className="h-full w-full absolute left-0 top-0"
                           style={{
-                            background: images
-                              ? `center center / cover scroll no-repeat url(${images.mobile})`
-                              : undefined,
-                          }}
-                        ></Link>
-                        <Link
-                          href={href ?? "/"}
-                          className={cn(
-                            "hidden h-full w-full absolute left-0 top-0",
-                            "xl:block",
-                          )}
-                          style={{
-                            background: images
-                              ? `center center / cover scroll no-repeat url(${images.desktop})`
-                              : undefined,
+                            background:
+                              images?.mobile && isMobile
+                                ? `url(${images?.mobile})`
+                                : images?.desktop
+                                  ? `url(${images?.desktop})`
+                                  : undefined,
+                            backgroundSize: "cover",
+                            backgroundRepeat: "no-repeat",
+                            backgroundPosition: "center",
                           }}
                         ></Link>
                       </div>
