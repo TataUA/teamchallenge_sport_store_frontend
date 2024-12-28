@@ -22,29 +22,5 @@
       "desktop": "/images/hero/asics_990-1440_624.jpg"
     },
     "href": "/product/95"
-  },
-  {
-    "id": 4,
-    "images": {
-      "mobile": "/images/hero/adidas_320-480_400.jpg",
-      "desktop": "/images/hero/adidas_990-1920_624.jpg"
-    },
-    "href": "/product/103"
-  },
-  {
-    "id": 5,
-    "images": {
-      "mobile": "/images/hero/puma_320-480.jpg",
-      "desktop": "/images/hero/puma_990-1920.jpg"
-    },
-    "href": "/product/30"
-  },
-  {
-    "id": 6,
-    "images": {
-      "mobile": "/images/hero/asics_320-480_400.jpg",
-      "desktop": "/images/hero/asics_990-1440_624.jpg"
-    },
-    "href": "/product/95"
   }
 ]

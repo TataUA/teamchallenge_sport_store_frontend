@@ -36,7 +36,7 @@ interface SliderProps {
   colorCurrent?: string;
   autoPlay?: boolean;
   loop?: boolean;
-  //loopAdditionalSlides?: number;
+  loopAdditionalSlides?: number;
   homePageMainSlider?: boolean;
   cardImage?: boolean;
   popularCat?: boolean;
@@ -44,6 +44,7 @@ interface SliderProps {
   bestSalesItem?: boolean;
   productsList?: boolean;
   slidesPerView?: number;
+  slidesPerGroup?: number;
   spaceBetween?: number;
   cssMode?: boolean;
   className?: string;
@@ -55,12 +56,13 @@ export const Slider = ({
   colorCurrent,
   autoPlay = true,
   loop = true,
-  //loopAdditionalSlides = 1,
+  loopAdditionalSlides = 1,
   cardImage,
   popularCat,
   bestSales,
   bestSalesItem,
   slidesPerView = 1,
+  slidesPerGroup = 1,
   spaceBetween = 0,
   cssMode = false,
   className = "",
@@ -120,12 +122,13 @@ export const Slider = ({
           className="h-full"
           cssMode={cssMode}
           slidesPerView={slidesPerView}
+          slidesPerGroup={slidesPerGroup}
           spaceBetween={spaceBetween}
           autoplay={autoPlay}
           effect="slide"
           speed={500}
           loop={loop}
-          loopAdditionalSlides={Math.max(slidesPerView, 2)}
+          loopAdditionalSlides={loopAdditionalSlides}
           modules={[Autoplay, Navigation, Pagination]}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
           onSlideChange={(swiper) => {
