@@ -15,6 +15,12 @@ export interface ICartResponseItem {
   detail?: string;
 }
 
+export interface ICartResponse {
+  id: string;
+  items: ICartResponseItem[];
+  user: number;
+}
+
 const fetchShoppingCartFromServerAction = async (id: string) => {
   try {
     const result = await fetch(`${apiBaseUrl}baskets/${id}/`, {
@@ -22,8 +28,7 @@ const fetchShoppingCartFromServerAction = async (id: string) => {
     });
 
     if (result.status === 200) {
-      const data: { id: string; items: ICartResponseItem[] } =
-        await result?.json();
+      const data: ICartResponse = await result?.json();
 
       return data;
     }
@@ -42,8 +47,7 @@ const fetchShoppingCartFromServerAction = async (id: string) => {
           });
 
           if (result.status === 200) {
-            const data: { id: string; items: ICartResponseItem[] } =
-              await result?.json();
+            const data: ICartResponse = await result?.json();
 
             return data;
           }

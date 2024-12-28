@@ -1,5 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+
+// slices
+import { cleanCart } from "../cart/cartSlice";
+import { UserData, logoutUser } from "./authSlice";
+
+// services
 import {
   registerUser,
   loginUser,
@@ -11,18 +17,23 @@ import {
   resendEmail,
   confirmedEmail,
 } from "@/services/api";
-import { UserData, logoutUser } from "./authSlice";
 import {
   RegisterResponseData,
   LoginResponseData,
 } from "@/services/types/auth-api-types";
 import { RegisterFormValues } from "@/services/types/auth-form-types";
 import { LoginFormValues } from "@/services/types/auth-form-types";
+
+// components
 import { UserDataEditFormValues } from "@/components/Auth/EditUser/UserDataEdit";
 import { ResetPasswordFormValues } from "@/components/Auth/ResetPassword/ResetPasswordForm";
 import { ResetPasswordRequestValues } from "@/components/Auth/ResetPassword/ResetPasswordRequestForm";
+
+
+// helpers
 import { handleThunkValidationErrors } from "@/helpers/handleThunkValidationErrors";
 import { handleSetTokens } from "@/helpers/handleSetTokens";
+import cleanAllLocalStorageData from "@/helpers/cleanAllLocalStorageData";
 
 export interface ErrorType {
   message?: string[] | string;
@@ -161,6 +172,9 @@ export const logoutUserThunk = createAsyncThunk<
   try {
     await apiLogoutUser();
     thunkApi.dispatch(logoutUser());
+    thunkApi.dispatch(cleanCart());
+    cleanAllLocalStorageData();
+    
     return;
   } catch (error: any) {
     const errorObject: ErrorType = {

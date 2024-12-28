@@ -46,11 +46,12 @@ const createCart =
     dispatch(saveCartIdFromDb(newBasketId));
   };
 
-const assignCartToUser = async () => {
+const assignCartToUser = async (userId: number) => {
   const basketId = getBasketIdFromLocalStorage();
 
   const isValidCart = await isValidShopingCart(basketId);
-  if (isValidCart?.id) {
+
+  if (isValidCart?.user && (isValidCart?.user === userId)) {
     return;
   }
 
@@ -75,9 +76,9 @@ export const useCartSync = () => {
       return;
     }
 
-    if (user) {
+    if (user?.id) {
       // Пользователь вошел: синхронизация с БД
-      assignCartToUser();
+      assignCartToUser(user.id);
       mounted.current = true;
 
       return;
