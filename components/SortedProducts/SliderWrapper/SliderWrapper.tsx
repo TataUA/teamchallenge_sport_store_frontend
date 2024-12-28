@@ -42,12 +42,11 @@ export const SliderWrapper = ({ products }: { products: IProduct[] }) => {
       <div className={isMobile ? "w-[calc(100%+24px)]" : "w-full"}>
         <Slider
           products={products}
+          bestSales
           autoPlay={false}
           loop={false}
-          bestSales
           slidesPerView={slidesPerView}
           spaceBetween={spaceBetween}
-          cssMode={true}
         />
       </div>
     </>
