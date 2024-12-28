@@ -73,21 +73,22 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
         basketId = await createShoppingCartAction();
       }
 
-        const isSuccess = await updateQuantityProductInCartInDbAction(
-          basketId,
-          updatedProductWithIncreasedQuantity,
-          updatedProductWithIncreasedQuantity.idInBasketInDb,
+      const isSuccess = await updateQuantityProductInCartInDbAction(
+        basketId,
+        updatedProductWithIncreasedQuantity,
+        updatedProductWithIncreasedQuantity.idInBasketInDb,
+      );
+
+      if (!isSuccess) {
+        dispatch(
+          setModalProductIsOutOfStock({
+            isOpened: true,
+            outOfStockProducts: [product],
+          }),
         );
 
-        if(!isSuccess) {
-          dispatch(
-            setModalProductIsOutOfStock({
-              isOpened: true,
-              outOfStockProducts: [product],
-            }),
-          );
-          return;
-        }
+        return;
+      }
 
       dispatch(handleIncreasProductQuantity(product));
     }
@@ -111,17 +112,14 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
           ],
         };
 
-        if (
-          basketId &&
-          updatedProductWithDecreasedQuantity.idInBasketInDb
-        ) {
+        if (basketId && updatedProductWithDecreasedQuantity.idInBasketInDb) {
           updateQuantityProductInCartInDbAction(
             basketId,
             updatedProductWithDecreasedQuantity,
             updatedProductWithDecreasedQuantity.idInBasketInDb,
           );
         }
-        
+
         dispatch(handleDecreasProductQuantity(product));
       }
     }
