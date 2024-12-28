@@ -36,6 +36,7 @@ interface SliderProps {
   colorCurrent?: string;
   autoPlay?: boolean;
   loop?: boolean;
+  loopAdditionalSlides?: number;
   homePageMainSlider?: boolean;
   cardImage?: boolean;
   popularCat?: boolean;
@@ -54,6 +55,7 @@ export const Slider = ({
   colorCurrent,
   autoPlay = true,
   loop = true,
+  loopAdditionalSlides = 1,
   cardImage,
   popularCat,
   bestSales,
@@ -123,7 +125,7 @@ export const Slider = ({
           effect="slide"
           speed={500}
           loop={loop}
-          loopAdditionalSlides={2}
+          loopAdditionalSlides={loopAdditionalSlides}
           modules={[Autoplay, Navigation, Pagination]}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
           onSlideChange={(swiper) => {
