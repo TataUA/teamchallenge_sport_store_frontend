@@ -51,8 +51,8 @@ const ListItem = (props: ListItemProps) => {
         )}
       >
         <Image
-          alt={product.title}
           src={bestSales ? product.colors[0].image_url : srcUrlImageString}
+          alt={product.title}
           width={200}
           height={302}
           priority

@@ -38,7 +38,6 @@ interface SliderProps {
   loop?: boolean;
   homePageMainSlider?: boolean;
   cardImage?: boolean;
-  popularCat?: boolean;
   bestSales?: boolean;
   bestSalesItem?: boolean;
   productsList?: boolean;
@@ -54,7 +53,6 @@ export const Slider = ({
   autoPlay = true,
   loop = true,
   cardImage,
-  popularCat,
   bestSales,
   bestSalesItem,
   slidesPerView = 1,
@@ -127,10 +125,7 @@ export const Slider = ({
             setActiveIndex(swiper.realIndex);
           }}
           pagination={
-            popularCat ||
-            bestSales ||
-            bestSalesItem ||
-            (cardImage && !isProductPage)
+            bestSales || bestSalesItem || (cardImage && !isProductPage)
               ? false
               : {
                   type: "bullets",
@@ -189,24 +184,6 @@ export const Slider = ({
                           }}
                         />
                         {isProductPage && <SliderButtons />}
-                      </div>
-                    ) : popularCat ? (
-                      <div className="relative mr-2 xl:mr-6">
-                        <Link href={href ?? "/"}>
-                          <div className="relative w-[108px] h-[108px] overflow-hidden rounded-xl mb-2 flex  justify-center xl:w-[312px] xl:h-[180px]  xl:rounded-2xl">
-                            <Image
-                              width={108}
-                              height={108}
-                              src={image || ""}
-                              alt=""
-                              className="object-center object-cover xl:w-full xl:h-full "
-                            />
-                          </div>
-                        </Link>
-                        <div className="absolute top-0 left-0 w-[108px] h-[108px] overflow-hidden rounded-xl xl:w-[312px] xl:h-[180px] z-30 xl:bg-gradient-to-t from-black/20 to-black/0 xl:rounded-2xl"></div>
-                        <h3 className="z-40 text-sm font-medium w-24 xl:absolute md:bottom-6 md:left-[22px] md:w-full xl:text-white xl:text-xl tracking-[0.015] xl:tracking-wide ">
-                          {title}
-                        </h3>{" "}
                       </div>
                     ) : (
                       <div
