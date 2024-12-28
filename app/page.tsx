@@ -10,12 +10,7 @@ import dataSlider from "@/public/data/slider_data.json";
 export default async function Page() {
   return (
     <>
-      <Slider
-        data={dataSlider}
-        homePageMainSlider
-        className={"min-h-[400px] h-[47dvh] xl:min-h-[624px]"}
-      />
-
+      <Slider data={dataSlider} homePageMainSlider />
       <Gender />
       <PopularCategories />
       <SortedProducts title="Топ продажів" page="/popular" sort="popular" />
