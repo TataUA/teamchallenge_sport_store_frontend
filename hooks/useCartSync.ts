@@ -3,9 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, AppState } from "@/redux/store";
 
 // slices
-import {
-  saveCartIdFromDb,
-} from "@/redux/cart/cartSlice";
+import { saveCartIdFromDb } from "@/redux/cart/cartSlice";
 
 // selectors
 import { selectUserData } from "@/redux/auth/authSelector";
@@ -16,8 +14,7 @@ import bindShopingCartToUser from "@/app/actions/bindShopinCartToUser";
 import isValidShopingCart from "@/app/actions/isValidShopingCart";
 
 // helpers
-import getBasketIdFromLocalStorage, {
-} from "@/helpers/getBasketIdFromLocalStorage";
+import getBasketIdFromLocalStorage from "@/helpers/getBasketIdFromLocalStorage";
 
 const createCart =
   () => async (dispatch: AppDispatch, getState: () => AppState) => {
@@ -51,14 +48,21 @@ const assignCartToUser = async (userId: number) => {
 
   const isValidCart = await isValidShopingCart(basketId);
 
-  if (isValidCart?.user && (isValidCart?.user === userId)) {
+  if (isValidCart?.user) {
+    if (isValidCart?.user !== userId) {
+      console.log(
+        "assignCartToUser: Error while binding shopping cart to user. Basket was already assigned to another user",
+      );
+      return;
+    }
+
     return;
   }
 
   const result = await bindShopingCartToUser(basketId);
 
   if (!result) {
-    console.log("assignCartToUser: Error while binding shopping cart to user");
+    console.log("assignCartToUser: Error while binding shopping cart to user. Request to bind cart, failed");
 
     return;
   }
