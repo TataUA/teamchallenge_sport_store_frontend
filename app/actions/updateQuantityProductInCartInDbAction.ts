@@ -15,7 +15,7 @@ const updateQuantityProductInCartInDbAction = async (
         "updateQuantityProductInCartInDbAction:itemIdInBasket parameter should be provided",
       );
 
-      return null;
+      return false;
     }
 
     const preparedBody = {
@@ -40,19 +40,17 @@ const updateQuantityProductInCartInDbAction = async (
     const data = await result?.json();
 
     if (result.status !== 200) {
-      throw new Error(JSON.stringify(data))
+      throw new Error(JSON.stringify(data));
     }
 
-      revalidateTag("products");
-
-      return data;
+    return true;
   } catch (error: any) {
     console.log(
       "🚀 ~ updateQuantityProductInCartInDbAction ~ error:",
       error.response,
     );
 
-    return null;
+    return false;
   }
 };
 
