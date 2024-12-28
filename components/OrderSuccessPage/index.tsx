@@ -2,54 +2,13 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
 
 // assets
 import cartImg from "@/public/icons/cart/cart-img.png";
 
-// helpers
-import getBasketIdFromLocalStorage, {
-  setBasketIdToLocalStorage,
-} from "@/helpers/getBasketIdFromLocalStorage";
 
-// actions
-import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction";
-import fetchShoppingCartFromServerAction from "@/app/actions/fetchShoppingCartFromServerAction";
-
-// redux
-import { saveCartIdFromDb } from "@/redux/cart/cartSlice";
 
 const OrderSuccessPage = () => {
-  const mounted = useRef(false);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (mounted.current) {
-      return;
-    }
-
-    if (getBasketIdFromLocalStorage()) {
-      localStorage.removeItem("basketId");
-    }
-
-    createShoppingCartAction()
-    .then((basketId) => {
-      if (!basketId) {
-        return;
-      }
-
-      dispatch(saveCartIdFromDb(basketId));
-      fetchShoppingCartFromServerAction(basketId);
-    })
-    .catch((error) => {
-      console.log("🚀 ~ createShoppingCartAction ~ error:", error);
-    });
-
-    mounted.current = true;
-  }, []);
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-12 p-6">
       <div className="flex flex-col items-center justify-center text-center">

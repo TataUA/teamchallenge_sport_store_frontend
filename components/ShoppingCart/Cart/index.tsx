@@ -5,6 +5,7 @@ import {
   handleDecreasProductQuantity,
   handleIncreasProductQuantity,
   removeProductById,
+  setModalProductIsOutOfStock,
 } from "@/redux/cart/cartSlice";
 import { selectCart } from "@/redux/cart/cartSelector";
 
@@ -18,13 +19,17 @@ import CartFooter from "./CartFooter";
 // actions
 import removeProductToCartInDbAction from "@/app/actions/removeProductToCartInDbAction";
 import updateQuantityProductInCartInDbAction from "@/app/actions/updateQuantityProductInCartInDbAction";
+import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction";
+
+// helper
+import getBasketIdFromLocalStorage from "@/helpers/getBasketIdFromLocalStorage";
 
 const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
   const dispatch = useDispatch();
 
   const cartDataStored = useSelector(selectCart);
 
-  const basketId = cartDataStored.id || localStorage.getItem("basketId");
+  const basketId = cartDataStored.id || getBasketIdFromLocalStorage();
   const token = localStorage.getItem("accessToken");
 
   const handleRemoveProduct = ({
@@ -45,17 +50,11 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
     dispatch(removeProductById({ id, color, size }));
   };
 
-  const handleIncreaseOrDecreasProduct = (
+  const handleIncreaseOrDecreasProduct = async (
     option: string,
     product: IProductWithMaxQuantity,
   ) => {
     if (option === "inc") {
-      if (product.quantity[0].quantity >= product.maxQuantity) {
-        console.log("Maximum amount of product has been achieved");
-
-        return;
-      }
-
       const updatedProductWithIncreasedQuantity = {
         ...product,
         quantity: [
@@ -66,17 +65,29 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
         ],
       };
 
-      if (
-        token &&
-        basketId &&
-        updatedProductWithIncreasedQuantity.idInBasketInDb
-      ) {
-        updateQuantityProductInCartInDbAction(
+      let basketId = getBasketIdFromLocalStorage();
+
+      if (!basketId) {
+        console.log("add product to cart: Basket id does not exist");
+
+        basketId = await createShoppingCartAction();
+      }
+
+        const isSuccess = await updateQuantityProductInCartInDbAction(
           basketId,
           updatedProductWithIncreasedQuantity,
           updatedProductWithIncreasedQuantity.idInBasketInDb,
         );
-      }
+
+        if(!isSuccess) {
+          dispatch(
+            setModalProductIsOutOfStock({
+              isOpened: true,
+              outOfStockProducts: [product],
+            }),
+          );
+          return;
+        }
 
       dispatch(handleIncreasProductQuantity(product));
     }
@@ -101,7 +112,6 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
         };
 
         if (
-          token &&
           basketId &&
           updatedProductWithDecreasedQuantity.idInBasketInDb
         ) {
@@ -111,6 +121,7 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
             updatedProductWithDecreasedQuantity.idInBasketInDb,
           );
         }
+        
         dispatch(handleDecreasProductQuantity(product));
       }
     }

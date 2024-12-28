@@ -11,6 +11,7 @@ import ResponsiveModal from "@/components/Shared/ResponsiveModal";
 // helpers
 import getCartSVG from "@/helpers/getCartSVG";
 import getCheckedIconSVG from "@/helpers/getCheckedIconSVG";
+import getBasketIdFromLocalStorage from "@/helpers/getBasketIdFromLocalStorage";
 import { cn } from "@/services/utils/cn";
 
 // redux
@@ -23,7 +24,6 @@ import {
   setCurrentProduct,
   setIsSizeModalOpened,
 } from "@/redux/currentProduct/currentProductSlice";
-import { selectCart } from "@/redux/cart/cartSelector";
 
 // types
 import { IProduct, ProductSize } from "@/services/types";
@@ -34,6 +34,7 @@ import { generalProductsFilers } from "@/components/ProductsList/ProductsFilters
 // zctions
 import addProductToCartInDbAction from "@/app/actions/addProductToCartInDbAction";
 import fetchProductByIdAction from "@/app/actions/fetchProductByIdAction";
+import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction";
 
 const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
   const [isSuccessModalIsOpened, setIsSuccessModalIsOpened] = useState(false);
@@ -41,8 +42,6 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
   const dispatch = useDispatch();
 
   const currentProduct = useSelector(selectCurrentProduct);
-
-  const cart = useSelector(selectCart);
 
   const { sizes: sizesStored } = currentProduct;
 
@@ -62,7 +61,6 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
     }
 
     const productInfo = await fetchProductByIdAction(product.id);
-    console.log("🚀 ~ handleClickCartButton ~ productInfo:", productInfo);
 
     if (!productInfo) {
       console.log(
@@ -70,23 +68,6 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
           product.id,
       );
 
-      return;
-    }
-
-    const isProductExists = productInfo.quantity.filter(
-      (item: { size: string; color: string; quantity: number }) =>
-        item.quantity >= 1 &&
-        item.color.toLowerCase() === currentProduct.color.toLowerCase() &&
-        item.size.toLowerCase() == currentProduct.sizes.toLowerCase(),
-    );
-
-    if (!isProductExists.length) {
-      dispatch(
-        setModalProductIsOutOfStock({
-          isOpened: true,
-          outOfStockProducts: [product],
-        }),
-      );
       return;
     }
 
@@ -130,56 +111,39 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
       ],
     };
 
-    const basketId = localStorage.getItem("basketId");
+    let basketId = getBasketIdFromLocalStorage();
 
-    const existingProduct = cart.products.find(
-      (product) =>
-        product.id === productWithSelectedSizeAndColor.id &&
-        product.quantity[0].size ===
-          productWithSelectedSizeAndColor.quantity[0].size &&
-        product.quantity[0].color ===
-          productWithSelectedSizeAndColor.quantity[0].color,
+    if (!basketId) {
+      console.log("Add product to cart: Basket id does not exist");
+
+      basketId = await createShoppingCartAction();
+    }
+
+    if (!basketId) {
+      console.log("Error while add products to cart, basket_id does not exist");
+    }
+
+    const itemIdInBasket = await addProductToCartInDbAction(
+      basketId,
+      productWithSelectedSizeAndColor,
     );
 
-    if (
-      existingProduct &&
-      existingProduct.quantity[0].quantity >= existingProduct.maxQuantity
-    ) {
+    if (!itemIdInBasket) {
       dispatch(
         setModalProductIsOutOfStock({
           isOpened: true,
           outOfStockProducts: [productWithSelectedSizeAndColor],
         }),
       );
-
       return;
     }
 
-    if (basketId) {
-      const itemIdInBasket = await addProductToCartInDbAction(
-        basketId,
-        productWithSelectedSizeAndColor,
-      );
-
-      if (!itemIdInBasket) {
-        dispatch(
-          setModalProductIsOutOfStock({
-            isOpened: true,
-            outOfStockProducts: [productWithSelectedSizeAndColor],
-          }),
-        );
-        return;
-      }
-
-      dispatch(
-        setProduct({
-          ...productWithSelectedSizeAndColor,
-          idInBasketInDb: itemIdInBasket,
-        }),
-      );
-    } else {
-      dispatch(setProduct(productWithSelectedSizeAndColor));
-    }
+    dispatch(
+      setProduct({
+        ...productWithSelectedSizeAndColor,
+        idInBasketInDb: itemIdInBasket,
+      }),
+    );
 
     setIsSuccessModalIsOpened(true);
   };
