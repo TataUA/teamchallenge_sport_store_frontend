@@ -46,7 +46,7 @@ const ListItem = (props: ListItemProps) => {
       <Link
         href={`/product/${product.id}`}
         className={cn(
-          "flex flex-col gap-2 rounded-xl overflow-hidden cursor-pointer",
+          "flex flex-col gap-2 rounded-xl cursor-pointer",
           bestSales ? "w-full h-full" : "",
         )}
       >

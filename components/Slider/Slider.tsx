@@ -36,7 +36,6 @@ interface SliderProps {
   colorCurrent?: string;
   autoPlay?: boolean;
   loop?: boolean;
-  loopAdditionalSlides?: number;
   homePageMainSlider?: boolean;
   cardImage?: boolean;
   popularCat?: boolean;
@@ -44,9 +43,7 @@ interface SliderProps {
   bestSalesItem?: boolean;
   productsList?: boolean;
   slidesPerView?: number;
-  slidesPerGroup?: number;
   spaceBetween?: number;
-  cssMode?: boolean;
   className?: string;
 }
 
@@ -56,15 +53,12 @@ export const Slider = ({
   colorCurrent,
   autoPlay = true,
   loop = true,
-  loopAdditionalSlides = 1,
   cardImage,
   popularCat,
   bestSales,
   bestSalesItem,
   slidesPerView = 1,
-  slidesPerGroup = 1,
   spaceBetween = 0,
-  cssMode = false,
   className = "",
 }: SliderProps) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -120,15 +114,13 @@ export const Slider = ({
       <div className={cn("h-full w-full", { "1440:w-[528px]": isProductPage })}>
         <Swiper
           className="h-full"
-          cssMode={cssMode}
           slidesPerView={slidesPerView}
-          slidesPerGroup={slidesPerGroup}
           spaceBetween={spaceBetween}
           autoplay={autoPlay}
           effect="slide"
           speed={500}
           loop={loop}
-          loopAdditionalSlides={loopAdditionalSlides}
+          loopAdditionalSlides={Math.max(slidesPerView, 2)}
           modules={[Autoplay, Navigation, Pagination]}
           onSwiper={(swiper) => (swiperRef.current = swiper)}
           onSlideChange={(swiper) => {
@@ -211,7 +203,7 @@ export const Slider = ({
                             />
                           </div>
                         </Link>
-                        <div className="absolute top-0 left-0 w-[108px] h-    [108px] overflow-hidden rounded-xl xl:w-[312px] xl:h-[180px] z-30 xl:bg-gradient-to-t from-black/20 to-black/0 xl:rounded-2xl"></div>
+                        <div className="absolute top-0 left-0 w-[108px] h-[108px] overflow-hidden rounded-xl xl:w-[312px] xl:h-[180px] z-30 xl:bg-gradient-to-t from-black/20 to-black/0 xl:rounded-2xl"></div>
                         <h3 className="z-40 text-sm font-medium w-24 xl:absolute md:bottom-6 md:left-[22px] md:w-full xl:text-white xl:text-xl tracking-[0.015] xl:tracking-wide ">
                           {title}
                         </h3>{" "}

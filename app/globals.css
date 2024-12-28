@@ -98,20 +98,4 @@ body {
   .transition-all {
     transition: all 0.2s;
   }
-
-  .swiper-wrapper {
-    margin-right: 0 !important; /* Прибираємо зайвий відступ з останнього слайда */
-  }
-
-  .swiper-slide:last-child {
-    margin-right: 0 !important; /* Прибираємо відступ з останнього слайда */
-  }
-
-  .swiper-slide {
-    flex-shrink: 0; /* Вимикаємо зтискання слайдів */
-  }
-
-  .swiper-wrapper {
-    justify-content: flex-start; /* Вирівнюємо по лівій стороні */
-  }
 }
