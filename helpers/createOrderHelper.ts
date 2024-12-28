@@ -8,11 +8,11 @@ import { createOrder, IOrder } from "@/services/api";
 
 // actions
 import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction";
-import addProductToCartInDbAction from "@/app/actions/addProductToCartInDbAction";
 
 // types
 import { ICartState } from "@/redux/cart/cartSlice";
 import { IProductWithMaxQuantity } from "@/services/types";
+import isValidShopingCart from "@/app/actions/isValidShopingCart";
 
 const createOrderHelper = async (
   data: {
@@ -29,11 +29,13 @@ const createOrderHelper = async (
   const getOrCreateBasketId = async (): Promise<string> => {
     let basketId = getBasketIdFromLocalStorage();
 
-    if (!basketId) {
+    const isValid = await isValidShopingCart(basketId);
+
+    if (!isValid) {
       basketId = await createShoppingCartAction();
 
       if (!basketId) {
-        return '';
+        return "";
       }
 
       setBasketIdToLocalStorage(basketId);
@@ -61,57 +63,10 @@ const createOrderHelper = async (
     };
   };
 
-  const addProductsToCart = async (
-    basketId: string,
-    products: IProductWithMaxQuantity[],
-  ): Promise<void> => {
-    const productsOutOfStock: IProductWithMaxQuantity[] = [];
-
-    await Promise.all(
-      products.map(async (product) => {
-        const intemIdInBasket = await addProductToCartInDbAction(basketId, product);
-
-        if (!intemIdInBasket) {
-          console.log(
-            `Product with id ${product.title}, was not saved, as it is out of Stock`,
-          );
-          productsOutOfStock.push(product);
-        }
-      }),
-    );
-    
-    if(productsOutOfStock.length) {
-      showModalProductOutOfStock(productsOutOfStock);
-    }
-  };
-
   try {
     let basketId = await getOrCreateBasketId();
     let newOrder = createNewOrder(basketId);
     let response = await createOrder(newOrder);
-
-    if (
-      response?.data.msg?.includes("Basket does not exist") ||
-      response?.data.msg?.includes("You cannot place an order from someone")
-    ) {
-      localStorage.removeItem("basketId");
-      const newBasketId = await createShoppingCartAction();
-      if (!newBasketId) {
-        return;
-      }
-      
-      basketId = newBasketId;
-      setBasketIdToLocalStorage(basketId);
-      newOrder.basket_id = basketId;
-
-      await addProductsToCart(basketId, cart.products);
-
-      response = await createOrder(newOrder);
-    } else if (response?.data.msg?.includes("Your basket is empty")) {
-      await addProductsToCart(basketId, cart.products);
-
-      response = await createOrder(newOrder);
-    }
 
     if (
       response?.data.msg?.includes("Congratulations") ||
