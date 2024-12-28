@@ -1,6 +1,6 @@
 import { Slider } from "@/components/Slider/Slider";
-import Gender from "@/components/Gender";
-import PopularCategories from "@/components/PopularCategories";
+import { Gender } from "@/components/Gender";
+import { PopularCategories } from "@/components/PopularCategories";
 import { SortedProducts } from "@/components/SortedProducts";
 import PromBanner from "@/components/PromBanner";
 import AboutUs from "@/components/AboutUs";
