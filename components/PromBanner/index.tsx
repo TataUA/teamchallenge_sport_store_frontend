@@ -1,8 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { cn } from "@/services/utils/cn";
-
 export default async function PromBanner() {
   return (
     <section className="container py-12 xl:pb-[62px]">
@@ -12,13 +10,14 @@ export default async function PromBanner() {
           alt="Банер"
           width={342}
           height={268}
-          className="xl:hidden object-fill w-full h-full"
+          className="xl:hidden object-cover w-full h-full"
         />
         <Image
           src="/images/prom-banner/prom-banner-desktop.jpg"
           alt="Банер"
           width={1320}
           height={432}
+          priority
           className="hidden xl:block object-cover w-full h-full"
         />
         <div className="absolute z-10 left-4 xl:left-10 bottom-6 xl:bottom-10 text-white">
