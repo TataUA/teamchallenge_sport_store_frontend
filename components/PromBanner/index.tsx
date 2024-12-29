@@ -5,41 +5,33 @@ import { cn } from "@/services/utils/cn";
 
 export default async function PromBanner() {
   return (
-    <section className="container py-12 xl:pt-[48px] xl:pb-[62px]">
-      <div className="relative w-full h-full xl:w-[1320px] xl:h-[432px] mx-auto rounded-2xl">
-        <div className="z-[-1] absolute xl:relative xl:hidden w-full h-full bg-slate-300 overflow-hidden rounded-2xl">
-          <Image
-            src="/images/prom-banner/prom-banner-mobile.jpg"
-            alt="image"
-            quality={100}
-            fill
-            style={{ objectFit: "cover" }}
-            priority
-          />
-        </div>
-        <div className="relative z-[-1] hidden xl:absolute xl:block w-full h-full overflow-hidden rounded-2xl">
-          <Image
-            src="/images/prom-banner/prom-banner-desktop.jpg"
-            alt="image"
-            quality={100}
-            fill
-            style={{ objectFit: "cover" }}
-            priority
-          />
-        </div>
-        <div className="z-10 xl:w-[575px] px-4 xl:px-[40px] pt-[110px] xl:pt-[234px] pb-6 text-white">
-          <h2 className="mb-2 text-base xl:text-2xl font-bold xl:font-semibold">
+    <section className="container py-12 xl:pb-[62px]">
+      <div className="relative w-full h-full xl:min-h-[432px] max-h-[432px] aspect-ratio-[342/268] xl:aspect-auto rounded-2xl overflow-hidden">
+        <Image
+          src="/images/prom-banner/prom-banner-mobile.jpg"
+          alt="Банер"
+          width={342}
+          height={268}
+          className="xl:hidden object-fill w-full h-full"
+        />
+        <Image
+          src="/images/prom-banner/prom-banner-desktop.jpg"
+          alt="Банер"
+          width={1320}
+          height={432}
+          className="hidden xl:block object-cover w-full h-full"
+        />
+        <div className="absolute z-10 left-4 xl:left-10 bottom-6 xl:bottom-10 text-white">
+          <h2 className="mb-2 font-semibold text-base xl:text-2xl">
             Palermo Vintage Sneakers Collection
           </h2>
-          <p className="mb-5 xl:mb-[35px] text-sm xl:font-light leading-[18px] tracking-[0.04em] xl:tracking-wider">
+          <p className="max-w-[310px] xl:max-w-[575px] mb-4 xl:mb-6 font-medium text-sm xl:text-base tracking-custom_4">
             Максимальний комфорт для активного життя. Обирайте найкраще для
             ваших досягнень!
           </p>
           <Link
             href="/product/83"
-            className={cn(
-              "min-w-[140px] tracking-[2%] bg-transparent rounded-lg px-[17px] py-[7px] border text-sm xl:px-[25px] xl:py-[14.5px] xl:rounded-xl xl:text-base hover:bg-[#0e0e10]/20",
-            )}
+            className="flex items-center justify-center w-[116px] xl:w-[144px] h-8 xl:h-12 px-4 xl:px-6 border rounded-lg xl:rounded-xl font-semibold text-sm xl:text-base tracking-custom_2 bg-transparent hover:bg-[#0e0e10]/20 transition"
           >
             Детальніше
           </Link>
