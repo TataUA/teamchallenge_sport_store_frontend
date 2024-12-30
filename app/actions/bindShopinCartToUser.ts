@@ -1,5 +1,6 @@
 "use client";
 
+import { setBasketIdToLocalStorage } from "@/helpers/getBasketIdFromLocalStorage";
 import { $instance } from "@/services/api";
 
 const bindShopingCartToUser = async (basketId: string) => {
@@ -14,11 +15,13 @@ const bindShopingCartToUser = async (basketId: string) => {
       },
     );
 
-    if (result.status !== 201) {
+    if (result.status !== 200) {
       throw new Error(JSON.stringify(result.data));
     }
 
     const { data }: { data: { basket_id: string; user_id: number[] } } = result;
+    
+    setBasketIdToLocalStorage(data.basket_id);
 
     return data.basket_id;
   } catch (error: any) {
