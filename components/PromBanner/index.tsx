@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function PromBanner() {
+export const PromBanner = () => {
   return (
     <section className="container py-12 xl:pb-[62px]">
       <div className="relative w-full h-full xl:min-h-[432px] max-h-[432px] aspect-ratio-[342/268] xl:aspect-auto rounded-2xl overflow-hidden">
@@ -10,6 +10,7 @@ export default async function PromBanner() {
           alt="Банер"
           width={342}
           height={268}
+          priority
           className="xl:hidden object-cover w-full h-full"
         />
         <Image
@@ -38,4 +39,4 @@ export default async function PromBanner() {
       </div>
     </section>
   );
-}
+};
