@@ -1,13 +1,11 @@
 "use client";
+
 import { useState } from "react";
+import Link from "next/link";
 
-// utils
-import { cn } from "@/services/utils/cn";
+import { FormBannerButton } from "@/components/SubscribeBannerFooter/FormBannerFooter/FormBannerButton";
 
-import getSuccessBlueIcon from "@/helpers/getSuccessBlueIconSVG";
-import { FormBannerButton } from "./FormBannerButton";
-
-const FormBanerFooter = () => {
+export const FormBanerFooter = () => {
   const [submitted, setSubmitted] = useState(false);
   const [email, setEmail] = useState("");
 
@@ -34,33 +32,22 @@ const FormBanerFooter = () => {
   };
 
   return (
-    <form onSubmit={handleSubscribeSubmit}>
-      <div
-        className={cn(
-          "font-extrabold  align-middle leading-9 md:pt-8  md:text-[28px] md:text-[#1a1a1c] xl:pt-[30px] xl:text-[32px] xl:leading-10 xl:font-bold ",
-          "max-[767px]:text-[28px] max-[767px]:mb-2",
-          "min-[2800px]:text-7xl",
-        )}
-      >
-        Знижка -15% на першу покупку
-      </div>
-      <p
-        className={cn(
-          "mt-3 text-[14px] mb-2 tracking-wider md:text-[#1a1a1c] xl:text-sm xl:font-medium  xl:mb-10 xl:tracking-wide",
-          "min-[767px]:text-[14px] max-[767px]:mb-9",
-          "min-[2800px]:text-3xl",
-        )}
-      >
+    <form
+      autoComplete="on"
+      onSubmit={handleSubscribeSubmit}
+      className="text-white xl:text-title"
+    >
+      <h2 className="mb-3 font-bold text-[28px] xl:text-[30px] leading-129">
+        Отримуйте спеціальні пропозиції першими
+      </h2>
+      <p className="mb-4 xl:mb-8 font-medium text-sm tracking-custom_4 xl:tracking-custom_2">
         Залиш свою електронну пошту, щоб бути в курсі про актуальні новинки та
         акції
       </p>
-      <div className="flex justify-between">
+
+      <div className="flex justify-between xl:mb-4">
         <input
-          className={cn(
-            "bg-transparent border-b-[1px] text-inherit placeholder-gray-500 mb-[6px]  pb-1.5 focus-visible:border-[blue] outline-none text-base  md:placeholder-label placeholder-[0.025em]   md:pt-6 xl:pt-4 md:w-full xl:mr-6 xl:font-medium",
-            "max-[767px]:w-[100%] md:border-border",
-            "min-[2800px]:mb-12 min-[2800px]:text-3xl",
-          )}
+          className="mb-2 xl:mb-0 w-full xl:w-[447px] h-[52px] xl:h-14 pt-5 xl:pt-6 pb-2 border-b border-border outline-none bg-transparent text-inherit placeholder-label  focus-visible:border-active_blue"
           type="email"
           value={email}
           placeholder="Електронна пошта"
@@ -71,45 +58,17 @@ const FormBanerFooter = () => {
         </div>
       </div>
 
-      <p
-        className={cn(
-          "leading-4 text-[#aaaaac] text-[12px]  tracking-wide opacity-100 md:text-secondary xl:font-medium xl:pt-2",
-          "max-[767px]:mb-[0]",
-          "min-[2800px]:text-3xl",
-        )}
-      >
+      <p className="mb-4 font-medium text-xs text-timer tracking-custom_2">
         Натискаючи кнопку “Підписатись”, ви даєте згоду на обробку персональних
         даних згідно{" "}
-        <span className="underline">Політики конфіденційності </span>
+        <Link href="" className="border-b border-border">
+          Політики конфіденційності
+        </Link>
       </p>
-      <br />
-      <div className=" xl:hidden">
+
+      <div className="xl:hidden">
         <FormBannerButton disabled={submitted} />
       </div>
-
-      {/* <div>
-        <button
-          disabled={submitted}
-          className={cn(
-            "mt-[-6px] text-title min-w-[148px] py-3 px-6 bg-white md:bg-blue md:text-white rounded-2xl tracking-wide font-semibold hover:opacity-70 disabled:hover:opacity-100 md:hover:opacity-100 md:hover:bg-active_blue  xl:hidden",
-            "max-[767px]:px-6 max-[767px]:rounded-xl",
-            "min-[2800px]:text-3xl min-[2800px]:min-w-[235px]",
-            {
-              "md:bg-white md:border selection: md:border-[#0A4CF6]": submitted,
-            },
-          )}
-        >
-          {submitted ? (
-            <span className="[&>svg]:w-5 [&>svg]:h-5 [&>svg]:m-auto min-[2800px]:[&>svg]:w-8 min-[2800px]:[&>svg]:h-9">
-              {getSuccessBlueIcon()}
-            </span>
-          ) : (
-            "Підписатися"
-          )}
-        </button>
-      </div> */}
     </form>
   );
 };
-
-export default FormBanerFooter;

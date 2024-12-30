@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { aboutUs } from "@/public/data/about-us.data";
 
-export default function AboutUs() {
+export const AboutUs = () => {
   return (
     <section className="my-12 xl:my-0 container xl:flex xl:flex-col-reverse">
       <ul className="mb-12 xl:mb-0 py-6 xl:py-[88px] flex flex-col xl:flex-row gap-10 xl:gap-6">
@@ -62,4 +62,4 @@ export default function AboutUs() {
       </div>
     </section>
   );
-}
+};

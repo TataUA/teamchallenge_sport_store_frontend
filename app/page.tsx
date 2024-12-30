@@ -2,9 +2,9 @@ import { Slider } from "@/components/Slider/Slider";
 import { Gender } from "@/components/Gender";
 import { PopularCategories } from "@/components/PopularCategories";
 import { SortedProducts } from "@/components/SortedProducts";
-import PromBanner from "@/components/PromBanner";
-import AboutUs from "@/components/AboutUs";
-import SubscribeBannerFooter from "@/components/SubscribeBannerFooter";
+import { PromBanner } from "@/components/PromBanner";
+import { AboutUs } from "@/components/AboutUs";
+import { SubscribeBannerFooter } from "@/components/SubscribeBannerFooter";
 import dataSlider from "@/public/data/slider_data.json";
 
 export default async function Page() {
