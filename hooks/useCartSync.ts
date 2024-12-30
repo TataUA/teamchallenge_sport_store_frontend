@@ -91,6 +91,8 @@ const assignCartToUser = async (userId: number, dispatch: any) => {
       return;
     }
 
+    dispatch(syncCart());
+
     return;
   }
 
