@@ -19,7 +19,7 @@ export default function AboutUs() {
               height={64}
               className="xl:w-[56px] xl:h-[56px]"
             ></Image>
-            <div className="flex flex-col items-center justify-center xl:items-start">
+            <div className="flex flex-col text-center xl:text-left">
               <h3 className="mb-1 xl:mb-2 font-semibold text-base xl:text-title">
                 {title}
               </h3>
