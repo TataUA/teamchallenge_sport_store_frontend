@@ -36,7 +36,7 @@ const PriceFilterXL = () => {
   };
 
   useEffect(() => {
-    let timer;
+    let timer: any;
     if (!timer) {
       timer = setTimeout(() => {
         const updateSlider = () => {

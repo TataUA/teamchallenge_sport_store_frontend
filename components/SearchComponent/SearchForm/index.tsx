@@ -53,7 +53,6 @@ const SearchForm = (props: IProps) => {
     (category) => searchText && category.includes(searchText),
   );
 
-  console.log(`in SearchForm ${recomendedCategories.length}`);
   if (recomendedCategories.length > 0) {
     setIsListCategoriesMob(recomendedCategories.length);
   } else {
