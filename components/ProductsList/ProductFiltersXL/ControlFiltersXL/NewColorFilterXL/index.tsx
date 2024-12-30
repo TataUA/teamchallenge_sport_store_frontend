@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { cn } from "@/services/utils/cn";
 
 //hooks
@@ -8,7 +8,8 @@ import { generalProductsFilers } from "../../../ProductsFilters/filtersData";
 import getArrowDownSVG from "@/helpers/getArrowDownSVG";
 
 //components
-import ColorsFilterXL from "../ColorFilterXL";
+import ColorsFilterXL from "../ColorFilterXL/index";
+import { builders } from "prettier/doc.js";
 
 interface ControlFiltrItem {
   title?: string | React.ReactNode;
@@ -18,8 +19,6 @@ interface ControlFiltrItem {
 
 const NewColorFilterXL = (props: ControlFiltrItem) => {
   const { title, isChosenFilter, setIsChosenFilter } = props;
-
-  const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
 
   const classItemFilter = {
     classFilter:
@@ -33,8 +32,7 @@ const NewColorFilterXL = (props: ControlFiltrItem) => {
     "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 top-[64px] left-0 w-[252px] h-auto";
 
   const handleClick = () => {
-    setIsSortingArrowUp(!isSortingArrowUp);
-    if (isSortingArrowUp == true) {
+    if (isChosenFilter == "" || isChosenFilter != "color") {
       setIsChosenFilter("color");
     } else {
       setIsChosenFilter("");

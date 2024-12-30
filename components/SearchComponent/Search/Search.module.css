@@ -14,7 +14,7 @@
   }
 
   .search_wrapperXL.active {
-    @apply mx-auto overflow-y-auto  relative top-3  w-[376px]  bg-white z-30 rounded-t-lg rounded-b-2xl;
+    @apply mx-auto overflow-y-auto absolute  top-3  w-[376px]  bg-white z-30 rounded-t-lg rounded-b-2xl;
   }
 
   .search_wrapper.active .search_box {

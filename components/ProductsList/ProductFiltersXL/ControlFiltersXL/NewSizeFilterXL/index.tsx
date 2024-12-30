@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "@/services/utils/cn";
 // helpers
 import getArrowDownSVG from "@/helpers/getArrowDownSVG";
@@ -7,7 +7,7 @@ import getArrowDownSVG from "@/helpers/getArrowDownSVG";
 import { generalProductsFilers } from "../../../ProductsFilters/filtersData";
 
 //components
-import SizeFilterXL from "../SizeFilterXL";
+import SizeFilterXL from "../SizeFilterXL/index";
 // types
 import { IProduct } from "@/services/types";
 
@@ -22,8 +22,6 @@ interface ControlFiltrItem {
 const NewSizeFilterXL = (props: ControlFiltrItem) => {
   const { title, params, products, isChosenFilter, setIsChosenFilter } = props;
 
-  const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
-
   const classItemFilter = {
     classFilter:
       "h-14 md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 ",
@@ -36,8 +34,7 @@ const NewSizeFilterXL = (props: ControlFiltrItem) => {
     "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 top-[64px] left-0 w-auto h-auto";
 
   const handleClick = () => {
-    setIsSortingArrowUp(!isSortingArrowUp);
-    if (isSortingArrowUp == true) {
+    if (isChosenFilter == "" || isChosenFilter != "size") {
       setIsChosenFilter("size");
     } else {
       setIsChosenFilter("");

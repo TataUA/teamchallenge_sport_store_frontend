@@ -32,13 +32,14 @@ const Search = (props: SearchFormProps) => {
 
   if (!isOpen) return null;
 
-  let shiftRight = "0px";
-  const widthBrowser = document.documentElement.clientWidth;
-  if (widthBrowser <= 1440) {
-    shiftRight = `${(1440 - widthBrowser) / 2 - 350}px`;
-  } else {
-    shiftRight = "-340px";
-  }
+  // let shiftRight = "0px";
+  // const widthBrowser = document.documentElement.clientWidth;
+  // console.log(widthBrowser);
+  // if (widthBrowser <= 1440) {
+  //   shiftRight = `${(1440 - widthBrowser) / 2 - 350}px`;
+  // } else {
+  //   shiftRight = "-357px";
+  // }
 
   const handleClick = (e: any) => {
     if (e.target.id === "wrapper-mod") {
@@ -50,6 +51,9 @@ const Search = (props: SearchFormProps) => {
       }, 100);
     }
   };
+
+  const paddinOfset = window.innerWidth - document.body.offsetWidth;
+  console.log(`${paddinOfset}px`);
 
   return (
     <>
@@ -69,27 +73,29 @@ const Search = (props: SearchFormProps) => {
           />
         </div>
       </div>
-      <div
-        className="hidden xl:block xl:fixed z-30 left-0 top-0 w-[100%] h-[100%] overflow-auto shadow-inner"
-        id="wrapper-mod"
-        onClick={(e) => handleClick(e)}
-      >
+      <div className="hidden xl:block  xl:fixed  left-0 top-0 w-[100%] h-[100%]">
         <div
-          className={`${styles.search_wrapperXL} ${isOpen ? styles.active : ""}`}
-          style={{
-            right: shiftRight,
-          }}
+          className="relative w-[100%] h-[100%]"
+          id="wrapper-mod"
+          onClick={(e) => handleClick(e)}
         >
-          <SearchFormXL
-            {...props}
-            setStringSearch={(e) => setIsStringSearch(e)}
-            setIsListCategories={(e) => setIsListCategories(e)}
-          />
-          <SearchResultComponentXL
-            onClose={onClose}
-            stringSearch={isStringSearch}
-            isListCategories={isListCategories}
-          />
+          <div
+            className={`${styles.search_wrapperXL} ${isOpen ? styles.active : ""}`}
+            style={{
+              right: "185px",
+            }}
+          >
+            <SearchFormXL
+              {...props}
+              setStringSearch={(e) => setIsStringSearch(e)}
+              setIsListCategories={(e) => setIsListCategories(e)}
+            />
+            <SearchResultComponentXL
+              onClose={onClose}
+              stringSearch={isStringSearch}
+              isListCategories={isListCategories}
+            />
+          </div>
         </div>
       </div>
     </>

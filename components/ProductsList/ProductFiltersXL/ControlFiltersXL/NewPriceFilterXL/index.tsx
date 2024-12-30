@@ -4,7 +4,7 @@ import { cn } from "@/services/utils/cn";
 // helpers
 import getArrowDownSVG from "@/helpers/getArrowDownSVG";
 
-import PriceFilterXL from "../PriceFilterXL";
+import PriceFilterXL from "../PriceFilterXL/index";
 
 interface ControlFiltrItem {
   title?: string | React.ReactNode;
@@ -14,8 +14,6 @@ interface ControlFiltrItem {
 
 const NewPriceFilterXL = (props: ControlFiltrItem) => {
   const { title, isChosenFilter, setIsChosenFilter } = props;
-
-  const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
 
   const classItemFilter = {
     classFilter:
@@ -29,8 +27,7 @@ const NewPriceFilterXL = (props: ControlFiltrItem) => {
     "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 top-[64px] left-0 w-[436px] h-[140px]";
 
   const handleClick = () => {
-    setIsSortingArrowUp(!isSortingArrowUp);
-    if (isSortingArrowUp == true) {
+    if (isChosenFilter == "" || isChosenFilter != "price") {
       setIsChosenFilter("price");
     } else {
       setIsChosenFilter("");

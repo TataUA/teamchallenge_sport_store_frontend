@@ -40,7 +40,7 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
 
   const handleClick = () => {
     setIsSortingArrowUp(!isSortingArrowUp);
-    if (isSortingArrowUp == true) {
+    if (isChosenFilter == "" || isChosenFilter != "select") {
       setIsChosenFilter("select");
     } else {
       setIsChosenFilter("");
