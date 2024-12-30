@@ -5,7 +5,7 @@ import { $instance } from "@/services/api";
 const bindShopingCartToUser = async (basketId: string) => {
   try {
     const result = await $instance.post(
-      "baskets/bind/",
+      "baskets/merge/",
       { basket_id: basketId },
       {
         headers: {
