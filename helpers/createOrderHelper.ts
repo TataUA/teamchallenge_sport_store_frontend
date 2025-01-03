@@ -24,46 +24,46 @@ const createOrderHelper = async (
   successfulyRedirect: (data: any) => void,
   showModalProductOutOfStock: (products: IProductWithMaxQuantity[]) => void,
 ): Promise<any> => {
-  const { userData, orderState, deliveryAddress, cart } = data;
+  try {
+    const { userData, orderState, deliveryAddress, cart } = data;
 
-  const getOrCreateBasketId = async (): Promise<string> => {
-    let basketId = getBasketIdFromLocalStorage();
+    const getOrCreateBasketId = async (): Promise<string> => {
+      let basketId = getBasketIdFromLocalStorage();
 
-    const isValid = await isValidShopingCart(basketId);
+      const isValid = await isValidShopingCart(basketId);
 
-    if (!isValid) {
-      basketId = await createShoppingCartAction();
+      if (!isValid) {
+        basketId = await createShoppingCartAction();
 
-      if (!basketId) {
-        return "";
+        if (!basketId) {
+          return "";
+        }
+
+        setBasketIdToLocalStorage(basketId);
       }
 
-      setBasketIdToLocalStorage(basketId);
-    }
-
-    return basketId;
-  };
-
-  const createNewOrder = (basketId: string): IOrder => {
-    const fullAddressParts = orderState.city.split(",");
-    return {
-      basket_id: basketId,
-      first_name: userData?.name,
-      last_name: userData.patronymic,
-      email: userData.email,
-      surname: userData.surname,
-      phone_number: userData.phone,
-      delivery_method: orderState.deliveryType || "",
-      branch: orderState.department || "",
-      city: fullAddressParts[0] + "," + fullAddressParts[1] || "",
-      appartment: deliveryAddress.numberAppartment,
-      street: deliveryAddress.street,
-      user: userData?.id || 0,
-      payment_method: orderState.payment || "Upon Receipt",
+      return basketId;
     };
-  };
 
-  try {
+    const createNewOrder = (basketId: string): IOrder => {
+      const fullAddressParts = orderState.city.split(",");
+      return {
+        basket_id: basketId,
+        first_name: userData?.name,
+        last_name: userData.patronymic,
+        email: userData.email,
+        surname: userData.surname,
+        phone_number: userData.phone,
+        delivery_method: orderState.deliveryType || "",
+        branch: orderState.department || "",
+        city: fullAddressParts[0] + "," + fullAddressParts[1] || "",
+        appartment: deliveryAddress.numberAppartment,
+        street: deliveryAddress.street,
+        user: userData?.id || 0,
+        payment_method: orderState.payment || "Upon Receipt",
+      };
+    };
+
     let basketId = await getOrCreateBasketId();
     let newOrder = createNewOrder(basketId);
     let response = await createOrder(newOrder);
