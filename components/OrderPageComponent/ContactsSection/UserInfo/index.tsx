@@ -133,7 +133,7 @@ const UserInfo = (props:IProps) => {
 
   return (
     <>
-      <div className="relative p-6 bg-[#F1F4FE] flex flex-col gap-[6px] rounded-3xl">
+      <div className="relative p-6 bg-[#F1F4FE] flex flex-col gap-[6px] rounded-3xl text-sm">
         <div className="absolute right-6 top-6 cursor-pointer"
           onClick={() => setEditDataMode(true)}
         >

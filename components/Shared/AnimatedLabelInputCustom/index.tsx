@@ -45,7 +45,7 @@ const AnimatedLabelInputCustom = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
         className={cn(
-          "w-full py-2 pt-[1.25rem] text-base border-b border-gray leading-[165%]",
+          "w-full py-2 pt-[1.25rem] text-base border-b border-[#CFCFCF] leading-[165%]",
           "transition-colors duration-300 focus:outline-none",
           {
             "border-blue": isFocused || value,
@@ -57,12 +57,12 @@ const AnimatedLabelInputCustom = ({
       />
       <label
         className={cn(
-          "absolute left-0 text-base text-gray top-6 transition-all duration-300",
+          "absolute left-0 text-base text-[#868687] top-6 transition-all duration-300",
           "transition-colors duration-300 focus:outline-none",
           {
             "text-xs text-blue top-0": isFocused || value,
           },
-          `${classnameLabel}`
+          `${classnameLabel}`,
         )}
         htmlFor={id || label}
       >
