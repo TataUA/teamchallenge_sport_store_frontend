@@ -8,7 +8,7 @@ import { IProduct } from "@/services/types";
 import getSortedProducts from "@/helpers/getSortedProducts";
 import getFilteredProducts from "@/helpers/getFilteredProducts";
 import ListItem from "@/components/ProductsList/ListItem";
-import Test from "@/components/ProductsList/Test";
+import NewTest from "@/components/ProductsList/NewTest";
 
 export const metadata = {
   title: "Products Page",
@@ -38,44 +38,60 @@ const getSortedAndFilteredProducts = async ({
   filters: IFilters;
   gender: string;
 }) => {
-  const products: IProduct[] = await fetchProductsByGenderAction(gender);
+  const limit = 8;
+  let offset: number;
 
-  const filteredProductByGender = products.filter((product) => {
-    if (filters.gender) {
-      return (
-        product.category.gender.toLowerCase() === filters.gender?.toLowerCase()
-      );
-    }
-    return product;
-  });
+  if (filters.page) {
+    offset = (Number(filters.page) - 1) * limit;
+  } else {
+    offset = 0;
+  }
 
-  const sortedProducts = getSortedProducts({
-    products: filteredProductByGender,
-    direction: filters.sortedBy,
-  });
+  const result = await fetchProductsByGenderAction(gender, limit, offset);
 
-  const arraOfFiltersFromFiltersObject = Object.entries({
-    ...filters,
-    gender,
-  }).map(([key, value]) => ({ [key]: value }));
-  const filteredProductsByGeneralFilters = getFilteredProducts({
-    products: sortedProducts,
-    filters: arraOfFiltersFromFiltersObject,
-  });
+  // const filteredProductByGender = products.filter((product) => {
+  //   if (filters.gender) {
+  //     return (
+  //       product.category.gender.toLowerCase() === filters.gender?.toLowerCase()
+  //     );
+  //   }
+  //   return product;
+  // });
 
-  return filteredProductsByGeneralFilters;
+  // const sortedProducts = getSortedProducts({
+  //   products: filteredProductByGender,
+  //   direction: filters.sortedBy,
+  // });
+
+  // const arraOfFiltersFromFiltersObject = Object.entries({
+  //   ...filters,
+  //   gender,
+  // }).map(([key, value]) => ({ [key]: value }));
+  // const filteredProductsByGeneralFilters = getFilteredProducts({
+  //   products: sortedProducts,
+  //   filters: arraOfFiltersFromFiltersObject,
+  // });
+
+  return result;
 };
 
 export default async function ProductsByGenderPage(
   props: IProductsPageInitialProps,
 ) {
-  const products = await getSortedAndFilteredProducts({
+  const resultsFunc = await getSortedAndFilteredProducts({
     filters: props.searchParams,
     gender: props.params.gender[0],
   });
-  return (
-    <section className="px-6 pt-4 pb-12">
-      <Test products={products} />
-    </section>
-  );
+  let products: IProduct[];
+  if (resultsFunc) {
+    products = resultsFunc[0];
+    const count = resultsFunc[1];
+    // console.log(`Page products - ${products[0].id} / ${products[0].title}`);
+    // console.log(`Page count - ${count}`);
+    return (
+      <section className="px-6 pt-4 pb-12">
+        <NewTest products={products} count={count} />
+      </section>
+    );
+  }
 }

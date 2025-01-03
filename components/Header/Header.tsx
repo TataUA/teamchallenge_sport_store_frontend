@@ -28,6 +28,17 @@ export const Header = () => {
 
   const showGoods = isShowMenuGoogs ? "block" : "none";
 
+  const handleOnMoseOver = (e: any) => {
+    console.log(e.target.id);
+    // if (e.target.id != "header") {
+    //   // setIsChoseGender("");
+    //   // setIsShowMenuGoods(false);
+    //   console.log("no header");
+    // } else {
+    //   console.log("header");
+    // }
+  };
+
   useEffect(() => {
     window.addEventListener("wheel", () => {
       setIsChoseGender("");
@@ -52,7 +63,10 @@ export const Header = () => {
       </header>
 
       <header className="hidden xl:h-30 xl:flex xl:flex-col fixed top-0 left-0 right-0 bg-white z-50 ">
-        <div className="h-18 xl:container xl:mx-auto xl:px-[82px] py-2 flex justify-between items-center">
+        <div
+          className="h-18 xl:container xl:mx-auto xl:px-[82px] py-2 flex justify-between items-center"
+          onMouseOver={(e) => handleOnMoseOver(e)}
+        >
           <div className="h-12 w-50 flex items-center gap-1">
             <MenuGender
               navItems={NAV_ITEMS}
@@ -68,7 +82,10 @@ export const Header = () => {
           className="h-12 w-full  bg-[#f7f7f7] transition duration-300"
           style={{ display: showGoods }}
         >
-          <div className="flex justify-start items-center xl:container xl:mx-auto xl:px-[82px]  transition duration-300">
+          <div
+            id="goods"
+            className="flex justify-start items-center xl:container xl:mx-auto xl:px-[82px]  transition duration-300"
+          >
             <MenuGoods navItems={NAV_ITEMS} gender={gender} />
           </div>
         </div>

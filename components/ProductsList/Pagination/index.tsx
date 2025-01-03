@@ -29,30 +29,64 @@ const PaginationArrow: FC<PaginationArrowProps> = ({
     <Link
       href={href}
       className={cn(`hover:bg-gray-200 ${disabledClassName}`, {
-        'opacity-[50%] pointer-events-none': isDisabled
+        "opacity-[50%] pointer-events-none": isDisabled,
       })}
       aria-disabled={isDisabled}
     >
-      {isLeft ? 
-      (
+      {isLeft ? (
         <span className="min-[2800px]:[&>svg]:size-14">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M19 12H5" stroke="#272728" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M12 19L5 12L12 5" stroke="#272728" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M19 12H5"
+              stroke="#272728"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M12 19L5 12L12 5"
+              stroke="#272728"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </span>
       ) : (
         <span className="min-[2800px]:[&>svg]:size-14">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <path d="M5 12H19" stroke="#3E3E40" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M12 5L19 12L12 19" stroke="#3E3E40" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M5 12H19"
+              stroke="#3E3E40"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M12 5L19 12L12 19"
+              stroke="#3E3E40"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         </span>
       )}
     </Link>
   );
 };
-
 
 const Pagination = ({ pageCount }: Readonly<PaginationProps>) => {
   const pathname = usePathname();
@@ -75,32 +109,40 @@ const Pagination = ({ pageCount }: Readonly<PaginationProps>) => {
         i === 1 ||
         i === pageCount ||
         (i >= currentPage - 1 && i <= currentPage + 1) ||
-        (pageCount <= maxVisiblePages)
+        pageCount <= maxVisiblePages
       ) {
         pageNumbers.push(
           <div
-            key={i} 
+            key={i}
             onClick={() => router.push(createPageURLWithPageParams(i))}
-            className={cn("relative cursor-pointer text-[#B7B7B8] py-1 px-2 min-[2800px]:text-4xl", 
-              'min-[2800px]:after:size-5', {
-                'after:block after:bg-blue after:size-2 after:rounded-[50%] after:absolute after:left-[50%] after:translate-x-[-50%]': i == currentPage,
-                  'text-[#272728]': i == currentPage,
-                })}
+            className={cn(
+              "relative cursor-pointer text-[#B7B7B8] py-1 px-2 min-[2800px]:text-4xl",
+              "min-[2800px]:after:size-5",
+              {
+                "after:block after:bg-blue after:size-2 after:rounded-[50%] after:absolute after:left-[50%] after:translate-x-[-50%]":
+                  i == currentPage,
+                "text-[#272728]": i == currentPage,
+              },
+            )}
           >
             {i}
-          </div>
+          </div>,
         );
       } else if (
         (i === currentPage - 2 && currentPage > 3) ||
         (i === currentPage + 2 && currentPage < pageCount - 2)
       ) {
-        pageNumbers.push(<span key={i} className="px-3 py-2">...</span>);
+        pageNumbers.push(
+          <span key={i} className="px-3 py-2">
+            ...
+          </span>,
+        );
       }
     }
 
     return pageNumbers;
   };
- 
+
   return (
     <div className="px-3 max-[480px]:px-0">
       <div className="flex justify-between items-center m-auto max-w-[500px] min-[2800px]:max-w-[800px]">
@@ -124,5 +166,5 @@ const Pagination = ({ pageCount }: Readonly<PaginationProps>) => {
       </div>
     </div>
   );
-}
-export default Pagination
+};
+export default Pagination;

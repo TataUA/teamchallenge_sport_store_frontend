@@ -39,7 +39,11 @@ const MenuGoods = ({ navItems, gender }: NavItemListProps) => {
     );
   });
 
-  return <div className="flex justify-start gap-2">{elements}</div>;
+  return (
+    <div id="goods" className="flex justify-start gap-2">
+      {elements}
+    </div>
+  );
 };
 
 export default MenuGoods;
