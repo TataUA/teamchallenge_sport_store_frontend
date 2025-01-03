@@ -75,7 +75,7 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
       id: product.size.filter(
         (sizeItem) =>
           sizeItem.value.toLowerCase() === sizesStored.toLowerCase(),
-      )[0].id,
+      )[0]?.id,
       value: sizesStored,
     };
 
