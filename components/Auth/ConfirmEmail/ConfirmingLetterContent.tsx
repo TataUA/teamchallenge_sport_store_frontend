@@ -3,8 +3,11 @@
 import React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
 
+import { AppDispatch } from "@/redux/store";
 import { resendEmailThunk } from "@/redux/auth/authThunk";
+import { authModalClose } from "@/redux/auth/authSlice";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { ClientComponent } from "@/components/ClientComponent";
 import { ResendLinkButton } from "@/components/Auth/ResendLinkButton";
@@ -13,25 +16,23 @@ import envelopBlue from "@/public/icons/auth/envelop_blue.svg";
 
 interface ConfirmingLetterContentProps {
   setShowConfirmRegister?: (show: boolean) => void;
-  setShowModal?: (show: boolean) => void;
   email?: string;
 }
 
 export const ConfirmingLetterContent = (
   props: ConfirmingLetterContentProps,
 ) => {
+  const dispatch: AppDispatch = useDispatch();
   const searchParams = useSearchParams();
-
   const router = useRouter();
+  const isMobile = useIsMobile();
 
   const email = searchParams.get("email") || "";
-
-  const isMobile = useIsMobile();
 
   const handleRedirect = () => {
     if (!isMobile) {
       props.setShowConfirmRegister?.(false);
-      props.setShowModal?.(false);
+      dispatch(authModalClose());
     }
     router.push("/auth/login");
   };

@@ -8,7 +8,7 @@ import * as yup from "yup";
 import { Formik, Form, FormikErrors, FormikProps } from "formik";
 
 import { AppDispatch } from "@/redux/store";
-import { clearError } from "@/redux/auth/authSlice";
+import { authModalClose, clearError } from "@/redux/auth/authSlice";
 import { selectError, selectUserData } from "@/redux/auth/authSelector";
 import { currentUserThunk, loginUserThunk } from "@/redux/auth/authThunk";
 import { LoginFormValues } from "@/services/types/auth-form-types";
@@ -43,7 +43,6 @@ export interface ExtendedFormikErrors extends FormikErrors<LoginFormValues> {
 }
 
 interface LoginFormProps {
-  setShowModal?: (show: boolean) => void;
   setShowConfirmRegister?: (show: boolean) => void;
   setShowResetPassword?: (show: boolean) => void;
   saveUserEmail?: (email: string) => void;
@@ -59,11 +58,8 @@ export const LoginForm = (props: LoginFormProps) => {
 
   const currentUser = useSelector(selectUserData);
   const error = useSelector(selectError);
-
   const dispatch: AppDispatch = useDispatch();
-
   const router = useRouter();
-
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -75,7 +71,7 @@ export const LoginForm = (props: LoginFormProps) => {
 
   useEffect(() => {
     if (currentUser) {
-      props.setShowModal?.(false);
+      dispatch(authModalClose());
     }
   }, [currentUser, props]);
 

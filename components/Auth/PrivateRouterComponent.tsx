@@ -27,26 +27,19 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
   const accessToken = localStorage.getItem("accessToken");
 
   const dispatch: AppDispatch = useDispatch();
-
   const router = useRouter();
-
   const pathname = usePathname();
-
   const isMobile = useIsMobile();
 
   useEffect(() => {
     if (isLoading) return;
 
-    if (
-      !isAuthenticated &&
-      (pathname === "/auth/login" || pathname === "/auth/signup")
-    ) {
-      return;
-    }
-
     if (!isAuthenticated) {
-      router.replace(isMobile ? "/auth/login" : "/");
-      return;
+      if (pathname === "/auth/login" || pathname === "/auth/signup") {
+        //router.replace(!isMobile ? "/" : "");
+        return;
+      }
+      router.replace(isMobile ? "/auth/login" : "");
     }
 
     if (isAuthenticated && !userData) {
