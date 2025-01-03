@@ -1,16 +1,23 @@
 "use client";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 
 // components
 import UserInfo from "./UserInfo";
 
 // store
+import { AppDispatch } from "@/redux/store";
 import { selectUserData } from "@/redux/auth/authSelector";
+import { authModalOpen } from "@/redux/auth/authSlice";
+
+//hooks
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 const ContactsSection = ({ children }: { children: any }) => {
   const user = useSelector(selectUserData);
+  const dispatch: AppDispatch = useDispatch();
+  const isMobile = useIsMobile();
 
   return (
     <div className="md:col-start-1 md:row-start-1 mb-[40px] md:mb-[48px]">
@@ -20,7 +27,10 @@ const ContactsSection = ({ children }: { children: any }) => {
         </h3>
         {!user ? (
           <Link
-            href="/auth/login"
+            href={isMobile ? "/auth/login" : ""}
+            onClick={() => {
+              if (!isMobile) dispatch(authModalOpen());
+            }}
             className="text-sm font-medium underline title"
           >
             У мене вже є аккаунт

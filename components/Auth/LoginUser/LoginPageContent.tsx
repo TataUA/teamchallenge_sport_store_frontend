@@ -11,7 +11,6 @@ import { PrivacyPolicy } from "@/components/Auth/PrivacyPolicy";
 import { Button } from "@/components/Button/Button";
 
 interface LoginPageContentProps {
-  setShowModal?: (show: boolean) => void;
   setShowRegistration?: (show: boolean) => void;
   setShowConfirmRegister?: (show: boolean) => void;
   setShowResetPassword?: (show: boolean) => void;
@@ -41,7 +40,6 @@ export const LoginPageContent = (props: LoginPageContentProps) => {
               Увійдіть або зареєструйтесь щоб продовжити
             </p>
             <LoginForm
-              setShowModal={props.setShowModal}
               setShowConfirmRegister={props.setShowConfirmRegister}
               setShowResetPassword={props.setShowResetPassword}
               saveUserEmail={props.saveUserEmail}

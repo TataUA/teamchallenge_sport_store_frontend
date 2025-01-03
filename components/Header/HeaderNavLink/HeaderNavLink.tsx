@@ -23,8 +23,12 @@ import { v4 as uuidv4 } from "uuid";
 
 // store
 import { selectCart } from "@/redux/cart/cartSelector";
-import { selectUserData } from "@/redux/auth/authSelector";
+import {
+  selectIsAuthModalOpen,
+  selectUserData,
+} from "@/redux/auth/authSelector";
 import { currentUserThunk } from "@/redux/auth/authThunk";
+import { authModalClose, authModalOpen } from "@/redux/auth/authSlice";
 import { AppDispatch } from "@/redux/store";
 
 //hooks
@@ -37,6 +41,7 @@ import getUserlogged from "@/helpers/getUserlogged";
 const HeaderNavLink = () => {
   const cart = useSelector(selectCart);
   const user = useSelector(selectUserData);
+  const isAuthModalOpen = useSelector(selectIsAuthModalOpen);
 
   useCartSync();
 
@@ -44,7 +49,6 @@ const HeaderNavLink = () => {
   const router = useRouter();
   const isMobile = useIsMobile();
 
-  const [showModal, setShowModal] = useState(false);
   const [showRegistration, setShowRegistration] = useState(false);
   const [showConfirmRegister, setShowConfirmRegister] = useState(false);
   const [showResetPassword, setShowResetPassword] = useState(false);
@@ -67,13 +71,14 @@ const HeaderNavLink = () => {
         router.push("/auth/login");
       } else {
         setShowRegistration(false);
-        setShowModal(true);
+        dispatch(authModalOpen());
       }
     }
   };
 
   const handleCloseModalClick = () => {
-    setShowModal(false);
+    dispatch(authModalClose());
+    setShowRegistration(false);
     setShowResetPassword(false);
     setShowConfirmRegister(false);
   };
@@ -146,12 +151,12 @@ const HeaderNavLink = () => {
         ))}
       </ul>
 
-      {!isMobile && showModal && (
+      {!isMobile && isAuthModalOpen && (
         <ModalForm onClose={handleCloseModalClick}>
           {showConfirmRegister ? (
             <ConfirmingLetterContent
               setShowConfirmRegister={setShowConfirmRegister}
-              setShowModal={setShowModal}
+              //setShowModal={setShowModal}
               email={userEmail}
             />
           ) : showRegistration ? (
@@ -166,7 +171,6 @@ const HeaderNavLink = () => {
             />
           ) : (
             <LoginPageContent
-              setShowModal={setShowModal}
               setShowRegistration={setShowRegistration}
               setShowConfirmRegister={setShowConfirmRegister}
               setShowResetPassword={setShowResetPassword}

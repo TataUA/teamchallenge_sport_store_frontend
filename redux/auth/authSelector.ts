@@ -10,3 +10,5 @@ export const selectIsRefreshing = (state: { auth: AuthState }) =>
 export const selectIsSubmitingComplete = (state: { auth: AuthState }) =>
   state.auth.isSubmitingComplete;
 export const selectError = (state: { auth: AuthState }) => state.auth.error;
+export const selectIsAuthModalOpen = (state: { auth: AuthState }) =>
+  state.auth.isAuthModalOpen;

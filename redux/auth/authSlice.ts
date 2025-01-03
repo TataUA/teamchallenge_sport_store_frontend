@@ -9,6 +9,7 @@ import {
   resetPasswordThunk,
   confirmedEmailThunk,
 } from "@/redux/auth/authThunk";
+import { stat } from "fs";
 
 export interface UserData {
   id?: number;
@@ -26,6 +27,7 @@ export interface AuthState {
   isRefreshing: boolean;
   isSubmitingComplete: boolean;
   error: ErrorType | null;
+  isAuthModalOpen: boolean;
 }
 
 const initialState: AuthState = {
@@ -35,6 +37,7 @@ const initialState: AuthState = {
   isLoading: false,
   isRefreshing: false,
   error: null,
+  isAuthModalOpen: false,
 };
 
 const authSlice = createSlice({
@@ -51,6 +54,12 @@ const authSlice = createSlice({
     },
     clearError(state) {
       state.error = null;
+    },
+    authModalOpen(state) {
+      state.isAuthModalOpen = true;
+    },
+    authModalClose(state) {
+      state.isAuthModalOpen = false;
     },
   },
   extraReducers: (builder) =>
@@ -145,5 +154,10 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-export const { resetSubmitingStatus, logoutUser, clearError } =
-  authSlice.actions;
+export const {
+  resetSubmitingStatus,
+  logoutUser,
+  clearError,
+  authModalOpen,
+  authModalClose,
+} = authSlice.actions;
