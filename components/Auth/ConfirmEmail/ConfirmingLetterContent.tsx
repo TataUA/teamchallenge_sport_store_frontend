@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
 
+import { AppDispatch } from "@/redux/store";
 import { resendEmailThunk } from "@/redux/auth/authThunk";
 import { authModalClose } from "@/redux/auth/authSlice";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -21,7 +22,7 @@ interface ConfirmingLetterContentProps {
 export const ConfirmingLetterContent = (
   props: ConfirmingLetterContentProps,
 ) => {
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const searchParams = useSearchParams();
   const router = useRouter();
   const isMobile = useIsMobile();
