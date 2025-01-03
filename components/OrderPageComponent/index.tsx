@@ -317,7 +317,7 @@ const OrderPageComponent = () => {
           md:grid-areas-layout 
           md:items-start
           md:grid-cols-[60%_40%]
-          min-[2800px]:pt-8 min-[2800px]:gap-[60px]"
+          min-[2800px]:pt-8"
       >
         <ContactsSection>
           <div className="flex flex-col">
