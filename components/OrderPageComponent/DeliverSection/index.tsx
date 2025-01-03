@@ -74,7 +74,7 @@ const DeliverSection = ({
   const titleCheckboxClassname = "text-sm text-[#272728] font-medium";
 
   return (
-    <div className="md:col-start-1 md:row-start-2">
+    <div className="md:col-start-1 md:row-start-2 mb-[40px] md:mb-[48px]">
       <div className="flex justify-between items-center gap-2 mb-4 flex-wrap ">
         <h3 className="text-[#1A1A1C] text-2xl font-bold md:text-2xl lg:text-3xl min-[2800px]:lg:text-5xl">
           Доставка

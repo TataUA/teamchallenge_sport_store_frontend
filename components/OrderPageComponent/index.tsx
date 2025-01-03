@@ -312,10 +312,10 @@ const OrderPageComponent = () => {
       </h1>
       <form
         onSubmit={handleSubmit}
-        className="grid grid-cols-1 gap-10 
+        className="grid grid-cols-1
           md:gap-x-[20px] 
           md:grid-areas-layout 
-          md:gap-y-[48px] md:items-start
+          md:items-start
           md:grid-cols-[60%_40%]
           min-[2800px]:pt-8 min-[2800px]:gap-[60px]"
       >
@@ -377,7 +377,7 @@ const OrderPageComponent = () => {
           submitted={submitted}
         />
         <ListProducts />
-        <div className="flex flex-col justify-center items-center md:block mb-4 md:col-start-1 md:row-start-4">
+        <div className="flex flex-col justify-center items-center md:block mb-[40px] md:col-start-1 md:row-start-4 md:mb-[48px]">
           <button
             type="submit"
             className={cn(

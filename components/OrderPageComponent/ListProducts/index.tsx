@@ -38,15 +38,18 @@ const ListProducts = () => {
   }, 0);
 
   return (
-    <div className="md:col-start-2 md:row-start-1 md:row-end-5">
-      <div className="flex flex-col gap-4 md:bg-[#F5F5F5] md:p-8 md:rounded-3xl">
+    <div className="md:col-start-2 md:row-start-1 mb-[40px] md:mb-0 md:row-end-10">
+      <div className="flex flex-col gap-4 bg-[#F5F5F5] p-8 rounded-3xl">
         <div
           className={cn("flex justify-between items-center", {
             "[&>svg]:rotate-180": isOpened,
           })}
           onClick={() => setIsOpened(!isOpened)}
         >
-          <h3 className="text-[#1A1A1C] text-xl font-semibold">Замовлення</h3>
+          <h3 className="text-[#1A1A1C] text-xl font-semibold">
+            Замовлення
+            <span>{`(${cart.products.length})`}</span>
+          </h3>
           {getArrowDownSVG()}
         </div>
         {isOpened ? (
@@ -112,6 +115,7 @@ const ListProducts = () => {
             </div>
           </div>
         ) : null}
+        <div className="h-[1px] bg-[#E7E7E8]"></div>
         <div className="flex items-center justify-between">
           <span className="text-base font-medium text-[#1A1A1C]">
             До оплати

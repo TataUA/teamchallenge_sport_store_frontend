@@ -13,7 +13,7 @@ const ContactsSection = ({ children }: { children: any }) => {
   const user = useSelector(selectUserData);
 
   return (
-    <div className="md:col-start-1 md:row-start-1">
+    <div className="md:col-start-1 md:row-start-1 mb-[40px] md:mb-[48px]">
       <div className="flex justify-between items-center flex-wrap gap-2 mb-4">
         <h3 className="text-[#1A1A1C] text-xl font-semibold lg:text-2xl min-[2800px]:text-3xl">
           Контактні дані

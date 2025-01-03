@@ -21,15 +21,17 @@ interface IProps {
 const PaymentSection = (props: IProps) => {
   const {orderState, submitted, handleChangeOrder} = props
   
-  const checkboxClassname = cn("w-[18px] h-[18px] mr-2 rounded-[6px] border-[1px] outline-none border-[#868687]",
-    'appearance-none checked:bg-blue checked:border-0',
-    'relative peer'
-  )
+  const checkboxClassname = cn(
+    "w-[18px] h-[18px] mr-2 rounded-[6px] border-[1px] outline-none border-[#868687]",
+    "md:w-5 md:h-5",
+    "appearance-none checked:bg-blue checked:border-0",
+    "relative peer",
+  );
   const labelCheckboxClassname = "flex gap-2 items-center"
   const titleCheckboxClassname = "text-sm text-[#272728] font-medium"
 
   return (
-    <div className="md:col-start-1 md:row-start-3">
+    <div className="md:col-start-1 md:row-start-3 mb-[40px] md:mb-[48px]">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-[#1A1A1C] text-2xl font-bold md:text-2xl lg:text-3xl min-[2800px]:lg:text-5xl">
           Оплата
@@ -58,6 +60,7 @@ const PaymentSection = (props: IProps) => {
             className="
                 absolute 
                 w-4 h-4 ml-[2px]
+                md:w-5 md:h-5 md:ml-0
                 hidden peer-checked:block stroke-white"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 18 18"
@@ -93,6 +96,7 @@ const PaymentSection = (props: IProps) => {
             className="
               absolute 
               w-4 h-4 ml-[2px]
+              md:w-5 md:h-5 md:ml-0
               hidden peer-checked:block stroke-white"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 18 18"
