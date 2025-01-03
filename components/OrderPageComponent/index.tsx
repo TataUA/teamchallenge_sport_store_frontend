@@ -224,8 +224,9 @@ const OrderPageComponent = () => {
         console.log("🚀 ~ handleSubmit ~ error:", error);
       }
 
-      setIsLoading(false);
       setPaymentError(true)
+    } finally {
+      setIsLoading(false);
     }
   };
 
