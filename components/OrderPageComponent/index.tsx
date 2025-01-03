@@ -293,7 +293,7 @@ const OrderPageComponent = () => {
   }
 
   return (
-    <div className="pt-4">
+    <div className="pt-4 md:pt-[48px]">
       <Script
         src="https://static.liqpay.ua/libjs/sdk_button.js"
         strategy="afterInteractive"
@@ -307,12 +307,17 @@ const OrderPageComponent = () => {
           }
         }}
       />
-      <h1 className="text-[#1A1A1C] text-2xl font-bold mb-10 md:text-2xl lg:text-3xl min-[2800px]:lg:text-5xl">
+      <h1 className="text-[#1A1A1C] text-2xl font-bold mb-8 md:mb-8 md:text-[32px] min-[2800px]:lg:text-5xl">
         Оформлення замовлення
       </h1>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col gap-10 lg:gap-[60px] lg:pt-6 min-[2800px]:pt-8 min-[2800px]:gap-[60px]"
+        className="grid grid-cols-1 gap-10 
+          md:gap-x-[20px] 
+          md:grid-areas-layout 
+          md:gap-y-[48px] md:items-start
+          md:grid-cols-[60%_40%]
+          min-[2800px]:pt-8 min-[2800px]:gap-[60px]"
       >
         <ContactsSection>
           <div className="flex flex-col">
@@ -372,11 +377,12 @@ const OrderPageComponent = () => {
           submitted={submitted}
         />
         <ListProducts />
-        <div className="flex flex-col justify-center items-center mb-4">
+        <div className="flex flex-col justify-center items-center md:block mb-4 md:col-start-1 md:row-start-4">
           <button
             type="submit"
             className={cn(
               "w-full py-[16px] px-6 text-white bg-blue rounded-xl flex items-center justify-center text-center text-base font-semibold transition-all",
+              "md:w-auto",
               "hover:bg-[#284695]",
             )}
           >
