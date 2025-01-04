@@ -11,8 +11,13 @@ import { Loader } from "@/components/Loader";
 import useCart from "@/hooks/useCart";
 import getCloseIconSVG18 from "@/helpers/getCloseIconSVG18";
 
+// slice
+import { useSelector } from "react-redux";
+import { selectCart } from "@/redux/cart/cartSelector";
+
 export default function CartModal() {
 
+  const cart = useSelector(selectCart)
   const [isOpened, handleOpenedCart] = useCart();
 
   const handleOverlayClick = useCallback(
@@ -36,20 +41,21 @@ export default function CartModal() {
   return (
     <section
       className="
-        fixed z-50 left-0 right-0 top-[64px] md:top-0 w-full bg-transparent min-h-full max-h-full overflow-auto
+        fixed z-50 left-0 right-0 bottom-0 top-0 pt-[64px] md:pt-0 bg-transparent
         flex md:justify-end
       "
     >
       <div
         onClick={handleOverlayClick}
-        className="fixed z-40 left-0 right-0 w-full bg-gray min-h-full max-h-full opacity-80"
+        className=" hidden md:block fixed z-40 left-0 right-0 bottom-0 top-0 bg-gray opacity-80"
       ></div>
       <div
         className="
           pt-4 px-6 md:pt-7 md:px-6 bg-white overflow-auto w-full md:max-w-[386px] z-50 relative
+          flex flex-col
         "
       >
-        <div className="flex items-center justify-center w-full">
+        <div className={"flex flex-col items-center justify-center flex-1 " + `${cart?.products.length ? '' : ''}`}>
           <React.Suspense fallback={<Loader />}>
             <ClientComponent>
               <div
