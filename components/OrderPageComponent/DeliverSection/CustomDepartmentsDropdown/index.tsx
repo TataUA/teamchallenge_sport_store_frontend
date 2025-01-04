@@ -104,7 +104,7 @@ const CustomDepartmentsDropdown = (props: IProps) => {
                 )}
                 onClick={toggleDropdown}
             >
-                <input className='w-full bg-gray-200 border border-gray-300 rounded-lg px-4 py-[15px] pr-[56px] text-base font-medium text-[#868687]' 
+                <input className='w-full bg-gray-200 border border-gray-300 rounded-lg px-4 py-[15px] pr-[56px] text-base font-medium text-[#000]' 
                     type="text" 
                     value={selected ? selected : undefined}
                     placeholder={typeOfEntity === 'department' ? 'Оберіть відділення' : 'Оберіть поштомат'}

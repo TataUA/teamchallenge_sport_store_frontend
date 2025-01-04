@@ -135,7 +135,7 @@ const CustomCitiesDropdown = ({
       >
         <input
           className={cn(
-            "w-full bg-gray-200 border border-gray-300 rounded-lg px-4 py-[15px] pr-[56px] text-base font-medium text-[#868687]",
+            "w-full bg-gray-200 border border-gray-300 rounded-lg px-4 py-[15px] pr-[56px] text-base font-medium text-[#000]",
             "focus:border-blue outline-none",
             {
               "border-red": error,
@@ -177,7 +177,7 @@ const CustomCitiesDropdown = ({
           )}
         </div>
       )}
-      {emptyResponse && (
+      {emptyResponse && !city && (
         <div className="text-gray text-xs">
           <span>Немає данних про таке місто.</span>
           <span>Виберіть інший пункт доставки будь ласка.</span>
