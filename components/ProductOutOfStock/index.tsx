@@ -49,16 +49,13 @@ const ProductOutOfStock = () => {
       <div className="flex gap-4 flex-wrap md:flex-nowrap justify-between text-base md:gap-5">
         <div
           onClick={() => handleOpenedCart(true)}
-          className={
-            buttonClassname + " text-blue hover:text-white hover:bg-blue"
-          }
+          className={buttonClassname + " text-blue hover:bg-[#E7EDFE]"}
         >
           Перейти в кошик
         </div>
         <div
           className={
-            buttonClassname +
-            " text-white bg-blue hover:text-blue hover:bg-white"
+            buttonClassname + " text-white bg-blue hover:bg-active_blue"
           }
           onClick={() =>
             dispatch(

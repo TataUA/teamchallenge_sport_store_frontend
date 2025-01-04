@@ -41,7 +41,7 @@ const ProductIsOutOfStockModal = (props:{children: ReactNode}) => {
   return (
     <div
       className={cn(
-        "fixed inset-0 bg-black bg-opacity-50 z-50 flex justify-center",
+        "fixed inset-0 bg-black bg-opacity-50 z-[51] flex justify-center",
         `items-center`,
       )}
       onClick={onClose}
