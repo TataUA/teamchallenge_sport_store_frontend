@@ -51,11 +51,16 @@ export default function CartModal() {
       ></div>
       <div
         className="
-          pt-4 px-6 md:pt-7 md:px-6 bg-white overflow-auto w-full md:max-w-[386px] z-50 relative
+          pt-4 px-6 md:pt-7 md:px-6 bg-white overflow-auto w-full md:max-w-[386px] 2xl:max-w-[500px] z-50 relative
           flex flex-col
         "
       >
-        <div className={"flex flex-col items-center justify-center flex-1 " + `${cart?.products.length ? '' : ''}`}>
+        <div
+          className={
+            "flex flex-col items-center justify-center flex-1 " +
+            `${cart?.products.length ? "" : ""}`
+          }
+        >
           <React.Suspense fallback={<Loader />}>
             <ClientComponent>
               <div

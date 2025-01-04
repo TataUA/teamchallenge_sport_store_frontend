@@ -16,7 +16,7 @@ const CartFooter = () => {
     <div 
       className="
         fixed bottom-0 left-0 right-0 z-20 pt-4 pb-14 px-6 bg-white 
-        md:left-auto md:w-[386px] md:pb-8 md:px-8
+        md:left-auto md:w-[386px] 2xl:w-[500px] md:pb-8 md:px-8
       "
     >
       <div>
