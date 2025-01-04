@@ -101,7 +101,7 @@ const SearchInputDropdown: React.FC<SearchInputDropdownProps> = ({
           onChange={handleInputChange}
           onBlur={handleInputBlur}
           placeholder={placeholder}
-          className="w-full bg-gray-200 border border-gray-300 rounded-lg px-4 py-[15px] text-base font-medium text-[#868687]"
+          className="w-full bg-gray-200 border border-gray-300 rounded-lg px-4 py-[15px] text-base font-medium text-[#000]"
         />
       </div>
       {isDropdownVisible && (

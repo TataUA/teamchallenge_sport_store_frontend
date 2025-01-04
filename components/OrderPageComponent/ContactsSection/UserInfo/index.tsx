@@ -134,19 +134,15 @@ const UserInfo = (props:IProps) => {
   return (
     <>
       <div className="relative p-6 bg-[#F1F4FE] flex flex-col gap-[6px] rounded-3xl text-sm">
-        <div className="absolute right-6 top-6 cursor-pointer"
+        <div
+          className="absolute right-6 top-6 cursor-pointer"
           onClick={() => setEditDataMode(true)}
         >
           {getPencilIconSVG()}
         </div>
         <div>
-          <span className="capitalize">
-            {user.surname}
-          </span>
-          {' '}
-          <span className="capitalize">
-            {user.name}
-          </span>
+          <span className="capitalize">{user.surname}</span>{" "}
+          <span className="capitalize">{user.name}</span>
         </div>
         <div>{user.phone}</div>
         <div>{user.email}</div>
@@ -155,85 +151,95 @@ const UserInfo = (props:IProps) => {
         show={editDataMode}
         onClose={() => setEditDataMode(false)}
       >
-        <div className="relative top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] w-full bg-white h-fit rounded-3xl overflow-hidden p-6">
-          <h3 className="text-[#1A1A1C] text-xl font-bold mb-6">Редагування даних</h3>
+        <div
+          className="
+            relative top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] w-full bg-white h-fit rounded-3xl overflow-hidden p-6
+            md:max-w-[607px] md:left-0 md:translate-x-0 md:p-10
+        "
+        >
+          <h3 className="text-[#1A1A1C] text-xl font-bold mb-6">
+            Редагування даних
+          </h3>
           <Formik
-              initialValues={{ ...initialValues }}
-              validationSchema={schema}
-              onSubmit={handleSubmit}
-            >
-              {(formik) => (
-                <Form autoComplete="off" className="flex flex-col">
-                  <div className="flex flex-col gap-4 mb-8">
-                    <InputLabelField
-                      label="Прізвище"
-                      name="surname"
-                      type="text"
-                      inputMode="text"
-                      placeholder=""
-                      formik={formik}
-                    />
+            initialValues={{ ...initialValues }}
+            validationSchema={schema}
+            onSubmit={handleSubmit}
+          >
+            {(formik) => (
+              <Form autoComplete="off" className="flex flex-col">
+                <div className="flex flex-col gap-4 mb-8">
+                  <InputLabelField
+                    label="Прізвище"
+                    name="surname"
+                    type="text"
+                    inputMode="text"
+                    placeholder=""
+                    formik={formik}
+                  />
 
-                    <InputLabelField
-                      label="Ім'я"
-                      name="name"
-                      type="text"
-                      inputMode="text"
-                      placeholder=""
-                      formik={formik}
-                    />
+                  <InputLabelField
+                    label="Ім'я"
+                    name="name"
+                    type="text"
+                    inputMode="text"
+                    placeholder=""
+                    formik={formik}
+                  />
 
-                    <InputLabelField
-                      label="По-батькові"
-                      name="patronymic"
-                      type="text"
-                      inputMode="text"
-                      placeholder=""
-                      formik={formik}
-                    />
+                  <InputLabelField
+                    label="По-батькові"
+                    name="patronymic"
+                    type="text"
+                    inputMode="text"
+                    placeholder=""
+                    formik={formik}
+                  />
 
-                    <InputLabelField
-                      label="Номер телефону"
-                      name="phone"
-                      type="text"
-                      inputMode="tel"
-                      placeholder="+380*********"
-                      formik={formik}
-                    />
+                  <InputLabelField
+                    label="Номер телефону"
+                    name="phone"
+                    type="text"
+                    inputMode="tel"
+                    placeholder="+380*********"
+                    formik={formik}
+                  />
 
-                    <InputLabelField
-                      label="Електронна пошта"
-                      name="email"
-                      type="email"
-                      inputMode="email"
-                      placeholder="example@gmail.com"
-                      formik={formik}
-                    />
-                  </div>
-
+                  <InputLabelField
+                    label="Електронна пошта"
+                    name="email"
+                    type="email"
+                    inputMode="email"
+                    placeholder="example@gmail.com"
+                    formik={formik}
+                  />
+                </div>
+                <div className="flex flex-wrap gap-4 justify-between items-start">
                   <button
                     type="submit"
                     disabled={formik.isSubmitting}
-                    className="h-12 mb-4 px-6 rounded-xl bg-blue text-base font-semibold  text-white hover:bg-active_blue transition-all"
+                    className="w-full h-12 px-6 rounded-xl bg-blue text-base font-semibold  text-white hover:bg-active_blue transition-all
+                      md:w-[47%]
+                    "
                   >
                     Зберегти
                   </button>
-                </Form>
-              )}
-          </Formik>
-          <div 
-            className={cn("py-[11px] px-6 text-[#3E3E40] border-[1px] border-[#E7E7E8] rounded-xl text-center text-base font-semibold transition-all",
-              'hover:text-white hover:bg-blue'
+                  <div
+                    className={cn(
+                      "w-full max-h-12 py-[11px] px-6 text-[#3E3E40] border-[1px] border-[#E7E7E8] rounded-xl text-center text-base font-semibold transition-all",
+                      "md:w-[48%]",
+                      "hover:bg-[#E7EDFE]",
+                    )}
+                    onClick={() => setEditDataMode(false)}
+                  >
+                    Закрити
+                  </div>
+                </div>
+              </Form>
             )}
-            onClick={() => setEditDataMode(false)}
-          >
-            Закрити
-          </div>
+          </Formik>
         </div>
       </EditUserDataModal>
-      <UserDataWasSuccessEdited
-        showSuccessModal={showSuccessMessage}
-      >
+      <UserDataWasSuccessEdited showSuccessModal={showSuccessMessage}>
         <p className="mb-6 text-sm font-medium text-common">
           Інформація успішно оновлена
         </p>
@@ -245,7 +251,7 @@ const UserInfo = (props:IProps) => {
         </div>
       </UserDataWasSuccessEdited>
     </>
-  )
+  );
 }
 
 export default UserInfo

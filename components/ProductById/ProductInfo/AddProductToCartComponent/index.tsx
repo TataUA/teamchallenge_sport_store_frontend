@@ -205,7 +205,7 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
             onClick={() => setIsSuccessModalIsOpened(false)}
             className={cn(
               "mb-3 py-4 px-20 border rounded-xl border-blue text-blue",
-              "hover:text-white hover:bg-blue cursor-pointer",
+              "hover:bg-[#E7EDFE] cursor-pointer",
             )}
           >
             Продовжити покупки
@@ -214,7 +214,7 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
             href={"/cart"}
             className={cn(
               "inline-block w-full mb-3 py-4 px-20 rounded-xl bg-blue text-white",
-              "hover:text-blue hover:bg-white hover:border-blue border cursor-pointer",
+              "hover:bg-active_blue border transition-all cursor-pointer",
             )}
           >
             Перейти в кошик

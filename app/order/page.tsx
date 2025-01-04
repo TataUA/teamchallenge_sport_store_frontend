@@ -9,7 +9,7 @@ const OrderPage = (props: any) => {
         Увага! Цей пет-проєкт створений виключно для навчальних цілей. Будь
         ласка, не вводьте свої реальні особисті данні
       </p>
-      <div className="p-6 pt-0 md:px-[20px] lg:px-[80px]">
+      <div className="p-6 pt-0 xl:container">
         <ClientComponent>
           <OrderPageComponent />
         </ClientComponent>
