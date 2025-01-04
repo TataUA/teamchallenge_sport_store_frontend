@@ -36,10 +36,15 @@ import addProductToCartInDbAction from "@/app/actions/addProductToCartInDbAction
 import fetchProductByIdAction from "@/app/actions/fetchProductByIdAction";
 import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction";
 
+// hooks
+import useCart from "@/hooks/useCart";
+
 const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
   const [isSuccessModalIsOpened, setIsSuccessModalIsOpened] = useState(false);
 
   const dispatch = useDispatch();
+
+  const [isOpened, handleOpenedCart] = useCart();
 
   const currentProduct = useSelector(selectCurrentProduct);
 
@@ -148,6 +153,11 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
     setIsSuccessModalIsOpened(true);
   };
 
+  const handleClickButtonCart = () => {
+    setIsSuccessModalIsOpened(false);
+    handleOpenedCart(true);
+  }
+
   useEffect(() => {
     dispatch(setCurrentProduct(product));
   }, [dispatch, product]);
@@ -210,15 +220,15 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
           >
             Продовжити покупки
           </div>
-          <Link
-            href={"/cart"}
+          <div
+            onClick={() => handleClickButtonCart()}
             className={cn(
               "inline-block w-full mb-3 py-4 px-20 rounded-xl bg-blue text-white",
               "hover:bg-active_blue border transition-all cursor-pointer",
             )}
           >
             Перейти в кошик
-          </Link>
+          </div>
         </div>
       </ResponsiveModal>
     </div>

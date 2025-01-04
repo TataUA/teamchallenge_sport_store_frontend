@@ -11,6 +11,7 @@ export interface ICartState {
   error: boolean;
   loading: boolean;
   isDisplayedModalProductIsOutOfStock: boolean;
+  isOpened: boolean;
 }
 export interface ICartCreatedResponse {
   items: any[];
@@ -24,6 +25,7 @@ const initialState: ICartState = {
   error: false,
   loading: false,
   isDisplayedModalProductIsOutOfStock: false,
+  isOpened: false,
 };
 
 const cartSlice = createSlice({
@@ -150,6 +152,12 @@ const cartSlice = createSlice({
       state.isDisplayedModalProductIsOutOfStock = payload.isOpened;
       state.outOfStockProducts = payload.outOfStockProducts || [];
     },
+    setIsOpened: (
+      state,
+      payload: PayloadAction<boolean>,
+    ) => {
+      state.isOpened = payload.payload;
+    },
   },
 });
 
@@ -164,4 +172,5 @@ export const {
   handleIncreasProductQuantity,
   setLoadingCartFromDB,
   setModalProductIsOutOfStock,
+  setIsOpened,
 } = cartSlice.actions;
