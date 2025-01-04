@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useCallback, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { usePathname, useRouter } from "next/navigation";
 
 import {
@@ -9,8 +9,6 @@ import {
   selectIsLoading,
   selectUserData,
 } from "@/redux/auth/authSelector";
-import { AppDispatch } from "@/redux/store";
-import { useIsMobile } from "@/hooks/useIsMobile";
 import { Loader } from "@/components/Loader";
 
 interface PrivateRouteComponentProps {
@@ -26,27 +24,39 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
 
   const accessToken = localStorage.getItem("accessToken");
 
-  const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
   const pathname = usePathname();
-  const isMobile = useIsMobile();
+
+  const handleAuthRedirect = useCallback(() => {
+    const containerWidth = window.innerWidth;
+
+    if (pathname === "/auth/login" || pathname === "/auth/signup") {
+      if (containerWidth >= 1024) {
+        router.replace("/");
+        return;
+      }
+      return;
+    }
+
+    if (!isAuthenticated || (isAuthenticated && !userData)) {
+      router.replace(containerWidth < 1024 ? "/auth/login" : "");
+    }
+  }, [isAuthenticated, userData, pathname, router]);
 
   useEffect(() => {
     if (isLoading) return;
 
-    if (!isAuthenticated) {
-      if (pathname === "/auth/login" || pathname === "/auth/signup") {
-        //router.replace(!isMobile ? "/" : "");
-        return;
-      }
-      router.replace(isMobile ? "/auth/login" : "");
-    }
+    handleAuthRedirect();
 
-    if (isAuthenticated && !userData) {
-      router.replace(isMobile ? "/auth/login" : "/");
-      return;
-    }
+    const resizeHandler = () => {
+      handleAuthRedirect();
+    };
 
+    window.addEventListener("resize", resizeHandler);
+    return () => window.removeEventListener("resize", resizeHandler);
+  }, [handleAuthRedirect, isLoading]);
+
+  useEffect(() => {
     if (
       isAuthenticated &&
       userData &&
@@ -55,23 +65,7 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
     ) {
       router.replace("/auth/profile");
     }
-  }, [
-    isAuthenticated,
-    isLoading,
-    userData,
-    isMobile,
-    router,
-    dispatch,
-    pathname,
-    accessToken,
-  ]);
-
-  if (
-    !isMobile &&
-    (pathname === "/auth/login" || pathname === "/auth/signup")
-  ) {
-    return null;
-  }
+  }, [isAuthenticated, userData, accessToken, pathname, router]);
 
   if (isLoading) {
     return <Loader />;
