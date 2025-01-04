@@ -1,18 +1,10 @@
+import getBigCartSVG from "@/helpers/getBigCartSVG";
 import Link from "next/link";
-import Image from "next/image";
-
-import cartImg from "@/public/icons/cart/cart-img.png";
 
 const EmptyCart = () => (
   <div className="flex flex-col items-center justify-center gap-12">
     <div className="flex flex-col items-center justify-center">
-      <Image
-        src={cartImg}
-        alt="cart"
-        width={152}
-        height={175}
-        className="mb-6"
-      />
+      {getBigCartSVG('mb-6')}
       <h1 className="text-heading font-bold text-title mb-2">
         Ваш кошик порожній
       </h1>
