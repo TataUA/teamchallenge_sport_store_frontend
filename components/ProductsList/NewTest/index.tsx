@@ -10,13 +10,13 @@ import Pagination from "../Pagination";
 interface TestProps {
   products: IProduct[];
   count: number;
+  limit: number;
 }
-export default function NewTest({ products, count }: TestProps) {
-  const itemsPerPage = 8;
-  const countPages = Math.ceil(count / itemsPerPage);
+export default function NewTest({ products, count, limit }: TestProps) {
+  const countPages = Math.ceil(count / limit);
 
   return (
-    <div className="xl:container mx-auto">
+    <div>
       <ul className="flex flex-wrap gap-2 justify-between mb-5">
         {products.map((product) => (
           <ListItem key={product.id} product={product} />
