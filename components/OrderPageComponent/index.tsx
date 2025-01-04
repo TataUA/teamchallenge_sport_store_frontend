@@ -313,11 +313,12 @@ const OrderPageComponent = () => {
       </h1>
       <form
         onSubmit={handleSubmit}
-        className="grid grid-cols-1
+        className="w-auto grid grid-cols-1
           md:gap-x-[20px] 
           md:grid-areas-layout 
           md:items-start
-          md:grid-cols-[60%_40%]
+          md:grid-cols-[50%_47%]
+          lg:grid-cols-[60%_40%]
           min-[2800px]:pt-8"
       >
         <ContactsSection>
