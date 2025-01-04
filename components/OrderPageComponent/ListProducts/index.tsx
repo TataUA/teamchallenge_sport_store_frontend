@@ -19,11 +19,16 @@ import { cn } from "@/services/utils/cn"
 import getArrowDownSVG from "@/helpers/getArrowDownSVG"
 import { useIsMobile } from "@/hooks/useIsMobile"
 
+// hooks
+import useCart from "@/hooks/useCart"
+
 const ListProducts = () => {
   const cart = useSelector(selectCart)
   const isMobile = useIsMobile();
 
   const [isOpened, setIsOpened] = useState(false)
+
+  const [isOpenedCart, handleOpenedCart] = useCart();
 
   const isShoesSizes = (size: string) => {
     const shoesSizes = generalProductsFilers.filter(
@@ -103,15 +108,15 @@ const ListProducts = () => {
               ))}
             </ul>
             <div className="flex justify-center items-center my-4 mt-8">
-              <Link
+              <div
                 className={cn(
                   "w-full py-[11px] px-6 text-[#3E3E40] border-[1px] border-[#E7E7E8] rounded-xl text-center text-base font-semibold transition-all",
                   "hover:bg-white",
                 )}
-                href="/cart"
+                onClick={() => handleOpenedCart(true)}
               >
                 Змінити замовлення
-              </Link>
+              </div>
             </div>
           </div>
         ) : null}

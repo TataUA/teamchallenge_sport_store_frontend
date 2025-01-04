@@ -6,6 +6,7 @@ import Footer from "@/components/Footer/Footer";
 import { Header } from "@/components/Header/Header";
 import { ClientComponent } from "@/components/ClientComponent";
 import ProductOutOfStock from "@/components/ProductOutOfStock";
+import CartModal from "@/components/CartModal";
 
 import "./globals.css";
 import Head from "next/head";
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <div id="modal-root"></div>
         <ClientComponent>
           <ProductOutOfStock />
+          <CartModal />
         </ClientComponent>
       </body>
     </html>

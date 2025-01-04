@@ -10,8 +10,13 @@ import { selectCart } from "@/redux/cart/cartSelector";
 // components
 import ProductIsOutOfStockModal from "./ProductIsOutOfStockModal";
 
+// hooks
+import useCart from "@/hooks/useCart";
+
 const ProductOutOfStock = () => {
   const dispatch = useDispatch();
+
+  const [isOpened, handleOpenedCart] = useCart();
 
   const cart = useSelector(selectCart);
 
@@ -39,21 +44,18 @@ const ProductOutOfStock = () => {
               </li>
             ))}
           </ul>
-          ) : null}
+        ) : null}
       </div>
       <div className="flex gap-4 flex-wrap md:flex-nowrap justify-between text-base md:gap-5">
-        <a
-          href="/cart"
-          className={
-            buttonClassname + " text-blue hover:text-white hover:bg-blue"
-          }
+        <div
+          onClick={() => handleOpenedCart(true)}
+          className={buttonClassname + " text-blue hover:bg-[#E7EDFE]"}
         >
           Перейти в кошик
-        </a>
+        </div>
         <div
           className={
-            buttonClassname +
-            " text-white bg-blue hover:text-blue hover:bg-white"
+            buttonClassname + " text-white bg-blue hover:bg-active_blue"
           }
           onClick={() =>
             dispatch(

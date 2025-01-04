@@ -37,6 +37,7 @@ import { useCartSync } from "@/hooks/useCartSync";
 
 // helpers
 import getUserlogged from "@/helpers/getUserlogged";
+import useCart from "@/hooks/useCart";
 
 const HeaderNavLink = () => {
   const cart = useSelector(selectCart);
@@ -44,6 +45,8 @@ const HeaderNavLink = () => {
   const isAuthModalOpen = useSelector(selectIsAuthModalOpen);
 
   useCartSync();
+
+  const [isOpened, handleOpenedCart] = useCart();
 
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
@@ -112,8 +115,8 @@ const HeaderNavLink = () => {
                   );
                 })}
               </span>
-            ) : (
-              <Link href={href}>
+            ) : name === "cart" ? (
+              <div onClick={() => handleOpenedCart(!isOpened)}>
                 {iconsData.map((icon) => {
                   return (
                     icon.name === name && (
@@ -121,7 +124,7 @@ const HeaderNavLink = () => {
                         key={uuidv4()}
                         className="hover:opacity-100  cursor-pointer "
                       >
-                        {name === "cart" && cart.products?.length ? (
+                        {cart.products?.length ? (
                           <div
                             className={cn(
                               "relative z-20 bg-blue w-[18px] h-[18px] overflow-hidden rounded-full text-white flex justify-center items-center",
@@ -137,9 +140,27 @@ const HeaderNavLink = () => {
                           viewBox={icon.viewBox}
                           path={icon.path}
                           classname={cn("", {
-                            "relative z-10 top-[-18px]":
-                              name === "cart" && cart.products?.length,
+                            "relative z-10 top-[-18px]": cart.products?.length,
                           })}
+                        />
+                      </span>
+                    )
+                  );
+                })}
+              </div>
+            ) : (
+              <Link href={href}>
+                {iconsData.map((icon) => {
+                  return (
+                    icon.name === name && (
+                      <span
+                        key={uuidv4()}
+                        className="hover:opacity-100  cursor-pointer "
+                      >
+                        <SvgComponent
+                          key={uuidv4()}
+                          viewBox={icon.viewBox}
+                          path={icon.path}
                         />
                       </span>
                     )

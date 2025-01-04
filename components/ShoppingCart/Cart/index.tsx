@@ -131,8 +131,8 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="flex-1 pb-[170px]">
-        <h3 className="text-heading font-bold leading-140 mb-4 text-title">
+      <div className="flex-1 pb-[230px] md:pb-[170px]">
+        <h3 className="text-heading font-bold leading-140 mb-4 text-title text-2xl">
           Кошик
           <span className="ml-2 font-semibold text-subheading text-primary">
             ({products.length})
