@@ -1,6 +1,6 @@
 'use client'
 
-import React from "react";
+import React, { useCallback } from "react";
 
 // components
 import ShoppingCart from "@/components/ShoppingCart";
@@ -15,6 +15,15 @@ export default function CartModal() {
 
   const [isOpened, handleOpenedCart] = useCart();
 
+  const handleOverlayClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      if (e.target === e.currentTarget) {
+        handleOpenedCart(false);
+      }
+    },
+    [handleOpenedCart],
+  );
+
   if (!isOpened) {
     document.body.style.overflow = '';
 
@@ -23,6 +32,7 @@ export default function CartModal() {
 
   document.body.style.overflow = 'hidden';
 
+
   return (
     <section
       className="
@@ -30,7 +40,10 @@ export default function CartModal() {
         flex md:justify-end
       "
     >
-      <div className="fixed z-40 left-0 right-0 w-full bg-gray min-h-full max-h-full opacity-80"></div>
+      <div
+        onClick={handleOverlayClick}
+        className="fixed z-40 left-0 right-0 w-full bg-gray min-h-full max-h-full opacity-80"
+      ></div>
       <div
         className="
           pt-4 px-6 md:pt-7 md:px-6 bg-white overflow-auto w-full md:max-w-[386px] z-50 relative
