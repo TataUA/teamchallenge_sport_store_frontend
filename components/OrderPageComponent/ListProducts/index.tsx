@@ -48,7 +48,7 @@ const ListProducts = () => {
         >
           <h3 className="text-[#1A1A1C] text-xl font-semibold">
             Замовлення
-            <span>{`(${cart.products.length})`}</span>
+            <span>{` (${cart.products.length})`}</span>
           </h3>
           {getArrowDownSVG()}
         </div>
@@ -106,7 +106,7 @@ const ListProducts = () => {
               <Link
                 className={cn(
                   "w-full py-[11px] px-6 text-[#3E3E40] border-[1px] border-[#E7E7E8] rounded-xl text-center text-base font-semibold transition-all",
-                  "hover:text-white hover:bg-blue",
+                  "hover:bg-white",
                 )}
                 href="/cart"
               >
