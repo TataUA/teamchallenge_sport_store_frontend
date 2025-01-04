@@ -49,7 +49,7 @@ const ProductItem = (props: IProps) => {
         <p className='text-label mb-[42px]'>
           Розмір: {product.size?.[0]?.value} UA
         </p>
-        <div className='flex justify-between items-center'>
+        <div className='flex justify-between items-center gap-4 flex-wrap'>
           <div className='flex gap-2 items-center'>
             <ButtonSvg
             onClick={() => handleIncreaseOrDecreasProduct('dec', product)}
