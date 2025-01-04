@@ -21,7 +21,7 @@ const CartFooter = () => {
           <span className="text-base text-[#1A1A1C]">До оплати</span>
           <span className="text-xl text-[#1A1A1C]">{total} {' грн'}</span>
         </div>
-        <Link href='/order' className="block bg-blue text-white py-3 w-full text-base font-semibold text-center rounded-xl">
+        <Link href='/order' className="block bg-blue text-white py-3 w-full text-base font-semibold text-center rounded-xl hover:bg-active_blue transition-all">
           Оформити замовлення
         </Link>
       </div>
