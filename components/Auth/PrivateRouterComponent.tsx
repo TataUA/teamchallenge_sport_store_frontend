@@ -39,7 +39,13 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
     }
 
     if (!isAuthenticated || (isAuthenticated && !userData)) {
-      router.replace(containerWidth < 1024 ? "/auth/login" : "");
+      router.replace(
+        containerWidth < 1024
+          ? "/auth/login"
+          : pathname === "/auth/profile"
+            ? "/"
+            : "",
+      );
     }
   }, [isAuthenticated, userData, pathname, router]);
 

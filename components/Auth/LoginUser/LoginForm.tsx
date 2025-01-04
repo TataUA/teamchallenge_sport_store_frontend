@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import * as yup from "yup";
 import { Formik, Form, FormikErrors, FormikProps } from "formik";
@@ -60,6 +60,7 @@ export const LoginForm = (props: LoginFormProps) => {
   const error = useSelector(selectError);
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
+  const pathname = usePathname();
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -90,7 +91,10 @@ export const LoginForm = (props: LoginFormProps) => {
 
       if (loginUserThunk.fulfilled.match(actionResult)) {
         await dispatch(currentUserThunk()).unwrap();
-        router.push("/auth/profile");
+        if (pathname === "/auth/login") {
+          router.push("/auth/profile");
+        }
+        return;
       } else if (loginUserThunk.rejected.match(actionResult)) {
         const errorMessage = actionResult.payload?.message || "";
 

@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import Image from "next/image";
 
+import { selectIsLoading } from "@/redux/auth/authSelector";
 import { cn } from "@/services/utils/cn";
+import { Loader } from "@/components/Loader";
 import close from "@/public/icons/close_icon.svg";
 
 interface ModalFormProps {
@@ -13,6 +16,8 @@ interface ModalFormProps {
 }
 
 export const ModalForm = (props: ModalFormProps) => {
+  const isLoading = useSelector(selectIsLoading);
+
   useEffect(() => {
     const handleKeyboardCloseForm = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -37,33 +42,37 @@ export const ModalForm = (props: ModalFormProps) => {
           props.onClose();
         }}
       >
-        <div
-          className={cn(
-            "relative w-auto max-h-[96vh] p-6 1440:p-10 bg-white rounded-3xl shadow-lg overflow-y-auto",
-            props.stylesContentBlock,
-          )}
-          onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
-            e.stopPropagation()
-          }
-        >
-          <div className="absolute top-6 1400:top-[33px] right-6 1440:right-[33px]">
-            <button
-              type="button"
-              onClick={() => {
-                props.onClose();
-              }}
-              className="h-[26px] 1440:h-8 w-[26px] 1440:w-8 flex items-center justify-center"
-            >
-              <Image
-                src={close}
-                alt="Хрестик закриття форми"
-                width={18}
-                height={18}
-              />
-            </button>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div
+            className={cn(
+              "relative w-auto max-h-[96vh] p-6 1440:p-10 bg-white rounded-3xl shadow-lg overflow-y-auto",
+              props.stylesContentBlock,
+            )}
+            onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
+              e.stopPropagation()
+            }
+          >
+            <div className="absolute top-6 1400:top-[33px] right-6 1440:right-[33px]">
+              <button
+                type="button"
+                onClick={() => {
+                  props.onClose();
+                }}
+                className="h-[26px] 1440:h-8 w-[26px] 1440:w-8 flex items-center justify-center"
+              >
+                <Image
+                  src={close}
+                  alt="Хрестик закриття форми"
+                  width={18}
+                  height={18}
+                />
+              </button>
+            </div>
+            <div>{props.children}</div>
           </div>
-          <div>{props.children}</div>
-        </div>
+        )}
       </div>
     </>
   );
