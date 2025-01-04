@@ -15,7 +15,7 @@ const ShoppingCart = () => {
 	if (!cart.products?.length) return <EmptyCart />
 
 	return (
-		<div className='md:w-full'>
+		<div className='w-full'>
 			<Cart products={cart.products} />
 		</div>
 	)

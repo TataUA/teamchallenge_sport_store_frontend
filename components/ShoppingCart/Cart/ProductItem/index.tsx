@@ -18,7 +18,7 @@ const ProductItem = (props: IProps) => {
   } = props
 
   return (
-    <div className='flex'>
+    <div className='flex w-full'>
       <div className='overflow-hidden relative rounded-lg min-w-[109px] h-[162px]'>
         <Image
           src={product.colors?.[0]?.image_url}
@@ -27,7 +27,7 @@ const ProductItem = (props: IProps) => {
           className='object-cover object-top'
         />
       </div>
-      <div className='ml-2 py-1 w-[225px]'>
+      <div className='ml-2 py-1 w-[225px] flex-1'>
         <div className='flex items-start justify-between mb-3'>
           <h3 className='text-primary font-medium text-basic font-pangram'>
             {product.title}

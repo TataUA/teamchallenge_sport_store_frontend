@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const EmptyCart = () => (
   <div>
-    <h3 className="text-heading font-bold leading-140 mb-4 text-title md:text-2xl">
+    <h3 className="text-heading font-bold leading-140 mb-4 text-title text-2xl">
       Кошик
     </h3>
     <div className="flex flex-col items-center justify-center gap-12">
