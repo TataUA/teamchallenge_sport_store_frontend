@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { IFilters } from "@/app/products/[...sub_category]/page";
 import { IProduct } from "@/services/types";
@@ -13,10 +13,27 @@ interface IProps {
 }
 
 const List = (props: IProps) => {
+  const [itemsPerPage, setItemsPerPage] = useState(8);
+
   const { products, searchParams } = props;
   const { gender, page } = searchParams;
-
   const currentPage = Number(page) || 1;
+
+  const updateItemsPerPage = useCallback(() => {
+    const containerWidth = window.innerWidth;
+    if (containerWidth >= 480 && containerWidth < 1024) {
+      setItemsPerPage(9);
+    } else {
+      setItemsPerPage(8);
+    }
+  }, []);
+
+  useEffect(() => {
+    updateItemsPerPage();
+
+    window.addEventListener("resize", updateItemsPerPage);
+    return () => window.removeEventListener("resize", updateItemsPerPage);
+  }, [updateItemsPerPage]);
 
   const getPaginatedItems = useCallback(
     (items: IProduct[], itemsPerPage: number, currentPage: number) => {
@@ -33,8 +50,6 @@ const List = (props: IProps) => {
     },
     [],
   );
-
-  const itemsPerPage = 8;
 
   const { paginatedProducts, countPages } = getPaginatedItems(
     products,

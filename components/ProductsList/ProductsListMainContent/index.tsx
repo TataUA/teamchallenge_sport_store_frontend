@@ -1,13 +1,11 @@
 import { Suspense } from "react";
 
+import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine";
+import { IProduct } from "@/services/types";
+import { IProductsPageInitialProps } from "@/app/products/[...sub_category]/page";
 import List from "@/components/ProductsList/List";
 import ProductsFilters from "@/components/ProductsList/ProductsFilters";
 import ProductsFiltersXL from "@/components/ProductsList/ProductFiltersXL";
-
-import getTranslatedSubcategoryFromEnglishToUkraine from "@/helpers/getTranslatedSubcategoryFromEnglishToUkraine";
-
-import { IProduct } from "@/services/types";
-import { IProductsPageInitialProps } from "@/app/products/[...sub_category]/page";
 
 interface IProductsPageProps extends IProductsPageInitialProps {
   products: IProduct[] | [];
@@ -20,8 +18,8 @@ const ProductsListMainContent = (props: IProductsPageProps) => {
   );
   return (
     <section>
-      <div className="flex justify-between items-center mb-4 xl:mb-8 min-[2800px]:mb-10">
-        <div className="text-3xl  xl:text-[32px] text-[##1A1A1C] font-bold min-[2800px]:text-5xl">
+      <div className="flex justify-between items-center mb-4 xl:mb-8">
+        <div className="text-3xl xl:text-[32px] text-title font-bold">
           {translatedProductType}
         </div>
         <div className="xl:hidden">
@@ -39,7 +37,7 @@ const ProductsListMainContent = (props: IProductsPageProps) => {
         </Suspense>
       ) : null}
       {Array.isArray(products) && !products.length ? (
-        <div className="text-base min-[2800px]:text-3xl">
+        <div className="text-base">
           <div>Нажаль не має товарів які відповідають вибраним критеріям</div>
           <div>Спробуйте змінити фільтри пошуку</div>
         </div>
