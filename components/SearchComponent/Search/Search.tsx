@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
+
 // styles
 import styles from "./Search.module.css";
 
@@ -32,14 +33,11 @@ const Search = (props: SearchFormProps) => {
 
   if (!isOpen) return null;
 
-  // let shiftRight = "0px";
-  // const widthBrowser = document.documentElement.clientWidth;
-  // console.log(widthBrowser);
-  // if (widthBrowser <= 1440) {
-  //   shiftRight = `${(1440 - widthBrowser) / 2 - 350}px`;
-  // } else {
-  //   shiftRight = "-357px";
-  // }
+  const widthBrowser = document.documentElement.clientWidth;
+  let shift = 0;
+  if (widthBrowser > 1440) {
+    shift = (widthBrowser - 1440) / 2 + 185;
+  }
 
   const handleClick = (e: any) => {
     if (e.target.id === "wrapper-mod") {
@@ -51,9 +49,6 @@ const Search = (props: SearchFormProps) => {
       }, 100);
     }
   };
-
-  const paddinOfset = window.innerWidth - document.body.offsetWidth;
-  console.log(`${paddinOfset}px`);
 
   return (
     <>
@@ -81,9 +76,7 @@ const Search = (props: SearchFormProps) => {
         >
           <div
             className={`${styles.search_wrapperXL} ${isOpen ? styles.active : ""}`}
-            style={{
-              right: "185px",
-            }}
+            style={{ right: `${shift}px` }}
           >
             <SearchFormXL
               {...props}
