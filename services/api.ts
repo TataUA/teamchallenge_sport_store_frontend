@@ -338,7 +338,24 @@ export const createOrder = async (
   data: { msg: string; order?: string; payment_form?: string };
 }> => {
   try {
-    const response = await $instance.post("/delivery/orders/create/", order);
+    const response = await $instance.post("/order/create/", order);
+
+    return response;
+  } catch (error: any) {
+    console.log("🚀 ~ error:", error);
+    return { data: { msg: error.response.data.msg } };
+  }
+};
+
+export const createPayment = async (
+  orderId: string,
+): Promise<{
+  data: { msg: string; payment_form?: string };
+}> => {
+  try {
+    const response = await $instance.post("/payment/create/", {
+      'order_id': orderId
+    });
 
     return response;
   } catch (error: any) {
