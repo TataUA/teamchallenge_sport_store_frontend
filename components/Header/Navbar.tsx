@@ -4,6 +4,7 @@ import { NavItemListMobile } from "@/components/Header/NavItemListMobile/NavItem
 import { UsernavMobile } from "@/components/Header/UsernavMobile";
 import { NAV_ITEMS } from "@/public/data/nav-items.data";
 import menuIcon from "@/public/icons/header/mob-menu.svg";
+import { ClientComponent } from "../ClientComponent";
 
 interface NavbarProps {
   isModalOpen: boolean;
@@ -24,7 +25,9 @@ export const Navbar = ({ isModalOpen, setIsModalOpen }: NavbarProps) => {
           />
         </div>
         <div className="border-t border-border mb-[16px]"></div>
-        <UsernavMobile onClose={() => setIsModalOpen(false)} />
+        <ClientComponent>
+          <UsernavMobile onClose={() => setIsModalOpen(false)} />
+        </ClientComponent>
       </Modal>
     </div>
   );

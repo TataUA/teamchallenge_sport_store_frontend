@@ -10,10 +10,10 @@ export default function Profile() {
   return (
     <ProfileLayout>
       <h1 className="md:hidden mt-4 mb-6 text-2xl leading-140 font-pangram font-bold text-title">
-        Особистий кабінет
+        Мої данні
       </h1>
       <div className="w-full md:max-w-[530px] mt-0 mx-auto">
-        <UserData />
+        <UserData editModeOpened />
       </div>
     </ProfileLayout>
   );

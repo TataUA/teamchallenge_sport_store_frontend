@@ -8,9 +8,9 @@ import { Loader } from "@/components/Loader";
 import { UserDataSave } from "@/components/Auth/EditUser/UserDataSave";
 import { UserDataEdit } from "@/components/Auth/EditUser/UserDataEdit";
 
-export const UserData = () => {
+export const UserData = ({ editModeOpened=false }: { editModeOpened?: boolean}) => {
   const isRefreshing = useSelector(selectIsRefreshing);
-  const [editData, setEditData] = useState(false);
+  const [editData, setEditData] = useState(editModeOpened);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   return (
