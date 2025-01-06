@@ -65,33 +65,40 @@ const DeliveryManForm = (props: IProps) => {
   return (
     <div className="mt-2">
       <div className="mb-2">
-        <SearchInputDropdown 
-        onSelect={(value) => handleChangeDeliveryAddress('street', value)}
-        onSearch={(query) => getListOfStreetsInCityNovaPoshta(orderData.city?.ref || '', query)} 
+        <SearchInputDropdown
+          placeholder="Почніть вводити назву вулиці"
+          onSelect={(value) => handleChangeDeliveryAddress("street", value)}
+          onSearch={(query) =>
+            getListOfStreetsInCityNovaPoshta(orderData.city?.ref || "", query)
+          }
         />
       </div>
       <div className="mb-2">
         <AnimatedLabelInputCustom
-          type="text" 
+          type="text"
           value={deliveryAddress.numberHouse}
-          placeholder="Номер будинку" 
-          label="Номер будинку" 
-          onChange={(event) => handleChange(event, 'numberHouse')}
+          placeholder="Номер будинку"
+          label="Номер будинку"
+          onChange={(event) => handleChange(event, "numberHouse")}
         />
-        {errors.numberHouse && <p className={errorClassname}>{errors.numberHouse}</p>}
+        {errors.numberHouse && (
+          <p className={errorClassname}>{errors.numberHouse}</p>
+        )}
       </div>
       <div className="mb-2">
         <AnimatedLabelInputCustom
-          type="text" 
+          type="text"
           value={deliveryAddress.numberAppartment}
-          placeholder="Номер квартири" 
-          label="Номер квартири" 
-          onChange={(event) => handleChange(event, 'numberAppartment')}
+          placeholder="Номер квартири"
+          label="Номер квартири"
+          onChange={(event) => handleChange(event, "numberAppartment")}
         />
-        {errors.numberAppartment && <p className={errorClassname}>{errors.numberAppartment}</p>}
+        {errors.numberAppartment && (
+          <p className={errorClassname}>{errors.numberAppartment}</p>
+        )}
       </div>
     </div>
-  )
+  );
 }
 
 export default DeliveryManForm
