@@ -15,7 +15,7 @@ interface SearchInputDropdownProps {
 }
 
 const SearchInputDropdown: React.FC<SearchInputDropdownProps> = ({
-  placeholder = "Виберіть вулицю",
+  placeholder = "Почніть вводити назву вулиці",
   onSearch,
   onSelect,
 }) => {

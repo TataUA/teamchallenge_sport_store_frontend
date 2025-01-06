@@ -143,10 +143,9 @@ const CustomCitiesDropdown = ({
           )}
           type="text"
           value={city}
-          placeholder="Оберіть місто"
+          placeholder="Почніть вводити назву"
           onChange={handleCityChange}
         />
-        {getArrowDownSVG()}
       </div>
       {isOpen && (
         <div
