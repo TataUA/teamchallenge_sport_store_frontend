@@ -1,21 +1,14 @@
-'use client'
+"use client";
 
-import { logoutUserThunk } from "@/redux/auth/authThunk";
-import { AppDispatch } from "@/redux/store";
+import useLogout from "@/hooks/useLogout";
 import { cn } from "@/services/utils/cn";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { usePathname } from "next/navigation";
 
 const ProfileMenu = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const router = useRouter();
-  const pathname = usePathname();
+  const handleLogout = useLogout();
 
-  const handleLogout = () => {
-    dispatch(logoutUserThunk());
-    router.push("/");
-  };
+  const pathname = usePathname();
 
   return (
     <div className="hidden md:block w-full md:w-[212px]">
@@ -26,7 +19,7 @@ const ProfileMenu = () => {
             "text-blue disabled cursor-default": pathname === "/auth/profile",
           })}
         >
-          Особистий кабінет
+          Мої данні
         </Link>
         <Link
           href="/orders"
@@ -39,7 +32,7 @@ const ProfileMenu = () => {
         <div className="bg-[#CFCFCF] h-[1px]" />
         <li
           className={cn("cursor-pointer hover:text-blue")}
-          onClick={handleLogout}
+          onClick={() => handleLogout()}
         >
           Вийти
         </li>

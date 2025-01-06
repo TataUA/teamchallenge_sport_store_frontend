@@ -12,7 +12,7 @@ export default function Profile() {
       <h1 className="md:hidden mt-4 mb-6 text-2xl leading-140 font-pangram font-bold text-title">
         Особистий кабінет
       </h1>
-      <div className="max-w-[530px] mt-0 mx-auto">
+      <div className="w-full md:max-w-[530px] mt-0 mx-auto">
         <UserData />
       </div>
     </ProfileLayout>

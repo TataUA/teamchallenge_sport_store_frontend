@@ -102,7 +102,7 @@ export const UserDataSave = (props: UserDataSaveProps) => {
       <button
         type="button"
         onClick={handleLogout}
-        className="md:hidden w-full h-12 mb-8 px-4 border rounded-xl border-border_button bg-white text-base font-semibold text-common hover:border-border hover:bg-border_button transition-all"
+        className="hidden w-full h-12 mb-8 px-4 border rounded-xl border-border_button bg-white text-base font-semibold text-common hover:border-border hover:bg-border_button transition-all"
       >
         Вихід
       </button>
