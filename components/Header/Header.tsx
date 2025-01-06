@@ -68,7 +68,10 @@ export const Header = () => {
           className="h-12 w-full  bg-[#f7f7f7] transition duration-300"
           style={{ display: showGoods }}
         >
-          <div className="flex justify-start items-center xl:container xl:mx-auto xl:px-[82px]  transition duration-300">
+          <div
+            id="goods"
+            className="flex justify-start items-center xl:container xl:mx-auto xl:px-[82px]  transition duration-300"
+          >
             <MenuGoods navItems={NAV_ITEMS} gender={gender} />
           </div>
         </div>

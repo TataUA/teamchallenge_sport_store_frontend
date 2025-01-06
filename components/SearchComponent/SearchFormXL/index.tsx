@@ -145,8 +145,6 @@ const SearchFormXL = (props: IProps) => {
     return () => clearTimeout(debouncedSearch);
   }, [dispatch, searchText]);
 
-  //const style
-
   return (
     <div>
       <div
@@ -188,7 +186,7 @@ const SearchFormXL = (props: IProps) => {
             onKeyDown={(e) => handleKeyboardEvent(e)}
           />
           <div
-            className="[&>svg]:size-5 [&>svg]:fill-[#868687]"
+            className="[&>svg]:size-5 [&>svg]:fill-[#868687] cursor-pointer "
             onClick={handleClickResetButton}
             style={
               searchText.length > 0 ? { display: "block" } : { display: "none" }

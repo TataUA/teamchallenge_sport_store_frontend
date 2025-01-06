@@ -17,7 +17,8 @@ const MenuGenger = ({
   gender,
   setIsShowMenuGoods,
 }: NavItemListProps) => {
-  const handleMouseEnter = () => {
+  const handleMouseEnter = (e: string) => {
+    setIsChoseGender(e);
     setIsShowMenuGoods(true);
   };
 
@@ -28,29 +29,29 @@ const MenuGenger = ({
     }
   };
 
-  const handleClick = (e: string) => {
-    setIsChoseGender(e);
-    setIsShowMenuGoods(true);
-  };
-
   return (
-    <div
-      className="item.box flex "
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <Button
-        title={navItems[0].title.label.toUpperCase()}
-        onClick={() => handleClick(navItems[0].title.key)}
-        selected={gender === "men" ? true : false}
-      />
-      <div className="h-4 w-[3px] px-[1px] mt-4 bg-[#E7E7E8]"></div>
-      <Button
-        title={navItems[1].title.label.toUpperCase()}
-        onClick={() => handleClick(navItems[1].title.key)}
-        paddingLeftFirst={"pl-4"}
-        selected={gender === "women" ? true : false}
-      />
+    <div className="item.box flex ">
+      <div
+        onMouseEnter={() => handleMouseEnter("men")}
+        onMouseLeave={handleMouseLeave}
+      >
+        <Button
+          title={navItems[0].title.label.toUpperCase()}
+          selected={gender === "men" ? true : false}
+        />
+      </div>
+
+      <div className="h-4 w-[1px]  mt-4 bg-[#E7E7E8]"></div>
+      <div
+        onMouseEnter={() => handleMouseEnter("women")}
+        onMouseLeave={handleMouseLeave}
+      >
+        <Button
+          title={navItems[1].title.label.toUpperCase()}
+          paddingLeftFirst={"pl-4"}
+          selected={gender === "women" ? true : false}
+        />
+      </div>
     </div>
   );
 };

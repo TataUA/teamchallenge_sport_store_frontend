@@ -5,10 +5,8 @@ import fetchProductsByGenderAction from "@/app/actions/fetchProductsByGenderActi
 import { IProduct } from "@/services/types";
 
 // helpers
-import getSortedProducts from "@/helpers/getSortedProducts";
-import getFilteredProducts from "@/helpers/getFilteredProducts";
-import ListItem from "@/components/ProductsList/ListItem";
-import Test from "@/components/ProductsList/Test";
+
+import NewTest from "@/components/ProductsList/NewTest";
 
 export const metadata = {
   title: "Products Page",
@@ -34,48 +32,41 @@ export interface IProductsPageInitialProps {
 const getSortedAndFilteredProducts = async ({
   filters,
   gender,
+  limit,
 }: {
   filters: IFilters;
   gender: string;
+  limit: number;
 }) => {
-  const products: IProduct[] = await fetchProductsByGenderAction(gender);
+  let offset: number;
 
-  const filteredProductByGender = products.filter((product) => {
-    if (filters.gender) {
-      return (
-        product.category.gender.toLowerCase() === filters.gender?.toLowerCase()
-      );
-    }
-    return product;
-  });
-
-  const sortedProducts = getSortedProducts({
-    products: filteredProductByGender,
-    direction: filters.sortedBy,
-  });
-
-  const arraOfFiltersFromFiltersObject = Object.entries({
-    ...filters,
-    gender,
-  }).map(([key, value]) => ({ [key]: value }));
-  const filteredProductsByGeneralFilters = getFilteredProducts({
-    products: sortedProducts,
-    filters: arraOfFiltersFromFiltersObject,
-  });
-
-  return filteredProductsByGeneralFilters;
+  if (filters.page) {
+    offset = (Number(filters.page) - 1) * limit;
+  } else {
+    offset = 0;
+  }
+  const result = await fetchProductsByGenderAction(gender, limit, offset);
+  return result;
 };
 
 export default async function ProductsByGenderPage(
   props: IProductsPageInitialProps,
 ) {
-  const products = await getSortedAndFilteredProducts({
+  let limit = 8; // Кількість карток на сторінці
+  const resultsFunc = await getSortedAndFilteredProducts({
     filters: props.searchParams,
     gender: props.params.gender[0],
+    limit,
   });
-  return (
-    <section className="px-6 pt-4 pb-12">
-      <Test products={products} />
-    </section>
-  );
+  let products: IProduct[];
+  if (resultsFunc) {
+    products = resultsFunc[0];
+    const count = resultsFunc[1];
+
+    return (
+      <section className="px-6 pt-4 pb-12 xl:container">
+        <NewTest products={products} count={count} limit={limit} />
+      </section>
+    );
+  }
 }
