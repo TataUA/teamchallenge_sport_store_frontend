@@ -1,20 +1,28 @@
 import React from "react";
 
-import { ClientComponent } from "@/components/ClientComponent";
-import { PrivateRouteComponent } from "@/components/Auth/PrivateRouterComponent";
 import { UserData } from "@/components/Auth/EditUser/UserData";
+
+// layouts
+import RootLayout from "@/app/layout";
+import ProfileLayout from "@/app/ProfileLayout";
 
 export default function Profile() {
   return (
-    <ClientComponent>
-      <PrivateRouteComponent>
-        <div className="container">
-          <h1 className="mt-4 mb-6 text-2xl leading-140 font-pangram font-bold text-title">
-            Особистий кабінет
-          </h1>
-          <UserData />
-        </div>
-      </PrivateRouteComponent>
-    </ClientComponent>
+    <ProfileLayout>
+      <h1 className="md:hidden mt-4 mb-6 text-2xl leading-140 font-pangram font-bold text-title">
+        Особистий кабінет
+      </h1>
+      <div className="max-w-[530px] mt-0 mx-auto">
+        <UserData />
+      </div>
+    </ProfileLayout>
   );
 }
+
+Profile.getLayout = function getLayout(page: any) {
+  return (
+    <RootLayout>
+      <ProfileLayout>{page}</ProfileLayout>
+    </RootLayout>
+  );
+};
