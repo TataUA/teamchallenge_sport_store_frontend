@@ -14,10 +14,11 @@ export const UsernavMobile = ({ onClose }: { onClose: () => void }) => {
   const handleLogout = useLogout();
 
   const classname = cn(
-    " cursor-default pointer-events-none opacity-[50%] flex justify-between items-center", 
+    " cursor-default pointer-events-none flex justify-between items-center",
+    `${user?.id ? "opacity-[100%]" : "opacity-[50%]"}`,
     "[&>svg]:stroke-primary text-primary hover:text-blue active:text-blue [&>svg]:hover:stroke-blue [&>svg]:active:stroke-blue",
     {
-      " pointer-events-auto cursor-pointer opacity-[100%]": user?.id,
+      " pointer-events-auto cursor-pointer": user?.id,
     },
   );
 
