@@ -11,9 +11,6 @@ export const HIDE_PAGE_PATH: HidePagePath[] = [
     path: "/auth/login",
   },
   {
-    path: "/auth/profile",
-  },
-  {
     path: "/auth/reset_password/[token]",
   },
   {
