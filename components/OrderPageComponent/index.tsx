@@ -230,7 +230,7 @@ const OrderPageComponent = () => {
     }
   };
 
-  const successfulyRedirect = (response: any) => {
+  const successfulyRedirect = (response?: any) => {
     dispatch(cleanCart());
     localStorage.removeItem("basketId");
 

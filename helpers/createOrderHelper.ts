@@ -4,7 +4,7 @@ import getBasketIdFromLocalStorage, {
 } from "./getBasketIdFromLocalStorage";
 
 // service
-import { createOrder, IOrder } from "@/services/api";
+import { createOrder, createPayment, IOrder } from "@/services/api";
 
 // actions
 import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction";
@@ -21,7 +21,7 @@ const createOrderHelper = async (
     deliveryAddress: any;
     cart: ICartState;
   },
-  successfulyRedirect: (data: any) => void,
+  successfulyRedirect: (data?: any) => void,
   showModalProductOutOfStock: (products: IProductWithMaxQuantity[]) => void,
 ): Promise<any> => {
   try {
@@ -67,12 +67,16 @@ const createOrderHelper = async (
     let basketId = await getOrCreateBasketId();
     let newOrder = createNewOrder(basketId);
     let response = await createOrder(newOrder);
+    console.log("🚀 ~ response:", response)
 
-    if (
-      response?.data.msg?.includes("Congratulations") ||
-      response?.data.msg?.includes("created successfully")
-    ) {
-      return successfulyRedirect(response.data);
+    if (response.data.order) {
+      if (orderState.payment !== "Card") {
+        return successfulyRedirect();
+      }
+      
+      const payment = await createPayment(response.data.order);
+
+      return successfulyRedirect(payment.data);
     }
 
     throw new Error("Unexpected response from server");
