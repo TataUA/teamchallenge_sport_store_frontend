@@ -77,8 +77,14 @@ const syncCart =
     dispatch(setCart(productsFromCartServer));
   };
 
-const assignCartToUser = async (userId: number, dispatch: any) => {
-  const basketId = getBasketIdFromLocalStorage();
+export const assignCartToUser = async (userId: number, dispatch: any) => {
+  let basketId = getBasketIdFromLocalStorage();
+
+  if (!basketId) {
+    await dispatch(createCart());
+
+    basketId = getBasketIdFromLocalStorage();
+  }
 
   const isValidCart = await isValidShopingCart(basketId);
 
@@ -117,23 +123,32 @@ export const useCartSync = () => {
   const mounted = useRef<boolean>(false);
 
   useEffect(() => {
-    if (mounted.current) {
-      return;
-    }
-
-    if (user?.id) {
-      // Пользователь вошел: синхронизация с БД
-      assignCartToUser(user.id, dispatch);
-      mounted.current = true;
-
-      return;
-    }
-
     if (mountedAnonim.current) {
       return;
     }
 
     dispatch(createCart());
     mountedAnonim.current = true;
+
+    return () => {
+      mountedAnonim.current = false;
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log(mounted, user);
+    
+    if (mounted.current || !user) {
+      return;
+    }
+
+    if (user?.id) {
+      (assignCartToUser(user.id, dispatch));
+      mounted.current = true;
+
+      return () => {
+        mounted.current = false;
+      };
+    }
   }, [user, dispatch]);
 };
