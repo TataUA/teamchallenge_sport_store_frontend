@@ -2,6 +2,7 @@
 
 // core
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 // slices
 import { setModalProductIsOutOfStock } from "@/redux/cart/cartSlice";
@@ -15,10 +16,30 @@ import useCart from "@/hooks/useCart";
 
 const ProductOutOfStock = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const [isOpened, handleOpenedCart] = useCart();
 
   const cart = useSelector(selectCart);
+
+  const handleClickOpenCart = () => {
+    dispatch(
+      setModalProductIsOutOfStock({
+        isOpened: false,
+      }),
+    );
+    handleOpenedCart(true);
+  }
+
+  const handleClickShopping = () => {
+    router.push(`/product/${cart.outOfStockProducts[0]?.id}`)
+    handleOpenedCart(false);
+    dispatch(
+      setModalProductIsOutOfStock({
+        isOpened: false,
+      }),
+    );
+  };
 
   const buttonClassname =
     "py-[11px] h-fit px-4 border-[1px] rounded-lg text-center border-blue w-full cursor-pointer";
@@ -48,7 +69,7 @@ const ProductOutOfStock = () => {
       </div>
       <div className="flex gap-4 flex-wrap md:flex-nowrap justify-between text-base md:gap-5">
         <div
-          onClick={() => handleOpenedCart(true)}
+          onClick={() => handleClickOpenCart()}
           className={buttonClassname + " text-blue hover:bg-[#E7EDFE]"}
         >
           Перейти в кошик
@@ -57,13 +78,7 @@ const ProductOutOfStock = () => {
           className={
             buttonClassname + " text-white bg-blue hover:bg-active_blue"
           }
-          onClick={() =>
-            dispatch(
-              setModalProductIsOutOfStock({
-                isOpened: false,
-              }),
-            )
-          }
+          onClick={() => handleClickShopping()}
         >
           Продовжити покупки
         </div>
