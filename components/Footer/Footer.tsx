@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { HIDE_PAGE_PATH } from "@/services/hide-page-path.data";
 
 import { useIsMobile } from "@/hooks/useIsMobile";
-
+import { SubscribeBannerFooter } from "@/components/SubscribeBannerFooter";
 import InfoSectionFooter from "./InfoSectionFooter";
 
 const Footer = () => {
@@ -32,6 +32,7 @@ const Footer = () => {
 
   return (
     <footer>
+      <SubscribeBannerFooter />
       <div className="font-pangram p-6 xl:py-0 xl:px-[82px] mt-auto max-[767px]:px-6 max-[767px]:py-5 xl:container xl:mx-auto">
         <InfoSectionFooter />
       </div>
