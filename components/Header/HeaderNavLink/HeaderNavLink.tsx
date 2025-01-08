@@ -33,18 +33,18 @@ import { AppDispatch } from "@/redux/store";
 
 //hooks
 import { useIsMobile } from "@/hooks/useIsMobile";
-import { useCartSync } from "@/hooks/useCartSync";
+import {useCartSync} from "@/hooks/useCartSync";
 
 // helpers
 import getUserlogged from "@/helpers/getUserlogged";
 import useCart from "@/hooks/useCart";
 
 const HeaderNavLink = () => {
+  useCartSync();
+
   const cart = useSelector(selectCart);
   const user = useSelector(selectUserData);
   const isAuthModalOpen = useSelector(selectIsAuthModalOpen);
-
-  useCartSync();
 
   const [isOpened, handleOpenedCart] = useCart();
 
