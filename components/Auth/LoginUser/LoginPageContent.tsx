@@ -1,8 +1,9 @@
 "use client";
 
 import React from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
+import { cn } from "@/services/utils/cn";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { ClientComponent } from "@/components/ClientComponent";
 import { PrivateRouteComponent } from "@/components/Auth/PrivateRouterComponent";
@@ -20,6 +21,7 @@ interface LoginPageContentProps {
 export const LoginPageContent = (props: LoginPageContentProps) => {
   const isMobile = useIsMobile();
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleRegistrationClick = () => {
     if (isMobile) {
@@ -45,21 +47,23 @@ export const LoginPageContent = (props: LoginPageContentProps) => {
               saveUserEmail={props.saveUserEmail}
             />
             <PrivacyPolicy />
-            <div className="flex mt-[21px] mb-[21px] justify-center items-center">
-              <div className="w-full flex items-center">
-                <div className="flex-1 h-px mr-3 bg-border"></div>
-                <p className=" text-sm leading-129 font-medium font-pangram text-gray">
-                  або
-                </p>
-                <div className="flex-1 h-px ml-3 bg-border"></div>
+            <div className={cn({ hidden: pathname === "/order" })}>
+              <div className="flex mt-[21px] mb-[21px] justify-center items-center">
+                <div className="w-full flex items-center">
+                  <div className="flex-1 h-px mr-3 bg-border"></div>
+                  <p className=" text-sm leading-129 font-medium font-pangram text-gray">
+                    або
+                  </p>
+                  <div className="flex-1 h-px ml-3 bg-border"></div>
+                </div>
               </div>
+              <Button
+                type="button"
+                subtype="secondary"
+                title="Зареєструватись"
+                onClick={handleRegistrationClick}
+              />
             </div>
-            <Button
-              type="button"
-              subtype="secondary"
-              title="Зареєструватись"
-              onClick={handleRegistrationClick}
-            />
           </div>
         </PrivateRouteComponent>
       </ClientComponent>

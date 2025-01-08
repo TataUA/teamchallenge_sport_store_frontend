@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 
 // data
@@ -50,6 +50,7 @@ const HeaderNavLink = () => {
 
   const dispatch: AppDispatch = useDispatch();
   const router = useRouter();
+  const pathname = usePathname();
   const isMobile = useIsMobile();
 
   const [showRegistration, setShowRegistration] = useState(false);
@@ -172,12 +173,11 @@ const HeaderNavLink = () => {
         ))}
       </ul>
 
-      {!isMobile && isAuthModalOpen && (
+      {(pathname === "/order" || !isMobile) && isAuthModalOpen && (
         <ModalForm onClose={handleCloseModalClick}>
           {showConfirmRegister ? (
             <ConfirmingLetterContent
               setShowConfirmRegister={setShowConfirmRegister}
-              //setShowModal={setShowModal}
               email={userEmail}
             />
           ) : showRegistration ? (

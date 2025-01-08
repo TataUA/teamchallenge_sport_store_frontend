@@ -11,13 +11,9 @@ import { AppDispatch } from "@/redux/store";
 import { selectUserData } from "@/redux/auth/authSelector";
 import { authModalOpen } from "@/redux/auth/authSlice";
 
-//hooks
-import { useIsMobile } from "@/hooks/useIsMobile";
-
 const ContactsSection = ({ children }: { children: any }) => {
   const user = useSelector(selectUserData);
   const dispatch: AppDispatch = useDispatch();
-  const isMobile = useIsMobile();
 
   return (
     <div className="md:col-start-1 md:row-start-1 mb-[40px] md:mb-[48px]">
@@ -27,9 +23,9 @@ const ContactsSection = ({ children }: { children: any }) => {
         </h3>
         {!user ? (
           <Link
-            href={isMobile ? "/auth/login" : ""}
+            href={""}
             onClick={() => {
-              if (!isMobile) dispatch(authModalOpen());
+              dispatch(authModalOpen());
             }}
             className="text-sm font-medium underline title"
           >
