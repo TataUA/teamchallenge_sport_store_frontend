@@ -29,44 +29,21 @@ export interface IProductsPageInitialProps {
   searchParams: IFilters;
 }
 
-const getSortedAndFilteredProducts = async ({
-  filters,
-  gender,
-  limit,
-}: {
-  filters: IFilters;
-  gender: string;
-  limit: number;
-}) => {
-  let offset: number;
-
-  if (filters.page) {
-    offset = (Number(filters.page) - 1) * limit;
-  } else {
-    offset = 0;
-  }
-  const result = await fetchProductsByGenderAction(gender, limit, offset);
-  return result;
-};
-
 export default async function ProductsByGenderPage(
   props: IProductsPageInitialProps,
 ) {
-  let limit = 8; // Кількість карток на сторінці
-  const resultsFunc = await getSortedAndFilteredProducts({
-    filters: props.searchParams,
-    gender: props.params.gender[0],
-    limit,
-  });
-  let products: IProduct[];
-  if (resultsFunc) {
-    products = resultsFunc[0];
-    const count = resultsFunc[1];
-
-    return (
-      <section className="px-6 pt-4 pb-12 xl:container">
-        <NewTest products={products} count={count} limit={limit} />
-      </section>
-    );
+  const filters: IFilters = props.searchParams;
+  let page: number;
+  if (!filters.page) {
+    page = 1;
+  } else {
+    page = Number(filters.page);
   }
+  return (
+    <section className="px-6 pt-4 pb-12 xl:container">
+      {/* <NewTest products={products} count={count} limit={limit} /> */}
+      <NewTest gender={props.params.gender[0]} page={page} />
+    </section>
+  );
+  //  }
 }
