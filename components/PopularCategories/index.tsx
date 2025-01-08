@@ -20,7 +20,7 @@ export const PopularCategories = () => {
               href={href ?? "/"}
               className="flex flex-col gap-2 w-full h-full cursor-pointer"
             >
-              <div className="flex flex-col items-center justify-center w-full min-h-[108px] xl:min-h-[181px] max-h-[181px] rounded-xl overflow-hidden">
+              <div className="relative flex flex-col items-center justify-center w-full min-h-[108px] xl:min-h-[181px] max-h-[181px] rounded-xl overflow-hidden">
                 <Image
                   src={image || ""}
                   alt={title}
@@ -28,7 +28,11 @@ export const PopularCategories = () => {
                   height={181}
                   className="w-full h-full object-cover"
                 />
+                <div className="absolute left-0 top-0 w-full h-full z-5     bg-gradient-to-t from-black/20 to-black/0 rounded-xl">
+                  {" "}
+                </div>
               </div>
+
               <h3 className="flex items-center text-center h-10 xl:h-7 xl:absolute z-10 left-6 bottom-6 font-medium text-sm xl:text-xl tracking-custom_2 text-title xl:text-white">
                 {title}
               </h3>

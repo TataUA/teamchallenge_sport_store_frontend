@@ -23,7 +23,7 @@ export const AboutUs = () => {
               <h3 className="mb-1 xl:mb-2 font-semibold text-base xl:text-title">
                 {title}
               </h3>
-              <p className="block font-medium text-sm xl:text-base tracking-custom_4 xl:tracking-normal text-common">
+              <p className="block font-medium text-sm  tracking-custom_4 xl:tracking-normal text-common">
                 {subtitle}
               </p>
             </div>
@@ -36,7 +36,7 @@ export const AboutUs = () => {
           <h2 className="mb-4 xl:mb-6 font-semibold text-xl xl:text-2xl text-title">
             Про нас
           </h2>
-          <p className="xl:mb-2 block font-medium text-sm xl:text-base tracking-custom_4 xl:tracking-normal text-common">
+          <p className="xl:mb-2 block font-medium text-sm  tracking-custom_4 xl:tracking-normal text-common">
             У нашому онлайн-магазині{" "}
             <span className="font-bold xl:font-medium">SportHub</span> ви
             знайдете широкий вибір спортивного взуття та одягу для чоловіків і
