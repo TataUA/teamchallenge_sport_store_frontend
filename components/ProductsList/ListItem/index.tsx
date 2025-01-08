@@ -36,11 +36,8 @@ const ListItem = (props: ListItemProps) => {
 
   return (
     <div
-      className={cn(
-        "pb-4",
-        bestSales
-          ? "w-full h-full flex justify-center items-center"
-          : "min-[320px]:[width:calc((100%-8px)/2)] min-[480px]:[width:calc((100%-16px)/3)] min-[1024px]:[width:calc((100%-24px)/4)] min-[1440px]:[width:calc((100%-60px)/4)]",
+      className={cn("pb-4", 
+        `${bestSales ? 'w-full h-full flex justify-center items-center' : 'w-custom-320 md:w-custom-480 lg:w-custom-1024 xl:w-custom-1440'}`,
       )}
     >
       <Link
