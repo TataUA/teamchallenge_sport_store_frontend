@@ -28,6 +28,12 @@ const config: Config = {
           raw: "((max-height: 1400px))",
         },
       },
+      spacing: {
+        "custom-320": "calc((100% - 8px) / 2)",
+        "custom-480": "calc((100% - 16px) / 3)",
+        "custom-1024": "calc((100% - 24px) / 4)",
+        "custom-1440": "calc((100% - 60px) / 4)",
+      },
       lineHeight: {
         "114": "114%",
         "129": "129%",
