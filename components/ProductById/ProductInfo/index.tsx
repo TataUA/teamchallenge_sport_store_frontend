@@ -2,8 +2,8 @@
 import getTranslatedSubcategoryFromUkraineToEnglish from "@/helpers/getTranslatedSubcategoryFromUkraineToEnglish";
 
 // components
-import SizesModal from "./SizesModal";
 import { ClientComponent } from "@/components/ClientComponent";
+import SizesBlock from "./SizesBlock";
 import AddProductToCartComponent from "./AddProductToCartComponent";
 import ColorPickerComponent from "./ColorPickerComponent";
 import SliderComponent from "./SliderComponent";
@@ -20,20 +20,20 @@ const ProductInfo = ({ product }: { product: IProduct }) => {
   );
 
   return (
-    <div className="1440:flex gap-5">
+    <div className="xl:flex gap-5">
       <ClientComponent>
-        <div className="1440:max-w-[628px]">
+        <div className="xl:max-w-[628px]">
           <SliderComponent />
         </div>
-        <div className="1440:max-w-[628px]">
-          <div className="1440:mt-4 mb-4 1440:mb-6 text-base 1440:text-xl tracking-custom_4 1440:tracking-custom_2 text-title">
+        <div className="xl:max-w-[628px]">
+          <div className="xl:mt-4 mb-4 xl:mb-6 text-base xl:text-xl tracking-custom_4 xl:tracking-custom_2 text-title">
             {product.title}
           </div>
-          <div className="mb-8 1440:mb-10 font-semibold text-2xl tracking-custom_2 text-title">
+          <div className="mb-8 xl:mb-10 font-semibold text-2xl tracking-custom_2 text-title">
             {price + " грн"}
           </div>
           <ColorPickerComponent colors={colors} />
-          <SizesModal
+          <SizesBlock
             translatedSubCategory={translatedSubCategory}
             existedSizesFromDb={quantity}
           />
