@@ -3,6 +3,7 @@ import { Nunito_Sans, Inter } from "next/font/google";
 
 // components
 import Footer from "@/components/Footer/Footer";
+import { SubscribeBannerFooter } from "@/components/SubscribeBannerFooter";
 import { Header } from "@/components/Header/Header";
 import { ClientComponent } from "@/components/ClientComponent";
 import ProductOutOfStock from "@/components/ProductOutOfStock";
@@ -40,7 +41,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <header>
           <Header />
         </header>
-        <main className="relative flex-1 flex flex-col xl:mt-16">{children}</main>
+        <main className="relative flex-1 flex flex-col xl:mt-16">
+          {children}
+        </main>
+
         <Footer />
         <div id="modal-root"></div>
         <ClientComponent>

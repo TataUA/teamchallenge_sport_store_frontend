@@ -23,6 +23,8 @@ const List = (props: IProps) => {
     const containerWidth = window.innerWidth;
     if (containerWidth >= 480 && containerWidth < 1024) {
       setItemsPerPage(9);
+    } else if (containerWidth > 1025) {
+      setItemsPerPage(12);
     } else {
       setItemsPerPage(8);
     }
