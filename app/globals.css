@@ -62,7 +62,7 @@ body {
   }
 
   .input {
-    @apply box-border w-full h-[52px] pt-5 pb-2 border-b border-border outline-none focus:ring-0 text-base font-medium font-pangram text-primary flex items-center;
+    @apply box-border flex items-center w-full h-[52px] pt-5 pb-2 border-b border-border outline-none focus:ring-0 text-base font-medium font-pangram text-primary;
   }
 
   .input:-webkit-autofill {

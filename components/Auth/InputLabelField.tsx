@@ -81,7 +81,7 @@ export const InputLabelField = <T,>({
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <Field
         id={uniqueId}
         type={type === "password" && showPassword ? "text" : type}
