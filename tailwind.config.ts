@@ -24,6 +24,9 @@ const config: Config = {
         "608": "608px",
         xl: "1440px",
         "1440": "1440px",
+        "custom-height-mq": {
+          raw: "((max-height: 1200px))",
+        },
       },
       lineHeight: {
         "114": "114%",

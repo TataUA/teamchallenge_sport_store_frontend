@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, AppState } from "@/redux/store";
 
 // slices
-import { cleanCart, saveCartIdFromDb, setCart } from "@/redux/cart/cartSlice";
+import { cleanCart, setCart } from "@/redux/cart/cartSlice";
 
 // selectors
 import { selectUserData } from "@/redux/auth/authSelector";
@@ -20,33 +20,31 @@ import getProductsByFetchingProductById from "@/helpers/getProductsByFetchingPro
 
 // types
 import { IProductWithMaxQuantity } from "@/services/types";
+import { UserData } from "@/redux/auth/authSlice";
 
-const createCart =
-  () => async (dispatch: AppDispatch, getState: () => AppState) => {
-    const basketId = getBasketIdFromLocalStorage();
+const createCart = async () => {
+  const basketId = getBasketIdFromLocalStorage();
 
-    if (basketId) {
-      const isValidCart = await isValidShopingCart(basketId);
+  if (basketId) {
+    const isValidCart = await isValidShopingCart(basketId);
 
-      if (isValidCart) {
-        dispatch(saveCartIdFromDb(basketId));
-
-        return;
-      }
-    }
-
-    const newBasketId = await createShoppingCartAction();
-
-    if (!newBasketId) {
-      console.log(
-        "syncCartOnLogin: Error while create shopping cart on server",
-      );
-
+    if (isValidCart) {
       return;
     }
 
-    dispatch(saveCartIdFromDb(newBasketId));
-  };
+    console.log(
+      "createCart: Error shopping cart is not valid, basket:" + basketId,
+    );
+  }
+
+  const newBasketId = await createShoppingCartAction();
+
+  if (!newBasketId) {
+    console.log("syncCartOnLogin: Error while create shopping cart on server");
+
+    return;
+  }
+};
 
 const syncCart =
   () => async (dispatch: AppDispatch, getState: () => AppState) => {
@@ -54,26 +52,27 @@ const syncCart =
 
     if (!basketId) {
       console.log(
-        "syncCartOnLogin: Error while create shopping cart on server",
+        "syncCart: Error while create shopping cart on server, basketId is null",
       );
 
       return;
     }
 
-    // Получение данных из БД
     let userCart = await fetchShoppingCartFromServerAction(basketId);
 
     if (!userCart) {
+      console.log(
+        "syncCart: Error while fetch shopping cart from server, basketId:" +
+          basketId,
+      );
       return;
     }
 
     let productsFromCartServer: IProductWithMaxQuantity[] =
       await getProductsByFetchingProductById(userCart?.items);
 
-    // Очистка локального хранилища
     dispatch(cleanCart());
 
-    // Обновление Redux Store обьединенной корзиной
     dispatch(setCart(productsFromCartServer));
   };
 
@@ -115,40 +114,29 @@ export const assignCartToUser = async (userId: number, dispatch: any) => {
   dispatch(syncCart());
 };
 
+const sync = (function sync() {
+  let userId: number | null = null;
+
+  return function (userData: any, dispatch: any) {
+    if (userId === userData?.id) {
+      return;
+    }
+
+    createCart();
+    userId = userData?.id;
+
+    if (userId) {
+      assignCartToUser(userId, dispatch);
+    }
+
+  };
+})();
+
 export const useCartSync = () => {
   const dispatch: AppDispatch = useDispatch();
   const user = useSelector(selectUserData);
 
-  const mountedAnonim = useRef<boolean>(false);
-  const mounted = useRef<boolean>(false);
-
   useEffect(() => {
-    if (mountedAnonim.current) {
-      return;
-    }
-
-    dispatch(createCart());
-    mountedAnonim.current = true;
-
-    return () => {
-      mountedAnonim.current = false;
-    };
-  }, [dispatch]);
-
-  useEffect(() => {
-    console.log(mounted, user);
-    
-    if (mounted.current || !user) {
-      return;
-    }
-
-    if (user?.id) {
-      (assignCartToUser(user.id, dispatch));
-      mounted.current = true;
-
-      return () => {
-        mounted.current = false;
-      };
-    }
+    sync(user, dispatch);
   }, [user, dispatch]);
 };
