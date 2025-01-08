@@ -146,23 +146,24 @@ export const RegisterForm = (props: RegisterPageContentProps) => {
                 formik={formik}
               />
 
-              <InputLabelField
-                label="Прізвище"
-                name="surname"
-                type="text"
-                inputMode="text"
-                placeholder=""
-                formik={formik}
-              />
-
-              <InputLabelField
-                label="По-батькові"
-                name="patronymic"
-                type="text"
-                inputMode="text"
-                placeholder=""
-                formik={formik}
-              />
+              <div className="flex flex-col gap-4 xl:flex-row w-full">
+                <InputLabelField
+                  label="Прізвище"
+                  name="surname"
+                  type="text"
+                  inputMode="text"
+                  placeholder=""
+                  formik={formik}
+                />
+                <InputLabelField
+                  label="По-батькові"
+                  name="patronymic"
+                  type="text"
+                  inputMode="text"
+                  placeholder=""
+                  formik={formik}
+                />
+              </div>
 
               <InputLabelField
                 label="Номер телефону"
@@ -172,7 +173,6 @@ export const RegisterForm = (props: RegisterPageContentProps) => {
                 placeholder="+380*********"
                 formik={formik}
               />
-
               <InputLabelField
                 label="Електронна пошта"
                 name="email"
@@ -182,23 +182,24 @@ export const RegisterForm = (props: RegisterPageContentProps) => {
                 formik={formik}
               />
 
-              <InputLabelField
-                label="Пароль"
-                name="password"
-                type="password"
-                inputMode="text"
-                placeholder="Не менше 6 символів"
-                formik={formik}
-              />
-
-              <InputLabelField
-                label="Повторити пароль"
-                name="repeatPassword"
-                type="password"
-                inputMode="text"
-                placeholder="Не менше 6 символів"
-                formik={formik}
-              />
+              <div className="flex flex-col gap-4 xl:flex-row w-full">
+                <InputLabelField
+                  label="Пароль"
+                  name="password"
+                  type="password"
+                  inputMode="text"
+                  placeholder="Не менше 6 символів"
+                  formik={formik}
+                />
+                <InputLabelField
+                  label="Повторити пароль"
+                  name="repeatPassword"
+                  type="password"
+                  inputMode="text"
+                  placeholder="Не менше 6 символів"
+                  formik={formik}
+                />
+              </div>
             </div>
             <Button
               type="submit"
