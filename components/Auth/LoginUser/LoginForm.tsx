@@ -74,7 +74,7 @@ export const LoginForm = (props: LoginFormProps) => {
     if (currentUser) {
       dispatch(authModalClose());
     }
-  }, [currentUser, props]);
+  }, [currentUser, dispatch]);
 
   const handleSubmit = async (
     values: LoginFormValues,

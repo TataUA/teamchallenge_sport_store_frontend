@@ -31,16 +31,20 @@ export const PrivateRouteComponent: React.FC<PrivateRouteComponentProps> = ({
     const containerWidth = window.innerWidth;
 
     if (pathname === "/auth/login" || pathname === "/auth/signup") {
-      if (containerWidth >= 1024) {
+      if (containerWidth >= 1440) {
         router.replace("/");
         return;
       }
       return;
     }
 
+    if (pathname === "/order") {
+      return;
+    }
+
     if (!isAuthenticated || (isAuthenticated && !userData)) {
       router.replace(
-        containerWidth < 1024
+        containerWidth < 1440
           ? "/auth/login"
           : pathname === "/auth/profile"
             ? "/"
