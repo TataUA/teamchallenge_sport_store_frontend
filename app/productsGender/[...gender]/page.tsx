@@ -1,12 +1,5 @@
-// actions
-import fetchProductsByGenderAction from "@/app/actions/fetchProductsByGenderAction";
-
-// types
-import { IProduct } from "@/services/types";
-
-// helpers
-
-import NewTest from "@/components/ProductsList/NewTest";
+// components
+import ContentGenderPage from "@/components/ProductsList/ContentGenderPage";
 
 export const metadata = {
   title: "Products Page",
@@ -41,9 +34,7 @@ export default async function ProductsByGenderPage(
   }
   return (
     <section className="px-6 pt-4 pb-12 xl:container">
-      {/* <NewTest products={products} count={count} limit={limit} /> */}
-      <NewTest gender={props.params.gender[0]} page={page} />
+      <ContentGenderPage gender={props.params.gender[0]} page={page} />
     </section>
   );
-  //  }
 }

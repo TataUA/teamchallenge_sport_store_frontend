@@ -12,7 +12,7 @@ interface TestProps {
   gender: string;
   page: number;
 }
-export default function NewTest({ gender, page }: TestProps) {
+export default function ContentGenderPage({ gender, page }: TestProps) {
   const [products, setProducts] = useState([]);
   const [countPages, setCountPages] = useState(1);
 
@@ -52,7 +52,6 @@ export default function NewTest({ gender, page }: TestProps) {
 
       fetchProducts(gender, limit, offset);
     }
-    
   }, [page]);
 
   return (
