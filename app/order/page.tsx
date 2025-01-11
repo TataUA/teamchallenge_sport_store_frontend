@@ -1,6 +1,5 @@
 import { ClientComponent } from "@/components/ClientComponent";
 import OrderPageComponent from "@/components/OrderPageComponent";
-import { SubscribeBannerFooter } from "@/components/SubscribeBannerFooter";
 
 const OrderPage = (props: any) => {
   return (
@@ -14,7 +13,6 @@ const OrderPage = (props: any) => {
           <OrderPageComponent />
         </ClientComponent>
       </div>
-      <SubscribeBannerFooter />
     </>
   );
 };
