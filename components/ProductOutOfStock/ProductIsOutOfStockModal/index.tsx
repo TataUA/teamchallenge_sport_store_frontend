@@ -58,14 +58,12 @@ const ProductIsOutOfStockModal = (props:{children: ReactNode}) => {
           )}
         >
           <div className="relative">
-            {isMobile ? (
-              <span
-                className="absolute right-0 top-0 [&>svg]:w-[18px] [&>svg]:h-[18px] cursor-pointer min-[2800px]:text-4xl"
-                onClick={onClose}
-              >
-                {getCloseIconSVG()}
-              </span>
-            ) : null}
+            <span
+              className="absolute right-0 top-0 [&>svg]:w-[18px] [&>svg]:h-[18px] cursor-pointer min-[2800px]:text-4xl"
+              onClick={onClose}
+            >
+              {getCloseIconSVG()}
+            </span>
             {props.children}
           </div>
         </div>
