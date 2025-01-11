@@ -2,7 +2,6 @@
 import { PrivateRouteComponent } from "@/components/Auth/PrivateRouterComponent";
 import { ClientComponent } from "@/components/ClientComponent";
 import ProfileMenu from "@/components/ProfileMenu";
-import { SubscribeBannerFooter } from "@/components/SubscribeBannerFooter";
 
 interface RootLayoutProps {
   children: React.ReactNode;
@@ -16,7 +15,6 @@ export default function ProfileLayout({ children }: RootLayoutProps) {
           <ProfileMenu />
           <div className="flex-1 w-full flex flex-col">{children}</div>
         </div>
-        <SubscribeBannerFooter />
       </PrivateRouteComponent>
     </ClientComponent>
   );
