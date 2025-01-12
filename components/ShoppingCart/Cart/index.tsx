@@ -132,12 +132,6 @@ const Cart = ({ products }: { products: IProductWithMaxQuantity[] }) => {
   return (
     <div className="flex-1 flex flex-col">
       <div className="flex-1 pb-[230px] md:pb-[170px]">
-        <h3 className="text-heading font-bold leading-140 mb-4 text-title text-2xl">
-          Кошик
-          <span className="ml-2 font-semibold text-subheading text-primary">
-            ({products.length})
-          </span>
-        </h3>
         <ul className="h-[100%] overflow-auto">
           {products.map((product, index) => (
             <li key={product.id}>

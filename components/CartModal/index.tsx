@@ -1,14 +1,14 @@
-'use client'
+"use client";
 
 import React, { useCallback } from "react";
 
 // components
 import ShoppingCart from "@/components/ShoppingCart";
-import { ClientComponent } from "@/components/ClientComponent";
-import { Loader } from "@/components/Loader";
 
 // hook
 import useCart from "@/hooks/useCart";
+
+// helpers
 import getCloseIconSVG18 from "@/helpers/getCloseIconSVG18";
 
 // slice
@@ -16,8 +16,7 @@ import { useSelector } from "react-redux";
 import { selectCart } from "@/redux/cart/cartSelector";
 
 export default function CartModal() {
-
-  const cart = useSelector(selectCart)
+  const cart = useSelector(selectCart);
   const [isOpened, handleOpenedCart] = useCart();
 
   const handleOverlayClick = useCallback(
@@ -30,13 +29,12 @@ export default function CartModal() {
   );
 
   if (!isOpened) {
-    document.body.style.overflow = '';
+    document.body.style.overflow = "";
 
     return null;
-  };
+  }
 
-  document.body.style.overflow = 'hidden';
-
+  document.body.style.overflow = "hidden";
 
   return (
     <section
@@ -51,27 +49,31 @@ export default function CartModal() {
       ></div>
       <div
         className="
-          pt-4 px-6 md:pt-7 md:px-6 bg-white overflow-auto w-full md:max-w-[386px] 2xl:max-w-[500px] z-50 relative
+          bg-white overflow-auto w-full md:max-w-[386px] 2xl:max-w-[500px] z-50 relative
           flex flex-col
         "
       >
         <div
           className={
-            "flex flex-col items-center justify-center flex-1 " +
+            "flex flex-col items-center justify-center flex-1 pt-[10px] px-6 md:pt-5 md:px-6 " +
             `${cart?.products.length ? "" : ""}`
           }
         >
-          <React.Suspense fallback={<Loader />}>
-            <ClientComponent>
-              <div
-                className="hidden md:block md:absolute right-5 md:right-5 top-7 cursor-pointer [&:svg]:w-[18px] [&:svg]:h-[18px]"
-                onClick={() => handleOpenedCart(false)}
-              >
-                {getCloseIconSVG18()}
-              </div>
-              <ShoppingCart />
-            </ClientComponent>
-          </React.Suspense>
+          <div className="sticky top-0 bg-white z-10 flex justify-between items-center w-full pt-[10px] pb-4">
+            <h3 className="text-heading font-bold leading-140 text-title text-2xl">
+              Кошик
+              <span className="ml-2 font-semibold text-subheading text-primary">
+                ({cart.products.length})
+              </span>
+            </h3>
+            <div
+              className="hidden md:block cursor-pointer [&:svg]:w-[18px] [&:svg]:h-[18px]"
+              onClick={() => handleOpenedCart(false)}
+            >
+              {getCloseIconSVG18()}
+            </div>
+          </div>
+          <ShoppingCart />
         </div>
       </div>
     </section>
