@@ -15,7 +15,7 @@ const ShoppingCart = () => {
 	if (!cart.products?.length) return <EmptyCart />
 
 	return (
-		<div className='w-full'>
+		<div className='w-full flex flex-col flex-1'>
 			<Cart products={cart.products} />
 		</div>
 	)
