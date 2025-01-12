@@ -8,9 +8,9 @@ const getArrowRightIconSVG = () => (
   >
     <path
       d="M9.5 18L15.5 12L9.5 6"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );

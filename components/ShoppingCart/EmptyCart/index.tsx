@@ -3,9 +3,6 @@ import Link from "next/link";
 
 const EmptyCart = () => (
   <div className="w-full flex-1 flex flex-col">
-    <h3 className="hidden md:block text-left text-heading font-bold leading-140 mb-4 text-title text-2xl">
-      Кошик
-    </h3>
     <div className="flex-1 flex flex-col items-center justify-center">
       <div className="flex flex-col items-center justify-center gap-12">
         <div className="flex flex-col items-center justify-center">

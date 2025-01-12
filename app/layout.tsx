@@ -1,13 +1,16 @@
+// core
+import React from "react";
+
 // fonts
 import { Nunito_Sans, Inter } from "next/font/google";
 
 // components
 import Footer from "@/components/Footer/Footer";
-import { SubscribeBannerFooter } from "@/components/SubscribeBannerFooter";
 import { Header } from "@/components/Header/Header";
 import { ClientComponent } from "@/components/ClientComponent";
 import ProductOutOfStock from "@/components/ProductOutOfStock";
 import CartModal from "@/components/CartModal";
+import { Loader } from "@/components/Loader";
 
 import "./globals.css";
 import Head from "next/head";
@@ -48,7 +51,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <div id="modal-root"></div>
         <ClientComponent>
           <ProductOutOfStock />
-          <CartModal />
+          <React.Suspense fallback={<Loader />}>
+            <CartModal />
+          </React.Suspense>
         </ClientComponent>
       </body>
     </html>

@@ -14,30 +14,30 @@ const getBigCartSVG = (classname = "") => (
     <path
       d="M48.4492 65.9623L33.1536 65.9623"
       stroke="#0A4CF6"
-      stroke-width="12.4277"
-      stroke-linecap="round"
+      strokeWidth="12.4277"
+      strokeLinecap="round"
     />
     <path
       d="M48.4492 46.8428L18.814 46.8428"
       stroke="#0A4CF6"
-      stroke-width="12.4277"
-      stroke-linecap="round"
+      strokeWidth="12.4277"
+      strokeLinecap="round"
     />
     <path
       d="M38.8906 85.0818L16.9032 85.0818"
       stroke="#0A4CF6"
-      stroke-width="12.4277"
-      stroke-linecap="round"
+      strokeWidth="12.4277"
+      strokeLinecap="round"
     />
     <path
       d="M149.887 125.21C148.096 131.895 141.738 135.398 136.175 133.907C130.612 132.417 126.858 126.204 128.649 119.519C130.44 112.835 136.797 109.332 142.361 110.822C147.924 112.313 151.678 118.525 149.887 125.21Z"
       stroke="#0A4CF6"
-      stroke-width="12.4277"
+      strokeWidth="12.4277"
     />
     <path
       d="M101.424 125.21C99.6329 131.895 93.2752 135.398 87.7121 133.907C82.149 132.417 78.3947 126.204 80.1858 119.519C81.977 112.835 88.3346 109.332 93.8977 110.822C99.4608 112.313 103.215 118.525 101.424 125.21Z"
       stroke="#0A4CF6"
-      stroke-width="12.4277"
+      strokeWidth="12.4277"
     />
   </svg>
 );
