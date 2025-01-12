@@ -42,16 +42,16 @@ export const Header = () => {
   }, [isChoseGenger]);
 
   return (
-    <>
-      <header className="h-16 py-3 px-4 flex justify-between xl:hidden">
+    <div>
+      <div className="h-16 py-3 px-4 flex justify-between xl:hidden">
         <div className="h-10 flex items-center gap-[8px]">
           <Navbar isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
           <Logo onClick={handleLogoClick} />
         </div>
         <Usernav />
-      </header>
+      </div>
 
-      <header className="hidden xl:h-30 xl:flex xl:flex-col fixed top-0 left-0 right-0 bg-white z-50 ">
+      <div className="hidden xl:h-30 xl:flex xl:flex-col fixed top-0 left-0 right-0 bg-white z-60 md:z-50 ">
         <div className="h-18 xl:container xl:mx-auto xl:px-[82px] py-2 flex justify-between items-center">
           <div className="h-12 w-50 flex items-center gap-1">
             <MenuGender
@@ -75,7 +75,7 @@ export const Header = () => {
             <MenuGoods navItems={NAV_ITEMS} gender={gender} />
           </div>
         </div>
-      </header>
-    </>
+      </div>
+    </div>
   );
 };

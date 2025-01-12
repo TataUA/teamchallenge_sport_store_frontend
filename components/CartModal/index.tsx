@@ -41,7 +41,7 @@ export default function CartModal() {
   return (
     <section
       className="
-        fixed z-50 left-0 right-0 bottom-0 top-0 pt-[64px] md:pt-0 bg-transparent
+        fixed z-50 left-0 right-0 bottom-0 top-[64px] md:top-0 md:pt-0 bg-transparent
         flex md:justify-end
       "
     >
