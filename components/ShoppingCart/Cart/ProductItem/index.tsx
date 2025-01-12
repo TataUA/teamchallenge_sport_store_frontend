@@ -27,7 +27,7 @@ const ProductItem = (props: IProps) => {
           className='object-cover object-top'
         />
       </div>
-      <div className='ml-2 py-1 w-[225px] flex-1'>
+      <div className='ml-4 py-1 w-[225px] flex-1'>
         <div className='flex items-start justify-between mb-3'>
           <h3 className='text-primary font-medium text-basic font-pangram'>
             {product.title}
