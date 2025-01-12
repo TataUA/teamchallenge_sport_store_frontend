@@ -135,8 +135,8 @@ const CustomCitiesDropdown = ({
       >
         <input
           className={cn(
-            "w-full bg-gray-200 border border-gray-300 rounded-lg px-4 py-[15px] pr-[56px] text-base font-medium text-[#000]",
-            "focus:border-blue outline-none",
+            "w-full bg-gray-200 border border-[#CFCFCF] rounded-xl px-4 py-[15px] pr-[56px] text-base font-medium text-[#000]",
+            "focus:border-blue active:border-blue outline-none",
             {
               "border-red": error,
             },
@@ -150,7 +150,7 @@ const CustomCitiesDropdown = ({
       {isOpen && (
         <div
           className={cn(
-            "absolute top-full left-0 w-full bg-white border border-gray-300 rounded mt-1 max-h-[300px] overflow-y-auto z-10 hidden",
+            "absolute top-full rounded-xl left-0 w-full p-[5px] px-[10px] bg-white border border-[#CFCFCF] mt-1 max-h-[300px] overflow-y-auto z-10 hidden",
             {
               block: isOpen && city && data.length,
             },
@@ -163,7 +163,7 @@ const CustomCitiesDropdown = ({
               <div
                 key={index}
                 className={cn(
-                  "p-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer",
+                  "p-[10px] border-b hover:bg-gray-100 cursor-pointer border-[#CFCFCF] hover:text-blue",
                   {
                     "border-b-0": index === data.length - 1,
                   },

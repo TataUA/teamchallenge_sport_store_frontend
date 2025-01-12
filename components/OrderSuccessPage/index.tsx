@@ -31,7 +31,7 @@ const OrderSuccessPage = () => {
   }, [dispatch]);
 
   return (
-    <div className="min-h-screen flex justify-center items-center p-6">
+    <div className="flex-1 flex justify-center items-center p-6">
       <div className="flex flex-col items-center justify-center gap-8 w-full md:max-w-[412px]">
         <div className="flex flex-col items-center justify-center text-center">
           {getBigCartSVG("mb-6")}

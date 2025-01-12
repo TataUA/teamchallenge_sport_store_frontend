@@ -104,7 +104,8 @@ const CustomDepartmentsDropdown = (props: IProps) => {
                 )}
                 onClick={toggleDropdown}
             >
-                <input className='w-full bg-gray-200 border border-gray-300 rounded-lg px-4 py-[15px] pr-[56px] text-base font-medium text-[#000]' 
+                <input className='w-full border border-[#cfcfcf] rounded-xl px-4 py-[15px] pr-[56px] text-base font-medium text-[#000]
+                active:border-blue focus:border-blue outline-none' 
                     type="text" 
                     value={selected ? selected : undefined}
                     placeholder={typeOfEntity === 'department' ? 'Оберіть відділення' : 'Оберіть поштомат'}
@@ -113,17 +114,17 @@ const CustomDepartmentsDropdown = (props: IProps) => {
             </div>
             {isOpen && (
                 <div className={cn(
-                  "absolute top-full left-0 w-full bg-white border border-gray-300 rounded mt-1 max-h-[300px] overflow-y-auto z-10 hidden", {
+                  "absolute top-full p-[10px] left-0 w-full bg-white border border-[#cfcfcf] rounded-xl mt-1 max-h-[300px] overflow-y-auto z-10 hidden", {
                     'block': isOpen && (city && data.length || isLoading)
                   })}
                 >
                     {isLoading ? (
-                        <div className="p-2 text-center">Loading...</div>
+                        <div className="p-[10px] text-center">Loading...</div>
                     ) : (
                         data.map((item:string, index) => (
                             <div
                                 key={index}
-                                className={cn("p-2 border-b border-gray-200 hover:bg-gray-100 cursor-pointer",{
+                                className={cn("p-[10px] border-b border-[#cfcfcf] cursor-pointer hover:text-blue",{
                                     'border-b-0': index === data.length - 1
                                 })}
                                 onClick={() => handleSelect(item)}
