@@ -1,3 +1,4 @@
+import { cn } from "@/services/utils/cn";
 import React, { useState, useEffect, useRef, useCallback } from "react";
 
 interface Response {
@@ -101,19 +102,24 @@ const SearchInputDropdown: React.FC<SearchInputDropdownProps> = ({
           onChange={handleInputChange}
           onBlur={handleInputBlur}
           placeholder={placeholder}
-          className="w-full bg-gray-200 border border-gray-300 rounded-lg px-4 py-[15px] text-base font-medium text-[#000]"
+          className="w-full border border-[#cfcfcf] rounded-lg px-4 py-[15px] text-base font-medium text-[#000] active:border-blue focus:border-blue outline-none"
         />
       </div>
       {isDropdownVisible && (
-        <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+        <ul className="absolute z-10 w-full mt-1 p-[10px] bg-white border border-[#cfcfcf] rounded-xl shadow-lg max-h-60 overflow-y-auto">
           {isLoading ? (
-            <div className="p-2 text-center">Loading...</div>
+            <div className="p-[10px] text-center">Loading...</div>
           ) : null}
-          {dropdownData.map((item) => (
+          {dropdownData.map((item, index) => (
             <li
               key={item.Present}
               onClick={() => handleOptionClick(item)}
-              className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+              className={cn(
+                "px-4 py-2 cursor-pointer border-b border-[#cfcfcf] hover:text-blue",
+                {
+                  "border-b-0": index === dropdownData.length - 1,
+                },
+              )}
             >
               {item.Present}
             </li>

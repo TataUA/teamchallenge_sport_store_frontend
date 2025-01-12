@@ -5,6 +5,9 @@ export const HIDE_PAGE_PATH: HidePagePath[] = [
     path: "/cart",
   },
   {
+    path: "/orders/success",
+  },
+  {
     path: "/auth/signup",
   },
   {
