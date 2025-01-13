@@ -22,19 +22,9 @@ const MenuGenger = ({
     setIsShowMenuGoods(true);
   };
 
-  const handleMouseLeave = () => {
-    if (!gender) {
-      setIsShowMenuGoods(false);
-      return;
-    }
-  };
-
   return (
     <div className="item.box flex ">
-      <div
-        onMouseEnter={() => handleMouseEnter("men")}
-        onMouseLeave={handleMouseLeave}
-      >
+      <div onMouseEnter={() => handleMouseEnter("men")}>
         <Button
           title={navItems[0].title.label.toUpperCase()}
           selected={gender === "men" ? true : false}
@@ -42,10 +32,7 @@ const MenuGenger = ({
       </div>
 
       <div className="h-4 w-[1px]  mt-4 bg-[#E7E7E8]"></div>
-      <div
-        onMouseEnter={() => handleMouseEnter("women")}
-        onMouseLeave={handleMouseLeave}
-      >
+      <div onMouseEnter={() => handleMouseEnter("women")}>
         <Button
           title={navItems[1].title.label.toUpperCase()}
           paddingLeftFirst={"pl-4"}
