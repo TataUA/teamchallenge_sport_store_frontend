@@ -11,7 +11,7 @@ const ProfileMenu = () => {
   const pathname = usePathname();
 
   return (
-    <div className="hidden md:block w-full md:w-[212px]">
+    <div className="hidden md:block w-full md:w-[212px] pt-[30px]">
       <ul className="flex md:flex-col gap-5">
         <Link
           href="/auth/profile"
