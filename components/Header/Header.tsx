@@ -28,21 +28,12 @@ export const Header = () => {
 
   const showGoods = isShowMenuGoogs ? "block" : "none";
 
-  useEffect(() => {
-    window.addEventListener("wheel", () => {
-      setIsChoseGender("");
-      setIsShowMenuGoods(false);
-    });
-    return () => {
-      window.addEventListener("wheel", () => {
-        setIsChoseGender("");
-        setIsShowMenuGoods(false);
-      });
-    };
-  }, [isChoseGenger]);
+  const handleMouseLeave = (e: boolean) => {
+    setIsShowMenuGoods(false);
+  };
 
   return (
-    <div>
+    <div onMouseLeave={() => handleMouseLeave(false)}>
       <div className="h-16 py-3 px-4 flex justify-between xl:hidden">
         <div className="h-10 flex items-center gap-[8px]">
           <Navbar isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
