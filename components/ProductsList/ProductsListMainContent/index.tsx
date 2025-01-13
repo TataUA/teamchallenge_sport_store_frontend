@@ -18,11 +18,11 @@ const ProductsListMainContent = (props: IProductsPageProps) => {
   );
   return (
     <section>
-      <div className="flex justify-between items-center mb-4 xl:mb-8">
-        <div className="text-3xl xl:text-[32px] text-title font-bold">
+      <div className="flex justify-between items-center mb-4 lg:mb-8 ">
+        <div className="text-3xl lg:text-[32px] text-title font-bold">
           {translatedProductType}
         </div>
-        <div className="xl:hidden">
+        <div className="lg:hidden">
           <ProductsFilters {...props} />
         </div>
       </div>

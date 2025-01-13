@@ -41,7 +41,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
   const pathname = usePathname();
   const [chosenSorting, setChosenSorting] = useState("");
 
-  // select / size / color / price  /  "" - не выбран
+  // select / size / color / price  /  "" - не вибраний
   const [isChosenFilter, setIsChosenFilter] = useState("");
 
   const { searchParamsFilter, params, products, setOpenedChangesFilters } =
@@ -119,7 +119,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
           `bg-${filters.color}`,
           "min-[2800px]:size-16",
           {
-            "border-[1px] xl:border-timer": filters.color === "white",
+            "border-[1px] lg:border-timer": filters.color === "white",
             "bg-colorful-circle bg-center bg-cover":
               filters.color === "colorful",
           },
@@ -151,7 +151,7 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
   }, [isChosenFilter]);
 
   return (
-    <div className="font-pangram hidden xl:block mb-5 w-[100%] h-[148px] py-6 bg-[#f7f7f7] rounded-xl px-6">
+    <div className="font-pangram hidden lg:block mb-5 w-[100%] h-[148px] py-6 bg-[#f7f7f7] rounded-xl px-6">
       <div className="flex justify-between w-[100%]">
         <div className="flex items-center pb-4">
           <p className="font-semibold text-xl text-title pr-4">Фільтр</p>

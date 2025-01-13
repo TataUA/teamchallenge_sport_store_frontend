@@ -32,9 +32,9 @@ const SortingFilterXL = (props: ISortingFilterXLProps) => {
   const [isSortingArrowUp, setIsSortingArrowUp] = useState(false);
 
   const classItemFilter =
-    "h-14  md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 pr-3";
+    " md:h-12 xl:h-14  md:w-[180px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 pr-3";
   const classItemFilterText =
-    "inline-block text-base leading-5 font-medium w-[160px]";
+    "inline-block text-base leading-5 font-medium  xl:w-[160px]";
 
   const classItemFilterIcon = " p-1 cursor-pointer  ";
 

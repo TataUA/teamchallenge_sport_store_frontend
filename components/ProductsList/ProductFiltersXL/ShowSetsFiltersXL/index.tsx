@@ -96,7 +96,7 @@ const ShowSetsFiltersXL = ({
   const upperPrice = searchParams.price_to ? searchParams.price_to : 10999;
 
   return (
-    <div className="font-pangram hidden xl:flex items-center mb-5 w-[100%] h-[64px] bg-[#f7f7f7] rounded-xl px-6">
+    <div className="font-pangram hidden lg:flex items-center mb-5 w-[100%] h-[64px] bg-[#f7f7f7] rounded-xl px-6">
       <div className="flex justify-between w-[100%]">
         <div className="flex items-center">
           <p className="font-semibold text-xl text-title pr-8">Фільтр</p>
