@@ -22,12 +22,12 @@ const PaymentSection = (props: IProps) => {
   const {orderState, submitted, handleChangeOrder} = props
   
   const checkboxClassname = cn(
-    "w-[18px] h-[18px] mr-2 rounded-[6px] border-[1px] outline-none border-[#868687]",
+    "w-[18px] h-[18px] mt-[3px] mr-2 rounded-[6px] border-[1px] outline-none border-[#868687]",
     "md:w-5 md:h-5",
     "appearance-none checked:bg-blue checked:border-0",
     "relative peer",
   );
-  const labelCheckboxClassname = "flex gap-2 items-center"
+  const labelCheckboxClassname = "flex gap-2 items-start"
   const titleCheckboxClassname = "text-sm text-[#272728] font-medium"
 
   return (

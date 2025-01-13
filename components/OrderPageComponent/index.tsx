@@ -385,7 +385,7 @@ const OrderPageComponent = () => {
             className={cn(
               "w-full py-[16px] px-6 text-white bg-blue rounded-xl flex items-center justify-center text-center text-base font-semibold transition-all",
               "md:w-auto",
-              "hover:bg-[#284695]",
+              "hover:bg-active_blue",
             )}
           >
             {isLoading ? (
