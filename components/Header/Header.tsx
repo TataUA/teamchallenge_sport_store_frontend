@@ -34,7 +34,7 @@ export const Header = () => {
 
   return (
     <div onMouseLeave={() => handleMouseLeave(false)}>
-      <div className="h-16 py-3 px-4 flex justify-between xl:hidden">
+      <div className="h-16 py-3 px-4 flex justify-between xl:hidden fixed top-0 left-0 right-0 z-50  bg-white ">
         <div className="h-10 flex items-center gap-[8px]">
           <Navbar isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
           <Logo onClick={handleLogoClick} />
