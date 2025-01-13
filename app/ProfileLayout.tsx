@@ -11,7 +11,7 @@ export default function ProfileLayout({ children }: RootLayoutProps) {
   return (
     <ClientComponent>
       <PrivateRouteComponent>
-        <div className="container custom-height-mq:min-h-[95vh] pb-10 flex flex-1 gap-5 lg:gap-[75px] lg:mt-12 md:pt-9">
+        <div className="container h-[640px] mb-10 flex gap-5 lg:gap-5">
           <ProfileMenu />
           <div className="flex-1 w-full flex flex-col">{children}</div>
         </div>

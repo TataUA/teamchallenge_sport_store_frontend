@@ -11,7 +11,7 @@ export default function MyOrders() {
       <h1 className="md:hidden mt-4 mb-6 text-2xl leading-140 font-pangram font-bold text-title">
         Мої замовлення
       </h1>
-      <div className="flex-1 w-full flex justify-center items-center">
+      <div className="flex-1 flex flex-col justify-center items-center">
         <div>
           <div className="flex-1 flex flex-col items-center justify-center gap-5 max-w-[412px] text-center">
             <div>{getWorkOnItIconSVG()}</div>
