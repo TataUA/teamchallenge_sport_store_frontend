@@ -62,7 +62,7 @@ const ColorsFilterXL = (props: IProps) => {
 
               <div
                 className={cn(
-                  " ml-4 pt-2 text-sm  xl:text-base xl:tracking-wider font-medium min-[2800px]:text-3xl",
+                  " ml-4 pt-2 text-sm  xl:text-base xl:tracking-wider font-medium text-ellipsis overflow-hidden  w-[60px] whitespace-nowrap ",
                 )}
               >
                 {colorItem.title}

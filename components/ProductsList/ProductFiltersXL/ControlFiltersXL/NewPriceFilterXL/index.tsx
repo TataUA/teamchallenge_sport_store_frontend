@@ -17,10 +17,11 @@ const NewPriceFilterXL = (props: ControlFiltrItem) => {
 
   const classItemFilter = {
     classFilter:
-      "h-14 md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 ",
+      "h-12 xl:h-14 md:w-[180px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 ",
   };
 
-  const classItemFilterText = "inline-block text-base leading-5 font-medium";
+  const classItemFilterText =
+    "inline-block text-sm xl:text-base leading-5 font-medium";
   const classItemFilterIcon = "ml-2 mr-3  p-1 cursor-pointer ";
 
   const classWithProps =

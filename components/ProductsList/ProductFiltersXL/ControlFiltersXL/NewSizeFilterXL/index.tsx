@@ -24,14 +24,15 @@ const NewSizeFilterXL = (props: ControlFiltrItem) => {
 
   const classItemFilter = {
     classFilter:
-      "h-14 md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 ",
+      " h-12 xl:h-14 md:w-[180px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 ",
   };
 
-  const classItemFilterText = "inline-block text-base leading-5 font-medium";
+  const classItemFilterText =
+    "inline-block text-sm xl:text-base leading-5 font-medium lg:text-ellipsis lg:overflow-hidden whitespace-nowrap lg:w-[110px]";
   const classItemFilterIcon = "ml-2 mr-3  p-1 cursor-pointer ";
 
   const classWithProps =
-    "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 top-[64px] left-0 w-auto h-auto";
+    "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 lg:top-[58px] xl:top-[64px] left-0 w-auto h-auto";
 
   const handleClick = () => {
     if (isChosenFilter == "" || isChosenFilter != "size") {
@@ -64,7 +65,7 @@ const NewSizeFilterXL = (props: ControlFiltrItem) => {
           style={{ boxShadow: "0px 10px 10px rgba(14, 14, 16, 0.2)" }}
         >
           {generalProductsFilers.map((generalFilter, index) => (
-            <div className="mb-2 min-[2800px]:mb-20" key={index}>
+            <div className="mb-2 " key={index}>
               {generalFilter.id === "sizes" &&
               generalFilter.shoesPosibleProductTypes?.includes(
                 params.sub_category[0],

@@ -52,13 +52,13 @@ const SizeFilter = (props: IProps) => {
 
   return (
     <>
-      <div className="flex gap-2  pt-1 mb-[-8px] flex-wrap min-[2800px]:gap-5 xl:flex-col xl:flex-nowrap ">
+      <div className="flex gap-2  pt-1 mb-[-8px] flex-wrap  lg:flex-col lg:flex-nowrap ">
         {props.clothesSizes?.map((size, sizeIndex) => (
           <li
             onClick={() => handleClick(size)}
             className={cn(
-              "list-none size-12 rounded-lg border-[1px] p-2 px-0 items-center cursor-pointer xl:border-0 xl: w-[218px] ",
-              "min-[2800px]:size-20 min-[2800px]:text-3xl",
+              "list-none size-12 rounded-lg border-[1px] p-2 px-0 items-center cursor-pointer lg:border-0 lg:w-[148px] xl:w-[218px] ",
+
               {
                 "pointer-events-none opacity-[50%]": !checkIsSizeExists(size),
               },
@@ -85,8 +85,8 @@ const SizeFilter = (props: IProps) => {
           <li
             onClick={() => handleClick(size)}
             className={cn(
-              "list-none size-12 rounded-lg border-[1px] p-2 px-0 items-center cursor-pointer xl:border-0 xl: w-[218px] ",
-              "min-[2800px]:size-20 min-[2800px]:text-3xl",
+              "list-none size-12 rounded-lg border-[1px] p-2 px-0 items-center cursor-pointer lg:border-0 xl:  lg:w-[148px] xl:w-[218px] ",
+
               {
                 "pointer-events-none opacity-[50%]": !checkIsSizeExists(size),
               },
