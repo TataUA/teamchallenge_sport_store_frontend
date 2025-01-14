@@ -25,7 +25,7 @@ const NewPriceFilterXL = (props: ControlFiltrItem) => {
   const classItemFilterIcon = "ml-2 mr-3  p-1 cursor-pointer ";
 
   const classWithProps =
-    "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 top-[64px] left-0 w-[436px] h-[140px]";
+    "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 top-[58px] xl:top-[64px] left-[-240px] xl:left-0 lg:w-[429px] xl:w-[436px] h-[140px]";
 
   const handleClick = () => {
     if (isChosenFilter == "" || isChosenFilter != "price") {

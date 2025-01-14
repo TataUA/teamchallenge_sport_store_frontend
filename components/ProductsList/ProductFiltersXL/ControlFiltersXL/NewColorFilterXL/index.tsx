@@ -27,7 +27,7 @@ const NewColorFilterXL = (props: ControlFiltrItem) => {
 
   const classItemFilterText =
     "inline-block  text-sm xl:text-base leading-5 font-medium ";
-  const classItemFilterIcon = "ml-2 mr-3  p-1 cursor-pointer ";
+  const classItemFilterIcon = "ml-2 mr-3  p-1 cursor-pointer";
 
   const classWithProps =
     "absolute z-10 bg-white border border-border_button  rounded-xl pt-3  top-[58px] xl:top-[64px] left-0 w-[180px] xl:w-[252px] h-auto";
@@ -63,7 +63,7 @@ const NewColorFilterXL = (props: ControlFiltrItem) => {
           style={{ boxShadow: "0px 10px 10px rgba(14, 14, 16, 0.2)" }}
         >
           {generalProductsFilers.map((generalFilter, index) => (
-            <div className="mb-2 min-[2800px]:mb-20" key={index}>
+            <div className="mb-2 " key={index}>
               {generalFilter.id === "color" && generalFilter.colorValues ? (
                 <div className="px-4 ">
                   <ColorsFilterXL colors={generalFilter.colorValues} />

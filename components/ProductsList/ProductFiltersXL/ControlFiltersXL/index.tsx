@@ -115,9 +115,9 @@ const ControlFiltersXL = (props: IProductsFiltersProps) => {
     showSelectedColor = (
       <div
         className={cn(
-          "size-8 rounded-[50%]",
+          "size-6 xl:size-8 rounded-[50%]",
           `bg-${filters.color}`,
-          "min-[2800px]:size-16",
+
           {
             "border-[1px] lg:border-timer": filters.color === "white",
             "bg-colorful-circle bg-center bg-cover":

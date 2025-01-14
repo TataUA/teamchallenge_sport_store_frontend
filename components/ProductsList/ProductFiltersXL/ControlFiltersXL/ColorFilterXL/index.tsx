@@ -47,9 +47,9 @@ const ColorsFilterXL = (props: IProps) => {
               >
                 <div
                   className={cn(
-                    "size-8 rounded-[50%]",
+                    "size-6 xl:size-8 rounded-[50%]",
                     `bg-${colorItem.value.toLocaleLowerCase()}`,
-                    "min-[2800px]:size-16",
+
                     {
                       "border-[1px] xl:border-timer":
                         colorItem.value.toLocaleLowerCase() === "white",

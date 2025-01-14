@@ -64,8 +64,8 @@ const PriceFilterXL = () => {
   }, [price]);
 
   return (
-    <div className="w-full xl:px-4 xl:pt-4 ">
-      <div className="relative h-4 mb-4 min-[2800px]:h-12">
+    <div className="w-full lg:px-4 lg:pt-4 ">
+      <div className="relative h-4 mb-4 ">
         <input
           type="range"
           min="499"
@@ -94,7 +94,6 @@ const PriceFilterXL = () => {
         className={cn(
           "flex w-full gap-2 [&>input]:w-[50%] [&>input]:border-b-[1px] [&>input]:border-[rgb(134,134,135)]",
           "[&>input]:w-[50%] [&>input]:border-b-[1px] [&>input]:border-[#868687] [&>input]:pb-2",
-          "min-[2800px]:[&>input]:text-3xl",
         )}
       >
         <input
