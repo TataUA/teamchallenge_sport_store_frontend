@@ -95,7 +95,7 @@ const config: Config = {
           backgroundColor: "#0A4CF6",
           cursor: "pointer",
           pointerEvents: "auto",
-          "@screen xl": {
+          "@screen lg": {
             backgroundColor: "#FFFFFF",
             border: "1px solid #DBDBDB",
           },

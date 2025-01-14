@@ -34,7 +34,7 @@ export const Header = () => {
 
   return (
     <div onMouseLeave={() => handleMouseLeave(false)}>
-      <div className="h-16 py-3 px-4 flex justify-between xl:hidden">
+      <div className="h-16 py-3 px-4 flex justify-between lg:hidden fixed top-0 left-0 right-0 z-50  bg-white ">
         <div className="h-10 flex items-center gap-[8px]">
           <Navbar isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
           <Logo onClick={handleLogoClick} />
@@ -42,8 +42,8 @@ export const Header = () => {
         <Usernav />
       </div>
 
-      <div className="hidden xl:h-30 xl:flex xl:flex-col fixed top-0 left-0 right-0 bg-white z-60 md:z-50 ">
-        <div className="h-18 xl:container xl:mx-auto xl:px-[82px] py-2 flex justify-between items-center">
+      <div className="hidden lg:h-30 lg:flex lg:flex-col fixed top-0 left-0 right-0 bg-white z-60 md:z-50 ">
+        <div className="h-18  lg:container lg:mx-auto lg:px-6 xl:container xl:mx-auto xl:px-[82px] py-2 flex justify-between items-center">
           <div className="h-12 w-50 flex items-center gap-1">
             <MenuGender
               navItems={NAV_ITEMS}
@@ -61,7 +61,7 @@ export const Header = () => {
         >
           <div
             id="goods"
-            className="flex justify-start items-center xl:container xl:mx-auto xl:px-[82px]  transition duration-300"
+            className="flex justify-start items-center lg:container lg:mx-auto lg:px-6 xl:container xl:mx-auto xl:px-[82px]  transition duration-300"
           >
             <MenuGoods navItems={NAV_ITEMS} gender={gender} />
           </div>

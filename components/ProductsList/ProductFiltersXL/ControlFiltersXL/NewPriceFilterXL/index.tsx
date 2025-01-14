@@ -17,14 +17,15 @@ const NewPriceFilterXL = (props: ControlFiltrItem) => {
 
   const classItemFilter = {
     classFilter:
-      "h-14 md:w-[160px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 ",
+      "h-12 xl:h-14 md:w-[180px] xl:w-[252px] rounded-xl border border-border  bg-white flex  justify-between items-center pl-4 ",
   };
 
-  const classItemFilterText = "inline-block text-base leading-5 font-medium";
+  const classItemFilterText =
+    "inline-block text-sm xl:text-base leading-5 font-medium";
   const classItemFilterIcon = "ml-2 mr-3  p-1 cursor-pointer ";
 
   const classWithProps =
-    "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 top-[64px] left-0 w-[436px] h-[140px]";
+    "absolute z-10 bg-white border border-border_button  rounded-xl pt-3 top-[58px] xl:top-[64px] left-[-240px] xl:left-0 lg:w-[429px] xl:w-[436px] h-[140px]";
 
   const handleClick = () => {
     if (isChosenFilter == "" || isChosenFilter != "price") {

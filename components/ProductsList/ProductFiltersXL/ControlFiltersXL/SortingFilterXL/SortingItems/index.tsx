@@ -41,11 +41,11 @@ const SortingItems = (props: ISortingItemsProps) => {
   return (
     <div className="relative">
       <div
-        className="absolute z-10 bg-white border border-border rounded-xl w-[254px] top-9  left-[-258px] pt-4"
+        className="absolute z-10 bg-white border border-border rounded-xl lg:w-[180px] xl:w-[254px] top-8 xl:top-9 lg:left-[-180px]  xl:left-[-258px] pt-4"
         style={{ boxShadow: "0px 10px 10px rgba(14, 14, 16, 0.2)" }}
       >
         {sortingProductsFilers.map((item, index) => (
-          <div key={item.id} className=" mb-2 min-[2800px]:mb-8">
+          <div key={item.id} className=" mb-2 ">
             <div
               className={cn(
                 "flex justify-between items-center px-4 [&>svg]:fill-blue [&>svg]:hidden [&>svg]:mb-2",
@@ -57,7 +57,7 @@ const SortingItems = (props: ISortingItemsProps) => {
             >
               <div
                 className={cn(
-                  "text-base text-[#272728] mb-4 mt-2 font-medium cursor-pointer hover:text-blue min-[2800px]:text-3xl",
+                  "lg:text-sm xl:text-base text-[#272728] mb-4 mt-2 font-medium cursor-pointer hover:text-blue whitespace-nowrap lg:text-ellipsis lg:overflow-hidden lg:w-[110px] ",
                   {
                     "text-[#272728]":
                       currentFilterValue === item.id.toLocaleLowerCase(),
@@ -70,7 +70,7 @@ const SortingItems = (props: ISortingItemsProps) => {
               {getCheckedIconSVG()}
             </div>
             {index < 2 ? (
-              <div className=" m-auto  h-[1px] bg-border w-[220px] "></div>
+              <div className=" m-auto  h-[1px] bg-border lg:w-[160px] xl:w-[220px] "></div>
             ) : null}
           </div>
         ))}
