@@ -1,4 +1,4 @@
-interface PopularCategories {
+export interface PopularCategories {
   key: string;
   title: string;
   href: string;

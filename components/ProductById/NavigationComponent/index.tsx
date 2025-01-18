@@ -1,9 +1,15 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 const NavigationComponent = ({ subCategory }: { subCategory: string }) => {
   const router = useRouter();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="flex items-center gap-1 mb-4 1440:mb-8 text-sm font-medium text-primary cursor-pointer hover:opacity-[50%]">
       <span onClick={() => router.back()}>
