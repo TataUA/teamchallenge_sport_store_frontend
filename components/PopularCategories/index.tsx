@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { v4 as uuidv4 } from "uuid";
 
+import { SliderWrapper } from "@/components/PopularCategories/SliderWrapper/SliderWrapper";
 import { popularCategories } from "@/public/data/popular-categories.data";
 
 export const PopularCategories = () => {
@@ -10,7 +11,7 @@ export const PopularCategories = () => {
       <h2 className="mb-4 xl:mb-8 font-semibold text-xl xl:text-2xl text-title">
         Популярні категорії
       </h2>
-      <ul className="flex flex-wrap gap-2 xl:gap-6">
+      {/* <ul className="flex flex-wrap gap-2 xl:gap-6">
         {popularCategories.map(({ href, image, title }) => (
           <li
             key={uuidv4()}
@@ -39,7 +40,8 @@ export const PopularCategories = () => {
             </Link>
           </li>
         ))}
-      </ul>
+      </ul> */}
+      <SliderWrapper popular={ popularCategories} />
     </section>
   );
 };

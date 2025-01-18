@@ -15,8 +15,10 @@ import { v4 as uuidv4 } from "uuid";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { cn } from "@/services/utils/cn";
 import { IProduct } from "@/services/types";
+import { PopularCategories } from "@/public/data/popular-categories.data";
 import ListItem from "@/components/ProductsList/ListItem";
 import { SliderButtons } from "@/components/Slider/SliderArrowButtons";
+import { SliderItem } from "../PopularCategories/SliderItem/SliderItem";
 
 interface Slide {
   id?: number;
@@ -33,6 +35,7 @@ interface Slide {
 interface SliderProps {
   data?: Slide[];
   products?: IProduct[];
+  popular?: PopularCategories[];
   colorCurrent?: string;
   autoPlay?: boolean;
   loop?: boolean;
@@ -41,6 +44,7 @@ interface SliderProps {
   bestSales?: boolean;
   bestSalesItem?: boolean;
   productsList?: boolean;
+  popularCat?: boolean;
   slidesPerView?: number;
   spaceBetween?: number;
   className?: string;
@@ -49,12 +53,14 @@ interface SliderProps {
 export const Slider = ({
   data = [],
   products = [],
+  popular = [],
   colorCurrent,
   autoPlay = true,
   loop = true,
   cardImage,
   bestSales,
   bestSalesItem,
+  popularCat,
   slidesPerView = 1,
   spaceBetween = 0,
   className = "",
@@ -125,7 +131,10 @@ export const Slider = ({
             setActiveIndex(swiper.realIndex);
           }}
           pagination={
-            bestSales || bestSalesItem || (cardImage && !isProductPage)
+            bestSales ||
+            bestSalesItem ||
+            popularCat ||
+            (cardImage && !isProductPage)
               ? false
               : {
                   type: "bullets",
@@ -166,53 +175,59 @@ export const Slider = ({
                     <ListItem bestSales={true} product={product} />
                   </SwiperSlide>
                 ))
-              : data?.map(({ image, images, title, href }) => (
-                  <SwiperSlide
-                    key={uuidv4()}
-                    style={{ width: "100%", height: "auto" }}
-                  >
-                    {cardImage ? (
-                      <div className="max-w-[850px] mx-auto relative flex items-center justify-center rounded-2xl 1440:rounded-[20px] overflow-hidden group">
-                        <Image
-                          alt={title || "image"}
-                          src={image || ""}
-                          width={850}
-                          height={1300}
-                          priority
+              : popularCat
+                ? popular.map((item) => (
+                    <SwiperSlide key={uuidv4()}>
+                      <SliderItem item={item} />
+                    </SwiperSlide>
+                  ))
+                : data?.map(({ image, images, title, href }) => (
+                    <SwiperSlide
+                      key={uuidv4()}
+                      style={{ width: "100%", height: "auto" }}
+                    >
+                      {cardImage ? (
+                        <div className="max-w-[850px] mx-auto relative flex items-center justify-center rounded-2xl 1440:rounded-[20px] overflow-hidden group">
+                          <Image
+                            alt={title || "image"}
+                            src={image || ""}
+                            width={850}
+                            height={1300}
+                            priority
+                            style={{
+                              objectFit: "contain",
+                            }}
+                          />
+                          {isProductPage && <SliderButtons />}
+                        </div>
+                      ) : (
+                        <div
+                          className="relative w-full"
                           style={{
-                            objectFit: "contain",
+                            minHeight: isMobile ? "400px" : "624px",
+                            maxHeight: "624px",
+                            aspectRatio: isMobile ? "390 / 400" : "",
                           }}
-                        />
-                        {isProductPage && <SliderButtons />}
-                      </div>
-                    ) : (
-                      <div
-                        className="relative w-full"
-                        style={{
-                          minHeight: isMobile ? "400px" : "624px",
-                          maxHeight: "624px",
-                          aspectRatio: isMobile ? "390 / 400" : "",
-                        }}
-                      >
-                        <Link
-                          href={href ?? "/"}
-                          className="h-full w-full absolute left-0 top-0"
-                          style={{
-                            background:
-                              images?.mobile && isMobile
-                                ? `url(${images?.mobile})`
-                                : images?.desktop
-                                  ? `url(${images?.desktop})`
-                                  : undefined,
-                            backgroundSize: "cover",
-                            backgroundRepeat: "no-repeat",
-                            backgroundPosition: "center",
-                          }}
-                        ></Link>
-                      </div>
-                    )}
-                  </SwiperSlide>
-                ))}
+                        >
+                          <Link
+                            href={href ?? "/"}
+                            className="h-full w-full absolute left-0 top-0"
+                            style={{
+                              background:
+                                images?.mobile && isMobile
+                                  ? `url(${images?.mobile})`
+                                  : images?.desktop
+                                    ? `url(${images?.desktop})`
+                                    : undefined,
+                              backgroundSize: "cover",
+                              backgroundRepeat: "no-repeat",
+                              backgroundPosition: "center",
+                            }}
+                          ></Link>
+                        </div>
+                      )}
+                    </SwiperSlide>
+                  ))}
           </ul>
         </Swiper>
       </div>
