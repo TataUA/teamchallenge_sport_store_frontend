@@ -19,10 +19,10 @@ export const SliderWrapper = ({
     const updateSlidesPerView = () => {
       const containerWidth = window.innerWidth;
 
-      if (containerWidth < 480) {
+      if (containerWidth < 768) {
         setSlidesPerView(3.1);
-      } else if (containerWidth >= 480 && containerWidth < 1024) {
-        setSlidesPerView(3.8);
+      } else if (containerWidth >= 768 && containerWidth < 1024) {
+        setSlidesPerView(3.5);
       } else {
         setSlidesPerView(4);
       }
