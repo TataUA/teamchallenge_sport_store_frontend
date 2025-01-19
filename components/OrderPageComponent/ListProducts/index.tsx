@@ -62,69 +62,74 @@ const ListProducts = () => {
         </div>
         <div>
           <ul className="overflow-auto">
-            {cart.products.slice(0, isOpened ? undefined : 3).map((product, index) => (
-              <li key={product.id}>
-                <div className="flex gap-3 mb-4">
-                  <div
-                    className={cn(
-                      "w-[50px] h-[76px] lg:w-[100px] lg:h-[124px] bg-grey rounded-xl overflow-hidden shrink-0",
-                    )}
-                  >
-                    <Image
-                      width={isMobile ? 50 : 100}
-                      height={isMobile ? 76 : 124}
-                      src={product.colors?.[0]?.image_url}
-                      alt="photo_product"
-                    />
-                  </div>
-                  <div className="flex flex-col justify-center flex-1 shrink">
-                    <div className="flex gap-4">
-                      <span className="flex-1 text-ellipsis overflow-hidden text-sm">
-                        {product.title}
-                      </span>
-                      <div className="flex flex-col shrink-0">
-                        <span className="text-[#1A1A1C] font-semibold text-base">
-                          {Number(product.price) *
-                            Number(product.quantity[0].quantity)}{" "}
-                          грн
+            {cart.products
+              .slice(0, isOpened ? undefined : 3)
+              .map((product, index) => (
+                <li key={product.id}>
+                  <div className="flex gap-3 mb-4">
+                    <div
+                      className={cn(
+                        "w-[50px] h-[76px] lg:w-[100px] lg:h-[124px] bg-grey rounded-xl overflow-hidden shrink-0",
+                      )}
+                    >
+                      <Image
+                        width={isMobile ? 50 : 100}
+                        height={isMobile ? 76 : 124}
+                        src={product.colors?.[0]?.image_url}
+                        alt="photo_product"
+                      />
+                    </div>
+                    <div className="flex flex-col justify-center flex-1 shrink">
+                      <div className="flex gap-4">
+                        <span className="flex-1 text-ellipsis overflow-hidden text-sm">
+                          {product.title}
+                        </span>
+                        <div className="flex flex-col shrink-0">
+                          <span className="text-[#1A1A1C] font-semibold text-base">
+                            {Number(product.price) *
+                              Number(product.quantity[0].quantity)}{" "}
+                            грн
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex gap-2 flex-wrap">
+                        <span className="text-[#868687] text-sm">
+                          Розмір:{" "}
+                          {isShoesSizes(product.size[0].value)
+                            ? `${product.size[0].value} UA`
+                            : product.size[0].value}
+                        </span>
+                        <span className="text-[#868687] text-sm">
+                          Кількість: {product.quantity[0].quantity}
+                        </span>
+                        <span className="text-[#868687] text-sm flex-[100%]">
+                          Ціна: {product.price} грн
                         </span>
                       </div>
                     </div>
-                    <div className="flex gap-2 flex-wrap">
-                      <span className="text-[#868687] text-sm">
-                        Розмір:{" "}
-                        {isShoesSizes(product.size[0].value)
-                          ? `${product.size[0].value} UA`
-                          : product.size[0].value}
-                      </span>
-                      <span className="text-[#868687] text-sm">
-                        Кількість: {product.quantity[0].quantity}
-                      </span>
-                      <span className="text-[#868687] text-sm flex-[100%]">
-                        Ціна: {product.price} грн
-                      </span>
-                    </div>
                   </div>
-                </div>
-              </li>
-            ))}
+                </li>
+              ))}
           </ul>
         </div>
-        <div
-          className={cn(
-            "flex w-auto m-auto justify-center items-center gap-2 cursor-pointer hover:underline",
-            {
-              "[&>span>svg]:rotate-180": isOpened,
-            },
-          )}
-          onClick={() => setIsOpened(!isOpened)}
-        >
-          <span>{getArrowDownSVG()}</span>
-          <span>Показати 
-            {isOpened ? ' менше' : ' більше'}
-          </span>
-          <span>{getArrowDownSVG()}</span>
-        </div>
+        {cart.products.length <= 3 ? null : (
+          <div
+            className={cn(
+              "flex w-auto m-auto justify-center items-center gap-2 cursor-pointer hover:underline",
+              {
+                "[&>span>svg]:rotate-180": isOpened,
+              },
+            )}
+            onClick={() => setIsOpened(!isOpened)}
+          >
+            <span>{getArrowDownSVG()}</span>
+            <span>
+              Показати
+              {isOpened ? " менше" : " більше"}
+            </span>
+            <span>{getArrowDownSVG()}</span>
+          </div>
+        )}
         <div className="h-[1px] bg-[#E7E7E8]"></div>
         <div className="flex items-center justify-between">
           <span className="text-base font-medium text-[#1A1A1C]">
