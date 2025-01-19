@@ -18,13 +18,13 @@ export const Navbar = ({ isModalOpen, setIsModalOpen }: NavbarProps) => {
         <Image src={menuIcon} alt="menu" width={40} height={40} />
       </button>
       <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div className="mb-[16px]">
+        <div>
           <NavItemListMobile
             navItems={NAV_ITEMS}
             onClose={() => setIsModalOpen(false)}
           />
         </div>
-        <div className="border-t border-border mb-[16px]"></div>
+        <div className="border-t border-border my-2"></div>
         <ClientComponent>
           <UsernavMobile onClose={() => setIsModalOpen(false)} />
         </ClientComponent>
