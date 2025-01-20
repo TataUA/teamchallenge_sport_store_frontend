@@ -220,13 +220,13 @@ const SearchForm = (props: IProps) => {
       ) : null}
       {!searchText && previousQueries?.length ? (
         <>
-          <div className="mt-5">
+          <div className="mt-5 ">
             {[...previousQueries]?.reverse()?.map((item, index) => (
               <div
                 className={cn(
                   "text-sm min-h-[48px] text-[#272728] capitalize flex items-center gap-3 py-2 cursor-pointer",
                   "hover:text-blue hover:underline",
-                  "border-b-[1px]",
+                  "border-b-[1px] border-b-border_button",
                 )}
                 key={index}
                 onClick={() => handleClickOldQuery(item)}

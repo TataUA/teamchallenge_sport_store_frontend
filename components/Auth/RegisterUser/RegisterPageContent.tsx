@@ -15,7 +15,7 @@ export const RegisterPageContent = (props: RegisterPageContentProps) => {
   return (
     <ClientComponent>
       <PrivateRouteComponent>
-        <div>
+        <div className="mt-[68px] xl:mt-0">
           <h1 className="mb-6 text-2xl leading-140 font-pangram font-bold text-title">
             Реєстрація
           </h1>

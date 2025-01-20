@@ -1,8 +1,10 @@
 import Image from "next/image";
 
+//helpers
+import getLogoMobile from "@/helpers/getLogoMobile";
+
 // assets
-import footerTitleImage from "@/public/icons/footer/footer-title.png";
-import footerTitleImageDesktop from "@/public/images/footer/Logo.jpg";
+
 import footerImageDesktop from "@/public/icons/footer/LogoFooter180-18.jpg";
 import { BlockSocialIcons } from "./BlockSocialIcons";
 import { BlockSocialIconsMin } from "./BlockSocialIconsMin";
@@ -11,12 +13,8 @@ import { BlockInfo } from "./BlockInfo";
 const InfoSectionFooter = () => {
   return (
     <div>
-      <div className="text-center flex justify-center content-center mt-[-4px] mb-6 min-[2800px]:mb-[50px] xl:hidden">
-        <Image
-          alt="footer title"
-          src={footerTitleImage}
-          className="min-[2800px]:h-[200px] min-[2800px]:w-auto"
-        />
+      <div className="text-center flex justify-center content-center mt-[-4px] mb-4 min-[2800px]:mb-[50px] xl:hidden pt-4 pb-2  ">
+        {getLogoMobile()}
       </div>
       <div className="hidden xl:flex xl:flex-row pt-[34px] xl:justify-between xl:space-x-4">
         <div className="hidden xl:flex xl:flex-col mr-2.5 pt-1 xl:min-w-[300px]">

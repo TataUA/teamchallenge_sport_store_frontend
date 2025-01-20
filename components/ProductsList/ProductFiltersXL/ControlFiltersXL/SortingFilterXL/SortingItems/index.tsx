@@ -57,7 +57,7 @@ const SortingItems = (props: ISortingItemsProps) => {
             >
               <div
                 className={cn(
-                  "lg:text-sm xl:text-base text-[#272728] mb-4 mt-2 font-medium cursor-pointer hover:text-blue whitespace-nowrap lg:text-ellipsis lg:overflow-hidden lg:w-[110px] ",
+                  "lg:text-sm xl:text-base text-[#272728] mb-4 mt-2 font-medium cursor-pointer hover:text-blue whitespace-nowrap lg:text-ellipsis lg:overflow-hidden lg:w-[110px] xl:w-[180px] ",
                   {
                     "text-[#272728]":
                       currentFilterValue === item.id.toLocaleLowerCase(),

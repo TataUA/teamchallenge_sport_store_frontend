@@ -34,7 +34,7 @@ export const LoginPageContent = (props: LoginPageContentProps) => {
     <>
       <ClientComponent>
         <PrivateRouteComponent>
-          <div className="1440:w-[610px]">
+          <div className="1440:w-[610px] mt-[68px] xl:mt-0">
             <h1 className="mb-2 1440:mb-4 text-2xl leading-140 font-pangram font-bold text-title">
               Авторизація
             </h1>
