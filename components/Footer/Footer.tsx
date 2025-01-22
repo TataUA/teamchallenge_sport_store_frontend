@@ -26,7 +26,7 @@ const Footer = () => {
     setShouldHideFooter(shouldHide);
   }, [pathname, isMobile]);
 
-  if ((shouldHideFooter && isMobile) || pathname === '/order/success') {
+  if (shouldHideFooter || pathname === "/order/success") {
     return null;
   }
 
