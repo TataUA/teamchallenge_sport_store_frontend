@@ -20,7 +20,7 @@ export interface IProductsPageInitialProps {
 
 export default async function ProductsPage(props: IProductsPageInitialProps) {
   return (
-    <section className="container xl:px-[82px] pt-4 xl:pt-6 pb-8 xl:pb-16">
+    <section className="container  xl:px-[82px] pt-16 xl:pt-6 pb-8 xl:pb-16 ">
       <ProductById id={props.params.product_id[0]} />
     </section>
   );
