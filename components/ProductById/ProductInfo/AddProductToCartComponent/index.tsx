@@ -1,9 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Link from "next/link";
 
 // components
 import ResponsiveModal from "@/components/Shared/ResponsiveModal";
@@ -23,6 +22,7 @@ import { selectCurrentProduct } from "@/redux/currentProduct/currentProductSelec
 import {
   setCurrentProduct,
   setIsSizeModalOpened,
+  setIsSizesWindowOpened,
 } from "@/redux/currentProduct/currentProductSlice";
 
 // types
@@ -31,7 +31,7 @@ import { IProduct, ProductSize } from "@/services/types";
 // data
 import { generalProductsFilers } from "@/components/ProductsList/ProductsFilters/filtersData";
 
-// zctions
+// actions
 import addProductToCartInDbAction from "@/app/actions/addProductToCartInDbAction";
 import fetchProductByIdAction from "@/app/actions/fetchProductByIdAction";
 import createShoppingCartAction from "@/app/actions/createShoppingCartInDbAction";
@@ -41,14 +41,26 @@ import useCart from "@/hooks/useCart";
 
 const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
   const [isSuccessModalIsOpened, setIsSuccessModalIsOpened] = useState(false);
+  const [isSizesWindowBottom, setIsSizesWindowBottom] = useState(true);
+
+  const currentProduct = useSelector(selectCurrentProduct);
+  const { sizes: sizesStored, isSizesWindowOpened } = currentProduct;
 
   const dispatch = useDispatch();
 
   const [isOpened, handleOpenedCart] = useCart();
 
-  const currentProduct = useSelector(selectCurrentProduct);
+  const updateIsSizesWindowBottom = useCallback(() => {
+    const containerWidth = window.innerWidth;
+    setIsSizesWindowBottom(containerWidth < 768);
+  }, []);
 
-  const { sizes: sizesStored } = currentProduct;
+  useEffect(() => {
+    updateIsSizesWindowBottom();
+    window.addEventListener("resize", updateIsSizesWindowBottom);
+    return () =>
+      window.removeEventListener("resize", updateIsSizesWindowBottom);
+  }, [updateIsSizesWindowBottom]);
 
   const isShoesSizes = () => {
     if (sizesStored?.length) {
@@ -61,7 +73,9 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
 
   const handleClickCartButton = async () => {
     if (!sizesStored?.length) {
-      dispatch(setIsSizeModalOpened(true));
+      isSizesWindowBottom
+        ? dispatch(setIsSizeModalOpened(true))
+        : dispatch(setIsSizesWindowOpened(!isSizesWindowOpened));
       return;
     }
 
@@ -156,7 +170,7 @@ const AddProductToCartComponent = ({ product }: { product: IProduct }) => {
   const handleClickButtonCart = () => {
     setIsSuccessModalIsOpened(false);
     handleOpenedCart(true);
-  }
+  };
 
   useEffect(() => {
     dispatch(setCurrentProduct(product));
