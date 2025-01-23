@@ -8,6 +8,7 @@ import { selectCurrentProduct } from "@/redux/currentProduct/currentProductSelec
 import {
   setCurrentProductSize,
   setIsSizeModalOpened,
+  setIsSizesWindowOpened,
 } from "@/redux/currentProduct/currentProductSlice";
 
 //services & helpers
@@ -27,12 +28,14 @@ export interface SizesBlockProps {
 
 const SizesBlock = (props: SizesBlockProps) => {
   const [isSizesWindowBottom, setIsSizesWindowBottom] = useState(true);
-  const [isSizesWindowOpened, setIsSizesWindowOpened] = useState(false);
-  const [isSizeGridTablesOpened, setIsSizGridTableOpened] = useState(false);
+    const [isSizeGridTablesOpened, setIsSizGridTableOpened] = useState(false);
   const dispatch = useDispatch();
 
-  const { sizes: sizesStored, isSizeModalOpened } =
-    useSelector(selectCurrentProduct);
+  const {
+    sizes: sizesStored,
+    isSizeModalOpened,
+    isSizesWindowOpened,
+  } = useSelector(selectCurrentProduct);
 
   const isShoesSizes = () => {
     if (sizesStored?.length) {
@@ -67,7 +70,7 @@ const SizesBlock = (props: SizesBlockProps) => {
       dispatch(setIsSizeModalOpened(true));
       return;
     }
-    setIsSizesWindowOpened((prev) => !prev);
+    dispatch(setIsSizesWindowOpened(!isSizesWindowOpened));
   };
 
   return (
