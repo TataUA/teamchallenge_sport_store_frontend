@@ -48,21 +48,14 @@ const ColorPickerComponent = ({ colors }: { colors: IColors[] }) => {
             className={cn(
               `min-w-[50px] min-h-[50px] rounded-[50%] relative z-20 cursor-pointer`,
               "flex items-center justify-center",
-              `${currentColorLoweCase === color.title.toLowerCase() ? `border-${currentColorLoweCase} border-[2px]` : ""}`,
-              `${"white" === color.title.toLowerCase() ? "border-timer border-[2px]" : ""}`,
-              {
-                border:
-                  currentColorLoweCase === color.title.toLowerCase() &&
-                  "white" === color.title.toLowerCase(),
-              },
+              `${currentColorLoweCase === color.title.toLowerCase() ? ("white" === currentColorLoweCase ? "border-timer border" : `border-${currentColorLoweCase} border-[2px]`) : ""}`,
             )}
           >
             <div
               className={cn(
-                `bg-${color.title.toLowerCase()} min-w-10 min-h-10 rounded-[50%] overflow-hidden`,
+                `bg-${color.title.toLowerCase()} min-w-[42px] min-h-[42px] rounded-[50%] overflow-hidden`,
                 {
                   "border-timer border-[2px]":
-                    currentColorLoweCase === color.title.toLowerCase() &&
                     "white" === color.title.toLowerCase(),
                 },
               )}
