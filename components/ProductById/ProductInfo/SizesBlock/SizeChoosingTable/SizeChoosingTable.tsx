@@ -57,7 +57,7 @@ export const SizeChoosingTable = ({
 
   return (
     <div className="flex gap-6 flex-col">
-      <h3 className="text-center font-semibold text-xl text-primary">Розмір</h3>
+      <h3 className="md:hidden text-center font-semibold text-xl text-primary">Розмір</h3>
       <ul className="list-none flex flex-col">
         {arrayOfSizes?.map((size, index) => (
           <li
