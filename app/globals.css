@@ -98,4 +98,18 @@ body {
   .transition-all {
     transition: all 0.2s;
   }
+
+  .sizes-right-border {
+    position: relative;
+  }
+
+  .sizes-right-border::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0.5px;
+    height: 100%;
+    background-color: #cfcfcf;
+  }
 }
