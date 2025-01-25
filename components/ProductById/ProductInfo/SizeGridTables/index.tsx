@@ -26,7 +26,7 @@ const WomenClothingSizesTable = () => {
       </div>
       <div className="block 608:inline-block md:block border border-border rounded-[20px] overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-[560px] md:w-full">
+          <table className="w-[560px]">
             <thead>
               <tr>
                 {womenClothingSizes.headers.map((header, index) => (
@@ -35,7 +35,7 @@ const WomenClothingSizesTable = () => {
                     className={cn(
                       "z-10 min-w-[120px] text-center py-2 px-4 font-medium text-sm text-primary tracking-custom_4",
                       {
-                        "sticky left-0 px-5 bg-white border-r border-border":
+                        "sticky left-0 px-5 bg-white sizes-right-border":
                           index === 0,
                       },
                     )}
@@ -51,7 +51,12 @@ const WomenClothingSizesTable = () => {
                   key={index}
                   className="border-t border-border font-medium text-sm text-primary tracking-custom_4 text-center"
                 >
-                  <td className="sticky left-0 z-10 py-2 px-4 bg-white border-r border-border font-semibold">
+                  <td
+                    className={cn(
+                      "sticky left-0 z-10 py-2 px-4 bg-white font-semibold",
+                      "sizes-right-border",
+                    )}
+                  >
                     {item.size}
                   </td>
                   <td className="py-2 px-4">{item.height}</td>
@@ -85,7 +90,7 @@ const MenClothingSizesTable = () => {
                     className={cn(
                       "z-10 min-w-[120px] text-center py-2 px-4 font-medium text-sm text-primary tracking-custom_4",
                       {
-                        "sticky left-0 px-5 bg-white border-r border-border":
+                        "sticky left-0 px-5 bg-white sizes-right-border":
                           index === 0,
                       },
                     )}
@@ -101,7 +106,12 @@ const MenClothingSizesTable = () => {
                   key={index}
                   className="border-t border-border font-medium text-sm text-primary tracking-custom_4 text-center"
                 >
-                  <td className="sticky left-0 z-10 py-2 px-4 bg-white border-r border-border font-semibold">
+                  <td
+                    className={cn(
+                      "sticky left-0 z-10 py-2 px-4 bg-white font-semibold",
+                      "sizes-right-border",
+                    )}
+                  >
                     {item.size}
                   </td>
                   <td className="py-2 px-4">{item.height}</td>
