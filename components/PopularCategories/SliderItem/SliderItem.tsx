@@ -5,18 +5,19 @@ import { PopularCategories } from "@/public/data/popular-categories.data";
 
 export const SliderItem = ({ item }: { item: PopularCategories }) => {
   return (
-    <div className="w-full h-[156px] xl:h-[180px] flex justify-center items-center">
+    <div className="w-full h-full flex justify-center items-center">
       <Link
         href={item.href}
         className="flex flex-col justify-start gap-2 w-full h-full cursor-pointer"
       >
-        <div className="relative w-full h-[108px] xl:h-[180px] overflow-hidden rounded-xl">
+        <div className="relative w-full h-full overflow-hidden rounded-xl">
           <Image
             src={item.image}
             alt={item.title}
-            fill
+            width={300}
+            height={300}
             priority
-            className="object-cover object-center"
+            className="w-full h-full object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-black/0"></div>
         </div>
