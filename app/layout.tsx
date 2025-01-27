@@ -33,7 +33,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="uk" className="h-full text-[16px]">
       <Head>
-        <title>&#34;Sport Hub&#34;</title>
+        <title>Sport Hub</title>
+        <link rel="icon" href="/favicon.ico" />
         <meta
           name="description"
           content={`&#34;Your best online store!&#34;`}
