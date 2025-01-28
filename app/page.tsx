@@ -9,7 +9,7 @@ import dataSlider from "@/public/data/slider_data.json";
 export default async function Page() {
   return (
     <>
-      <div className="mt-16">
+      <div className="mt-16 xl:mt-0">
         <Slider data={dataSlider} homePageMainSlider loop={false} />
       </div>
       <Gender />

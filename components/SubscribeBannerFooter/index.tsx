@@ -17,7 +17,7 @@ export const SubscribeBannerFooter = () => {
           style={{ objectFit: "cover" }}
         />
         <div className="absolute left-0 top-0 z-[5] w-full h-full collor-substrate bg-[#151515] opacity-60 "></div>
-        <div className="relative z-[10] container py-[42px]">
+        <div className="relative z-[10] px-6 py-4 370:py-[42px]">
           <FormBanerFooter />
         </div>
       </div>

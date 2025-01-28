@@ -64,7 +64,7 @@ export default function ContentGenderPage({ gender, page }: TestProps) {
       ) : null}
       {stateFatching === "received" ? (
         <div>
-          <ul className="flex flex-wrap gap-2 justify-start mb-5">
+          <ul className="flex flex-wrap gap-2 justify-start mb-5 pt-14 xl:pt-0">
             {products.map((product: IProduct) => (
               <ListItem key={product.id} product={product} />
             ))}
