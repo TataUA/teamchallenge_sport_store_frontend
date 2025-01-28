@@ -44,7 +44,7 @@ export default function Test({ products }: TestProps) {
 
   return (
     <div>
-      <ul className="flex flex-wrap gap-2 justify-between mb-5">
+      <ul className="flex flex-wrap gap-2 justify-start mb-5 pt-16 xl:pt-0 ">
         {paginatedProducts.map((product) => (
           <ListItem key={product.id} product={product} />
         ))}

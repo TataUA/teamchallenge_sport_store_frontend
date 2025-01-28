@@ -33,7 +33,7 @@ const Footer = () => {
   return (
     <footer>
       <SubscribeBannerFooter />
-      <div className="font-pangram p-6 xl:py-0 xl:px-[82px] mt-auto max-[767px]:px-6 max-[767px]:py-5 xl:container xl:mx-auto">
+      <div className="font-pangram p-6 pb-0 xl:py-0 xl:px-[82px] mt-auto max-[767px]:px-6 max-[767px]:py-5 xl:container xl:mx-auto">
         <InfoSectionFooter />
       </div>
     </footer>

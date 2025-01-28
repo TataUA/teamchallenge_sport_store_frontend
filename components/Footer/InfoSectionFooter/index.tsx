@@ -25,7 +25,7 @@ const InfoSectionFooter = () => {
         </div>
         <BlockInfo />
       </div>
-      <div className="flex flex-wrap justify-between mb-6 max-[767px]:gap-[22px] max-[767px]:mb-6 min-[2800px]:mb-12 xl:hidden">
+      <div className="flex gap-x-4 flex-wrap justify-start md:justify-between mb-6 max-[767px]:gap-[22px] max-[767px]:mb-6 min-[2800px]:mb-12 xl:hidden">
         <BlockInfo />
       </div>
 
@@ -34,10 +34,7 @@ const InfoSectionFooter = () => {
       </div>
       <hr className="mb-6 min-[2800px]:my-[50px]  text-[#CFCFCF] xl:mt-3 xl:hidden xl:mb-[18px]" />
       <div className="mb-6 font-nunito font-normal text-[#6e6e70]  text-xs tracking-wider max-[767px]:text-xs min-[2800px]:text-3xl">
-        <div className="xl:hidden">
-          Project created for educational purposes <br />© 2024 Sport Hub.
-        </div>
-        <div className="hidden xl:block xl:text-center xl:mt-10 xl:tracking-wider xl:mb-5 ">
+        <div className="block md:text-center xl:mt-10 xl:tracking-wider mb-5 ">
           © 2024 Sport Hub. Всі права захищено
         </div>
       </div>
