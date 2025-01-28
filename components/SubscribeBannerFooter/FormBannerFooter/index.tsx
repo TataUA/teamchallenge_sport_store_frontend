@@ -37,7 +37,7 @@ export const FormBanerFooter = () => {
       onSubmit={handleSubscribeSubmit}
       className="text-white xl:text-title"
     >
-      <h2 className="mb-3 font-bold text-[28px] xl:text-[30px] leading-129">
+      <h2 className="mb-3 font-bold  text-[24px] 370:text-[28px] xl:text-[30px] leading-129">
         Отримуйте спеціальні пропозиції першими
       </h2>
       <p className="mb-4 xl:mb-8 font-medium text-sm tracking-custom_4 xl:tracking-custom_2">
