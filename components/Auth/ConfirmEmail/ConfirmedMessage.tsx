@@ -44,7 +44,7 @@ export const ConfirmedMessage = () => {
         <Loader />
       ) : (
         <div className="container 1440:h-full 1440:flex items-center justify-center">
-          <div className=" w-full 1440:w-[504px] 1440:my-4 flex flex-col justify-center items-center self-center text-center font-pangram 1440:p-10 1440:border 1440:border-border 1440:rounded-lg 1440:shadow-lg">
+          <div className="w-full 1440:w-[504px] 1440:my-4 flex flex-col justify-center items-center self-center text-center font-pangram 1440:p-10 1440:border 1440:border-border 1440:rounded-3xl 1440:shadow-custom">
             {!error ? (
               <>
                 <Image

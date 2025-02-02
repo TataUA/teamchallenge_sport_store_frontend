@@ -82,6 +82,9 @@ const config: Config = {
         timer: "#b7b7b8",
         blured: "rgba(14, 14, 16, 0.4)",
       },
+      boxShadow: {
+        custom: "0px 5px 10px 0px rgba(14, 14, 16, 0.06)",
+      },
     },
   },
 
