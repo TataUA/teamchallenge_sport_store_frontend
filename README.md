@@ -1,6 +1,7 @@
 ### Sport Hub
 
 This repository contains the frontend part of the **Sport Hub** web application, a training project developed as part of the **Team Challenge** program. The main objective of this project is to practice and enhance skills in building a modern e-commerce web application using cutting-edge technologies.
+The backend part is [here](https://github.com/KolyaChaun/sport_hub_store).
 
 ---
 
